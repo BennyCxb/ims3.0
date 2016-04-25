@@ -73,25 +73,39 @@ define(function (require, exports, module) {
         //拼接
         if (json.content != undefined) {
             var rolData = json.content;
-			$("#termlogTable tbody").append('<tr>'+                              
-                                    '<th class="eventSubType">种类</th>'+
+			$("#termlogTable tbody").append('<tr>'+       
+                                    '<th class="termID">终端ID</th>'+
                                     '<th class="level">等级</th>'+
 									'<th class="eventType">类型</th>'+
 									'<th class="termIP">IP</th>'+
-									'<th class="termID">终端ID</th>'+
 									'<th class="date">日期</th>'+
 									'<th class="event">日志内容</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
-                var roltr = '<tr termID="' + rolData[x].termID + '>' +
-                    '<td class="eventSubType">' + rolData[x].eventSubType + '/td>' +
-                    '<td class="level">' + rolData[x].level + '</td>' + 
-                    '<td class="eventType">' + rolData[x].eventType + '</td>' + 
-                    '<td class="termIP">' + rolData[x].termIP + '</td>' + 
+                var eventTypes = rolData[x].eventType;
+                if(rolData[x].eventType=="play")
+                    eventTypes = "播放";
+                else if (rolData[x].eventType=="pause")
+                    eventTypes = "暂停";
+                else if (rolData[x].eventType=="stop")
+                    eventTypes = "停止";
+                    
+                var eventS = rolData[x].event;
+                var eventJson = Json.parse(eventS);
+                if(eventS.indexOf("\"Operate\":\"play\"") != -1)
+                    eventS = "开始播放："+eventJson['Name']
+                else if (eventS.indexOf("\"Operate\":\"stop\"") != -1)
+                    eventS = "停止播放："+eventJson['Name']
+                
+                
+                var roltr = '<tr termID="' + rolData[x].termID + '">' +
                     '<td class="termID">' + rolData[x].termID + '</td>' + 
+                    '<td class="level">' + rolData[x].level + '</td>' + 
+                    '<td class="eventType">' + eventTypes + '</td>' + 
+                    '<td class="termIP">' + rolData[x].termIP + '</td>' + 
                     '<td class="date">' + rolData[x].date + '</td>' + 
-					'<td class="event" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' +  rolData[x].event + '</td>' + 
+					'<td class="event" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + eventS  + '</td>' + 
                     '</tr>';
                 $("#termlogTable tbody").append(roltr);
             }
