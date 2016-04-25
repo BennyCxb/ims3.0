@@ -8,6 +8,7 @@ define(function(require, exports, module) {
   exports.IP;
   exports.MAC;
   exports.requireJS;
+  exports.diskInfo;
 
   var _workSeqments,
       _downloadSeqments,
@@ -32,7 +33,7 @@ define(function(require, exports, module) {
       var termName = $.trim($('#CO-term-name').val()),
           upgradeURL = $.trim($('#CO-upgradeURL').val()),
           logURL = $.trim($('#CO-logURL').val()),
-          vol = $('#CO-vol-slider').val(),
+          vol = Number($('#CO-vol-slider').val()),
           workSwitch = ($("#CO-workSwitch").bootstrapSwitch('state'))?1:0,
           downloadSwitch = ($("#CO-downloadSwitch").bootstrapSwitch('state'))?1:0,
           restartSwitch = ($("#CO-restartSwitch").bootstrapSwitch('state'))?1:0,
@@ -40,7 +41,7 @@ define(function(require, exports, module) {
 
       $('#CO-workWeekRepeat input[type="checkbox"]').each(function(i,e){
         if($(e)[0].checked){
-          workWeekRepeat[i] = (i+1);
+          workWeekRepeat.push(i+1);
         }
       })
 
@@ -261,16 +262,16 @@ define(function(require, exports, module) {
               "LogURL": logURL
           }
         }
-        console.log(JSON.stringify(data));
+        
         UTIL.ajax('POST', 
-          CONFIG.serverRoot + '/backend_mgt/v2/termcategory', 
+          CONFIG.serverRoot + '/backend_mgt/v2/term', 
           JSON.stringify(data), 
           function(data){
             if(data.rescode === '200'){
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
-              alert('保存终端配置失败');
+              alert('保存终端配置失败' + data.errInfo);
             }
           }
         )
@@ -332,6 +333,7 @@ define(function(require, exports, module) {
 
     $('#CO-title').html(exports.termName);
     $('#CO-term-name').val(exports.termName);
+    $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
 
@@ -354,7 +356,7 @@ define(function(require, exports, module) {
           $("#CO-vol-slider").val(data.config.Volume);
 
           var config = data.config;
-          config = {
+          /*config = {
             "DownloadSeqments":"{\"on\": 1, \"duration\": 999999, \"trigger\": \"1 2 3 * * * *\"}",
             "WorkSeqments":"{\"on\": 1, \"duration\": 1, \"trigger\": \"13 * 5 * * * 1,2,7\"}",
             "UpgradeURL":"117","Volume":60,"Channel_ID":117,"PreDownload_Channel_ID":117,
@@ -362,7 +364,7 @@ define(function(require, exports, module) {
             "RestartTimer":"{\"on\": 0, \"trigger\": \"2 3 * * * * *\"}",
             "ProgramSync":"{\"on\": 0, \"SyncSetID\": \"1-1\", \"SyncMulticastIP\": \"225.2.3.4\", \"SyncMulticastPort\": 9000, \"SyncSwitchTimeout\": 300}",
             "LogURL":null
-          }
+          }*/
 
           // 心跳
           _heartBeatPeriod = config.HeartBeat_Period;
@@ -412,22 +414,21 @@ define(function(require, exports, module) {
             hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
             minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
             second = (second === '*')?'00':((second<10)?'0'+second:second);
+            $('#CO-workStart').val(hour+':'+minute+':'+second);
+            
+            //endtime
+            var duration = workSeqments.duration;
+            var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
+            var end = new Date();
+            end.setTime(start.getTime()+duration*1000);
+            var end_hour = end.getHours();
+            var end_minute = end.getMinutes();
+            var end_second = end.getSeconds();
+            end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
+            end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
+            end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
+            $('#CO-workEnd').val(end_hour+':'+end_minute+':'+end_second);
           }
-          $('#CO-workStart').val(hour+':'+minute+':'+second);
-
-          //endtime
-          var duration = workSeqments.duration;
-          var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
-          var end = new Date();
-          end.setTime(start.getTime()+duration*1000);
-          var end_hour = end.getHours();
-          var end_minute = end.getMinutes();
-          var end_second = end.getSeconds();
-          end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
-          end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
-          end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
-          $('#CO-workEnd').val(end_hour+':'+end_minute+':'+end_second);
-        
 
           // 下载区间
           var DownloadSeqments = JSON.parse(config.DownloadSeqments);
@@ -446,21 +447,21 @@ define(function(require, exports, module) {
             hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
             minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
             second = (second === '*')?'00':((second<10)?'0'+second:second);
+            $('#CO-downloadStart').val(hour+':'+minute+':'+second);
+          
+            //endtime
+            var duration = DownloadSeqments.duration;
+            var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
+            var end = new Date();
+            end.setTime(start.getTime()+duration*1000);
+            var end_hour = end.getHours();
+            var end_minute = end.getMinutes();
+            var end_second = end.getSeconds();
+            end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
+            end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
+            end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
+            $('#CO-downloadEnd').val(end_hour+':'+end_minute+':'+end_second);
           }
-          $('#CO-downloadStart').val(hour+':'+minute+':'+second);
-
-          //endtime
-          var duration = DownloadSeqments.duration;
-          var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
-          var end = new Date();
-          end.setTime(start.getTime()+duration*1000);
-          var end_hour = end.getHours();
-          var end_minute = end.getMinutes();
-          var end_second = end.getSeconds();
-          end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
-          end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
-          end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
-          $('#CO-downloadEnd').val(end_hour+':'+end_minute+':'+end_second);
         
 
           // 定时重启
@@ -480,8 +481,8 @@ define(function(require, exports, module) {
             hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
             minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
             second = (second === '*')?'00':((second<10)?'0'+second:second);
+            $('#CO-restartTime').val(hour+':'+minute+':'+second);
           }
-          $('#CO-restartTime').val(hour+':'+minute+':'+second);
         
         }
       }
