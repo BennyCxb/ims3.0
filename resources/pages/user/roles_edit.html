@@ -1,14 +1,20 @@
-<div id="roleEdit_box" class="modal-content" style="margin: auto; width: 600px; max-height: 560px;">
+<div id="roleEdit_box" class="modal-content" style="margin: auto; width: 600px; max-height: 560px; overflow:auto">
     <div class="modal-header">
         <button type="button" class="close CA_close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">编辑角色</h4>
     </div>
     <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group" style="overflow:auto;">
             <label>角色名称：</label>
             <input type="text" class="form-control" id="role_name" placeholder="请输入角色名称" style="width:80%;">
             <button id="name_change" type="button" class="btn btn-primary" style=" position:absolute;right:15px;top:40px;">修改名称</button>
+            <label style="margin-top:10px;">终端分类树根节点：</label>
+             <button id="term_list" type="button" class="btn btn-primary pull-right" style="margin:10px 0;">终端编辑</button>
+            <div class="form-group">
+           
+            <textarea id="term" style="width:80%; height:150px; resize:none;"></textarea>
+            </div>
             <label>功能：</label>
             <div class="form-group">
                 <div class="table-responsive mailbox-messages">
