@@ -9,7 +9,6 @@ define(function (require, exports, module) {
         $("#logout").click(function () {
             window.location.href = "login.jsp";
         });
-
     };
     //上传弹层页面
     exports.upl = function () {
