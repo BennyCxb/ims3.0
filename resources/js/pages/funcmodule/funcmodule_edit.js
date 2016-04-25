@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 				ModuleName: mModuleName			
             }
             var data = JSON.stringify({
-                project_name: 'newui_dev',
+                project_name: CONFIG.projectName,
                 action:'PUT',
                 Data: module
             });

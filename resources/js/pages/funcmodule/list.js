@@ -90,7 +90,7 @@ define(function (require, exports, module) {
 				var currentID = self.parent().parent().attr("ModuleID");
 				if (confirm("确定删除该功能模块？")) {
 					var data = JSON.stringify({
-						project_name: 'newui_dev',
+						project_name: CONFIG.projectName,
 						action: 'DELETE'		
 					});
 					var url = CONFIG.serverRoot + '/backend_mgt/v2/functionmodules/' + currentID;

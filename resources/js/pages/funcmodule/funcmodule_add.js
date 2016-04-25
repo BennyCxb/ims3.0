@@ -16,7 +16,7 @@ define(function (require, exports, module) {
 				ModuleName: mName			
             }
             var data = JSON.stringify({
-                project_name: 'newui_dev',
+                project_name: CONFIG.projectName,
                 action:'POST',
                 Data: module
             });
