@@ -71,7 +71,8 @@
 
                 <p>
                   <sec:authentication property="name"/>@${project_name}
-                  <small>Member since Nov. 2012</small>
+                  <small>${project_name_cn}
+                  Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -124,7 +125,7 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <li class="treeview active">
+        <!-- <li id="treeview_term" class="treeview active">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -132,13 +133,13 @@
             <li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> 日志</a></li>
           </ul>
-        </li>
-        <li id="treeview_mtr" class="treeview">
+        </li> -->
+        <!-- <li id="treeview_mtr" class="treeview">
           <a href="#materials/materials_list">
             <i class="fa fa-book"></i> <span>资源</span>
           </a>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li id="treeview_user" class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
             <span>用户</span>
@@ -148,8 +149,8 @@
             <li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>
             <li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>
           </ul>
-        </li>
-		<li class="treeview">
+        </li> -->
+		<!-- <li id="treeview_channel" class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
             <span>频道</span>
@@ -160,7 +161,7 @@
             <li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>
             <li><a href="#layout/list"><i class="fa fa-circle-o"></i> 布局列表</a></li>
           </ul>
-        </li>
+        </li> -->
 		
       </ul>
     </section>
