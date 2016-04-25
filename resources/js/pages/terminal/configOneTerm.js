@@ -33,7 +33,7 @@ define(function(require, exports, module) {
       var termName = $.trim($('#CO-term-name').val()),
           upgradeURL = $.trim($('#CO-upgradeURL').val()),
           logURL = $.trim($('#CO-logURL').val()),
-          vol = Number($('#CO-vol-slider').val()),
+          vol = $('#CO-vol-slider').val(),
           workSwitch = ($("#CO-workSwitch").bootstrapSwitch('state'))?1:0,
           downloadSwitch = ($("#CO-downloadSwitch").bootstrapSwitch('state'))?1:0,
           restartSwitch = ($("#CO-restartSwitch").bootstrapSwitch('state'))?1:0,
@@ -99,6 +99,7 @@ define(function(require, exports, module) {
 
         if((workEnd - workStart) < 0){
           alert('工作区间结束时间不能早于开始时间');
+          $('#CO-workEnd').focus();
           return;
         }
 
@@ -314,11 +315,6 @@ define(function(require, exports, module) {
       }
     });
 
-    $( "#CO-vol-slider" ).slider({
-      max: 100,
-      value: 60
-    });
-
     $('#CO-workWeekRepeat input[type="checkbox"]').iCheck({
       checkboxClass: 'icheckbox_minimal-blue'
     })
@@ -338,7 +334,7 @@ define(function(require, exports, module) {
     $('#CO-MAC').html(exports.MAC);
 
       var data = {
-        "project_name": "newui_dev",
+        "project_name": CONFIG.projectName,
         "action": "getConfig",
         "ID": exports.termID
       }
@@ -353,7 +349,11 @@ define(function(require, exports, module) {
         }else{
           $('#CO-upgradeURL').val(data.config.UpgradeURL);
           $('#CO-logURL').val(data.config.LogURL);
-          $("#CO-vol-slider").val(data.config.Volume);
+
+          $( "#CO-vol-slider" ).slider({
+            max: 100,
+            value: data.config.Volume
+          });
 
           var config = data.config;
           /*config = {
