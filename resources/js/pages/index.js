@@ -4,11 +4,12 @@ define(function (require, exports, module) {
 
     exports.init = function () {
     	checkJurisdiction();
-        
+
     	//登出
         $("#logout").click(function () {
             window.location.href = "login.jsp";
         });
+
     };
     //上传弹层页面
     exports.upl = function () {
@@ -28,7 +29,7 @@ define(function (require, exports, module) {
         }else {
         	page = page[1];
         }
-        
+
         //刷新菜单的焦点
         $(".sidebar-menu li").attr("class", "treeview");
         $(".sidebar-menu li ul li").removeAttr("class");
@@ -57,7 +58,7 @@ define(function (require, exports, module) {
 //    	var url = CONFIG.serverRoot + "/backend_mgt/v1/projects"
 //    	UTIL.ajax("post", url, json_data, render);
 //    })
-    
+
     //检索权限
     function checkJurisdiction(){
     	var data = JSON.stringify({
@@ -134,7 +135,7 @@ define(function (require, exports, module) {
         		}
         	}
         	$(".sidebar-menu li:eq(0)").attr("class","treeview active");
-        	
+
         	window.onhashchange = function () {
                 loadPage();
             }
@@ -146,7 +147,7 @@ define(function (require, exports, module) {
                 $("#treeview_mtr").attr("class", "treeview active");
                 loadPage();
             })
-            
+
             if ($(".sidebar-menu li").length == 0){
         		alert("您没有任何权限，请联系管理员！");
         	}else {
