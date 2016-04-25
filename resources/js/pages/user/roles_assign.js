@@ -3,7 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
 	var ROLES = require("pages/user/roles_list.js");
 	var templates = require('common/templates');
-    var nDisplayItems = 10;
+    var nDisplayItems = 5;
 
 
     exports.init = function () {
@@ -23,17 +23,38 @@ define(function (require, exports, module) {
 				if(flag){
 					var data = JSON.stringify({
 						project_name:'newui_dev',
-						action:'PUT',
+						action:'UpdateUserRole',
 						Data:{
-							"USERNAME": checked_name,
-							"PASSWORD": "123456",
-							"EMAIL": "",
-							"RoleID":rID,
-							"Description":"",
-							"isValid":1
+							"RoleID":rID
 							}
 						});
 						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+checked_id;
+						UTIL.ajax('post', url, data, function(msg){
+							if(msg.rescode==200){
+								}else{
+									suc = false;
+									};
+							});
+					}
+					else{
+						}
+				
+			};
+			var unchecked = $('.disassign');
+			for(var i=0;i<unchecked.length;i++){	
+				var uncheDiv = unchecked.eq(i).parent();
+				var flag = uncheDiv.hasClass("checked");
+				var unchecked_id = unchecked.eq(i).attr("userID");
+				var unchecked_name = unchecked.eq(i).attr("userName");
+				if(!flag){
+					var data = JSON.stringify({
+						project_name:'newui_dev',
+						action:'UpdateUserRole',
+						Data:{
+							"RoleID":-1
+							}
+						});
+						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+unchecked_id;
 						UTIL.ajax('post', url, data, function(msg){
 							if(msg.rescode==200){
 								}else{
@@ -63,7 +84,7 @@ define(function (require, exports, module) {
             action: 'GetUsersAll',
             Pager: {
 				"total":-1,
-				"per_page":10,
+				"per_page":5,
 				"page":pageNum,
 				"orderby":"",
 				"sortby":"desc",
@@ -89,7 +110,7 @@ define(function (require, exports, module) {
             currentPage: Number(json.Pager.page),
             onPageChange: function (num, type) {
                 if (type === 'change') {
-					$('#roles-table-pager').jqPaginator('destroy');
+					$('#users-table-pager').jqPaginator('destroy');
 					exports.loadUserPage(num);
                 }
             }
@@ -117,7 +138,7 @@ define(function (require, exports, module) {
 			   	   };
 				   if(hasUser == true){
 					  var roltr = '<tr userID="' + userID + '">' +
-						  '<td class="user_checkbox"><input type="checkbox" checked="checked" disabled="true" userID="' + userID + '"></td>' +
+						  '<td class="user_checkbox"><input class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +
 						  '<td class="user_name">' + userName + '</td>' +
 						  '<td class="user_id">ID：' + userID + '</td>' + 
 						  '</tr>';

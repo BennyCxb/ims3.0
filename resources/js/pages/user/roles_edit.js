@@ -32,6 +32,41 @@ define(function (require, exports, module) {
         });
 		//获取角色的功能模块及读写权限
 		exports.loadModulePage(1);//加载功能模块默认页面
+		//确定
+        $("#role_updata").click(function () {
+        	var module = $('.module');
+			var FunctionModules = [];
+			for(var i=0;i<module.length;i++){	
+				var cheDiv = module.eq(i).parent();
+				var flag = cheDiv.hasClass("checked");
+				var module_id = module.eq(i).attr("moduleID");
+				if(flag){
+					var auth = 1;
+					}
+					else{
+						var auth = 0;
+						}
+				var obj = {ModuleID:module_id,ReadWriteAuth:auth};
+				FunctionModules.push(obj);
+			};
+			var data = JSON.stringify({
+						project_name:'newui_dev',
+						action:'UpdateRoleModule',
+						Data:{
+							"FunctionModules":FunctionModules
+							}
+						});
+			var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/'+rID;
+			UTIL.ajax('post', url, data, function(msg){
+							if(msg.rescode==200){
+								alert("修改成功")
+								}else{
+								alert("修改失败")
+									};
+							});
+				ROLES.loadRolesPage(1);
+				UTIL.cover.close();
+			})
 		 //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -46,22 +81,25 @@ define(function (require, exports, module) {
             action: 'GetRoleModule'
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
-        UTIL.ajax('post', url, data, function(){
+        UTIL.ajax('post', url, data, function(redata){
 				 //拼接
-				if (json.RoleModules != undefined) {
-					var rolData = json.RoleModules;
+				if (redata.RoleModules != undefined) {
+					var rolData = redata.RoleModules;
 					for (var i = 0; i < rolData.length; i++) {	
 						var auth = rolData[i].ReadWriteAuth;
 						var ModuleID = rolData[i].ModuleID;	
-						   if(auth == 0){
+						var ModuleName = rolData[i].ModuleName;
+						   if(auth == 1){
 							  var roltr = '<tr moduleID="' + ModuleID + '">' +
-								  '<td class="module_checkbox"><input type="checkbox" checked="checked" disabled="true" moduleID="' + rolData[i].ID + '"></td>' + 
+								  '<td class="module_checkbox"><input class="module" type="checkbox" checked="checked" moduleID="' + ModuleID + '"  moduleName="' + ModuleName + '"></td>' + 
+								  '<td class="module_name">' + ModuleName + '</td>' +
 								  '<td class="module_id">ID：' + ModuleID + '</td>' + 
 								  '</tr>';
 							  $("#moduleTable tbody").append(roltr);
 						   }else{
 							   var roltr = '<tr moduleID="' + ModuleID + '">' +
-								  '<td class="module_checkbox"><input class="assign" type="checkbox" moduleID="' + ModuleID + '"></td>' +
+								  '<td class="module_checkbox"><input class="module" type="checkbox" moduleID="' + ModuleID + '"   moduleName="' + ModuleName + '"></td>' +
+								  '<td class="module_name">' + ModuleName + '</td>' +
 								  '<td class="module_id">ID：' + ModuleID + '</td>' + 
 								  '</tr>';
 							  $("#moduleTable tbody").append(roltr);
