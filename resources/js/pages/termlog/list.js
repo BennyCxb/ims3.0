@@ -4,6 +4,7 @@ define(function (require, exports, module) {
     var templates = require('common/templates');
     var nDisplayItems = 10;
     var termMac = '';
+    var pageNumC=1;
 
     exports.init = function () {
         exports.loadTermlogPage(1); //加载默认页面
@@ -26,7 +27,7 @@ define(function (require, exports, module) {
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#termlogLisTitle").html("日志列表");
         
-        
+        pageNumC = pageNum;
         var data = JSON.stringify({
         	project_name: CONFIG.projectName,
             action: 'getTermLog',
@@ -46,8 +47,7 @@ define(function (require, exports, module) {
 
     function onSearch(_keyword) {
     	termMac = typeof(_keyword) === 'string' ? _keyword : '';
-        alert(termMac);
-        exports.loadPage(1);
+        exports.loadTermlogPage(1);
     }
     
     function render(json) {
@@ -62,7 +62,7 @@ define(function (require, exports, module) {
 			next: CONFIG.pager.next,
 			last: CONFIG.pager.last,
             page: CONFIG.pager.page,
-            currentPage: Number(json.Pager.page),
+            currentPage: Number(pageNumC),
             onPageChange: function (num, type) {
                 if (type === 'change') {
 					$('#termlog-table-pager').jqPaginator('destroy');
@@ -92,7 +92,7 @@ define(function (require, exports, module) {
                     eventTypes = "停止";
                     
                 var eventS = rolData[x].event;
-                var eventJson = Json.parse(eventS);
+                var eventJson = JSON.parse(eventS);
                 if(eventS.indexOf("\"Operate\":\"play\"") != -1)
                     eventS = "开始播放："+eventJson['Name']
                 else if (eventS.indexOf("\"Operate\":\"stop\"") != -1)

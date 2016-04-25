@@ -52,7 +52,7 @@ define(function (require, exports, module) {
 			last: CONFIG.pager.last,
             page: CONFIG.pager.page,
             currentPage: Number(json.curPage),
-            onPageChange: function (num) {
+            onPageChange: function (num,type) {
                 if (type === 'change') {
 					$('#userlog-table-pager').jqPaginator('destroy');
 					exports.loadUserlogPage(num);
