@@ -116,6 +116,7 @@ define(function (require, exports, module) {
                 	          '<ul class="treeview-menu">'+
                 	            '<li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>'+
                 	            '<li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>'+
+                                '<li><a href="#funcmodule/list"><i class="fa fa-circle-o"></i> 功能模块</a></li>'+
                                 '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-circle-o"></i> 操作日志</a></li>'+
                 	          '</ul>'+
                 	        '</li>');
