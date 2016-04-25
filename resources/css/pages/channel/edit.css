@@ -63,7 +63,7 @@
 #channel-editor-wrapper .channel-program-footer {  }
 
 #channel-editor-wrapper .channel-program-layout {
-    width: calc(100% - 200px);
+    width: calc(100% - 500px);
     height: 100%;
     float: left;
 }
@@ -82,7 +82,7 @@
 }
 
 #channel-editor-wrapper .channel-program-widget {
-    width: 200px;
+    width: 500px;
     height: 100%;
     float: left;
 }

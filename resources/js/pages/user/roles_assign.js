@@ -11,6 +11,9 @@ define(function (require, exports, module) {
 		exports.loadUserPage(1); //加载默认页面
 		var rName = ROLES.roleName;
 		var rID = ROLES.roleID;
+		//缓存数组
+		var checkedArr = [];
+		var uncheckedArr = [];
 		//确定
 		$("#users_updata").click(function(){
 			var checked = $('.assign');

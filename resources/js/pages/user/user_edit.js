@@ -14,7 +14,7 @@ define(function (require, exports, module) {
 		$("#user_name1").val(uName);
 		$("#email1").val(uEmail);
 		$("#description1").val(uDes);
-		$("#password").val(uPass);
+		$("#password1").val(uPass);
         //确定
         $("#user_create").click(function () {
         	var uName = $("#user_name").val();

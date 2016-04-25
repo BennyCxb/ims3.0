@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="resources/plugins/bootstrap-slider/slider.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="resources/dist/css/AdminLTE.css">
+  <!-- Bootstrap switch -->
+  <link rel="stylesheet" href="resources/plugins/bootstrap-switch/bootstrap-switch.min.css"/>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="resources/dist/css/skins/_all-skins.min.css">
@@ -131,7 +133,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 日志</a></li>
+            <li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-circle-o"></i> 日志</a></li>
           </ul>
         </li> -->
         <!-- <li id="treeview_mtr" class="treeview">
@@ -148,6 +150,7 @@
           <ul class="treeview-menu">
             <li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>
             <li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>
+            <li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-circle-o"></i> 操作日志</a></li>
           </ul>
         </li> -->
 		<!-- <li id="treeview_channel" class="treeview">
@@ -220,6 +223,8 @@
 <script src="resources/js/bower_components/backbone/backbone-min.js"></script>
 <!-- Bootstrap slider -->
 <script src="resources/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<!-- Bootstrap switch -->
+<script src="resources/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
 <script>
 	seajs.config({
 	  base: "./resources/js/"

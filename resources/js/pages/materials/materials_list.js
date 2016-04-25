@@ -42,7 +42,7 @@ define(function (require, exports, module) {
         $('#mtrSearch').bind('input propertychange', function () {
             var typeId = $("#mtrSearch").attr("typeId");
             onSearch($('#mtrSearch').val(), typeId);
-        });
+        })
 
         //删除和批量删除
         $("#mtr_delete").click(function () {

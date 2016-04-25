@@ -18,6 +18,10 @@ define(function(require, exports, module) {
     initEvent();
 	}
 
+  exports.loadTermList = function(){
+    loadTermList(_pageNO);
+  }
+
   function test(){
     $('#ct').click(function(){
       var getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
@@ -437,7 +441,7 @@ define(function(require, exports, module) {
           var snap = (tl[i].Online === 0)?'':'<a class="pointer">截屏</a>';
 
           $('#term_list').append('' +
-            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" status="' + status + '">' +
+            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" status="' + status + '">' +
               '<td><input type="checkbox"></td>' +
               '<td>'+ tl[i].Name +'<br />'+ statusName +'</td>' +
               '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
@@ -518,8 +522,10 @@ define(function(require, exports, module) {
             var li = $(this).parent().parent();
             configOneTerm.termID = Number(li.attr("tid"));
             configOneTerm.termName = li.attr("tname");
+            configOneTerm.diskInfo = li.attr("disk");
             configOneTerm.IP = li.attr("ip");
             configOneTerm.MAC = li.attr("mac");
+            configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 
