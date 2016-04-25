@@ -18,6 +18,10 @@ define(function(require, exports, module) {
     initEvent();
 	}
 
+  exports.loadTermList = function(){
+    loadTermList(_pageNO);
+  }
+
   function test(){
     $('#ct').click(function(){
       var getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
@@ -520,6 +524,7 @@ define(function(require, exports, module) {
             configOneTerm.termName = li.attr("tname");
             configOneTerm.IP = li.attr("ip");
             configOneTerm.MAC = li.attr("mac");
+            configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 
