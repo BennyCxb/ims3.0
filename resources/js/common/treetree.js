@@ -147,7 +147,7 @@ define(function(require, exports, module) {
 	    tree.addParentCss = function(dom){
 	    	dom.addClass('treeview');
         var a = dom.children('a');
-        var angle = $('<i class="fa fa-angle-right"></i>');
+        var angle = $('<i class="glyphicon glyphicon glyphicon-chevron-right"></i>');
         a.prepend(angle);
         angle.click(function(e){
         	e.preventDefault();
@@ -252,7 +252,7 @@ define(function(require, exports, module) {
           // 是否有子结点
           if(data[i].children.length > 0){
             treeview = 'treeview';
-            angle = '<i class="fa fa-angle-right"></i>';
+            angle = '<i class="glyphicon glyphicon-chevron-right"></i>';
           }
 
           var li = $('' +

@@ -1,7 +1,7 @@
 
 
 <small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 24px;">编辑</small>
-<input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="<%=name%>" data-property-id="layout-name" style="margin-left: 15px;">
+<input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="<%=name%>" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold;">
 
 
 
@@ -34,14 +34,29 @@
 
 <script type="text/javascript">
 
+	function getLength(str){  
+		    var realLength = 0;  
+		    for (var i = 0; i < str.length; i++){  
+		        charCode = str.charCodeAt(i);  
+		        
+		        if (charCode >= 0 && charCode <= 128)   
+		        realLength += 1;  
+		        else   
+		        realLength += 2;
+
+		    }
+
+		    return realLength;  
+		}  
+
 
 	function directName(obj,hint){
 		//get name
 		$obj = $(obj);
 		var t = $obj.val();
-		var length = t.length;
+		var length = getLength(t);
 		var width = parseFloat($obj.css('font-size'));
-		var left = length * width +37;
+		var left = length * width/2 +47;
 
 		//get hint
 		$hint = $(hint);
@@ -65,9 +80,9 @@
 			$obj.css('cursor','pointer');
 			//reposition
 			var t = $obj.val();
-			var length = t.length;
+			var length = getLength(t);
 			var width = parseFloat($obj.css('font-size'));
-			var left = length * width +37;
+			var left = length * width/2 +47;
 			$hint.css('left',left);
 		});
 	}
