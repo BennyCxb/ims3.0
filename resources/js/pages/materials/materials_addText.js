@@ -82,7 +82,7 @@ define(function (require, exports, module) {
     	var editor_data = CKEDITOR.instances.editor1.getData();
     	if(mtrId == null){
             $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val()),
+                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
                 type: "POST",
                 data: editor_data,
                 dataType: "json",

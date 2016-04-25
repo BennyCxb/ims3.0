@@ -179,7 +179,7 @@ define(function (require, exports, module) {
                     material["material"]["md5"] = blkRet.md5;
                     material["material"]["duration"] = blkRet.duration;
                     material["material"]["create_time"] = getNowFormatDate();
-//                    material["material"]["create_user"] = $("#username").text();
+                    material["material"]["CreateUser"] = $('#USER-NAME').html();
                     $.post(CONFIG.serverRoot + "/backend_mgt/v1/materials",
                         JSON.stringify(material), function (data) {
                             if (parseInt(data.rescode) == 200) {

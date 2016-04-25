@@ -106,7 +106,8 @@ define(function (require, exports, module) {
                 size: '0',
                 md5: '',
                 duration: '0',
-                create_time: getNowFormatDate()
+                create_time: getNowFormatDate(),
+                CreateUser: $('#USER-NAME').html()
             };
             var data = JSON.stringify({
                 action: action,
