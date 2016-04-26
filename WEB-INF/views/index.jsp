@@ -63,13 +63,14 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a class="dropdown-toggle" data-toggle="dropdown">
-              <img src="resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <!-- <img src="resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
               <span id="username" class="hidden-xs"><sec:authentication property="name"/>@${project_name}</span>
+              <i class="glyphicon glyphicon-triangle-bottom" style="font-size: 12px; transform: translateY(2px) scale(0.9); margin-left: 4px;"></i>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <!-- <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
 
                 <p>
                   <sec:authentication property="name"/>@${project_name}

@@ -18,10 +18,6 @@ define(function(require, exports, module) {
     initEvent();
 	}
 
-  exports.loadTermList = function(){
-    loadTermList(_pageNO);
-  }
-
   function test(){
     $('#ct').click(function(){
       var getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
@@ -75,12 +71,7 @@ define(function(require, exports, module) {
 
     // 终端配置按钮点击
     $('#tct_config').click(function(){
-      var configTermClass = require('pages/terminal/configTermClass.js');
-      var li = $('#termclass-tree').find('.focus');
-      configTermClass.classID = Number(li.attr("node-id"));
-      configTermClass.className = $('#termlist-title').html();
-      configTermClass.requireJS = "pages/terminal/list.js";
-      UTIL.cover.load('resources/pages/terminal/configTermClass.html');
+      
     })
 
     // refresh
@@ -446,9 +437,10 @@ define(function(require, exports, module) {
           var snap = (tl[i].Online === 0)?'':'<a class="pointer">截屏</a>';
 
           $('#term_list').append('' +
-            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" status="' + status + '">' +
-              '<td><input type="checkbox"></td>' +
-              '<td>'+ tl[i].Name +'<br />'+ statusName +'</td>' +
+            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" status="' + status + '">' +
+              '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
+              '<td style="width:36px; padding-right:0; padding-left:0"><i class="glyphicon glyphicon-hdd" style="position:relative; top:4px; left:10px;"></i></td>'+
+              '<td style="padding-left:0;">'+ tl[i].Name +'<br />'+ statusName +'</td>' +
               '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
               '<td>' +
@@ -469,7 +461,7 @@ define(function(require, exports, module) {
                    '</div>' +
                 '</div>' +
               '</td>' +
-              '<td>' +
+              '<td style="font-size:14px; color:#333; line-height:20px; position:relative; top:1px; ">' +
               'IP：'+ tl[i].IP +'<br />' +
               'MAC：'+ tl[i].MAC +'<br />' +
               '版本：' + tl[i].TermVersion + 
@@ -527,10 +519,8 @@ define(function(require, exports, module) {
             var li = $(this).parent().parent();
             configOneTerm.termID = Number(li.attr("tid"));
             configOneTerm.termName = li.attr("tname");
-            configOneTerm.diskInfo = li.attr("disk");
             configOneTerm.IP = li.attr("ip");
             configOneTerm.MAC = li.attr("mac");
-            configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 
