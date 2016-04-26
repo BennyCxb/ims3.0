@@ -75,7 +75,12 @@ define(function(require, exports, module) {
 
     // 终端配置按钮点击
     $('#tct_config').click(function(){
-      
+      var configTermClass = require('pages/terminal/configTermClass.js');
+      var li = $('#termclass-tree').find('.focus');
+      configTermClass.classID = Number(li.attr("node-id"));
+      configTermClass.className = $('#termlist-title').html();
+      configTermClass.requireJS = "pages/terminal/list.js";
+      UTIL.cover.load('resources/pages/terminal/configTermClass.html');
     })
 
     // refresh

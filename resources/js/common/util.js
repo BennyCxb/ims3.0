@@ -66,7 +66,7 @@ define(function(require, exports, module) {
 		  url: url,
 		  dataType: 'json',
 		  data: data,
-		  timeout: 10000,
+		  timeout: 60000,
 		  success: function(data){
 		    successFn(data);
 		  },
