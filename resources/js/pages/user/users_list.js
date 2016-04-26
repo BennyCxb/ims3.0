@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         $("#usersLisTitle").html("");
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#usersLisTitle").html("用户列表");
+        $("#usersLisTitle").html("全部用户");
         var data = JSON.stringify({
 			project_name:CONFIG.projectName,
             action: 'GetUsersAll',
@@ -62,10 +62,10 @@ define(function (require, exports, module) {
         if (json.Users != undefined) {
             var rolData = json.Users;
 			$("#usersTable tbody").append('<tr>'+                              
+                                    // '<th class="users_ID">UID</th>'+
                                     '<th class="users_name">用户名</th>'+
-                                    '<th class="users_ID">用户ID</th>'+
-									'<th class="users_email">邮箱</th>'+
 									'<th class="description">备注</th>'+
+									'<th class="users_email">邮箱</th>'+
 									'<th class="roles">角色</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
@@ -81,33 +81,33 @@ define(function (require, exports, module) {
 				if(rName!==undefined){
 					if(uID===1){
 						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
-                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
-                    '<td class="users_id">ID：' + uID + '</td>' + 
-					'<td class="users_email">' + email + '</td>' + 
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
 					'<td></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 						}else{
-                var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
-                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
-                    '<td class="users_id">ID：' + uID + '</td>' + 
-					'<td class="users_email">' + email + '</td>' + 
+                var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
-					'<td><a class="users_delete">删除</a></td>' +
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 				}
 				}else{
-					var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
-                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
-                    '<td class="users_id">ID：' + uID + '</td>' + 
-					'<td class="users_email">' + email + '</td>' +
+					var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' +
 					'<td class="role_name">未分配</td>' + 
-					'<td><a class="users_delete">删除</a></td>' +
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                		$("#usersTable tbody").append(roltr);
 					}

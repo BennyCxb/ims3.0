@@ -479,7 +479,7 @@ a {
 }
 
 .offline.term-icon{
-  opacity: 0.5
+  opacity: 0.3
 }
 
 .running.term-icon:after{
@@ -492,3 +492,19 @@ a {
 }
 
 
+/*user*/
+
+ .user-delete{
+  opacity: 0.2;
+  color: #333;
+ }
+
+ 
+.user-row:hover .user-delete{
+  opacity: .6
+  }
+
+.users_delete:hover .user-delete{
+  opacity: 1;
+ }
+  
