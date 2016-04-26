@@ -449,7 +449,36 @@ a {
 .tree-menu-2 > li > a:hover .glyphicon{
   color: #3c8dbc;
 }
+
 /*termlist*/
-#term_list > tr > td > i.offline{ color:yellow; }
-#term_list > tr > td > i.running{ color:green; }
-#term_list > tr > td > i.shutdown{ color:red; }
+.term-icon{
+  position: relative;
+}
+
+.term-icon:after{
+  content: ' ';
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 16px;
+  height: 10px;
+  background: red;
+  border: solid 1px #333;
+  border-radius: 1px;
+}
+
+.offline.term-icon:after{
+  background: white;
+}
+
+
+.running.term-icon:after{
+  background:#3c8dbc;
+}
+
+
+.shutdown.term-icon:after{
+  background: black;
+}
+
+

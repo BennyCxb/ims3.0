@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     exports.serverRoot = 'http://imsoperate.cleartv.cn';
     exports.Resource_UploadURL = "http://imsresource.cleartv.cn/upload";
     exports.projectName = UTIL.getCookie('project_name');
-    exports.termListLoadInterval = 60 * 1000;
+    exports.termListLoadInterval = 600 * 1000;
     exports.termSnapInterval = 1 * 1000;
     exports.termSnapWait = 30 * 1000;
     exports.pager = {
