@@ -15,6 +15,7 @@ define(function (require, exports, module) {
 
         //保存
         $("#Emtr_updata").click(function () {
+        	if (!inputCheck()) return;
         	var mtrName = $("#Emtr_name").val() + "." + $("#Emtr_name").attr("mtrtype");
             var material = {
                 Name: mtrName
@@ -66,5 +67,19 @@ define(function (require, exports, module) {
     function close() {
         $("#cover_area").html("");
         $("#cover_area").css("display", "none");
+    }
+    
+    //检测文本框事件
+    function inputCheck() {
+        var errormsg = "";
+        if ($("#Emtr_name").val() == "") {
+            errormsg += "请输入资源名称！\n";
+        }
+        if (errormsg != "") {
+            alert(errormsg);
+            return false;
+        }else {
+        	return true;
+        }
     }
 })

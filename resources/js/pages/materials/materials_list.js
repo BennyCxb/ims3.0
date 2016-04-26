@@ -8,35 +8,9 @@ define(function (require, exports, module) {
         keyword = "";
 
     exports.init = function () {
+    	checkJurisdiction();
         exports.loadPage(1, 1); //加载默认页面
-        // 上传文件按钮点击
-        $('#mtr_upload').click(function () {
-            $('#file').trigger("click");
-        })
-        $("#file").change(function () {
-            if ($("#page_upload").children().length == 0) {
-                INDEX.upl();
-            } else {
-                $("#page_upload").css("display", "flex");
-                $("#upload_box").css("display", "block");
-                MTRU.beginUpload();
-            }
-
-        });
-        // 添加文本按钮点击
-        $('#mtr_addText').click(function () {
-        	openEditor();
-        })
-        // 添加直播按钮点击
-        $('#mtr_addLive').click(function () {
-        	openLive();
-        })
-
-        // 频道添加直播
-        $('#mtr_addMtr').click(function () {
-            var page = "resources/pages/channel/addMtr.html";
-            UTIL.cover.load(page);
-        })
+        
 
         //加载视频列表
         $('#mtrVideo').click(function () {
@@ -68,7 +42,7 @@ define(function (require, exports, module) {
         $('#mtrSearch').bind('input propertychange', function () {
             var typeId = $("#mtrSearch").attr("typeId");
             onSearch($('#mtrSearch').val(), typeId);
-        });
+        })
 
         //删除和批量删除
         $("#mtr_delete").click(function () {
@@ -260,7 +234,7 @@ define(function (require, exports, module) {
                             '<td class="mtr_name" title="' +mtrData[x].Name+ '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">00:00:00</td>' +
-                            '<td class="mtr_uploadUser">' + mtrData[x].CreateName + '</td>' +
+                            '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
                             '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
                             '</tr>';
                         $("#mtrTable tbody").append(mtrtr);
@@ -272,7 +246,7 @@ define(function (require, exports, module) {
                             '<td class="mtr_name" title="' +mtrData[x].Name+ '"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-                            '<td class="mtr_uploadUser">' + mtrData[x].CreateName + '</td>' +
+                            '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
                             '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
                             '</tr>';
                         $("#mtrTable tbody").append(mtrtr);
@@ -363,5 +337,70 @@ define(function (require, exports, module) {
     	var page = "resources/pages/materials/materials_addText.html";
         $("#addtext_box").load(page);
         $("#list_box").css("display","none");
+    }
+    
+    //检索添加资源权限
+    function checkJurisdiction(){
+    	var data = JSON.stringify({
+            action: 'GetFunctionModules',
+            project_name: CONFIG.projectName,
+            UserName: $('#USER-NAME').html(),
+        });
+        var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
+        UTIL.ajax('post', url, data, function(json){
+        	var jdtData = json.FunctionModules;
+        	for(var a = 0; a < jdtData.length; a++){
+        		var moduleId = jdtData[a].ModuleID;
+        		if (moduleId == 4){
+        			if (jdtData[a].ReadWriteAuth == 1){
+	        			$(".col-md-3").append('<div class="box box-solid">'+
+	        	                '<div class="box-header with-border">'+
+	                            '<h3 class="box-title">添加资源</h3>'+
+	                            '<div class="box-tools">'+
+	        						'<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+	                            '</div>'+
+	                        '</div>'+
+	                        '<div class="box-body no-padding">'+
+	                            '<ul class="nav nav-pills nav-stacked">'+
+	                                '<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>'+
+	                                '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>'+
+	                                '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'+
+	                                '<li><a id="mtr_addMtr" typeid="1"><i class="fa fa-circle-o text-light-blue"></i> 频道添加直播</a></li>'+
+	                            '</ul>'+
+	                        '</div>'+
+	                    '</div>');
+        			}
+        		}
+        	}
+        	
+        	// 上传文件按钮点击
+            $('#mtr_upload').click(function () {
+                $('#file').trigger("click");
+            })
+            $("#file").change(function () {
+                if ($("#page_upload").children().length == 0) {
+                    INDEX.upl();
+                } else {
+                    $("#page_upload").css("display", "flex");
+                    $("#upload_box").css("display", "block");
+                    MTRU.beginUpload();
+                }
+
+            });
+            // 添加文本按钮点击
+            $('#mtr_addText').click(function () {
+            	openEditor();
+            })
+            // 添加直播按钮点击
+            $('#mtr_addLive').click(function () {
+            	openLive();
+            })
+
+            // 频道添加直播
+            $('#mtr_addMtr').click(function () {
+                var page = "resources/pages/channel/addMtr.html";
+                UTIL.cover.load(page);
+            })
+        });
     }
 })

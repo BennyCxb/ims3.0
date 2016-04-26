@@ -12,7 +12,7 @@ config.toolbar =
     ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
     ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
     ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-    ['HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
     '/',
     ['Styles','Format','Font','FontSize'],
     ['TextColor','BGColor'],
