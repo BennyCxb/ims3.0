@@ -89,7 +89,7 @@ define(function (require, exports, module) {
 
     function registerEventListeners() {
         $('#layout-list-dialog .layout-list').delegate('li', 'click', function (ev) {
-            var layoutId = this.getAttribute('data-layout-id');
+            var layoutId = parseInt(this.getAttribute('data-layout-id'));
             notifySelectItem(layoutId);
         });
         $('#layout-list-dialog .layout-list-search').change(function (ev) {

@@ -2,9 +2,7 @@
 
     <div class="channel-editor-header">
         <button class="btn-channel-editor-close">返回</button>
-        <span class="editable-span" data-key="name"><%=name%></span>
-        <span class="editable-span" data-key="overall-schedule-params"><%=overall_schedule_params%></span>
-        <!--<span class="editable-span" data-key="overall-schedule-type"><%=overall_schedule_type%></span>-->
+        <input class="channel-editor-property" data-key="name" value="<%=name%>" />
         <button class="btn-channel-editor-save">保存</button>
         <button class="btn-channel-editor-publish">保存并发布</button>
     </div>
@@ -23,9 +21,22 @@
                 <div>
                     <h3>常规节目</h3>
                     <select class="channel-program-schedule-type">
-                        <option value="1">顺序</option>
-                        <option value="2">随机</option>
-                        <option value="3">比例</option>
+                        <% var type = JSON.parse(overall_schedule_params).Type; %>
+                        <% if (type === 'Sequence') { %>
+                        <option value="Sequence" selected>顺序</option>
+                        <% } else { %>
+                        <option value="Sequence">顺序</option>
+                        <% } %>
+                        <% if (type === 'Random') { %>
+                        <option value="Random" selected>随机</option>
+                        <% } else { %>
+                        <option value="Random">随机</option>
+                        <% } %>
+                        <% if (type === 'Percent') { %>
+                        <option value="Percent" selected>随机</option>
+                        <% } else { %>
+                        <option value="Percent">比例</option>
+                        <% } %>
                     </select>
                     <button class="btn-program-delete" data-program-type="Regular">删除</button>
                     <button class="btn-program-new" data-program-type="Regular">新建</button>

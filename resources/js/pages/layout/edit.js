@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 	var templates = require('common/templates'),
 		config    = require('common/config'),
 		util      = require('common/util'),
-        layoutEditor    = require('common/layout_editor');
+        layoutEditor    = require('common/layout_editor'),
+        addMtrDialog    = require('pages/channel/addMtr');
 
     /**
      * 模块全局变量
@@ -150,7 +151,7 @@ define(function(require, exports, module) {
         $('#layout-editor-wrapper input').change(onInputChanged);
         $('#layout-editor-wrapper .btn-add-widget').click(onAddWidget);
         $('#layout-editor-wrapper .btn-layout-editor-background').click(function () {
-            alert('资源列表还未实现');
+            onAddMaterial();
         });
         $('#layout-editor-wrapper .btn-layout-editor-delete-widget').click(function () {
             editor.getLayout().deleteWidget(editor.getLayout().getFocusedWidget());
@@ -545,6 +546,19 @@ define(function(require, exports, module) {
                 }
                 break;
         }
+    }
+
+    function onAddMaterial() {
+        util.cover.load('resources/pages/channel/addMtr.html');
+        addMtrDialog.getSelectedID = function (ids) {
+            addMtrDialog.getSelectedID = null;
+            if (ids.length !== 0) {
+                alert('只能选择一个图片');
+                return;
+            } else {
+                // TODO
+            }
+        };
     }
 
 });

@@ -127,15 +127,15 @@ define(function (require, exports, module) {
     function Collection(name, database, schema) {
         this.name = name;
         this.database = database;
-        this.autoIncreaseIndexes = {};
+        this.autoIncrementIndexes = {};
         var _schema = [], self = this;
         schema.forEach(function (el) {
             var col = {
                 name: el.name
             };
-            if (el.autoIncreasement) {
-                self.autoIncreaseIndexes[col.name] = -1;
-                col.autoIncreasement = true;
+            if (el.autoIncrement) {
+                self.autoIncrementIndexes[col.name] = -1;
+                col.autoIncrement = true;
             }
             _schema.push(col);
         });
@@ -193,10 +193,10 @@ define(function (require, exports, module) {
         this.schema.forEach(function (col) {
             var v;
             if (!_.has(value, col.name)) {
-                if (col.autoIncreasement) {
-                    v = self.autoIncreaseIndexes[col.name];
+                if (col.autoIncrement) {
+                    v = self.autoIncrementIndexes[col.name];
                     self.last_insert_id = v;
-                    self.autoIncreaseIndexes[col.name]--;
+                    self.autoIncrementIndexes[col.name]--;
                 } else {
                     throw new Error('can not find value for column ' + col.name);
                 }
@@ -242,10 +242,10 @@ define(function (require, exports, module) {
         this.schema.forEach(function (col) {
             var v;
             if (!_.has(value, col.name)) {
-                if (col.autoIncreasement) {
-                    v = self.autoIncreaseIndexes[col.name];
+                if (col.autoIncrement) {
+                    v = self.autoIncrementIndexes[col.name];
                     self.last_insert_id = v;
-                    self.autoIncreaseIndexes[col.name]--;
+                    self.autoIncrementIndexes[col.name]--;
                 } else {
                     throw new Error('can not find value for column ' + col.name);
                 }
