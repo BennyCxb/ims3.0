@@ -87,7 +87,7 @@ define(function (require, exports, module) {
 	                	$(".sidebar-menu").append('<li id="treeview_channel" class="treeview">'+
 	                	          '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
-	                	            '<li><a href="#channel/list"><i class="fa fa-caret-square-o-right"></i> 频道列表</a></li>'+
+	                	            '<li><a href="#channel/list"><i class="fa fa-caret-square-o-right"></i> 频道</a></li>'+
 	                	            // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
 	                	          '</ul>'+
 	                	        '</li>');
