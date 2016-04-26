@@ -75,7 +75,7 @@
                 <p>
                   <sec:authentication property="name"/>@${project_name}
                   <small>${project_name_cn}
-                  Member since Nov. 2012</small>
+                  </small>
                 </p>
               </li>
               <!-- Menu Footer-->
