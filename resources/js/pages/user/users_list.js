@@ -82,7 +82,7 @@ define(function (require, exports, module) {
 					if(uID===1){
 						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
@@ -92,7 +92,7 @@ define(function (require, exports, module) {
 						}else{
                 var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
@@ -103,7 +103,7 @@ define(function (require, exports, module) {
 				}else{
 					var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><a class="user_name"><i class="fa fa-user"></i>&nbsp&nbsp' + uName + '</a></td>' +
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' +
 					'<td class="role_name">未分配</td>' + 

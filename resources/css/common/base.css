@@ -493,6 +493,10 @@ a {
 
 
 /*user*/
+.users_name .fa-user{
+  color: #3c8dbc;
+  padding-right: 7px;
+}
 
  .user-delete{
   opacity: 0.2;
