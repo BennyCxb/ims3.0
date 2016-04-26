@@ -74,7 +74,7 @@ define(function (require, exports, module) {
                 case 1:		//终端管理
                 	if (jdtData[a].ReadWriteAuth == 1){
                 		$(".sidebar-menu").append('<li id="treeview_term" class="treeview">'+
-                  	          '<a href="#"><i class="fa fa-desktop"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i></a>'+
+                  	          '<a href="#"><i class="glyphicon glyphicon-modal-window"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i></a>'+
                   	          '<ul class="treeview-menu">'+
                   	          	'<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>'+
                   	          	'<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-circle-o"></i> 日志</a></li>'+
