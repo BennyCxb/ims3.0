@@ -471,9 +471,12 @@ a {
   background: white;
 }
 
+.offline.term-icon{
+  opacity: 0.5
+}
 
 .running.term-icon:after{
-  background:#3c8dbc;
+  background:rgb(48,173,255);
 }
 
 
