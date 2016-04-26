@@ -14,7 +14,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label>用户名</label>
-                  <input type="text" class="form-control" id="user_name1" placeholder="请输入用户名">
+                  <input type="text" class="form-control" id="user_name1" placeholder="请输入英文用户名" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')">
                 </div>
                 <div class="form-group">
                   <label>密码</label>

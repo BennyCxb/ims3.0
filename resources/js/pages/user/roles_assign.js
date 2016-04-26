@@ -4,26 +4,35 @@ define(function (require, exports, module) {
 	var ROLES = require("pages/user/roles_list.js");
 	var templates = require('common/templates');
     var nDisplayItems = 5;
-
+	//缓存数组
+	var checkedArr = [];
+	var uncheckedArr = [];
 
     exports.init = function () {
 				
 		exports.loadUserPage(1); //加载默认页面
+		 //关闭窗口
+        $(".CA_close").click(function () {
+            UTIL.cover.close();
+        });
 		var rName = ROLES.roleName;
 		var rID = ROLES.roleID;
-		//缓存数组
-		var checkedArr = [];
-		var uncheckedArr = [];
 		//确定
 		$("#users_updata").click(function(){
+			var suc=true;
 			var checked = $('.assign');
-			var suc = true;
 			for(var i=0;i<checked.length;i++){	
 				var cheDiv = checked.eq(i).parent();
 				var flag = cheDiv.hasClass("checked");
-				var checked_id = checked.eq(i).attr("userID");
-				var checked_name = checked.eq(i).attr("userName");
 				if(flag){
+					var checked_id = checked.eq(i).attr("userID");
+					//var checked_name = checked.eq(i).attr("userName");
+					checkedArr.push(checked_id);
+					}
+				}
+			for(var i=0;i<checkedArr.length;i++){	
+				var checked_id1 = checkedArr[i];
+				if(checked_id1){
 					var data = JSON.stringify({
 						project_name:'newui_dev',
 						action:'UpdateUserRole',
@@ -31,7 +40,7 @@ define(function (require, exports, module) {
 							"RoleID":rID
 							}
 						});
-						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+checked_id;
+						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+checked_id1;
 						UTIL.ajax('post', url, data, function(msg){
 							if(msg.rescode==200){
 								}else{
@@ -44,12 +53,19 @@ define(function (require, exports, module) {
 				
 			};
 			var unchecked = $('.disassign');
-			for(var i=0;i<unchecked.length;i++){	
-				var uncheDiv = unchecked.eq(i).parent();
-				var flag = uncheDiv.hasClass("checked");
-				var unchecked_id = unchecked.eq(i).attr("userID");
-				var unchecked_name = unchecked.eq(i).attr("userName");
-				if(!flag){
+			for(var j=0;j<unchecked.length;j++){	
+				var uncheDiv = unchecked.eq(j).parent();
+				var flagg = uncheDiv.hasClass("checked");
+				if(!flagg){
+					var unchecked_id = unchecked.eq(j).attr("userID");
+					//var checked_name = checked.eq(i).attr("userName");
+					uncheckedArr.push(unchecked_id);
+					}
+				
+			};
+			for(var k=0;k<uncheckedArr.length;k++){	
+				var unchecked_id1 = uncheckedArr[k];
+				if(unchecked_id1){
 					var data = JSON.stringify({
 						project_name:'newui_dev',
 						action:'UpdateUserRole',
@@ -57,7 +73,7 @@ define(function (require, exports, module) {
 							"RoleID":-1
 							}
 						});
-						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+unchecked_id;
+						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+unchecked_id1;
 						UTIL.ajax('post', url, data, function(msg){
 							if(msg.rescode==200){
 								}else{
@@ -70,13 +86,11 @@ define(function (require, exports, module) {
 				
 			};
 			if(suc){alert("分配成功")}else{alert("分配失败")}
-				ROLES.loadRolesPage(1);
-				UTIL.cover.close();
+			checkedArr=[];
+			uncheckedArr=[];
+			ROLES.loadRolesPage(1);
+			UTIL.cover.close();
 			})
-		 //关闭窗口
-        $(".CA_close").click(function () {
-            UTIL.cover.close();
-        });
     }
 	 // 加载页面数据
     exports.loadUserPage = function (pageNum) {
@@ -96,6 +110,7 @@ define(function (require, exports, module) {
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/roles';
         UTIL.ajax('post', url, data, render);
+		
     }
 
     function render(json) {
@@ -113,6 +128,26 @@ define(function (require, exports, module) {
             currentPage: Number(json.Pager.page),
             onPageChange: function (num, type) {
                 if (type === 'change') {
+					var checked = $('.assign');
+					for(var i=0;i<checked.length;i++){	
+						var cheDiv = checked.eq(i).parent();
+						var flag = cheDiv.hasClass("checked");
+						if(flag){
+							var checked_id = checked.eq(i).attr("userID");
+							//var checked_name = checked.eq(i).attr("userName");
+							checkedArr.push(checked_id);
+							}
+						}
+					var unchecked = $('.disassign');
+					for(var j=0;j<unchecked.length;j++){	
+						var uncheDiv = unchecked.eq(j).parent();
+						var flag3 = uncheDiv.hasClass("checked");
+						if(!flag3){
+							var unchecked_id = unchecked.eq(j).attr("userID");
+							//var checked_name = checked.eq(i).attr("userName");
+							uncheckedArr.push(unchecked_id);
+							}
+						}
 					$('#users-table-pager').jqPaginator('destroy');
 					exports.loadUserPage(num);
                 }
