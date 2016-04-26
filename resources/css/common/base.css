@@ -442,3 +442,7 @@ a {
 .tree-menu-2 > li > a:hover .glyphicon{
   color: #3c8dbc;
 }
+/*termlist*/
+#term_list > tr > td > i.offline{ color:yellow; }
+#term_list > tr > td > i.running{ color:green; }
+#term_list > tr > td > i.shutdown{ color:red; }
