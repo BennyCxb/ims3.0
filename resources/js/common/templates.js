@@ -30,21 +30,17 @@ return __p;
 exports['channel_edit_program']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="channel-program-header"> <h4>'+
+__p+='<div class="channel-program-header"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'</h4> <div class="channel-program-timer"> <span>start:'+
+'" type="text"> <div class="channel-program-timer"> <input type="datetime" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
-'</span> <span>end:'+
+'"> <input type="datetime" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'</span> <span>type:'+
-((__t=(schedule_type))==null?'':__t)+
-'</span> <span>params:'+
-((__t=(schedule_params))==null?'':__t)+
-'</span> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span>layout name:'+
+'"> <input type=""> </div> <button class="btn-channel-setup-timer">定时设置</button> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span>布局:'+
 ((__t=(layout.name))==null?'':__t)+
-'</span> <span>layout width:'+
+'</span> <span>宽:'+
 ((__t=(layout.width))==null?'':__t)+
-'</span> <span>layout height:'+
+'</span> <span>高:'+
 ((__t=(layout.height))==null?'':__t)+
 '</span> <button class="btn-channel-preview">预览</button> </div> <div class="channel-program-layout-body"> </div> <div class="channel-program-layout-footer"> <ul></ul> </div> </div> <div class="channel-program-widget"> 正在加载数据 </div> </div> <div class="channel-program-footer"> </div>';
 }
@@ -58,6 +54,99 @@ __p+='<li data-id="'+
 '"> <div>'+
 ((__t=(name))==null?'':__t)+
 '</div> </li>';
+}
+return __p;
+};
+exports['channel_edit_timer']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title">设置定时</h4> </div> <div class="modal-body timer-container"> <ul class="granularity-selector"> <li> <button data-selector="everyday">每天</button> </li> <li> <button data-selector="day">每周</button> </li> <li> <button data-selector="date">每月</button> </li> <li> <button data-selector="month">每年</button> </li> </ul> <div class="month-selector"> <ul> <label>按月选择</label> ';
+ var numbers = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","二十一","二十二","二十三","二十四","二十五","二十六","二十七","二十八","二十九","三十","三十一"]; 
+__p+=' ';
+ for ( var i = 0; i < 12; i++) { 
+__p+=' <li data-id="'+
+((__t=(i+1))==null?'':__t)+
+'" data-selector="month"> <label> ';
+ if (months.indexOf(i+1) !== -1) { 
+__p+=' <input type="checkbox" checked="checked"> ';
+ } else { 
+__p+=' <input type="checkbox"> ';
+ } 
+__p+=' '+
+((__t=(numbers[i] + '月'))==null?'':__t)+
+' </label> </li> ';
+ } 
+__p+=' </ul> </div> <div class="date-selector"> <ul> <label>按天选择</label> ';
+ for ( var i = 0; i < 31; i++) { 
+__p+=' <li data-id="'+
+((__t=(i+1))==null?'':__t)+
+'" data-selector="date"> <label> ';
+ if (dates.indexOf(i+1) !== -1) {
+__p+=' <input type="checkbox" checked="checked"> ';
+ } else { 
+__p+=' <input type="checkbox"> ';
+ } 
+__p+=' '+
+((__t=((i < 9) ? '0' + (i + 1) : (i + 1)))==null?'':__t)+
+' </label> </li> ';
+ } 
+__p+=' </ul> </div> <div class="day-selector"> <ul> <label>按天选择</label> ';
+ for ( var i = 0; i < 7; i++) { 
+__p+=' <li data-id="'+
+((__t=(i+1))==null?'':__t)+
+'" data-selector="day"> <label> ';
+ if (days.indexOf(i+1) !== -1) {
+__p+=' <input type="checkbox" checked="checked"> ';
+ } else { 
+__p+=' <input type="checkbox"> ';
+ } 
+__p+=' '+
+((__t=('周' + numbers[i]))==null?'':__t)+
+' </label> </li> ';
+ } 
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector"> <label>小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
+ for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1) { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'" selected="selected">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ } else { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ }} 
+__p+=' </select> </div> <div class="minute-selector"> <label>分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
+ for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1) { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'" selected="selected">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ } else { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ }} 
+__p+=' </select> </div> <div class="second-selector"> <label>秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
+ for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1) { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'" selected="selected">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ } else { 
+__p+=' <option value="'+
+((__t=(i))==null?'':__t)+
+'">'+
+((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
+'</option> ';
+ }} 
+__p+=' </select> </div> </div> </div> <div class="modal-footer"> <button id="single-term-class-save" type="button" class="btn btn-save btn-primary pull-right">保存</button> </div> </div>';
 }
 return __p;
 };

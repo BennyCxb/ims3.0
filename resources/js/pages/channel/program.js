@@ -6,11 +6,10 @@ define(function (require, exports, module) {
         config = require('common/config'),
         util = require('common/util'),
         crud = require('common/crud'),
-        layoutEditor = require('common/layout_editor');
+        layoutEditor = require('common/layout_editor'),
+        timer = require('pages/channel/timer');
 
-    var requestUrl = config.serverRoot,
-        projectName = config.projectName,
-        db = null,
+    var db = null,
         programId = null,
         layoutId = null,
         editor = null,
@@ -155,6 +154,12 @@ define(function (require, exports, module) {
                 editor.hidePreview();
                 editMode = false;
             }
+        });
+        $('#channel-editor-wrapper .btn-channel-setup-timer').click(function () {
+            var instance = new timer.Timer(timer.Timer.decode('0 0 0 * * * 1'));
+            instance.open(function (data) {
+                console.log(data);
+            });
         });
     }
 

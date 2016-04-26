@@ -1,0 +1,86 @@
+
+#channel-editor-timer {
+    margin: auto;
+    width: 600px;
+}
+
+#channel-editor-timer .modal-body {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#channel-editor-timer .granularity-month .month-selector,
+#channel-editor-timer .granularity-month .date-selector {
+    display: block;
+}
+
+#channel-editor-timer .granularity-month .day-selector {
+    display: none;
+}
+
+#channel-editor-timer .granularity-date .date-selector {
+    display: block;
+}
+#channel-editor-timer .granularity-date .month-selector,
+#channel-editor-timer .granularity-date .day-selector {
+    display: none;
+}
+
+#channel-editor-timer .granularity-day .day-selector {
+    display: block;
+}
+#channel-editor-timer .granularity-day .month-selector,
+#channel-editor-timer .granularity-day .date-selector {
+    display: none;
+}
+
+#channel-editor-timer .granularity-everyday .month-selector,
+#channel-editor-timer .granularity-everyday .day-selector,
+#channel-editor-timer .granularity-everyday .date-selector {
+    display: none;
+}
+
+#channel-editor-timer .granularity-everyday button[data-selector="everyday"],
+#channel-editor-timer .granularity-month button[data-selector="month"],
+#channel-editor-timer .granularity-day button[data-selector="day"],
+#channel-editor-timer .granularity-date button[data-selector="date"] {
+    background: red;
+}
+
+#channel-editor-timer .granularity-selector,
+#channel-editor-timer .month-selector ul,
+#channel-editor-timer .date-selector ul,
+#channel-editor-timer .day-selector ul {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+}
+
+#channel-editor-timer .granularity-selector li,
+#channel-editor-timer .month-selector li,
+#channel-editor-timer .date-selector li,
+#channel-editor-timer .day-selector li {
+    list-style: none;
+    display: inline-block;
+}
+
+.select2-container--open .select2-dropdown {
+    z-index: 3000 !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #3c8dbc !important;
+    border-color: #367fa9 !important;
+    padding: 1px 10px !important;
+    color: #fff !important;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    margin-right: 5px !important;
+    color: rgba(255,255,255,0.7) !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 1px solid #3c8dbc !important;
+}
+

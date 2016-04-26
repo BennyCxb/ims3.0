@@ -1,18 +1,18 @@
 <div class="channel-program-header">
-    <h4><%=name%></h4>
+    <input value="<%=name%>" type="text" />
     <div class="channel-program-timer">
-        <span>start:<%=lifetime_start%></span>
-        <span>end:<%=lifetime_end%></span>
-        <span>type:<%=schedule_type%></span>
-        <span>params:<%=schedule_params%></span>
+        <input type="datetime" step="1" value="<%=lifetime_start%>">
+        <input type="datetime" step="1" value="<%=lifetime_end%>">
+        <input type="" >
     </div>
+    <button class="btn-channel-setup-timer">定时设置</button>
 </div>
 <div class="channel-program-body">
     <div class="channel-program-layout">
         <div class="channel-program-layout-header">
-            <span>layout name:<%=layout.name%></span>
-            <span>layout width:<%=layout.width%></span>
-            <span>layout height:<%=layout.height%></span>
+            <span>布局:<%=layout.name%></span>
+            <span>宽:<%=layout.width%></span>
+            <span>高:<%=layout.height%></span>
             <button class="btn-channel-preview">预览</button>
         </div>
         <div class="channel-program-layout-body">
