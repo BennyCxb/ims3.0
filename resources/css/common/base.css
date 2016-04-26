@@ -23,8 +23,15 @@ body,h1,h2,h3,h4,h5,h6{
 
 
 .warn-i{
-  background:rgba(255,255,0,.8);
+  background:rgba(255,195,0,0.6);
   font-size: 14px;
+}
+
+
+.replace24{
+  position: relative;
+  width: 1px;
+  height: 24px;
 }
 
 .div-line-i{
