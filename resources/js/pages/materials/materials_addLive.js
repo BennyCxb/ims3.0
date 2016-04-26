@@ -106,7 +106,8 @@ define(function (require, exports, module) {
                 size: '0',
                 md5: '',
                 duration: '0',
-                create_time: getNowFormatDate()
+                create_time: getNowFormatDate(),
+                CreateUser: $('#USER-NAME').html()
             };
             var data = JSON.stringify({
                 action: action,
@@ -156,12 +157,14 @@ define(function (require, exports, module) {
         if ($("#ULmtr_name").val() == "") {
             errormsg += "请输入直播源名称！\n";
         }
-        if ($("#ULmtr_name").val() == "") {
+        if ($("#ULmtr_address").val() == "") {
             errormsg += "请输入直播源地址！";
         }
         if (errormsg != "") {
             alert(errormsg);
-            return;
+            return false;
+        }else {
+        	return true;
         }
     }
 })

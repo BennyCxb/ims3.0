@@ -127,6 +127,8 @@ define(function(require, exports, module) {
 		configDatabase();
 		var channelId = Number(util.getHashParameters().id);
 		loadChannelData(isNaN(channelId) ? null : channelId);
+		
+		
 	};
 
 	/**

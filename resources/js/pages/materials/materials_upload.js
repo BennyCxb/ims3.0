@@ -118,6 +118,7 @@ define(function (require, exports, module) {
 
     //上传模块
     function upload(num1, num2) {
+    	$("#dpUpl").css("display", "block");
         // 上传
         var Qiniu_upload = function (f) {
             var xhr = new XMLHttpRequest();
@@ -147,18 +148,22 @@ define(function (require, exports, module) {
                         formatSpeed = uploadSpeed.toFixed(2) + "Kb\/s";
                     }
                     var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-                    $("#dpUpl").css("display", "block");
                     $("#upl_tr_" + num1).attr("status", "uploading");
                     $("#progressbar_" + num1).css("width", percentComplete + "%");
                     $("#upl_speed_" + num1).html(formatSpeed);
-                    _upl_list[num1].status = 'uploading';
+                    if (num1 <= _upl_list.length){
+                    	_upl_list[num1].status = 'uploading';
+                    }
                 }
             }, false);
 
 
             //入库
             xhr.onreadystatechange = function (response) {
-                var fileName = $("#file")[0].files[num2].name;
+            	try{
+            		var fileName = $("#file")[0].files[num2].name;
+            	}catch(e){}
+                
                 var fileCount = $("#file")[0].files.length;
                 
                 if (xhr.readyState == 4 && xhr.status == 200
@@ -179,7 +184,7 @@ define(function (require, exports, module) {
                     material["material"]["md5"] = blkRet.md5;
                     material["material"]["duration"] = blkRet.duration;
                     material["material"]["create_time"] = getNowFormatDate();
-//                    material["material"]["create_user"] = $("#username").text();
+                    material["material"]["CreateUser"] = $('#USER-NAME').html();
                     $.post(CONFIG.serverRoot + "/backend_mgt/v1/materials",
                         JSON.stringify(material), function (data) {
                             if (parseInt(data.rescode) == 200) {

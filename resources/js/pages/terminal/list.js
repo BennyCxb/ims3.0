@@ -437,9 +437,10 @@ define(function(require, exports, module) {
           var snap = (tl[i].Online === 0)?'':'<a class="pointer">截屏</a>';
 
           $('#term_list').append('' +
-            '<tr tid="'+ tl[i].ID +'" status="' + status + '">' +
-              '<td><input type="checkbox"></td>' +
-              '<td>'+ tl[i].Name +'<br />'+ statusName +'</td>' +
+            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" status="' + status + '">' +
+              '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
+              '<td style="width:36px; padding-right:0; padding-left:0"><i class="glyphicon glyphicon-hdd" style="position:relative; top:4px; left:10px;"></i></td>'+
+              '<td style="padding-left:0;">'+ tl[i].Name +'<br />'+ statusName +'</td>' +
               '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
               '<td>' +
@@ -460,7 +461,7 @@ define(function(require, exports, module) {
                    '</div>' +
                 '</div>' +
               '</td>' +
-              '<td>' +
+              '<td style="font-size:14px; color:#333; line-height:20px; position:relative; top:1px; ">' +
               'IP：'+ tl[i].IP +'<br />' +
               'MAC：'+ tl[i].MAC +'<br />' +
               '版本：' + tl[i].TermVersion + 
@@ -515,7 +516,11 @@ define(function(require, exports, module) {
             e.preventDefault();
             e.stopPropagation();
             var configOneTerm = require('pages/terminal/configOneTerm.js');
-            configOneTerm.termID = Number($(this).parent().parent().attr("tid"));
+            var li = $(this).parent().parent();
+            configOneTerm.termID = Number(li.attr("tid"));
+            configOneTerm.termName = li.attr("tname");
+            configOneTerm.IP = li.attr("ip");
+            configOneTerm.MAC = li.attr("mac");
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 

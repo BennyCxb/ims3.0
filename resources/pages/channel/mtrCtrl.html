@@ -1,0 +1,86 @@
+<!-- general form elements -->
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 id="mtrCtrl_Title" class="box-title">视频控件</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form">
+    	<div class="box-header with-border">
+	        <span class="box-title">效果选项</span>
+	        <div class="pull-right">
+	        	<div id="" class="btn-group mtrCtrl_select">
+		            <select id="" class="form-control select2 "
+		                    style="width: 100%; height: 30px; padding: 0px 10px;">
+		                <option selected="selected" value=1>选项</option>
+		                <option value=2>随机播放</option>
+		            </select>
+		        </div>
+		        <div id="" class="btn-group mtrCtrl_select">
+		            <select id="" class="form-control select2 "
+		                    style="width: 100%; height: 30px; padding: 0px 10px;">
+		                <option selected="selected" value=1>选项</option>
+		                <option value=2>随机播放</option>
+		            </select>
+		        </div>
+		        <div id="" class="btn-group mtrCtrl_select">
+		            <select id="" class="form-control select2 "
+		                    style="width: 100%; height: 30px; padding: 0px 10px;">
+		                <option selected="selected" value=1>选项</option>
+		                <option value=2>随机播放</option>
+		            </select>
+		        </div>
+		        <div id="" class="btn-group mtrCtrl_select">
+		            <select id="" class="form-control select2 "
+		                    style="width: 100%; height: 30px; padding: 0px 10px;">
+		                <option selected="selected" value=1>选项</option>
+		                <option value=2>随机播放</option>
+		            </select>
+		        </div>
+	        </div>
+	    </div>
+	    <div class="box-header with-border">
+	        <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i>
+	        </button>
+	
+	        <div class="pull-right">
+		        <div id="mtr_dplist" class="btn-group">
+		            <select id="mtr_typeChiose" class="form-control select2"
+		                    style="width: 100%; height: 30px; padding: 0px 10px;">
+		                <option selected="selected" value=1>顺序播放</option>
+		                <option value=2>随机播放</option>
+		            </select>
+		        </div>
+		        <div class="btn-group">
+		            <button id="mtr_addMtr" type="button" class="btn btn-default btn-sm">添加</button>
+		            <button id="mtr_chiose" type="button" class="btn btn-default btn-sm">设置</button>
+		            <button id="mtr_chiose" type="button" class="btn btn-default btn-sm">删除</button>
+		        </div>
+	        </div>
+	        <!-- /.box-tools -->
+	    </div>
+	    <div class="mtr_choise table-responsive">
+	        <!-- 资源列表 -->
+	        <table id="mtr_choiseTable" class="table table-hover table-striped">
+	            <tbody>
+	
+	            </tbody>
+	        </table>
+	        <!-- /.table -->
+	        <div class="box-footer no-padding text-center">
+	            <!-- 翻页 -->
+	            <ul id="materials-table-pager" class="pagination">
+	            </ul>
+	        </div>
+	    </div>
+        <!-- /.box-body -->
+    </form>
+</div>
+<!-- /.box -->
+
+
+<script>
+    seajs.use("pages/channel/mtrCtrl.js", function (mtrCtrl) {
+        mtrCtrl.init()
+    })
+</script>

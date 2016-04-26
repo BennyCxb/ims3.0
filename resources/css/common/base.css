@@ -6,6 +6,16 @@ body,h1,h2,h3,h4,h5,h6{
 
 
 /*lh*/
+
+::-webkit-scrollbar{width:6px;height:6px;} /*滚动条垂直方向的宽度与水平方向的高度*/
+::-webkit-scrollbar-button{ width: 0px; height:0px; background:rgba(240,230,230,1);} /*滚动条按钮*/
+::-webkit-scrollbar-track{background:rgba(240,230,230,0);} /*滚动条轨道*/
+::-webkit-scrollbar-track-piece:vertical{} /*滚动条垂直方向轨道件*/
+::-webkit-scrollbar-track-piece:horizontal{} /*滚动条水平方向轨道件*/
+::-webkit-scrollbar-thumb{border-radius:2px 2px 2px 2px; background:rgba(151,151,151,1);} /*滚动条轨道上的按钮*/
+::-webkit-scrollbar-corner{} /*滚动条轨道上的滚动角*/ 
+
+
 .tips{
   color:#51a2e2;
 }
@@ -164,6 +174,17 @@ a {
     overflow: hidden;
 }
 
+/*资源控件页面*/
+#mtrCtrl_box {
+	width: 600px;
+    margin: auto;
+    max-height: 80%;
+}
+
+.mtrCtrl_select {
+	width: 80px;
+}
+
 /*资源选择页面*/
 .mtr_choise_name {
 	width: 50%;
@@ -268,14 +289,23 @@ a {
   cursor: pointer;
 }
 .tree-menu > li > a {
-  padding: 12px 5px 12px 15px;
+  padding: 7px 7px 7px 7px;
   display: block;
 }
-.tree-menu > li > a > .fa,
 .tree-menu > li > a > .glyphicon,
 .tree-menu > li > a > .ion {
   width: 20px;
 }
+.tree-menu > li > a > .glyphicon-chevron-right{
+  font-size: 12px;
+  color: rgb(151,151,151);
+  transform: scale(0.9);
+  position: relative;
+  top: -1px;
+}
+
+
+
 .tree-menu > li .label,
 .tree-menu > li .badge {
   margin-top: 3px;
@@ -292,11 +322,11 @@ a {
   margin-right: 10px;
   margin-top: 3px;
 }
-.tree-menu li.open > a > .fa-angle-right {
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  transform: rotate(90deg);
+.tree-menu li.open > a > .glyphicon-chevron-right{
+  -webkit-transform: rotate(90deg) scale(0.9) !important;
+  -ms-transform: rotate(90deg) scale(0.9) !important;
+  -o-transform: rotate(90deg) scale(0.9) !important;
+  transform: rotate(90deg) scale(0.9) !important;
 }
 .tree-menu li.open > .tree-menu-2 {
   display: block;
@@ -315,7 +345,7 @@ a {
   margin: 0;
 }
 .tree-menu .tree-menu-2 > li > a {
-  padding: 5px 5px 5px 15px;
+  padding: 7px 7px 7px 15px;
   font-size: 14px;
 }
 .tree-menu > li > a,
@@ -343,14 +373,16 @@ a {
   width:38px; 
   height: 34px;
 }
-.tree-menu .tree-menu-2 > li > a > .fa,
 .tree-menu .tree-menu-2 > li > a > .glyphicon,
 .tree-menu .tree-menu-2 > li > a > .ion {
   width: 20px;
 }
-.tree-menu .tree-menu-2 > li > a > .fa-angle-right,
-.tree-menu .tree-menu-2 > li > a > .fa-angle-down {
-  width: auto;
+.tree-menu .tree-menu-2 > li > a > .glyphicon-chevron-right{
+  font-size: 12px;
+  color: rgb(151,151,151);
+  transform: scale(0.9);
+  position: relative;
+  top: -1px;
 }
 .tree-menu,
 .tree-menu > li.header {
@@ -385,6 +417,11 @@ a {
   color: #3c8dbc;
   font-weight: bold;
 }
+.tree-menu > li > a:hover .glyphicon,
+.tree-menu > li.focus > a .glyphicon{
+  color: #3c8dbc;
+}
+
 .tree-menu > li > .tree-menu-2 {
   margin: 0 1px;
 }
@@ -399,4 +436,9 @@ a {
 .tree-menu-2 > li > a:hover {
   color: #3c8dbc;
   font-weight: bold;
+}
+
+.tree-menu-2 > li.focus > a .glyphicon,
+.tree-menu-2 > li > a:hover .glyphicon{
+  color: #3c8dbc;
 }

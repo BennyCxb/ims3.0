@@ -1,19 +1,31 @@
-<section id="channel-list-nav" class="content-header row">
+<section id="channel-list-nav" class="content-header">
 	<h1>布局列表</h1>
-	<div class="input-group input-group-sm col-sm-2 search-container">
-		<input type="text" class="form-control">
-		<span class="input-group-btn">
-			<button type="button" class="btn btn-info btn-flat">搜索</button>
-		</span>
-	</div>
+	<small>Layout management</small>
+	
 </section>
 <section class="content">
 	<div class="box">
+		<div class="box-header with-border">
+            <h3 id="mtrLisTitle" class="box-title">布局</h3>
+
+            <div class="box-tools pull-right">
+                <div class="has-feedback">
+                    <input id="channel-list-nav" type="text" class="form-control input-sm" placeholder="搜索布局">
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                </div>
+            </div>
+            <!-- /.box-tools -->
+        </div>
 		<!-- /.box-header -->
 		<div id="layout-list-controls">
 			<!-- Check all button -->
-			<button type="button" class="btn btn-default btn-sm checkbox-toggle select-all"><i class="fa fa-square-o"></i>
-			</button>
+			<button type="button" class="btn btn-default btn-sm checkbox-toggle select-all"><i class="fa fa-square-o"></i></button>
+				<!-- <div class="has-feedback">
+					<input type="text" class="form-control">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-info btn-flat">搜索</button>
+					</span>
+				</div> -->
 		</div>
 		<div class="table-responsive">
 			<table id="layout-table" class="table table-hover table-striped">

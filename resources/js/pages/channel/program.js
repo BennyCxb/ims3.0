@@ -34,6 +34,10 @@ define(function (require, exports, module) {
             widgets = db.collection('widget').select({program_id: programId});
         renderProgramView(program, layout, widgets);
         registerEventListeners();
+        
+        //资源控件页面加载
+		var page = "resources/pages/channel/mtrCtrl.html";
+		$(".channel-program-widget").load(page);
     }
 
     function renderProgramView(program, layout, widgets) {

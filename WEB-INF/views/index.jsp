@@ -12,13 +12,15 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"> -->
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"> -->
   <!-- bootstrap slider -->
   <link rel="stylesheet" href="resources/plugins/bootstrap-slider/slider.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="resources/dist/css/AdminLTE.css">
+  <!-- Bootstrap switch -->
+  <link rel="stylesheet" href="resources/plugins/bootstrap-switch/bootstrap-switch.min.css"/>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="resources/dist/css/skins/_all-skins.min.css">
@@ -61,17 +63,19 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a class="dropdown-toggle" data-toggle="dropdown">
-              <img src="resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <!-- <img src="resources/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
               <span id="username" class="hidden-xs"><sec:authentication property="name"/>@${project_name}</span>
+              <i class="glyphicon glyphicon-triangle-bottom" style="font-size: 12px; transform: translateY(2px) scale(0.9); margin-left: 4px;"></i>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <!-- <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
 
                 <p>
                   <sec:authentication property="name"/>@${project_name}
-                  <small>Member since Nov. 2012</small>
+                  <small>${project_name_cn}
+                  Member since Nov. 2012</small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -124,21 +128,21 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <li class="treeview active">
+        <!-- <li id="treeview_term" class="treeview active">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
             <li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> 日志</a></li>
+            <li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-circle-o"></i> 日志</a></li>
           </ul>
-        </li>
-        <li id="treeview_mtr" class="treeview">
+        </li> -->
+        <!-- <li id="treeview_mtr" class="treeview">
           <a href="#materials/materials_list">
             <i class="fa fa-book"></i> <span>资源</span>
           </a>
-        </li>
-        <li class="treeview">
+        </li> -->
+        <!-- <li id="treeview_user" class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
             <span>用户</span>
@@ -147,9 +151,10 @@
           <ul class="treeview-menu">
             <li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>
             <li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>
+            <li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-circle-o"></i> 操作日志</a></li>
           </ul>
-        </li>
-		<li class="treeview">
+        </li> -->
+		<!-- <li id="treeview_channel" class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
             <span>频道</span>
@@ -160,7 +165,7 @@
             <li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>
             <li><a href="#layout/list"><i class="fa fa-circle-o"></i> 布局列表</a></li>
           </ul>
-        </li>
+        </li> -->
 		
       </ul>
     </section>
@@ -219,6 +224,8 @@
 <script src="resources/js/bower_components/backbone/backbone-min.js"></script>
 <!-- Bootstrap slider -->
 <script src="resources/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<!-- Bootstrap switch -->
+<script src="resources/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
 <script>
 	seajs.config({
 	  base: "./resources/js/"
