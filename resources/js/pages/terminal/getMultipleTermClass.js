@@ -21,7 +21,7 @@ define(function(require, exports, module) {
     // 保存
     $('#mul-term-class-save').click(function(){
       var categoryList = _tree.getSelectedNodeID();
-      categoryList = JSON.parse(JSON.stringify(categoryList).replace(/nodeId/,'categoryID'));
+      categoryList = JSON.parse(JSON.stringify(categoryList).replace(/nodeId/g,'categoryID'));
       
       if(categoryList.length === 0){
         alert('请选择终端分类');
