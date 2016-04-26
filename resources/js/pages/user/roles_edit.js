@@ -106,6 +106,7 @@ define(function (require, exports, module) {
 					if(msg.rescode==200){
 						alert("保存成功！")
 						UTIL.cover.close();
+						UTIL.cover.load('resources/pages/user/roles_edit.html');
 						}
 					else{
 						alert("保存失败!")
