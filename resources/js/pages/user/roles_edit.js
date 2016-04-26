@@ -8,21 +8,10 @@ define(function (require, exports, module) {
     exports.init = function () {
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
-		getClass.title = '请选取';
-		getClass.roleID = rID;
-		getClass.save = function(data){
-			console.log(data);
-			if(data.length !== 0){
-			alert("保存成功");
-			UTIL.cover.close();
-			}else{
-				alert("保存失败");
-				}
-		}
 		$("#role_name").val(rName);
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
-			 	project_name: 'newui_dev',
+			 	project_name:CONFIG.projectName,
                 action:'GetRoleTgCategory'
 			})
 		var term_url = CONFIG.serverRoot + '/backend_mgt/v2/roles/'+rID;
@@ -48,7 +37,7 @@ define(function (require, exports, module) {
                 RoleName: roleName
             }
             var data = JSON.stringify({
-                project_name: 'newui_dev',
+                project_name:CONFIG.projectName,
                 action:'Put',
                 Data: name
             });
@@ -83,7 +72,7 @@ define(function (require, exports, module) {
 				FunctionModules.push(obj);
 			};
 			var data = JSON.stringify({
-						project_name:'newui_dev',
+						project_name:CONFIG.projectName,
 						action:'UpdateRoleModule',
 						Data:{
 							"FunctionModules":FunctionModules
@@ -100,8 +89,29 @@ define(function (require, exports, module) {
 				ROLES.loadRolesPage(1);
 				UTIL.cover.close();
 			})
-		//编辑终端
+		//终端分类选择
 		$("#term_list").click(function(){
+			getClass.title = '请选取';
+			getClass.roleID = rID;
+			getClass.save = function(data){
+				console.log(data);
+				var ajax_data = JSON.stringify({
+					project_name:CONFIG.projectName,
+            		action: 'updateTreeRoleInfo',
+					roleID:rID,
+					categoryList:data
+					})
+				var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
+				UTIL.ajax('post',url,ajax_data,function(msg){
+					if(msg.rescode==200){
+						alert("保存成功！")
+						UTIL.cover.close();
+						}
+					else{
+						alert("保存失败!")
+						}
+					})
+			}
 			UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
 			})
 		 //关闭窗口
@@ -115,7 +125,7 @@ define(function (require, exports, module) {
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
 		var authArr = [];
         var data = JSON.stringify({
-			project_name: 'newui_dev',
+			project_name:CONFIG.projectName,
             action: 'GetRoleModule'
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
@@ -133,7 +143,7 @@ define(function (require, exports, module) {
 					}
 				}
 		var data1 = JSON.stringify({
-				  "project_name": "newui_dev",
+				  "project_name":CONFIG.projectName,
 				  "action": "GetPage",
 				  "Pager":{
 					  "total":-1,

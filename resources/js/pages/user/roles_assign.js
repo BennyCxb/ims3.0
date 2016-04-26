@@ -34,7 +34,7 @@ define(function (require, exports, module) {
 				var checked_id1 = checkedArr[i];
 				if(checked_id1){
 					var data = JSON.stringify({
-						project_name:'newui_dev',
+						project_name:CONFIG.projectName,
 						action:'UpdateUserRole',
 						Data:{
 							"RoleID":rID
@@ -97,7 +97,7 @@ define(function (require, exports, module) {
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         var data = JSON.stringify({
-			project_name: 'newui_dev',
+			project_name:CONFIG.projectName,
             action: 'GetUsersAll',
             Pager: {
 				"total":-1,

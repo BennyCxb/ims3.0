@@ -12,7 +12,7 @@ define(function (require, exports, module) {
                 RoleName: rolesName
             }
             var data = JSON.stringify({
-                project_name: 'newui_dev',
+                project_name:CONFIG.projectName,
                 action:'Post',
                 Data: name
             });

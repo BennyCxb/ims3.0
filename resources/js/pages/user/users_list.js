@@ -21,7 +21,7 @@ define(function (require, exports, module) {
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#usersLisTitle").html("用户列表");
         var data = JSON.stringify({
-			project_name: 'newui_dev',
+			project_name:CONFIG.projectName,
             action: 'GetUsersAll',
             Pager: {
 				"total":-1,
@@ -79,7 +79,18 @@ define(function (require, exports, module) {
 				var email = rolData[x].EMAIL;
 				var uPass = rolData[x].PASSWORD;
 				if(rName!==undefined){
-                var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '">' +
+					if(uID===1){
+						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
+                    '<td class="users_id">ID：' + uID + '</td>' + 
+					'<td class="users_email">' + email + '</td>' + 
+					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="role_name">' + rName + '</td>' + 
+					'<td></td>' +
+                    '</tr>';
+                $("#usersTable tbody").append(roltr);
+						}else{
+                var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
                     '<td class="users_id">ID：' + uID + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
@@ -88,8 +99,9 @@ define(function (require, exports, module) {
 					'<td><a class="users_delete">删除</a></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
+				}
 				}else{
-					var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '">' +
+					var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
                     '<td class="users_id">ID：' + uID + '</td>' + 
 					'<td class="users_email">' + email + '</td>' +
@@ -106,7 +118,7 @@ define(function (require, exports, module) {
 				var currentID = self.parent().parent().attr("userID");
 				if (confirm("确定删除该用户？")) {
 					var data = JSON.stringify({
-						project_name: 'newui_dev',
+						project_name:CONFIG.projectName,
 						action: 'DELETE'		
 					});
 					var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/' + currentID;
@@ -124,11 +136,13 @@ define(function (require, exports, module) {
 				var uEmail = self.parent().parent().attr("userEmail");
 				var uDes = self.parent().parent().attr("userDes");
 				var uPass = self.parent().parent().attr("userPass");
+				var rID = self.parent().parent().attr("roleID");
 				exports.userName = uName;
 				exports.userID = currentID;
 				exports.userEmail = uEmail;
 				exports.userDes = uDes;
 				exports.userPass = uPass;
+				exports.roleID = rID;
 				UTIL.cover.load('resources/pages/user/user_edit.html');
 				});
         }
