@@ -6,6 +6,8 @@ define(function(require, exports, module) {
   exports.termID;
   exports.termName;
   exports.IP;
+  exports.CPU;
+  exports.Mem;
   exports.MAC;
   exports.requireJS;
   exports.diskInfo;
@@ -269,6 +271,7 @@ define(function(require, exports, module) {
           JSON.stringify(data), 
           function(data){
             if(data.rescode === '200'){
+              alert('保存成功');
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
@@ -332,6 +335,8 @@ define(function(require, exports, module) {
     $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
+    $('#CO-CPU').html(exports.CPU + '%');
+    $('#CO-Mem').html(exports.Mem);
 
       var data = {
         "project_name": CONFIG.projectName,
