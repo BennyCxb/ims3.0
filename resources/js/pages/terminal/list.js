@@ -449,7 +449,7 @@ define(function(require, exports, module) {
           $('#term_list').append('' +
             '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
-              '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television '+status+'" style="position:relative; left:10px;"></i></td>'+
+              '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
               '<td style="padding-left:0;"><strong>'+ tl[i].Name +'</strong><br />'+ statusName +'</td>' +
               '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
