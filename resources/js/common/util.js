@@ -41,6 +41,14 @@ define(function(require, exports, module) {
 		return ret;
 	};
 
+	exports.setLocalParameter = function(name,value){
+		localStorage.setItem(name , value);
+	}
+
+	exports.getLocalParameter = function(name){
+		return localStorage.getItem(name);
+	}
+
 	//设置cookie
 	exports.setCookie = function (name,value,days){
 		//var exp=new Date();
