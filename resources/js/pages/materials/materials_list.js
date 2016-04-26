@@ -352,22 +352,24 @@ define(function (require, exports, module) {
         	for(var a = 0; a < jdtData.length; a++){
         		var moduleId = jdtData[a].ModuleID;
         		if (moduleId == 4){
-        			$(".col-md-3").append('<div class="box box-solid">'+
-        	                '<div class="box-header with-border">'+
-                            '<h3 class="box-title">添加资源</h3>'+
-                            '<div class="box-tools">'+
-        						'<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="box-body no-padding">'+
-                            '<ul class="nav nav-pills nav-stacked">'+
-                                '<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>'+
-                                '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>'+
-                                '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'+
-                                '<li><a id="mtr_addMtr" typeid="1"><i class="fa fa-circle-o text-light-blue"></i> 频道添加直播</a></li>'+
-                            '</ul>'+
-                        '</div>'+
-                    '</div>');
+        			if (jdtData[a].ReadWriteAuth == 1){
+	        			$(".col-md-3").append('<div class="box box-solid">'+
+	        	                '<div class="box-header with-border">'+
+	                            '<h3 class="box-title">添加资源</h3>'+
+	                            '<div class="box-tools">'+
+	        						'<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>'+
+	                            '</div>'+
+	                        '</div>'+
+	                        '<div class="box-body no-padding">'+
+	                            '<ul class="nav nav-pills nav-stacked">'+
+	                                '<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>'+
+	                                '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>'+
+	                                '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'+
+	                                '<li><a id="mtr_addMtr" typeid="1"><i class="fa fa-circle-o text-light-blue"></i> 频道添加直播</a></li>'+
+	                            '</ul>'+
+	                        '</div>'+
+	                    '</div>');
+        			}
         		}
         	}
         	
