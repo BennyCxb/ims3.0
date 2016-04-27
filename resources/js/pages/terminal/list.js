@@ -336,7 +336,7 @@ define(function(require, exports, module) {
       _pageNO = 1;
     }
     
-    if(_timerLoadTermList){
+    /*if(_timerLoadTermList){
       clearInterval(_timerLoadTermList);
     }
 
@@ -345,7 +345,7 @@ define(function(require, exports, module) {
     }
     else{
       return;
-    }
+    }*/
     
     // loadlist start
     var searchKeyword = $.trim($('#term_search').val());
