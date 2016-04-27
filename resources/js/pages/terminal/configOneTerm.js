@@ -285,6 +285,8 @@ define(function(require, exports, module) {
 
   function inputInit(){
 
+    $(".select2").select2();
+    
     $.fn.bootstrapSwitch.defaults.onText = '开';
     $.fn.bootstrapSwitch.defaults.offText = '关';
 
@@ -326,6 +328,7 @@ define(function(require, exports, module) {
     $('#CO-downloadStart').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-downloadEnd').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-restartTime').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+
   }
 
   function loadInfo(){
