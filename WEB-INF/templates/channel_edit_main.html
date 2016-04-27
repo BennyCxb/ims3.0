@@ -29,20 +29,37 @@
             
 
 
-            <div class="channel-program-list-timed">
-                <div>
-                    <h3>定时节目</h3>
-                    <button class="btn-program-delete" data-program-type="Timed">删除</button>
-                    <button class="btn-program-new" data-program-type="Timed">新建</button>
+            <div class="channel-program-list-timed box box-solid">
+                <small style="position: absolute; bottom: 10px; right: 15px;">
+                    点击添加新节目
+                    <i class="glyphicon glyphicon-hand-up"></i>
+                </small>
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px;"></i>
+                        定时节目
+                    </h3>
+                    <div class="tools">
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                     </div>
                 </div>
-                <ul></ul>
+                <ul>
+                    
+                </ul>
             </div>
 
 
 
-            <div class="channel-program-list-regular">
-                <div>
-                    <h3>常规节目</h3>
+            <div class="channel-program-list-regular box box-solid">
+                <small style="position: absolute; bottom: 10px; right: 15px;">
+                    点击添加新节目
+                    <i class="glyphicon glyphicon-hand-up"></i>
+                </small>
+                <div class="box-header with-border">
+                    <i class="glyphicon glyphicon-repeat" style="position: relative; top: 3px; font-size: 16px; margin-right: 0;"></i>
+                    <h3 class="box-title">常规节目</h3>
+
                     <select class="channel-program-schedule-type">
                         <% var type = JSON.parse(overall_schedule_params).Type; %>
                         <% if (type === 'Sequence') { %>
@@ -61,8 +78,10 @@
                         <option value="Percent">比例</option>
                         <% } %>
                     </select>
-                    <button class="btn-program-delete" data-program-type="Regular">删除</button>
-                    <button class="btn-program-new" data-program-type="Regular">新建</button>
+                     <div class="tools">
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                     </div>
                 </div>
                 <ul></ul>
             </div>
