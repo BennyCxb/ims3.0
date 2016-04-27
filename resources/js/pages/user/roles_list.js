@@ -147,7 +147,7 @@ define(function (require, exports, module) {
 			//分配用户
 			$(".roles_assign").click(function(){
 				var self = $(this);
-				var userList = self.parent().prev().prev().html();
+				var userList = self.html();
 				exports.uList = userList;
 				var rName = self.parent().parent().attr("rolesName");
 				exports.roleName = rName;
