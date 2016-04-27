@@ -192,14 +192,62 @@ a {
 }
 
 /*资源控件页面*/
-#mtrCtrl_box {
-	width: 600px;
-    margin: auto;
-    max-height: 80%;
-}
 
 .mtrCtrl_select {
 	width: 80px;
+}
+
+#box_effect {
+	display: none;
+}
+
+#text_color {
+	height: 30px;
+    width: 80px;
+    border-color: #d2d6de;
+    background-color: transparent;
+}
+
+#mtrCtrl_Table input {
+    height: 20px;
+    text-align: center;
+} 
+
+.mtrCtrl_checkbox {
+	width: 40px;
+}
+
+.mtrCtrl_name {
+	width: 250px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mtr_time {
+	width: 112px;
+}
+
+.mtrCtrl_times {
+	width: 45px;
+}
+
+.mtrCtrl_times label {
+	margin: 0;
+}
+
+.mtrCtrl_times input {
+	width: 100%;
+}
+
+.mtrCtrl_delete {
+	width: 10%;
+}
+
+.mtrC_datetime {
+	width: 90%;
+    margin: 10px auto;
+    display: inline-table;
 }
 
 /*资源选择页面*/
