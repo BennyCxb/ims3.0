@@ -1,8 +1,8 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var	MTRCTRL = require('pages/channel/mtrCtrl');
-    var	LAYOUTEDIT = require('pages/layout/edit');
+    var	MTRCTRL = require("pages/channel/mtrCtrl");
+    var	LAYOUTEDIT = require("pages/layout/edit");
     var nDisplayItems = 10,
         keyword = "";
 
@@ -48,7 +48,7 @@ define(function (require, exports, module) {
 
         //保存
         $("#amtr_add").click(function () {
-            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
             	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
             	LAYOUTEDIT.updateBackground(url);
             }else {
@@ -73,13 +73,6 @@ define(function (require, exports, module) {
             UTIL.cover.close();
         })
     }
-
-//    exports.mtrChoiseBg = function(msg){
-//        if(msg == "true"){
-//        	loadPage(pageNum, 2);
-//        	$("#mtr_choiseTitle").html("背景图选择列表");
-//        }
-//    }
 
     function loadPage(pageNum, type) {
         //判断是否是视频控件选择列表
@@ -147,8 +140,6 @@ define(function (require, exports, module) {
     function add(json) {
         $("#mtr_choiseTable tbody").empty();
         //翻页
-//        var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
-//        totalPages = Math.max(totalPages, 1);
         var totalCounts = Math.max(json.Pager.total, 1);
         $('#materials-table-pager').jqPaginator({
             totalCounts: totalCounts,
