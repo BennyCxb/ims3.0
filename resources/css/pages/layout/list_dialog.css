@@ -21,12 +21,25 @@
     list-style: none;
     float: left;
     width: 80px;
-    height: 80px;
+    height: 100px;
     line-height: 80px;
     text-align: center;
-    background: #cccccc;
     cursor: pointer;
     margin: 10px;
+}
+
+#layout-list-dialog .layout-list>li>div {
+    height: 80px;
+    width: 100%;
+    background-size: 100% 100%;
+}
+
+#layout-list-dialog .layout-list>li>span {
+    height: 20px;
+    width: 100%;
+    line-height: 20px;
+    display: block;
+    text-align: center;
 }
 
 #layout-list-dialog .text-center {

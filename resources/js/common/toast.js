@@ -3,9 +3,9 @@
 define(function(require, exports, module) {
     'use strict';
 
-    var defaultDuration = 5,
+    var defaultDuration = 5000,
         timerHandles = {},
-        maxToast = 3;
+        maxToast = 3,
         maxToastId = 0;
 
     function show(msg) {
@@ -27,7 +27,8 @@ define(function(require, exports, module) {
                 .remove();
             delete timerHandles[toastId];
         }, defaultDuration);
-        $jq.append('<div data-toast-id=' + toastId + '>msg</div>');
+        var newNode = $('<div data-toast-id="' + toastId + '">' + msg + '</div>')
+            .appendTo($jq);
         timerHandles[toastId] = setTimeoutHandle;
     }
 

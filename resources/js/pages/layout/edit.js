@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 		config    = require('common/config'),
 		util      = require('common/util'),
         layoutEditor    = require('common/layout_editor'),
-        oldHash;
+        toast = require('common/toast');
 
     /**
      * 模块全局变量
@@ -26,7 +26,6 @@ define(function(require, exports, module) {
      */
 	exports.init = function() {
         window.onpopstate = onHashChange;
-        oldHash = location.hash;
 		layoutId = Number(util.getHashParameters().id);
         if (!isNaN(layoutId)) {
             var data = JSON.stringify({
@@ -536,11 +535,13 @@ define(function(require, exports, module) {
             case 'layout-width':
                 if (!editor.getLayout().setWidth(Number(this.value))) {
                     this.value = editor.getLayout().getWidth();
+                    toast.show('宽度太小了');
                 }
                 break;
             case 'layout-height':
                 if (!editor.getLayout().setHeight(Number(this.value))) {
                     this.value = editor.getLayout().getHeight();
+                    toast.show('高度太小了');
                 }
                 break;
             case 'layout-bg-color':
@@ -552,21 +553,25 @@ define(function(require, exports, module) {
             case 'widget-top':
                 if (focusedWidget && !focusedWidget.setTop(Number(this.value))) {
                     this.value = focusedWidget.getTop();
+                    toast.show('控件超出了容器');
                 }
                 break;
             case 'widget-left':
                 if (focusedWidget && !focusedWidget.setLeft(Number(this.value))) {
                     this.value = focusedWidget.getLeft();
+                    toast.show('控件超出了容器');
                 }
                 break;
             case 'widget-width':
                 if (focusedWidget && !focusedWidget.setWidth(Number(this.value))) {
                     this.value = focusedWidget.getWidth();
+                    toast.show('控件超出了容器');
                 }
                 break;
             case 'widget-height':
                 if (focusedWidget && !focusedWidget.setHeight(Number(this.value))) {
                     this.value = focusedWidget.getHeight();
+                    toast.show('控件超出了容器');
                 }
                 break;
         }

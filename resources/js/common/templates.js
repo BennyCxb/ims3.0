@@ -255,7 +255,7 @@ return __p;
 exports['layout_list_dialog']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="layout-list-dialog" class="modal-content"> <div class="modal-header"> <button type="button" class="btn btn-close close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h3 class="modal-title">选择布局</h3> </div> <div class="modal-header-body"> <div class="has-feedback box-tools pull-right"> <input type="text" class="layout-list-search form-control input-sm" placeholder="搜索布局"> <span class="glyphicon glyphicon-search form-control-feedback"> </span> </div> <ul class="layout-list"> </ul> </div> <div class="text-center modal-footer"> <ul class="pagination layout-list-pager"> </ul> </div> </div>';
+__p+='<div id="layout-list-dialog" class="modal-content"> <div class="modal-header"> <button type="button" class="btn btn-close close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h3 class="modal-title">选择布局</h3> </div> <div class="modal-body"> <div class="has-feedback box-tools pull-right"> <input type="text" class="layout-list-search form-control input-sm" placeholder="搜索布局"> <span class="glyphicon glyphicon-search form-control-feedback"> </span> </div> <ul class="layout-list"> </ul> </div> <div class="text-center modal-footer"> <ul class="pagination layout-list-pager"> </ul> </div> </div>';
 }
 return __p;
 };
@@ -264,9 +264,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<li data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <div>'+
+'"> <div style="'+
+((__t=(style))==null?'':__t)+
+'"> </div> <span>'+
 ((__t=(name))==null?'':__t)+
-'</div> </li>';
+'</span> </li>';
 }
 return __p;
 };
