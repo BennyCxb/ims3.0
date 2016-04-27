@@ -8,8 +8,7 @@ define(function(require, exports, module) {
 	var templates = require('common/templates'),
 		config    = require('common/config'),
 		util      = require('common/util'),
-        layoutEditor    = require('common/layout_editor'),
-        addMtrDialog    = require('pages/channel/addMtr');
+        layoutEditor    = require('common/layout_editor');
 
     /**
      * 模块全局变量
@@ -34,10 +33,10 @@ define(function(require, exports, module) {
                     layout_id: layoutId
                 }
             });
-            util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, onLayoutDataAvaiable);
+            util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, onLayoutDataAvailable);
         } else {
             var defaultLayout = {
-                layout_id: -1,
+                ID: -1,
                 Name: '新建布局',
                 Name_eng: 'new layout',
                 Width: '1920',
@@ -50,14 +49,14 @@ define(function(require, exports, module) {
                 LeftMargin: '0',
                 Layout_ControlBoxs: []
             };
-            onLayoutDataAvaiable(defaultLayout);
+            onLayoutDataAvailable(defaultLayout);
         }
 	};
 
     /**
      * 过滤网络数据
      */
-    function onLayoutDataAvaiable(res) {
+    function onLayoutDataAvailable(res) {
         var widgets = [];
         res.Layout_ControlBoxs.sort(function (a, b) {
             return a.Zorder - b.Zorder;
@@ -87,10 +86,13 @@ define(function(require, exports, module) {
             rightMargin:    res.RightMargin,
             bottomMargin:   res.BottomMargin,
             backgroundColor:res.BackgroundColor,
-            backgroundImage: {
+            backgroundImage: res.BackgroundPic.Type === 'Image' ? {
                 id: res.BackgroundPic.ID,
                 url: res.BackgroundPic.URL,
                 type: res.BackgroundPic.Type
+            } : {
+                type: 'Unknown',
+                ID: 0
             },
             widgets:        widgets
         };
@@ -184,7 +186,8 @@ define(function(require, exports, module) {
      */
     function onSaveLayout() {
 
-        var json = editor.getLayout().toJSON();
+        var json = editor.getLayout().toJSON(),
+            isNewLayout = json.id === -1;
 
         httpCheckLayoutExists(json, function (err) {
             if (err) { console.error(err); return; }
@@ -202,6 +205,9 @@ define(function(require, exports, module) {
                             if (err) { console.error(err); return; }
                             console.log('控件更新成功!');
                             alert('保存成功!');
+                            if (isNewLayout) {
+                                location.hash = '#layout/edit?id=' + json.id
+                            }
                         });
                     });
                 });
@@ -551,17 +557,24 @@ define(function(require, exports, module) {
         }
     }
 
-    function onAddMaterial() {
-        util.cover.load('resources/pages/channel/addMtr.html');
-        addMtrDialog.getSelectedID = function (ids) {
-            addMtrDialog.getSelectedID = null;
-            if (ids.length !== 0) {
-                alert('只能选择一个图片');
-                return;
-            } else {
-                // TODO
-            }
-        };
+    function updateBackground(id, url) {
+        if (typeof url !== 'string') {
+            return;
+        }
+        editor.getLayout().setBackgroundImage({id: parseInt(id), url: url, type: 'Image'});
     }
+
+    function onAddMaterial() {
+        var el = $('#mtr_addMtr');
+        if (el.size() === 0) {
+            el = $('<input id="mtr_addMtr" type="hidden">')
+                .appendTo($(document.body));
+        }
+        el.attr('typeid', 2);
+        el.attr('is_choisebg', 1);
+        util.cover.load('resources/pages/channel/addMtr.html');
+    }
+
+    exports.updateBackground = updateBackground;
 
 });

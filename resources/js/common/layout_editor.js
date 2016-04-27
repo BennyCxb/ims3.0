@@ -584,10 +584,13 @@ define(function (require, exports, module) {
             leftMargin: this.mLeftMargin,
             rightMargin: this.mRightMargin,
             bottomMargin: this.mBottomMargin,
-            backgroundImage: {
+            backgroundImage: this.mBackgroundImage.type === 'Image' ? {
                 url: this.mBackgroundImage.url,
                 id: this.mBackgroundImage.id,
-                type: this.mBackgroundImage.type
+                type: this.mBackgroundImage.type,
+            } : {
+                id: 0,
+                type: 'Unknown'
             },
             backgroundColor: this.mBackgroundColor,
             widgets: widgets,
@@ -658,7 +661,7 @@ define(function (require, exports, module) {
      */
     Layout.prototype.setBackgroundImage = function (backgroundImage) {
         this.mBackgroundImage = backgroundImage;
-        if (this.mBackgroundImage && this.mBackgroundImage.type === 'image') {
+        if (this.mBackgroundImage && this.mBackgroundImage.type === 'Image') {
             this.mContent.style.backgroundImage = 'url(' + this.mBackgroundImage.url + ')';
         } else {
             this.mContent.style.backgroundImage = 'none';
