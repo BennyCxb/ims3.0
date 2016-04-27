@@ -351,7 +351,8 @@ define(function(require, exports, module) {
 	function renderProgramList(channel, programs) {
 		var data = {
 			name: channel.name,
-			overall_schedule_params: channel.overall_schedule_params
+			overall_schedule_params: channel.overall_schedule_params,
+			overall_schedule_type: channel.overall_schedule_type
 		};
 		$('#edit-page-container')
 			.html(templates.channel_edit_main(data))

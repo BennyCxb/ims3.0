@@ -9,15 +9,28 @@ define(function (require, exports, module) {
         });
 
 
-        //下拉框点击事件
-        $("#mtr_typeChiose").change(function () {
-            var typeId = $("#mtr_typeChiose").val();
+        //播放类型下拉框
+        $("#mtrCtrl_playType").change(function () {
+            var playType = $("#mtrCtrl_playType").val();
+            if (playType == 3){
+            	$(".mtrCtrl_times").children().show();
+            }else {
+            	$(".mtrCtrl_times").children().hide();
+            }
         })
         
-        // 频道添加直播
+        // 添加资源控件
         $('#mtr_addMtr').click(function () {
             var page = "resources/pages/channel/addMtr.html";
             UTIL.cover.load(page);
+        })
+        
+        //批量删除
+        $("#mtr_delete").click(function(){
+        	$("input:checkbox[class='mtr_cb']:checked") .each(function(){
+        		$(this).parents("tr").remove();
+        	});
+        	mtrCb();
         })
         
         //全选和全不选
@@ -37,115 +50,170 @@ define(function (require, exports, module) {
             mtrCb();
         });
         
-        loadPage(1);
+        //Flat red color scheme for iCheck
+        $('input[type="radio"].flat-red').iCheck({
+          radioClass: 'iradio_flat-green'
+        });
+        
+        loadPage(4);
     }
 
     function loadPage(type) {
+    	$("#mtrCtrl_Table tbody").empty();	//初始化
+    	$("#mtrCtrl_Table tbody").append('<tr>' +
+                '<th class="mtrCtrl_checkbox"></th>' +
+                '<th class="mtr_choise_name">文件名</th>' +
+                '<th class="mtr_time">时长</th>'+
+				'<th class="mtrCtrl_times"><label>次数</label></th>'+
+				'<th class="mtrCtrl_delete"></th>'+
+            '</tr>');
+    	if ($("#mtrCtrl_playType").val() == 3){
+        	$(".mtrCtrl_times").children().show();
+        }else {
+        	$(".mtrCtrl_times").children().hide();
+        }
+    	
         //载入
         var mtrType;
         switch (type) {
             case 1:
                 $("#mtrCtrl_Title").html("视频控件");
                 $("#mtrChoiseSearch").attr("typeId", "1");
+                $("#mtr_addMtr").attr("typeId", "1");
+                $("#box_effect").css("display","none");
                 break;
             case 2:
                 $("#mtrCtrl_Title").html("图片控件");
                 $("#mtrChoiseSearch").attr("typeId", "2");
+                $("#mtr_addMtr").attr("typeId", "2");
+                $("#box_effect").css("display","none");
                 break;
             case 3:
                 $("#mtrCtrl_Title").html("音频控件");
                 $("#mtrChoiseSearch").attr("typeId", "3");
+                $("#mtr_addMtr").attr("typeId", "3");
+                $("#box_effect").css("display","none");
                 break;
             case 4:
                 $("#mtrCtrl_Title").html("文本控件");
                 $("#mtrChoiseSearch").attr("typeId", "4");
+                $("#mtr_addMtr").attr("typeId", "4");
+                $("#box_effect").css("display","block");
                 break;
             case 5:
-                $("#mtrCtrl_Title").html("直播控件");
+                $("#mtrCtrl_Title").html("时间控件");
                 $("#mtrChoiseSearch").attr("typeId", "5");
+                $("#mtr_addMtr").attr("typeId", "5");
+                $("#box_effect").css("display","none");
                 break;
         }
     }
 
     //将数据添加到列表
-    function add(json) {
-        $("#mtr_choiseTable tbody").empty();
-
-        //拼接
-        if (json.Materials != undefined) {
-            var mtrData = json.Materials;
-            $("#mtr_choiseTable tbody").append('<tr>' +
-                '<th class="mtr_checkbox"></th>' +
-                '<th class="mtr_choise_name">文件名</th>' +
-                '<th class="mtr_size">大小</th>' +
-                '<th class="mtr_time">时长</th>' +
-                '<th class="mtr_choise_status">状态</th>' +
-                '</tr>');
-            if (mtrData.length != 0) {
-                var material_type = mtrData[0].Type_Name;
-                if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
-                    for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrID="' + mtrData[x].ID + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">00:00:00</td>' +
-                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
-                            '</tr>';
-                        $("#mtr_choiseTable tbody").append(mtrtr);
-                    }
+    exports.getSelectedID = function(mtrData){
+    	//拼接
+    	if (mtrData.length != 0) {
+            for (var x = 0; x < mtrData.length; x++) {
+            	if (mtrData[x].mtrtype == "VideoLive" || mtrData[x].mtrtype == "Audio"){
+            		var mtrtr = '<tr mtrid="' + mtrData[x].mtrId + '">' +
+                        '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].mtrId + '"></td>' +
+                        '<td class="mtrCtrl_name">' + mtrData[x].mtrName + '</td>' +
+                        '<td class="mtr_time">' + mtrData[x].duration + '</td>' +
+                        '<td class="mtrCtrl_times"><input type="text" value="1"></td>' +
+                        '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
+                        '</tr>';
+                    $("#mtrCtrl_Table tbody").append(mtrtr);
+            	}else if (mtrData[x].mtrtype == "Image" || mtrData[x].mtrtype == "文本"){
+            		var mtrtr = '<tr mtrid="' + mtrData[x].mtrId + '">' +
+                        '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].mtrId + '"></td>' +
+                        '<td class="mtrCtrl_name">' + mtrData[x].mtrName + '</td>' +
+                        '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
+                        '<td class="mtrCtrl_times"><input type="text" value="1"></td>' +
+                        '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
+                        '</tr>';
+                    $("#mtrCtrl_Table tbody").append(mtrtr);
+            	}else if (mtrData[x].mtrtype == "Live"){
+            		var mtrtr = '<tr mtrid="' + mtrData[x].mtrId + '">' +
+                        '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].mtrId + '"></td>' +
+                        '<td class="mtrCtrl_name">' + mtrData[x].mtrName + '</td>' +
+                        '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
+                        '<td class="mtrCtrl_times"><input type="text" value="1"></td>' +
+                        '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
+                        '</tr>';
+                    $("#mtrCtrl_Table tbody").append(mtrtr);
+            	}
+                
+            }
+            //显示或隐藏次数
+            if ($("#mtrCtrl_playType").val() == 3){
+            	$(".mtrCtrl_times").children().show();
+            }else {
+            	$(".mtrCtrl_times").children().hide();
+            }
+            
+            //显示或隐藏删除按钮
+            $(".btn_ctrlDel").hide();
+            $("#mtrCtrl_Table tbody tr").mouseover(function(){
+                $(this).find("a").show();
+            })
+            $("#mtrCtrl_Table tbody tr").mouseout(function(){
+            	$(this).find("a").hide();
+            })
+            //单个删除
+            $(".btn_ctrlDel").click(function(){
+            	$(this).parent().parent().remove();
+            })
+            
+            //复选框样式
+            $('.table-responsive input[type="checkbox"]').iCheck({
+                checkboxClass: 'icheckbox_flat-blue',
+                radioClass: 'iradio_flat-blue'
+            });
+            //
+            $(".icheckbox_flat-blue").parent().parent().click(function () {
+                $(".table-responsive input[type='checkbox']").iCheck("uncheck");
+                var obj = $(this).find("input");
+                if ($(this).find("input").prop("checked") == true) {
+                    $(this).find("input").prop("checked", false);
+                    $(this).find("div").prop("class", "icheckbox_flat-blue");
+                    $(this).find("div").prop("aria-checked", "false");
                 } else {
-                    for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrID="' + mtrData[x].ID + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
-                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-                            '<th class="mtr_choise_status"><span>已添加</span></th>' +
-                            '</tr>';
-                        $("#mtr_choiseTable tbody").append(mtrtr);
-                    }
+                    $(this).find("input").prop("checked", true);
+                    $(this).find("div").prop("class", "icheckbox_flat-blue checked");
+                    $(this).find("div").prop("aria-checked", "true");
                 }
-            }
+                mtrCb();
+            })
+            $(".icheckbox_flat-blue ins").click(function () {
+                mtrCb();
+            })
         }
-
-        //复选框样式
-        $('.table-responsive input[type="checkbox"]').iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
-        });
-        //
-        $(".icheckbox_flat-blue").parent().parent().click(function () {
-            $(".table-responsive input[type='checkbox']").iCheck("uncheck");
-            var obj = $(this).find("input");
-            if ($(this).find("input").prop("checked") == true) {
-                $(this).find("input").prop("checked", false);
-                $(this).find("div").prop("class", "icheckbox_flat-blue");
-                $(this).find("div").prop("aria-checked", "false");
-            } else {
-                $(this).find("input").prop("checked", true);
-                $(this).find("div").prop("class", "icheckbox_flat-blue checked");
-                $(this).find("div").prop("aria-checked", "true");
-            }
-            mtrCb();
-        })
-        $(".icheckbox_flat-blue ins").click(function () {
-            mtrCb();
-        })
-
     }
-
+    
+    //时间控件载入
+    function datetimeload(){
+    	
+    }
+    
     //校验复选框勾选的个数
     function mtrCb() {
         var Ck = $(".icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $(".icheckbox_flat-blue").length;			//复选框总个数
         //控制全选按钮全选或者不全选状态
+        if (Ck != 0) {
+        	$("#mtr_delete").removeAttr("disabled");
+        }else {
+        	$("#mtr_delete").attr("disabled",true);
+        }
         if (Uck != 0) {
             if (Ck == Uck) {
                 $(".fa.fa-square-o").attr("class", "fa fa-check-square-o");
             } else {
                 $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
             }
+        }else {
+        	$(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
+        	$(".checkbox-toggle").data("clicks", false);
         }
 
     }
