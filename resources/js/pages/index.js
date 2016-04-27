@@ -88,10 +88,10 @@ define(function (require, exports, module) {
 	                	          '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
 
-	                	            '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
-	                	            '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
-									'<li><a href="#channel/list_check"><i class="fa fa-circle-o"></i> 频道审核</a></li>'+
 	                	            '<li><a href="#channel/list"><i class="fa fa-caret-square-o-right"></i> 频道</a></li>'+
+                                    // '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
+                                    // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
+                                    // '<li><a href="#channel/list_check"><i class="fa fa-circle-o"></i> 频道审核</a></li>'+
 	                	            // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
 
 	                	          '</ul>'+
@@ -103,11 +103,11 @@ define(function (require, exports, module) {
 	                	$(".sidebar-menu").append('<li id="treeview_mtr" class="treeview">'+
 
 	              	         
-							   '<a href="#"><i class="fa fa-book"></i><span>&nbsp;资源</span><i class="fa fa-angle-left pull-right"></i></a>'+
-	                	          '<ul class="treeview-menu">'+
-	                	            '<li><a href="#materials/materials_list"><i class="fa fa-book"></i> 资源</a></li>'+
-	                	            '<li><a href="#materials/materials_list_check"><i class="fa fa-book"></i> 资源审核</a></li>'+
-	                	          '</ul>'+
+							   // '<a href="#materials/materials_list"><i class="fa fa-server"></i><span>&nbsp;资源存储</span><i class="fa fa-angle-left pull-right"></i></a>'+
+	         //        	          '<ul class="treeview-menu">'+
+	         //        	            '<li><a href="#materials/materials_list"><i class="fa fa-book"></i> 资源</a></li>'+
+	         //        	            '<li><a href="#materials/materials_list_check"><i class="fa fa-book"></i> 资源审核</a></li>'+
+	         //        	          '</ul>'+
 	                	        
 
 	              	          '<a href="#materials/materials_list">'+
@@ -138,8 +138,9 @@ define(function (require, exports, module) {
 	                	$(".sidebar-menu").append('<li id="treeview_user" class="treeview">'+
 	                	          '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
-	                	            '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>'+
-	                	            '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>'+
+	                	            // '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>审核</a></li>'+
+                                    '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>'+
+                                    '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>'+
                                     '<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
                                     '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>'+
 	                	          '</ul>'+
