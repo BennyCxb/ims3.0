@@ -8,7 +8,8 @@ define(function(require, exports, module) {
 	var templates = require('common/templates'),
 		config    = require('common/config'),
 		util      = require('common/util'),
-        layoutEditor    = require('common/layout_editor');
+        layoutEditor    = require('common/layout_editor'),
+        oldHash;
 
     /**
      * 模块全局变量
@@ -24,6 +25,8 @@ define(function(require, exports, module) {
      * 页面初始化
      */
 	exports.init = function() {
+        window.onpopstate = onHashChange;
+        oldHash = location.hash;
 		layoutId = Number(util.getHashParameters().id);
         if (!isNaN(layoutId)) {
             var data = JSON.stringify({
@@ -52,6 +55,13 @@ define(function(require, exports, module) {
             onLayoutDataAvailable(defaultLayout);
         }
 	};
+
+    function onHashChange() {
+        if (location.hash.indexOf('#layout/edit') !== 0) {
+            $('#edit-page-container').empty().addClass('none');
+        }
+        window.onpopstate = undefined;
+    }
 
     /**
      * 过滤网络数据
@@ -170,13 +180,18 @@ define(function(require, exports, module) {
         editor.onFocusChanged(onFocusedWidgetChanged);
         editor.onWidgetsChanged(onWidgetsListUpdate);
         $('#layout-editor-wrapper .btn-layout-editor-back').click(function () {
-            $('#edit-page-container').html('').addClass('none');
+            $('#edit-page-container').empty().addClass('none');
             location.hash = '#layout/list';
         });
         $('#layout-editor-wrapper .btn-layout-editor-save').click(onSaveLayout);
         $('#layout-editor-wrapper .layout-editor-widgets').delegate('li', 'click', function (ev) {
             var index = Number(this.getAttribute('data-widget-index'));
             editor.mLayout.mWidgets[index].requestFocus();
+        });
+
+        $('#layout-editor-wrapper .btn-layout-editor-exit').click(function () {
+            $('#edit-page-container').empty().addClass('none');
+            location.hash = '#layout/list';
         });
 
     }

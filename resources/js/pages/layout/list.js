@@ -17,10 +17,6 @@ define(function(require, exports, module) {
 	exports.init = function() {
 		loadPage(1);
 		registerEventListeners();
-		
-		$('#channel-list-nav').bind('input propertychange', function () {
-            onSearch($('#channel-list-nav').val());
-		})
 	};
 
 	function registerEventListeners() {
@@ -52,15 +48,12 @@ define(function(require, exports, module) {
 			});
 			onSelectedItemChanged();
 		});
-//        $('#channel-list-nav').bind('input propertychange', function () {
-//	            if (ev.which === 13) {
-//                onSearch($('#channel-list-nav').val());
-//                ev.stopPropagation();
-//            }
-//        })
-//        $('#channel-list-nav button').click(function (ev) {
-//            onSearch($('#channel-list-nav').val());
-//        });
+		$('#channel-list-search').keyup(function (ev) {
+			if (ev.which === 13) {
+				onSearch(this.value);
+                ev.stopPropagation();
+            }
+		});
 
     }
 
