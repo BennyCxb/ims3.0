@@ -450,10 +450,10 @@ define(function(require, exports, module) {
             '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
-              '<td style="padding-left:0;"><strong>'+ tl[i].Name +'</strong><br />'+ statusName +'<br />磁盘信息：'+ tl[i].DiskInfo +'<br />CPU：'+ tl[i].Cpu +'%<br />内存：'+ tl[i].Mem +'</td>' +
-              '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
+              '<td style="padding-left:0;"><strong>'+ tl[i].Name +'</strong><small class="term-status-small">('+statusName+')</small><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
+              '<td style="line-height:26px; padding-top:10px;">当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
-              '<td>' +
+              '<td  style=" padding-top:10px;">' +
                 '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
                 '<div style="visibility:'+downloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
                    '<div class="progress-bar progress-bar-success" role="progressbar" ' +
@@ -471,7 +471,7 @@ define(function(require, exports, module) {
                    '</div>' +
                 '</div>' +
               '</td>' +
-              '<td>' +
+              '<td  style="line-height:26px; padding-top:10px;">' +
               'IP：'+ tl[i].IP +'<br />' +
               '版本：' + tl[i].TermVersion + 
               '</td>' +
