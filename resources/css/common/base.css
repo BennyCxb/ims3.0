@@ -566,4 +566,30 @@ a {
 .users_delete:hover .user-delete , .roles_delete:hover .user-delete{
   opacity: 1;
  }
-  
+
+/*////// toast ////////*/
+#toast-container {
+    position: fixed;
+    left: 0;
+    bottom: 100px;
+    z-index: 3000;
+}
+
+#toast-container div {
+    position: relative;
+    margin: 0 0 8px 0;
+    padding: 0 8px 0 4px;
+    border-left: 4px solid #288ecf;
+    border-radius: 1px;
+    min-width: 100px;
+    background-color: #3a9bd9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    color: #fff;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 24px;
+    *display: block;
+}
+/*////// /toast ///////*/

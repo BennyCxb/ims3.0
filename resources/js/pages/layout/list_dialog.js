@@ -78,9 +78,12 @@ define(function (require, exports, module) {
 
         $('#layout-list-dialog .layout-list').html('');
         json.LayoutList.forEach(function (el, idx, arr) {
+            var style = el.BackgroundPic.Type === 'Unknown' ?
+                'background-color: ' + el.BackgroundColor : 'background-image: url(' + el.BackgroundPic.URL + ')';
             var data = {
                 id: el.ID,
-                name: el.Name
+                name: el.Name,
+                style: style
             };
             $('#layout-list-dialog .layout-list').append(templates.layout_list_dialog_item(data));
         });

@@ -5,7 +5,8 @@ define(function(require, exports, module) {
     // depend on these components
     var templates = require('common/templates'),
         config    = require('common/config'),
-        util      = require('common/util');
+        util      = require('common/util'),
+        toast     = require('common/toast');
 
     // global variables
     var requestUrl    = config.serverRoot,
@@ -59,6 +60,9 @@ define(function(require, exports, module) {
         });
         $('#channel-list-nav .glyphicon-search').click(function (ev) {
             onSearch($('#channel-list-nav input').val());
+        });
+        $('#channel-list-controls .btn-toast').click(function () {
+            toast.show(Math.random());
         });
         
     }
