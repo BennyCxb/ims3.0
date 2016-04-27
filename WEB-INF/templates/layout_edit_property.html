@@ -25,7 +25,7 @@
 <div class="col-xs-2 layout-editor-property">
 	<!-- <label class="control-label property-name-inline">背景图</label> -->
 	<div class="col-sm-9">
-		<button type="button" class="btn-layout-editor-background btn btn-block btn-default">添加背景图</button>
+		<button type="button" class="btn-layout-editor-background btn btn-block btn-default" style="width: auto">添加背景图</button>
 	</div>
 </div>
 
@@ -37,7 +37,7 @@
 	function getLength(str){  
 		    var realLength = 0;  
 		    for (var i = 0; i < str.length; i++){  
-		        charCode = str.charCodeAt(i);  
+		        var charCode = str.charCodeAt(i);
 		        
 		        if (charCode >= 0 && charCode <= 128)   
 		        realLength += 1;  
@@ -52,14 +52,14 @@
 
 	function directName(obj,hint){
 		//get name
-		$obj = $(obj);
+		var $obj = $(obj);
 		var t = $obj.val();
 		var length = getLength(t);
 		var width = parseFloat($obj.css('font-size'));
 		var left = length * width/2 +47;
 
 		//get hint
-		$hint = $(hint);
+		var $hint = $(hint);
 		
 		//ux fix
 		$obj.css('cursor','pointer');

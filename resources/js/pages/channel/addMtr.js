@@ -49,8 +49,9 @@ define(function (require, exports, module) {
         //保存
         $("#amtr_add").click(function () {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
+                var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
             	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
-            	LAYOUTEDIT.updateBackground(url);
+            	LAYOUTEDIT.updateBackground(mtrId, url);
             }else {
             	var datalist = [];
                 for (var x = 0; x < $(".amtr_cb").length; x++) {
