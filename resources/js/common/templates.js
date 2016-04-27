@@ -32,11 +32,15 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" type="text"> <div class="channel-program-timer"> <input type="datetime" step="1" value="'+
+'" data-field="name" type="text"> <div class="channel-program-timer"> <label> 开始时间 <input type="datetime-local" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
-'"> <input type="datetime" step="1" value="'+
+'"> </label> <label> 结束时间 <input type="datetime-local" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> <input type=""> </div> <button class="btn-channel-setup-timer">定时设置</button> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span>布局:'+
+'"> </label> <label> 持续时间 <input type="number" step="1" data-field="duration" value="'+
+((__t=(duration))==null?'':__t)+
+'"> </label> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
+((__t=(count))==null?'':__t)+
+'"> </label> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span>布局:'+
 ((__t=(layout.name))==null?'':__t)+
 '</span> <span>宽:'+
 ((__t=(layout.width))==null?'':__t)+

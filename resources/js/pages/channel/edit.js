@@ -262,8 +262,8 @@ define(function(require, exports, module) {
             template_id: data.ProgramTemplateID,
             is_time_segment_limit: data.Is_TimeSegment_Limit,
             layout_id: data.Layout_ID,
-            lifetime_start: data.LifeEndTime,
-            lifetime_end: data.LifeStartTime,
+            lifetime_start: data.LifeStartTime,
+            lifetime_end: data.LifeEndTime,
             name: data.Name,
             name_eng: '',
             schedule_params: data.Schedule_Paras,
@@ -463,8 +463,13 @@ define(function(require, exports, module) {
 	 */
     function onCloseEditor() {
 		db.rollback();
+		db.drop('channel');
+		db.drop('program');
+		db.drop('layout');
+		db.drop('widget');
+		db.drop('material');
         $('#edit-page-container')
-			.html('')
+			.empty()
 			.addClass('none');
         location.hash = '#channel/list';
     }
@@ -547,7 +552,7 @@ define(function(require, exports, module) {
 		var deferred = $.Deferred(),
 			newPrograms = db.collection('program').getLocalInsertedRows();
 		if (newPrograms.length === 0) {
-			deferred.resolve();
+			deferred.resolve([]);
 		} else {
 			var successCount = 0,
                 failed = false,
@@ -604,7 +609,7 @@ define(function(require, exports, module) {
 		var deferred = $.Deferred(),
 			changedPrograms = db.collection('program').getLocalUpdatedRows();
 		if (changedPrograms.length === 0) {
-			deferred.resolve();
+			deferred.resolve(generatedWidgets);
 		} else {
 			var successCount = 0, failed = false;
 			changedPrograms.forEach(function (program) {
@@ -958,7 +963,7 @@ define(function(require, exports, module) {
 			lifetime_end: '2030-01-01 00:00:00',
 			name: '新建节目',
             name_eng: 'new program',
-			schedule_params: '{\"duration\":3600,\"count\":null}',
+			schedule_params: '{\"duration\":3600,\"count\":1}',
 			schedule_type: type,
 			sequence: maxSequence + 1,
 			time_segment_duration: 0,

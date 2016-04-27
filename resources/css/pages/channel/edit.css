@@ -112,3 +112,22 @@
     color: #ffffff;
     margin: 10px;
 }
+
+#channel-editor-wrapper .timed-program .channel-editor-program-trigger {
+    display: inherit;
+}
+
+#channel-editor-wrapper .percent-channel .channel-editor-program-count {
+    display: inherit;
+}
+
+#channel-editor-wrapper .channel-editor-program-trigger.day-timer .timer-field-date,
+#channel-editor-wrapper .channel-editor-program-trigger.date-timer .timer-field-day {
+    display: none;
+}
+
+#channel-editor-wrapper .channel-editor-program-trigger,
+#channel-editor-wrapper .channel-editor-program-count {
+    display: none;
+}
+
