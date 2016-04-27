@@ -14,37 +14,12 @@ define(function(require, exports, module) {
       _editTreeClassInput;
 
   exports.init = function(){
-    test();
     initTree();
     initEvent();
   }
 
   exports.loadTermList = function(){
     loadTermList(_pageNO);
-  }
-
-  function test(){
-    $('#ct').click(function(){
-      var getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
-      getClassAndTerm.channelID = 118;
-      getClassAndTerm.title = '发布到...';
-      getClassAndTerm.save = function(data){
-        console.log(data);
-        UTIL.cover.close();
-      }
-      UTIL.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
-    })
-
-    $('#c').click(function(){
-      var getClass = require('pages/terminal/getMultipleTermClass.js');
-      getClass.title = '请选取';
-      getClass.roleID = 4;
-      getClass.save = function(data){
-        console.log(data);
-        UTIL.cover.close();
-      }
-      UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
-    })
   }
 
   function setBatchBtn(){

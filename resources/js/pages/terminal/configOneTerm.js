@@ -39,7 +39,7 @@ define(function(require, exports, module) {
           downloadSwitch = ($("#CO-downloadSwitch").bootstrapSwitch('state'))?1:0,
           restartSwitch = ($("#CO-restartSwitch").bootstrapSwitch('state'))?1:0,
           workWeekRepeat = new Array(),
-          cityIDs = $('#CO-city').val().join();
+          cityIDs = ($('#CO-city').val()===null?'':$('#CO-city').val().join());
 
       $('#CO-workWeekRepeat input[type="checkbox"]').each(function(i,e){
         if($(e)[0].checked){
@@ -284,8 +284,6 @@ define(function(require, exports, module) {
   }
 
   function inputInit(){
-
-    $("#CO-city").select2();
     
     $.fn.bootstrapSwitch.defaults.onText = '开';
     $.fn.bootstrapSwitch.defaults.offText = '关';
@@ -427,6 +425,12 @@ define(function(require, exports, module) {
             // _restartTimer
             _restartTimer = config.RestartTimer;
 
+            // 加载城市信息
+            for(var i = 0; i<config.Cities.length; i++){
+              $('#CO-city > option:nth(0)').attr('value')
+              $("#CO-city").find("[value$='"+config.Cities[i].ID+"']").attr('selected',true);
+            } 
+            $("#CO-city").select2();
 
             //工作区间
             var workSeqments = JSON.parse(config.WorkSeqments);

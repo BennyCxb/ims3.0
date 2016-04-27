@@ -11,7 +11,6 @@ define(function(require, exports, module) {
       _downloadSeqments,
       _restartTimer,
       _heartBeatPeriod,
-      _cityIDs,
       _mainServer,
       _programSync;
 
@@ -33,7 +32,8 @@ define(function(require, exports, module) {
           workSwitch = ($("#CC-workSwitch").bootstrapSwitch('state'))?1:0,
           downloadSwitch = ($("#CC-downloadSwitch").bootstrapSwitch('state'))?1:0,
           restartSwitch = ($("#CC-restartSwitch").bootstrapSwitch('state'))?1:0,
-          workWeekRepeat = new Array();
+          workWeekRepeat = new Array(),
+          cityIDs = ($('#CC-city').val()===null?'':$('#CC-city').val().join());
 
       $('#CC-workWeekRepeat input[type="checkbox"]').each(function(i,e){
         if($(e)[0].checked){
@@ -226,7 +226,7 @@ define(function(require, exports, module) {
               "UpgradeURL": upgradeURL, 
               "Volume": vol, 
               "HeartBeat_Period": _heartBeatPeriod,
-              "CityIDs": _cityIDs, 
+              "CityIDs": cityIDs, 
               "MainServer": _mainServer, 
               "RestartTimer": restartTimer, 
               "ProgramSync": _programSync, 
@@ -299,7 +299,39 @@ define(function(require, exports, module) {
   function loadInfo(){
 
     $('#CC-title').html(exports.className);
-    loadConfigInfo();
+    loadCityInfo();
+
+    function loadCityInfo(){
+      var data = {
+        "project_name": CONFIG.projectName,
+        "action": "getCityList",
+        "Pager":{
+          "total":-1,
+          "per_page":100000000,
+          "page":1,
+          "orderby":"",
+          "sortby":"",
+          "keyword":""
+        }
+      }  
+
+      UTIL.ajax('POST', 
+        CONFIG.serverRoot + '/backend_mgt/v2/city', 
+        JSON.stringify(data), 
+        function(data){
+          if(data.rescode === '200'){
+            var citys = data.cityList;
+            $('#CC-city').empty();
+            for(var i = 0; i < citys.length; i++){
+              $('#CC-city').append('<option value = "'+citys[i].AreaID+'">'+citys[i].City+'（'+citys[i].CityEng+'）</option>');
+            }
+            loadConfigInfo();
+          }else{
+            alert('获取城市信息失败');
+          }
+        }
+      );
+    }
 
     function loadConfigInfo(){
       var data = {
@@ -331,9 +363,6 @@ define(function(require, exports, module) {
             // 心跳
             _heartBeatPeriod = config.HeartBeat_Period;
 
-            // 城市id
-            _cityIDs = config.CityIDs;
-
             // MainServer
             _mainServer = config.MainServer;
 
@@ -349,6 +378,12 @@ define(function(require, exports, module) {
             // _restartTimer
             _restartTimer = config.RestartTimer;
 
+            // 加载城市信息
+            for(var i = 0; i<config.Cities.length; i++){
+              $('#CC-city > option:nth(0)').attr('value')
+              $("#CC-city").find("[value$='"+config.Cities[i].ID+"']").attr('selected',true);
+            } 
+            $("#CC-city").select2();
 
             //工作区间
             var workSeqments = JSON.parse(config.WorkSeqments);
