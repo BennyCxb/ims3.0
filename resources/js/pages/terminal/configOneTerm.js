@@ -6,6 +6,8 @@ define(function(require, exports, module) {
   exports.termID;
   exports.termName;
   exports.IP;
+  exports.CPU;
+  exports.Mem;
   exports.MAC;
   exports.requireJS;
   exports.diskInfo;
@@ -14,7 +16,6 @@ define(function(require, exports, module) {
       _downloadSeqments,
       _restartTimer,
       _heartBeatPeriod,
-      _cityIDs,
       _mainServer,
       _programSync;
 
@@ -37,7 +38,8 @@ define(function(require, exports, module) {
           workSwitch = ($("#CO-workSwitch").bootstrapSwitch('state'))?1:0,
           downloadSwitch = ($("#CO-downloadSwitch").bootstrapSwitch('state'))?1:0,
           restartSwitch = ($("#CO-restartSwitch").bootstrapSwitch('state'))?1:0,
-          workWeekRepeat = new Array();
+          workWeekRepeat = new Array(),
+          cityIDs = $('#CO-city').val().join();
 
       $('#CO-workWeekRepeat input[type="checkbox"]').each(function(i,e){
         if($(e)[0].checked){
@@ -256,7 +258,7 @@ define(function(require, exports, module) {
               "UpgradeURL": upgradeURL, 
               "Volume": vol, 
               "HeartBeat_Period": _heartBeatPeriod,
-              "CityIDs": _cityIDs, 
+              "CityIDs": cityIDs, 
               "MainServer": _mainServer, 
               "RestartTimer": restartTimer, 
               "ProgramSync": _programSync, 
@@ -269,6 +271,7 @@ define(function(require, exports, module) {
           JSON.stringify(data), 
           function(data){
             if(data.rescode === '200'){
+              alert('保存成功');
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
@@ -282,6 +285,8 @@ define(function(require, exports, module) {
 
   function inputInit(){
 
+    $("#CO-city").select2();
+    
     $.fn.bootstrapSwitch.defaults.onText = '开';
     $.fn.bootstrapSwitch.defaults.offText = '关';
 
@@ -323,6 +328,7 @@ define(function(require, exports, module) {
     $('#CO-downloadStart').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-downloadEnd').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-restartTime').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+
   }
 
   function loadInfo(){
@@ -332,161 +338,196 @@ define(function(require, exports, module) {
     $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
+    $('#CO-CPU').html(exports.CPU + '%');
+    $('#CO-Mem').html(exports.Mem);
 
+    loadCityInfo();
+
+    function loadCityInfo(){
+      var data = {
+        "project_name": CONFIG.projectName,
+        "action": "getCityList",
+        "Pager":{
+          "total":-1,
+          "per_page":100000000,
+          "page":1,
+          "orderby":"",
+          "sortby":"",
+          "keyword":""
+        }
+      }  
+
+      UTIL.ajax('POST', 
+        CONFIG.serverRoot + '/backend_mgt/v2/city', 
+        JSON.stringify(data), 
+        function(data){
+          if(data.rescode === '200'){
+            var citys = data.cityList;
+            $('#CO-city').empty();
+            for(var i = 0; i < citys.length; i++){
+              $('#CO-city').append('<option value = "'+citys[i].AreaID+'">'+citys[i].City+'（'+citys[i].CityEng+'）</option>');
+            }
+            loadConfigInfo();
+          }else{
+            alert('获取城市信息失败');
+          }
+        }
+      );
+    }
+
+    function loadConfigInfo(){
       var data = {
         "project_name": CONFIG.projectName,
         "action": "getConfig",
         "ID": exports.termID
       }
 
-    UTIL.ajax(
-      'POST', 
-      CONFIG.serverRoot + '/backend_mgt/v2/term',
-      JSON.stringify(data),
-      function(data){
-        if(data.rescode !== '200'){
-          alert('获取终端配置信息失败');
-        }else{
-          $('#CO-upgradeURL').val(data.config.UpgradeURL);
-          $('#CO-logURL').val(data.config.LogURL);
+      UTIL.ajax(
+        'POST', 
+        CONFIG.serverRoot + '/backend_mgt/v2/term',
+        JSON.stringify(data),
+        function(data){
+          if(data.rescode !== '200'){
+            alert('获取终端配置信息失败');
+          }else{
+            $('#CO-upgradeURL').val(data.config.UpgradeURL);
+            $('#CO-logURL').val(data.config.LogURL);
 
-          $( "#CO-vol-slider" ).slider({
-            max: 100,
-            value: data.config.Volume
-          });
+            $( "#CO-vol-slider" ).slider({
+              max: 100,
+              value: data.config.Volume
+            });
 
-          var config = data.config;
-          /*config = {
-            "DownloadSeqments":"{\"on\": 1, \"duration\": 999999, \"trigger\": \"1 2 3 * * * *\"}",
-            "WorkSeqments":"{\"on\": 1, \"duration\": 1, \"trigger\": \"13 * 5 * * * 1,2,7\"}",
-            "UpgradeURL":"117","Volume":60,"Channel_ID":117,"PreDownload_Channel_ID":117,
-            "HeartBeat_Period":3,"CityIDs":"","MainServer":null,
-            "RestartTimer":"{\"on\": 0, \"trigger\": \"2 3 * * * * *\"}",
-            "ProgramSync":"{\"on\": 0, \"SyncSetID\": \"1-1\", \"SyncMulticastIP\": \"225.2.3.4\", \"SyncMulticastPort\": 9000, \"SyncSwitchTimeout\": 300}",
-            "LogURL":null
-          }*/
+            var config = data.config;
+            /*config = {
+              "DownloadSeqments":"{\"on\": 1, \"duration\": 999999, \"trigger\": \"1 2 3 * * * *\"}",
+              "WorkSeqments":"{\"on\": 1, \"duration\": 1, \"trigger\": \"13 * 5 * * * 1,2,7\"}",
+              "UpgradeURL":"117","Volume":60,"Channel_ID":117,"PreDownload_Channel_ID":117,
+              "HeartBeat_Period":3,"CityIDs":"","MainServer":null,
+              "RestartTimer":"{\"on\": 0, \"trigger\": \"2 3 * * * * *\"}",
+              "ProgramSync":"{\"on\": 0, \"SyncSetID\": \"1-1\", \"SyncMulticastIP\": \"225.2.3.4\", \"SyncMulticastPort\": 9000, \"SyncSwitchTimeout\": 300}",
+              "LogURL":null
+            }*/
 
-          // 心跳
-          _heartBeatPeriod = config.HeartBeat_Period;
+            // 心跳
+            _heartBeatPeriod = config.HeartBeat_Period;
 
-          // 城市id
-          _cityIDs = config.CityIDs;
+            // MainServer
+            _mainServer = config.MainServer;
 
-          // MainServer
-          _mainServer = config.MainServer;
+            // _programSync
+            _programSync = config.ProgramSync;
 
-          // _programSync
-          _programSync = config.ProgramSync;
+            // _workSeqments
+            _workSeqments = config.WorkSeqments;
 
-          // _workSeqments
-          _workSeqments = config.WorkSeqments;
+            // _downloadSeqments
+            _downloadSeqments = config.DownloadSeqments;
 
-          // _downloadSeqments
-          _downloadSeqments = config.DownloadSeqments;
-
-          // _restartTimer
-          _restartTimer = config.RestartTimer;
+            // _restartTimer
+            _restartTimer = config.RestartTimer;
 
 
-          //工作区间
-          var workSeqments = JSON.parse(config.WorkSeqments);
-          
-          if(workSeqments.on === 0){
-            $("#CO-workSwitch").bootstrapSwitch('state', false);
-          }
-          
-          var trigger = workSeqments.trigger.split(" ");
-
-          //week
-          var week = trigger[6];
-          if(week !== '*'){
-            week = week.split(',');
-            for(var i=0; i< week.length; i++){
-              $('#CO-workWeekRepeat input[type$=checkbox]:nth('+(Number(week[i])-1)+')').iCheck('check');
-            }
-          }
-
-          //starttime
-          var hour = trigger[2];
-          var minute = trigger[1];
-          var second = trigger[0];
-          if(hour !== '*' || minute !== '*' || second !== '*'){
-            hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
-            minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
-            second = (second === '*')?'00':((second<10)?'0'+second:second);
-            $('#CO-workStart').val(hour+':'+minute+':'+second);
+            //工作区间
+            var workSeqments = JSON.parse(config.WorkSeqments);
             
-            //endtime
-            var duration = workSeqments.duration;
-            var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
-            var end = new Date();
-            end.setTime(start.getTime()+duration*1000);
-            var end_hour = end.getHours();
-            var end_minute = end.getMinutes();
-            var end_second = end.getSeconds();
-            end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
-            end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
-            end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
-            $('#CO-workEnd').val(end_hour+':'+end_minute+':'+end_second);
-          }
+            if(workSeqments.on === 0){
+              $("#CO-workSwitch").bootstrapSwitch('state', false);
+            }
+            
+            var trigger = workSeqments.trigger.split(" ");
 
-          // 下载区间
-          var DownloadSeqments = JSON.parse(config.DownloadSeqments);
+            //week
+            var week = trigger[6];
+            if(week !== '*'){
+              week = week.split(',');
+              for(var i=0; i< week.length; i++){
+                $('#CO-workWeekRepeat input[type$=checkbox]:nth('+(Number(week[i])-1)+')').iCheck('check');
+              }
+            }
 
-          if(DownloadSeqments.on === 0){
-            $("#CO-downloadSwitch").bootstrapSwitch('state', false);
-          }
-        
-          var trigger = DownloadSeqments.trigger.split(" ");
+            //starttime
+            var hour = trigger[2];
+            var minute = trigger[1];
+            var second = trigger[0];
+            if(hour !== '*' || minute !== '*' || second !== '*'){
+              hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
+              minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
+              second = (second === '*')?'00':((second<10)?'0'+second:second);
+              $('#CO-workStart').val(hour+':'+minute+':'+second);
+              
+              //endtime
+              var duration = workSeqments.duration;
+              var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
+              var end = new Date();
+              end.setTime(start.getTime()+duration*1000);
+              var end_hour = end.getHours();
+              var end_minute = end.getMinutes();
+              var end_second = end.getSeconds();
+              end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
+              end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
+              end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
+              $('#CO-workEnd').val(end_hour+':'+end_minute+':'+end_second);
+            }
 
-          //starttime
-          var hour = trigger[2];
-          var minute = trigger[1];
-          var second = trigger[0];
-          if(hour !== '*' || minute !== '*' || second !== '*'){
-            hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
-            minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
-            second = (second === '*')?'00':((second<10)?'0'+second:second);
-            $('#CO-downloadStart').val(hour+':'+minute+':'+second);
+            // 下载区间
+            var DownloadSeqments = JSON.parse(config.DownloadSeqments);
+
+            if(DownloadSeqments.on === 0){
+              $("#CO-downloadSwitch").bootstrapSwitch('state', false);
+            }
           
-            //endtime
-            var duration = DownloadSeqments.duration;
-            var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
-            var end = new Date();
-            end.setTime(start.getTime()+duration*1000);
-            var end_hour = end.getHours();
-            var end_minute = end.getMinutes();
-            var end_second = end.getSeconds();
-            end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
-            end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
-            end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
-            $('#CO-downloadEnd').val(end_hour+':'+end_minute+':'+end_second);
-          }
-        
+            var trigger = DownloadSeqments.trigger.split(" ");
 
-          // 定时重启
-          var RestartTimer = JSON.parse(config.RestartTimer);
-
-          if(RestartTimer.on === 0){
-            $("#CO-restartSwitch").bootstrapSwitch('state', false);
-          }
+            //starttime
+            var hour = trigger[2];
+            var minute = trigger[1];
+            var second = trigger[0];
+            if(hour !== '*' || minute !== '*' || second !== '*'){
+              hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
+              minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
+              second = (second === '*')?'00':((second<10)?'0'+second:second);
+              $('#CO-downloadStart').val(hour+':'+minute+':'+second);
+            
+              //endtime
+              var duration = DownloadSeqments.duration;
+              var start = new Date('2016-04-24 '+hour+':'+minute+':'+second);
+              var end = new Date();
+              end.setTime(start.getTime()+duration*1000);
+              var end_hour = end.getHours();
+              var end_minute = end.getMinutes();
+              var end_second = end.getSeconds();
+              end_hour = (end_hour === '*')?'00':((end_hour<10)?'0'+end_hour:end_hour);
+              end_minute = (end_minute === '*')?'00':((end_minute<10)?'0'+end_minute:end_minute);
+              end_second = (end_second === '*')?'00':((end_second<10)?'0'+end_second:end_second);
+              $('#CO-downloadEnd').val(end_hour+':'+end_minute+':'+end_second);
+            }
           
-          var trigger = RestartTimer.trigger.split(" ");
 
-          //starttime
-          var hour = trigger[2];
-          var minute = trigger[1];
-          var second = trigger[0];
-          if(hour !== '*' || minute !== '*' || second !== '*'){
-            hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
-            minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
-            second = (second === '*')?'00':((second<10)?'0'+second:second);
-            $('#CO-restartTime').val(hour+':'+minute+':'+second);
+            // 定时重启
+            var RestartTimer = JSON.parse(config.RestartTimer);
+
+            if(RestartTimer.on === 0){
+              $("#CO-restartSwitch").bootstrapSwitch('state', false);
+            }
+            
+            var trigger = RestartTimer.trigger.split(" ");
+
+            //starttime
+            var hour = trigger[2];
+            var minute = trigger[1];
+            var second = trigger[0];
+            if(hour !== '*' || minute !== '*' || second !== '*'){
+              hour = (hour === '*')?'00':((hour<10)?'0'+hour:hour);
+              minute = (minute === '*')?'00':((minute<10)?'0'+minute:minute);
+              second = (second === '*')?'00':((second<10)?'0'+second:second);
+              $('#CO-restartTime').val(hour+':'+minute+':'+second);
+            }
+          
           }
-        
         }
-      }
-    );
+      );
+    }
   }
 
 	

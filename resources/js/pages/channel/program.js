@@ -6,11 +6,10 @@ define(function (require, exports, module) {
         config = require('common/config'),
         util = require('common/util'),
         crud = require('common/crud'),
-        layoutEditor = require('common/layout_editor');
+        layoutEditor = require('common/layout_editor'),
+        timer = require('pages/channel/timer');
 
-    var requestUrl = config.serverRoot,
-        projectName = config.projectName,
-        db = null,
+    var db = null,
         programId = null,
         layoutId = null,
         editor = null,
@@ -41,11 +40,13 @@ define(function (require, exports, module) {
     }
 
     function renderProgramView(program, layout, widgets) {
+        var p = JSON.parse(program.schedule_params);
         var data = {
-            lifetime_start: program.lifetime_start,
-            lifetime_end: program.lifetime_end,
-            schedule_type: program.schedule_type,
-            schedule_params: program.schedule_params,
+            name: program.name,
+            lifetime_start: program.lifetime_start.replace(' ', 'T'),
+            lifetime_end: program.lifetime_end.replace(' ', 'T'),
+            count: p.count,
+            duration: p.duration,
             layout: {
                 name: layout.name,
                 width: layout.width,
@@ -54,6 +55,21 @@ define(function (require, exports, module) {
         };
         $('#channel-editor-wrapper .channel-program-editor')
             .html(templates.channel_edit_program(data));
+        var trigger = JSON.parse(program.schedule_params);
+        if (!trigger.trigger) {
+            trigger.trigger = '0 0 0 * * * *';
+        }
+        updateTimer(trigger.trigger);
+        var timerType = 'timed';
+        if (program.schedule_type !== 'Timed') {
+            var params = JSON.parse(db.collection('channel').select({})[0].overall_schedule_params);
+            if (params.Type === 'Percent') {
+                timerType = 'percent';
+            } else {
+                timerType = '';
+            }
+        }
+        updateProgramSchedule(timerType);
         renderEditor(layout, widgets);
         var w = editor.mLayout.getFocusedWidget();
         if (w) {
@@ -156,6 +172,93 @@ define(function (require, exports, module) {
                 editMode = false;
             }
         });
+        $('#channel-editor-wrapper .btn-channel-setup-timer').click(function () {
+            var scheduleStr = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
+            scheduleStr = scheduleStr.trigger ? scheduleStr.trigger : '0 0 0 * * * *';
+            var instance = new timer.Timer(timer.Timer.decode(scheduleStr));
+            instance.open(function (data) {
+                db.collection('program').update({schedule_params: JSON.stringify({trigger: data})}, {id: programId});
+                updateTimer(data);
+            });
+        });
+        $('#channel-editor-wrapper .channel-program-header input').change(onProgramEdit);
+    }
+    
+    function onProgramEdit() {
+        var field = this.getAttribute('data-field'),
+            updates = null;
+        switch (field) {
+            case 'name':
+                updates = {name: this.value};
+                break;
+            case 'lifetime_start':
+                updates = {lifetime_start: this.value.replace('T', ' ')};
+                break;
+            case 'lifetime_end':
+                updates = {lifetime_start: this.value.replace('T', ' ')};
+                break;
+            case 'duration':
+            case 'count':
+                var schedule_params = JSON.parse(db.collection('program')[0].schedule_params);
+                var params = {};
+                if (field === 'count') {
+                    params.count = parseInt(this.value);
+                    if (typeof schedule_params.trigger !== 'string') {
+                        params.trigger = '0 0 0 * * * *';
+                    } else {
+                        params.trigger = schedule_params.trigger;
+                    }
+                    if (typeof schedule_params.duration !== 'number') {
+                        params.duration = 60;
+                    } else {
+                        params.duration = schedule_params.duration;
+                    }
+                } else {
+                    params.duration = parseInt(this.value);
+                    if (typeof schedule_params.trigger !== 'string') {
+                        params.trigger = '0 0 0 * * * *';
+                    } else {
+                        params.trigger = schedule_params.trigger;
+                    }
+                    if (typeof schedule_params.count !== 'number') {
+                        params.count = 60;
+                    } else {
+                        params.count = schedule_params.count;
+                    }
+                }
+                updates = {schedule_params: JSON.stringify(params)};
+                break;
+        }
+        if (updates) {
+            db.collection('program').update({id: programId}, updates);
+        }
+    }
+
+    function updateProgramSchedule(type) {
+        var timed = type === 'timed',
+            percent = type === 'percent';
+        $('#channel-editor-wrapper .channel-program-timer')
+            .toggleClass('timed-program', timed)
+            .toggleClass('percent-channel', percent);
+    }
+    
+    function updateTimer(str) {
+        var fields = $('#channel-editor-wrapper .channel-editor-program-trigger span'),
+            segments = str.split(' '),
+            dayTimer = false;
+        if (segments[6] !== '*' || (segments[5] === '*' &&
+            segments[4] === '*' && segments[3] === '*')) {
+            dayTimer = true;
+        }
+        $('#channel-editor-wrapper .channel-editor-program-trigger')
+            .toggleClass('day-timer', dayTimer)
+            .toggleClass('date-timer', !dayTimer);
+        fields[0].textContent = segments[4] === '*' ? '-' : segments[4];
+        fields[1].textContent = segments[3] === '*' ? '-' : segments[3];
+        fields[2].textContent = segments[5] === '*' ? '-' : segments[5];
+        fields[3].textContent = segments[2] === '*' ? '-' : segments[2];
+        fields[4].textContent = segments[1] === '*' ? '-' : segments[1];
+        fields[5].textContent = segments[0] === '*' ? '-' : segments[0];
     }
 
      function onSelectWidget (widget) {

@@ -193,7 +193,17 @@ define(function (require, exports, module) {
                                 $("#upl_speed_" + num1).html("");
                                 $("#upl_status_" + num1).html("上传成功");
                                 _upl_list[num1].status = "end";
-                                if(num2 == fileCount-1){
+                                var status = "uploading";
+                                //判断是否全部上传完毕
+                                for(var b = 0, c=0; b<_upl_list.length; b++){
+                                	if (_upl_list[b].status == "end"){
+                                		c++;
+                                		if (c==_upl_list.length){
+                                			status = "end";
+                                		}
+                                	}
+                                }
+                                if(status == "end"){
                                 	$("#box_fileList").attr("status", "end");
                                 	var typeId = $("#mtrChoise li.active").attr("typeid");
                                 	if(typeId == "1" || typeId == "2" || typeId == "3"){

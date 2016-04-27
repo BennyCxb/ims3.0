@@ -3,7 +3,10 @@ body,h1,h2,h3,h4,h5,h6{
   font-family: "Helvetica Neue", Helvetica, Arial, '等线','微软雅黑','黑体',sans-serif !important;
 }
 
-
+/*select2*/
+.select2-container--open .select2-dropdown {
+    z-index: 3000 !important;
+}
 
 /*lh*/
 
@@ -17,7 +20,21 @@ body,h1,h2,h3,h4,h5,h6{
 
 
 .tips{
-  color:#51a2e2;
+  color:#3c8dbc;
+  font-size: 14px;
+}
+
+
+.warn-i{
+  background:rgba(255,195,0,0.6);
+  font-size: 14px;
+}
+
+
+.replace24{
+  position: relative;
+  width: 1px;
+  height: 24px;
 }
 
 .div-line-i{
@@ -175,14 +192,62 @@ a {
 }
 
 /*资源控件页面*/
-#mtrCtrl_box {
-	width: 600px;
-    margin: auto;
-    max-height: 80%;
-}
 
 .mtrCtrl_select {
 	width: 80px;
+}
+
+#box_effect {
+	display: none;
+}
+
+#text_color {
+	height: 30px;
+    width: 80px;
+    border-color: #d2d6de;
+    background-color: transparent;
+}
+
+#mtrCtrl_Table input {
+    height: 20px;
+    text-align: center;
+} 
+
+.mtrCtrl_checkbox {
+	width: 40px;
+}
+
+.mtrCtrl_name {
+	width: 250px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mtr_time {
+	width: 112px;
+}
+
+.mtrCtrl_times {
+	width: 45px;
+}
+
+.mtrCtrl_times label {
+	margin: 0;
+}
+
+.mtrCtrl_times input {
+	width: 100%;
+}
+
+.mtrCtrl_delete {
+	width: 10%;
+}
+
+.mtrC_datetime {
+	width: 90%;
+    margin: 10px auto;
+    display: inline-table;
 }
 
 /*资源选择页面*/
@@ -442,3 +507,63 @@ a {
 .tree-menu-2 > li > a:hover .glyphicon{
   color: #3c8dbc;
 }
+
+/*termlist*/
+.term-icon{
+  position: relative;
+}
+
+.term-icon:after{
+  content: ' ';
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 16px;
+  height: 10px;
+  background: red;
+  border: solid 1px #333;
+  border-radius: 1px;
+}
+
+.offline.term-icon:after{
+  background: white;
+}
+
+.offline.term-icon{
+  opacity: 0.3
+}
+
+.running.term-icon:after{
+  background:rgb(48,173,255);
+}
+
+
+.shutdown.term-icon:after{
+  background: black;
+}
+
+
+/*user*/
+.user_name{
+  /*font-weight: bold;*/
+}
+
+.users_name .fa-user{
+  color: #3c8dbc;
+  padding-right: 7px;
+}
+
+ .user-delete{
+  opacity: 0.2;
+  color: #333;
+ }
+
+ 
+.user-row:hover .user-delete , .rol-row:hover .user-delete{
+  opacity: .6;
+  }
+
+.users_delete:hover .user-delete , .roles_delete:hover .user-delete{
+  opacity: 1;
+ }
+  
