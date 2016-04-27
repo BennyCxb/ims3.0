@@ -2,16 +2,33 @@
 
     <div class="channel-editor-header">
         <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button>
-        <h1 class="header-title">频道编辑</h1>
+        
+        <input class="direct-name-002 channel-editor-property" data-key="name" value="<%=name%>" />
+        <small class="direct-name-001-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px;">
+            <i class="glyphicon glyphicon-edit" style="color: white"></i>
+        </small>
+
+
+        <button type="button" class="header-button-left btn-channel-editor-save pull-right">
+            <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px;"></i>
+            保存
+        </button>
+        <button class="header-button-left btn-channel-editor-save pull-right btn-channel-editor-publish">
+            <i class="fa fa-rocket" style="position: relative; font-size: 15px;"></i>
+            保存并发布
+        </button>
     </div>
 
-        <input class="channel-editor-property" data-key="name" value="<%=name%>" />
-        <button class="btn-channel-editor-save">保存</button>
-        <button class="btn-channel-editor-publish">保存并发布</button>
 
         
     <div class="channel-editor-body">
+
+
+
         <div class="channel-program-list">
+            
+
+
             <div class="channel-program-list-timed">
                 <div>
                     <h3>定时节目</h3>
@@ -20,6 +37,9 @@
                 </div>
                 <ul></ul>
             </div>
+
+
+
             <div class="channel-program-list-regular">
                 <div>
                     <h3>常规节目</h3>
@@ -46,6 +66,10 @@
                 </div>
                 <ul></ul>
             </div>
+
+
+
+            
         </div>
         <div class="channel-program-editor">
             正在加载数据...
@@ -56,3 +80,63 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+
+    function getLength(str){  
+            var realLength = 0;  
+            for (var i = 0; i < str.length; i++){  
+                var charCode = str.charCodeAt(i);
+                
+                if (charCode >= 0 && charCode <= 128)   
+                realLength += 1;  
+                else   
+                realLength += 2;
+
+            }
+
+            return realLength;  
+        }  
+
+
+    function directName(obj,hint){
+        //get name
+        var $obj = $(obj);
+        var t = $obj.val();
+        var length = getLength(t);
+        var width = parseFloat($obj.css('font-size'));
+        var left = length * width/2 +77;
+
+        //get hint
+        var $hint = $(hint);
+        
+        //ux fix
+        $obj.css('cursor','pointer');
+
+        //reposition
+        $hint.css('left',left);
+
+        //event
+        $hint.click(function(){
+            $obj.focus().val(t);
+        });
+        $obj.focus(function(){
+            $hint.css('display','none');
+            $obj.css('cursor','');
+        });
+        $obj.blur(function(){
+            $hint.css('display','');
+            $obj.css('cursor','pointer');
+            //reposition
+            var t = $obj.val();
+            var length = getLength(t);
+            var width = parseFloat($obj.css('font-size'));
+            var left = length * width/2 +77;
+            $hint.css('left',left);
+        });
+    }
+
+    directName('.direct-name-002','.direct-name-001-hint');
+
+
+</script>

@@ -132,3 +132,23 @@
     display: none;
 }
 
+
+.channel-editor-property{
+    position: relative;
+    top: -2px;
+    border: none;
+    background-color:#3c8dbc;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px;
+    width: 500px;
+    
+}
+
+.channel-editor-property:focus{
+    background-color:white;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}

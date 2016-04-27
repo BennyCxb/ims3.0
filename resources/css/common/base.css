@@ -290,7 +290,7 @@ a {
   color: white;
   font-size: 16px;
   top: 0;
-  font-weight: 900;
+  /*font-weight: 900;*/
 }
 
 .header-button-left:hover{
