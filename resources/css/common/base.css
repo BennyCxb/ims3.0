@@ -3,7 +3,10 @@ body,h1,h2,h3,h4,h5,h6{
   font-family: "Helvetica Neue", Helvetica, Arial, '等线','微软雅黑','黑体',sans-serif !important;
 }
 
-
+/*select2*/
+.select2-container--open .select2-dropdown {
+    z-index: 3000 !important;
+}
 
 /*lh*/
 
