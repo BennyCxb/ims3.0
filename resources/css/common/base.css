@@ -610,3 +610,12 @@ a {
     *display: block;
 }
 /*////// /toast ///////*/
+
+
+/*////// marquee //////*/
+.marquee {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background: #ccc;
+}
+/*////// /marquee /////*/

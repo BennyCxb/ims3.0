@@ -139,7 +139,40 @@ define(function (require, exports, module) {
     }
 
     function showPreview(editor) {
-        console.log('show preview');
+        var data = {}, style;
+        db.collection('widget').select({program_id: programId}).forEach(function (w) {
+            switch (w.type) {
+                case 'AudioBox':
+                    data[w.id] = {};
+                    break;
+                case 'VideoBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'WebBox':
+                    style = JSON.parse(w.style);
+                    if (style.Type === 'Marquee') {
+                        style = {
+                            type: style.Type,
+                            color: style.TextColor,
+                            direction: style.Right_2_Left,
+                            speed: Number(style.ScrollSpeed)
+                        };
+                    } else {
+                        style = {
+                            type: style.Type
+                        };
+                    }
+                    data[w.id] = {material: w.material, style: style};
+                    break;
+                case 'ClockBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'ImageBox':
+                    data[w.id] = {material: w.material};
+                    break;
+            }
+        });
+        editor.showPreview(data);
     }
 
     function registerEventListeners () {
