@@ -25,25 +25,26 @@
 
 
 
-        <div class="channel-program-list">
+        <div class="channel-program-list box box-default">
             
 
 
-            <div class="channel-program-list-timed box box-solid">
+            <div class="channel-program-list-timed ">
                 <small style="position: absolute; bottom: 10px; right: 15px;">
                     点击添加新节目
                     <i class="glyphicon glyphicon-hand-up"></i>
                 </small>
-                <div class="box-header with-border">
+                <div class="box-header with-border" style="position: fixed; z-index: 2; background: white; width: 256px;">
                     <h3 class="box-title">
                         <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px;"></i>
                         定时节目
                     </h3>
                     <div class="tools">
-                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
-                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除" data-program-type="Timed"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加" data-program-type="Timed"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
                      </div>
                 </div>
+                <div class="sticky-item-replace"></div>
                 <ul>
                     
                 </ul>
@@ -51,39 +52,43 @@
 
 
 
-            <div class="channel-program-list-regular box box-solid">
+            <div class="channel-program-list-regular">
                 <small style="position: absolute; bottom: 10px; right: 15px;">
                     点击添加新节目
                     <i class="glyphicon glyphicon-hand-up"></i>
                 </small>
-                <div class="box-header with-border">
-                    <i class="glyphicon glyphicon-repeat" style="position: relative; top: 3px; font-size: 16px; margin-right: 0;"></i>
+                <div class="box-header with-border" style="position: absolute; width: 256px; background: white; z-index: 2"> 
+                    <i class="glyphicon glyphicon-repeat" style="position: relative; top: 2px; font-size: 14px; margin-right: 0;"></i>
                     <h3 class="box-title">常规节目</h3>
 
-                    <select class="channel-program-schedule-type">
-                        <% var type = JSON.parse(overall_schedule_params).Type; %>
-                        <% if (type === 'Sequence') { %>
-                        <option value="Sequence" selected>顺序</option>
-                        <% } else { %>
-                        <option value="Sequence">顺序</option>
-                        <% } %>
-                        <% if (type === 'Random') { %>
-                        <option value="Random" selected>随机</option>
-                        <% } else { %>
-                        <option value="Random">随机</option>
-                        <% } %>
-                        <% if (type === 'Percent') { %>
-                        <option value="Percent" selected>随机</option>
-                        <% } else { %>
-                        <option value="Percent">比例</option>
-                        <% } %>
-                    </select>
                      <div class="tools">
-                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
-                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                        <select class="channel-program-schedule-type">
+                            <% var type = JSON.parse(overall_schedule_params).Type; %>
+                            <% if (type === 'Sequence') { %>
+                            <option value="Sequence" selected>顺序</option>
+                            <% } else { %>
+                            <option value="Sequence">顺序</option>
+                            <% } %>
+                            <% if (type === 'Random') { %>
+                            <option value="Random" selected>随机</option>
+                            <% } else { %>
+                            <option value="Random">随机</option>
+                            <% } %>
+                            <% if (type === 'Percent') { %>
+                            <option value="Percent" selected>随机</option>
+                            <% } else { %>
+                            <option value="Percent">比例</option>
+                            <% } %>
+                        </select>
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除" data-program-type="Regular"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加" data-program-type="Regular"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
                      </div>
+                
                 </div>
-                <ul></ul>
+                <div class="sticky-item-replace"></div>
+                <ul>
+                    
+                </ul>
             </div>
 
 
@@ -102,6 +107,9 @@
 
 <script type="text/javascript">
 
+
+    (function (obj,hint){
+
     function getLength(str){  
             var realLength = 0;  
             for (var i = 0; i < str.length; i++){  
@@ -117,8 +125,6 @@
             return realLength;  
         }  
 
-
-    function directName(obj,hint){
         //get name
         var $obj = $(obj);
         var t = $obj.val();
@@ -153,9 +159,7 @@
             var left = length * width/2 +77;
             $hint.css('left',left);
         });
-    }
-
-    directName('.direct-name-002','.direct-name-001-hint');
+    }('.direct-name-002','.direct-name-001-hint'))
 
 
 </script>

@@ -12,9 +12,9 @@
 }
 
 #channel-editor-wrapper .channel-editor-body {
-    padding-left: 30px;
+    padding-left: 15px;
     padding-top: 15px;
-    padding-right: 30px;
+    padding-right: 15px;
     width: 100%;
     height: calc(100% - 60px);
 }
@@ -24,12 +24,7 @@
     display: block;
     clear: both;
 }
-
-#channel-editor-wrapper .channel-program-list {
-    width: 256px;
-    height: 100%;
-    float: left;
-}
+    
 
 #channel-editor-wrapper .channel-program-list ul {
     list-style: none;
@@ -37,12 +32,6 @@
     margin-bottom: 0;
 }
 
-#channel-editor-wrapper .channel-program-list li {
-    list-style: none;
-    width: 100px;
-    height: 100px;
-    border: 1px solid #cccccc;
-}
 
 #channel-editor-wrapper .channel-program-editor {
     width: calc(100% - 300px);
@@ -157,5 +146,38 @@
 }
 
 .channel-program-list-timed{
+    position: relative;
     min-height: 80px;
+}
+
+.channel-program-list-regular{
+    position: relative;
+    min-height: 80px;
+}
+
+
+.program-list-item{
+    position: relative;
+    list-style: none;
+    height: 150px;
+    border-bottom: 1px solid #f4f4f4;
+    margin: 15px 15px 15px 15px;
+    background: white;
+    z-index: 1;
+}
+
+.program-list-item-title{
+    position: absolute;
+    bottom: 7px;
+    width: 100%;
+    text-align: center;
+
+}
+
+#channel-editor-wrapper .channel-program-list{
+    width: 256px;
+    height: 100%;
+    float: left;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
