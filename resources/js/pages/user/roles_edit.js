@@ -120,7 +120,6 @@ define(function (require, exports, module) {
 					alert("修改成功！")
 					ROLES.loadRolesPage(1);
 					UTIL.cover.close();
-					UTIL.cover.load('resources/pages/user/roles_edit.html');
 				}else{
 					alert("修改失败！")
 					}

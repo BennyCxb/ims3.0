@@ -153,9 +153,7 @@ define(function (require, exports, module) {
         	}
         	$(".sidebar-menu li:eq(0)").attr("class","treeview active");
 
-        	window.onhashchange = function () {
-                loadPage();
-            }
+        	window.onhashchange = loadPage;
 
             //选择资源
            // $("#treeview_mtr").click(function () {

@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 			$('#cover_area').empty();
 			$('#cover_area').css('display','none');
 		}
-	}
+	};
 
 
 	exports.getHashParameters = function () {
@@ -43,11 +43,11 @@ define(function(require, exports, module) {
 
 	exports.setLocalParameter = function(name,value){
 		localStorage.setItem(name , value);
-	}
+	};
 
 	exports.getLocalParameter = function(name){
 		return localStorage.getItem(name);
-	}
+	};
 
 	//设置cookie
 	exports.setCookie = function (name,value,days){
@@ -55,13 +55,14 @@ define(function(require, exports, module) {
 		//exp.setTime(exp.getTime() + days*24*60*60*1000);
 		//var arr=document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 		document.cookie=name+"="+escape(value);
-	}
+	};
+
 	exports.getCookie = function (name){
 		var arr=document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
 		if(arr!=null){
 			return unescape(arr[2]);
 		}
-	}
+	};
 
 	function ajax(type, url, data, successFn){
 
