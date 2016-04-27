@@ -5,7 +5,6 @@ define(function (require, exports, module) {
     var nDisplayItems = 10;
 
     exports.init = function () {
-		var loadType;
         exports.loadRolesPage(1); //加载默认页面
         //添加
         $("#roles_add").click(function () {
@@ -97,28 +96,28 @@ define(function (require, exports, module) {
 					
 				//alert(stringArry);
 				if(users===""){
-					users="点击分配用户"
+					var users1="点击分配用户"
 					}else{
 						var uArray = users.split(",");
-						users="";
+						var users1="";
 						for(var n = 0;n<uArray.length;n++){
 							var uString = '<i class="fa fa-user"></i>'+uArray[n]+'&nbsp;';
-							users = users + uString;
+							users1 = users1 + uString;
 							}
 						}
 				if(rID===1){
-					var roltr = '<tr class="rol-row" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+					var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users + '</a></td>' + 
+					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users1 + '</a></td>' + 
 					'<td></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
 					}else{
-                var roltr = '<tr class="rol-row" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+                var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users + '</a></td>' + 
+					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users1 + '</a></td>' + 
 					'<td><a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
@@ -157,7 +156,7 @@ define(function (require, exports, module) {
 			//分配用户
 			$(".roles_assign").click(function(){
 				var self = $(this);
-				var userList = self.html();
+				var userList = self.parent().parent().attr("users");
 				exports.uList = userList;
 				var rName = self.parent().parent().attr("rolesName");
 				exports.roleName = rName;
