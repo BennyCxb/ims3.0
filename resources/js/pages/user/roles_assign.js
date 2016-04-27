@@ -67,7 +67,7 @@ define(function (require, exports, module) {
 				var unchecked_id1 = uncheckedArr[k];
 				if(unchecked_id1){
 					var data = JSON.stringify({
-						project_name:'newui_dev',
+						project_name:CONFIG.projectName,
 						action:'UpdateUserRole',
 						Data:{
 							"RoleID":-1

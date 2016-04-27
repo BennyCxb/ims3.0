@@ -89,6 +89,7 @@ define(function (require, exports, module) {
 	                	          '<ul class="treeview-menu">'+
 	                	            '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
 	                	            '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
+									'<li><a href="#channel/list_check"><i class="fa fa-circle-o"></i> 频道审核</a></li>'+
 	                	          '</ul>'+
 	                	        '</li>');
                 	}
