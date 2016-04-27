@@ -76,12 +76,16 @@
  }
 
 #channel-editor-wrapper .channel-program-layout-body {
-    height: calc(100% - 160px);
-    position: relative;
-}
-
-#channel-editor-wrapper .channel-program-layout-footer {
-    height: 100px;
+    position: absolute;
+    top: 160px;
+    bottom: 80px;
+    left: 15px;
+    right: 480px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    background-image: url(../../../img/img_grid.png);
 }
 
 #channel-editor-wrapper .channel-program-widget {
@@ -97,23 +101,35 @@
 }
 
 #channel-editor-wrapper .channel-program-layout-footer {
-    width: 100%;
-    overflow-x: auto;
+    position: absolute;
+    height: 50px;
+    bottom: 15px;
+    left: 15px;
+    right: 500px;
 }
 
 #channel-editor-wrapper .channel-program-layout-footer>ul {
     display: inline-block;
     white-space: nowrap;
+    padding: 0;
 }
 
 #channel-editor-wrapper .channel-program-layout-footer li {
+    position: relative;
     display: inline-block;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
+    padding: 3px 7px 3px 31px;
+    line-height: 24px;
     text-align: center;
-    color: #ffffff;
-    margin: 10px;
+    color: #333;
+    margin-right: 10px;
+    cursor: pointer;
+    border: solid 1px #ddd;
+    border-radius: 3px;
+}
+
+#channel-editor-wrapper .channel-program-layout-footer li:hover{
+    transition-duration: .3s;
+    background: #e7e7e7;
 }
 
 #channel-editor-wrapper .timed-program .channel-editor-program-trigger {
@@ -215,8 +231,15 @@
     background: #f4f4f4;
 }
 
-
-
+.wiget-mark {
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    border: solid 1px #ddd;
+}
 
 
 
