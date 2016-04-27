@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "Sortable": "^1.4.2",
-    "backbone": "^1.3.3"
+    "backbone": "^1.3.3",
+    "jquery.marquee": "jQuery.Marquee#^1.3.9"
   }
 }
