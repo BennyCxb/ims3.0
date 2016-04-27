@@ -2,6 +2,7 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var	MTRCTRL = require('pages/channel/mtrCtrl');
+    var	LAYOUTEDIT = require('pages/layout/edit');
     var nDisplayItems = 10,
         keyword = "";
 
@@ -25,57 +26,60 @@ define(function (require, exports, module) {
         })
 
         //全选和全不选
-        $("#mtr_allCheck").click(function () {
-            var clicks = $(this).data('clicks');
+        if ($("#mtr_addMtr").attr("is_choisebg") != "1"){
+	        $("#mtr_allCheck").click(function () {
+	            var clicks = $(this).data('clicks');
+	            if (clicks) {
+	                //Uncheck all checkboxes
+	                $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
+	                $("#mtr_allCheck i").attr("class", "fa fa-square-o");
+	            } else {
+	                //Check all checkboxes
+	                $("#mtr_choiseTable input[type='checkbox']").iCheck("check");
+	                $("#mtr_allCheck i").attr("class", "fa fa-check-square-o");
+	            }
+	            $(this).data("clicks", !clicks);
+	            mtrCb();
+	        });
+        }
 
-            if (clicks) {
-                //Uncheck all checkboxes
-                $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
-//                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-                $("#mtr_allCheck i").attr("class", "fa fa-square-o");
-            } else {
-                //Check all checkboxes
-                $("#mtr_choiseTable input[type='checkbox']").iCheck("check");
-//                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-                $("#mtr_allCheck i").attr("class", "fa fa-check-square-o");
-            }
-            $(this).data("clicks", !clicks);
-            mtrCb();
-        });
-
-        exports.mtrChoiseBg();
         var type = $("#mtr_addMtr").attr("typeid");
         loadPage(1, Number(type));
 
         //保存
         $("#amtr_add").click(function () {
-            
-            var datalist = [];
-            for (var x = 0; x < $(".amtr_cb").length; x++) {
-                if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
-                    var mtrId = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrid");
-                    var mtrName = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrname");
-                    var duration = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("duration");
-                    var mtrtype = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrtype");
-                    var data = {
-                		mtrId : mtrId,
-                		mtrName : mtrName,
-                        duration : duration,
-                        mtrtype :mtrtype
-                    };
-                    datalist.push(data);
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
+            	LAYOUTEDIT.updateBackground(url);
+            }else {
+            	var datalist = [];
+                for (var x = 0; x < $(".amtr_cb").length; x++) {
+                    if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
+                        var mtrId = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrid");
+                        var mtrName = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrname");
+                        var duration = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("duration");
+                        var mtrtype = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrtype");
+                        var data = {
+                    		mtrId : mtrId,
+                    		mtrName : mtrName,
+                            duration : duration,
+                            mtrtype :mtrtype
+                        };
+                        datalist.push(data);
+                    }
                 }
+                MTRCTRL.getSelectedID(datalist);
             }
-            MTRCTRL.getSelectedID(datalist);
             UTIL.cover.close();
         })
     }
 
-    exports.mtrChoiseBg = function(msg){
-        if(msg == "true"){
-
-        }
-    }
+//    exports.mtrChoiseBg = function(msg){
+//        if(msg == "true"){
+//        	loadPage(pageNum, 2);
+//        	$("#mtr_choiseTitle").html("背景图选择列表");
+//        }
+//    }
 
     function loadPage(pageNum, type) {
         //判断是否是视频控件选择列表
@@ -83,12 +87,12 @@ define(function (require, exports, module) {
             if (type == 1) {
                 $("#dp_action").html("视频");
             } else if (type == 2) {
-                $("#mtr_choiseTitle").html("视频控件选择列表");
+                $("#mtr_choiseTitle").html("视频控件资源选择列表");
                 $("#dp_action").html("图片");
             }
         } else {
             if (type == 2) {
-                $("#mtr_choiseTitle").html("图片控件选择列表");
+                $("#mtr_choiseTitle").html("图片控件资源选择列表");
             }
             $("#mtr_dplist").remove();
         }
@@ -98,7 +102,7 @@ define(function (require, exports, module) {
         switch (type) {
             case 1:
                 mtrType = "VideoLive";
-                $("#mtr_choiseTitle").html("视频控件选择列表");
+                $("#mtr_choiseTitle").html("视频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索视频");
                 $("#mtrChoiseSearch").attr("typeId", "1");
                 break;
@@ -109,13 +113,13 @@ define(function (require, exports, module) {
                 break;
             case 3:
                 mtrType = "Audio";
-                $("#mtr_choiseTitle").html("音频控件选择列表");
+                $("#mtr_choiseTitle").html("音频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索音频");
                 $("#mtrChoiseSearch").attr("typeId", "3");
                 break;
             case 4:
                 mtrType = "WebText";
-                $("#mtr_choiseTitle").html("文本控件选择列表");
+                $("#mtr_choiseTitle").html("文本控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索文本");
                 $("#mtrChoiseSearch").attr("typeId", "4");
                 break;
@@ -218,9 +222,8 @@ define(function (require, exports, module) {
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue'
         });
-        //
+        //checkbox
         $(".icheckbox_flat-blue").parent().parent().click(function () {
             $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
             var obj = $(this).find("input");
@@ -236,6 +239,19 @@ define(function (require, exports, module) {
             mtrCb();
         })
         $(".icheckbox_flat-blue ins").click(function () {
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            	$("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
+                var obj = $(this).prev();
+                if ($(this).prev().prop("checked") == true) {
+                    $(this).prev().prop("checked", false);
+                    $(this).parent().prop("class", "icheckbox_flat-blue");
+                    $(this).parent().prop("aria-checked", "false");
+                } else {
+                    $(this).prev().prop("checked", true);
+                    $(this).parent().prop("class", "icheckbox_flat-blue checked");
+                    $(this).parent().prop("aria-checked", "true");
+                }
+            }
             mtrCb();
         })
 
@@ -259,6 +275,5 @@ define(function (require, exports, module) {
                 $("#mtr_allCheck i").attr("class", "fa fa-square-o");
             }
         }
-
     }
 })
