@@ -151,6 +151,9 @@ define(function(require, exports, module) {
         $('#layout-editor-wrapper input').change(onInputChanged);
         $('#layout-editor-wrapper .btn-add-widget').click(onAddWidget);
         $('#layout-editor-wrapper .btn-layout-editor-background').click(function () {
+            //alert('资源列表还未实现');
+            var page = "resources/pages/channel/addMtr.html";
+            util.cover.load(page);
             onAddMaterial();
         });
         $('#layout-editor-wrapper .btn-layout-editor-delete-widget').click(function () {

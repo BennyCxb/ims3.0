@@ -12,11 +12,13 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="resources/bootstrap/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"> -->
+  <link rel="stylesheet" href="resources/bootstrap/css/ionicons.min.css">
   <!-- bootstrap slider -->
   <link rel="stylesheet" href="resources/plugins/bootstrap-slider/slider.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="resources/dist/css/AdminLTE.css">
   <!-- Bootstrap switch -->
@@ -77,7 +79,7 @@
                 <p>
                   <sec:authentication property="name"/>@${project_name}
                   <small>${project_name_cn}
-                  Member since Nov. 2012</small>
+                  </small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -212,6 +214,8 @@
 <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="resources/plugins/fastclick/fastclick.js"></script>
+<!-- Select2 -->
+<script src="resources/plugins/select2/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="resources/dist/js/app.min.js"></script>
 <!-- Sea.js 3.0.0 -->

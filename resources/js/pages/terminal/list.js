@@ -10,13 +10,18 @@ define(function(require, exports, module) {
       _pageNO = 1,
       _checkList = [],
       _snapTermID,
-      _termStatusCount;
+      _termStatusCount,
+      _editTreeClassInput;
 
-	exports.init = function(){
+  exports.init = function(){
     test();
     initTree();
     initEvent();
-	}
+  }
+
+  exports.loadTermList = function(){
+    loadTermList(_pageNO);
+  }
 
   function test(){
     $('#ct').click(function(){
@@ -71,7 +76,16 @@ define(function(require, exports, module) {
 
     // 终端配置按钮点击
     $('#tct_config').click(function(){
-      
+      var li = $('#termclass-tree').find('.focus');
+      // 未选中分类不能配置
+      if(li.length === 0){
+        return;
+      }
+      var configTermClass = require('pages/terminal/configTermClass.js');
+      configTermClass.classID = Number(li.attr("node-id"));
+      configTermClass.className = $('#termlist-title').html();
+      configTermClass.requireJS = "pages/terminal/list.js";
+      UTIL.cover.load('resources/pages/terminal/configTermClass.html');
     })
 
     // refresh
@@ -305,12 +319,17 @@ define(function(require, exports, module) {
 
   function loadTermList(pageNum){
 
+    var dom = $('#termclass-tree').find('.focus');
+
+    // 未选中分类不加载
+    if(dom.length === 0){
+      return;
+    }
+    $('#termlist-title').html(_tree.getFocusName(dom));
+    
     // loading
     $('#term_list').html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
-
-    var dom = $('#termclass-tree').find('.focus');
-    $('#termlist-title').html(_tree.getFocusName(dom));
-
+    
     if(pageNum !== undefined){
       _pageNO = pageNum;
     }else{
@@ -424,46 +443,61 @@ define(function(require, exports, module) {
         $('#term_list').empty();
         for(var i = 0; i < tl.length; i++){
 
-          var downloadStatus = JSON.parse(tl[i].CurrentChannelDownloadInfo);
-          var downloadNum = downloadStatus.DownloadFiles +'/' + downloadStatus.AllFiles;
-          downloadStatus = downloadStatus.DownloadFiles/downloadStatus.AllFiles*100;
+          var downloadStatus = JSON.parse(tl[i].CurrentChannelDownloadInfo),
+              downloadNum,
+              downloadDisplay = "visible";
+          if(downloadStatus.AllFiles === 0){
+            downloadNum = "无下载任务";
+            downloadStatus = '-';
+            downloadDisplay = 'hidden';
+          }else{
+            downloadNum = "已下载：" + downloadStatus.DownloadFiles +'个，未下载' + (downloadStatus.AllFiles - downloadStatus.DownloadFiles)+'个';
+            downloadStatus = Number(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
+          }
 
-          var preloadStatus = JSON.parse(tl[i].PreDownloadInfo);
-          var preloadNum = preloadStatus.DownloadFiles +'/' + preloadStatus.AllFiles;
-          preloadStatus = preloadStatus.DownloadFiles/preloadStatus.AllFiles*100;
+          var preloadStatus = JSON.parse(tl[i].PreDownloadInfo),
+              preloadNum,
+              preloadDisplay = "visible";
+          if(preloadStatus.AllFiles === 0){
+            preloadNum = "无下载任务";
+            preloadStatus = '-';
+            preloadDisplay = 'hidden';
+          }else{
+            preloadNum = "已下载：" + preloadStatus.DownloadFiles +'个，未下载' + (preloadStatus.AllFiles - preloadStatus.DownloadFiles)+'个';
+            preloadStatus = Number(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
+          }
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
           var snap = (tl[i].Online === 0)?'':'<a class="pointer">截屏</a>';
 
           $('#term_list').append('' +
-            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" status="' + status + '">' +
+            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
-              '<td style="width:36px; padding-right:0; padding-left:0"><i class="glyphicon glyphicon-hdd" style="position:relative; top:4px; left:10px;"></i></td>'+
-              '<td style="padding-left:0;">'+ tl[i].Name +'<br />'+ statusName +'</td>' +
+              '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
+              '<td style="padding-left:0;"><strong>'+ tl[i].Name +'</strong><br />'+ statusName +'<br />磁盘信息：'+ tl[i].DiskInfo +'<br />CPU：'+ tl[i].Cpu +'%<br />内存：'+ tl[i].Mem +'</td>' +
               '<td>当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
               '<td>' +
-                '<span style="font-size: 12px; color: grey;">下载：'+downloadNum+'</span>' +
-                '<div style="height: 10px; margin-top: 0px;" class="progress progress-striped">' +
+                '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
+                '<div style="visibility:'+downloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
                    '<div class="progress-bar progress-bar-success" role="progressbar" ' +
                       'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
-                      'style="width: '+ downloadStatus +'%;">' +
-                      '<span class="sr-only">'+ downloadStatus +'% 完成（成功）</span>' +
+                      'style="width: '+ downloadStatus +';">' +
+                      '<span class="sr-only">'+ downloadStatus +' 完成（成功）</span>' +
                    '</div>' +
                 '</div>' +
-                '<span style="font-size: 12px; color: grey;">预下载：'+preloadNum+'</span>' +
-                '<div style="height: 10px; margin-top: 0px;" class="progress progress-striped">' +
+                '<span title="'+preloadNum+'" style="font-size: 12px; color: grey;">预下载：'+preloadStatus+'</span>' +
+                '<div style="visibility:'+preloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
                    '<div class="progress-bar progress-bar-success" role="progressbar" ' +
                       'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
-                      'style="width: '+ preloadStatus +'%;">' +
-                      '<span class="sr-only">'+ preloadStatus +'% 完成（成功）</span>' +
+                      'style="width: '+ preloadStatus +';">' +
+                      '<span class="sr-only">'+ preloadStatus +' 完成（成功）</span>' +
                    '</div>' +
                 '</div>' +
               '</td>' +
-              '<td style="font-size:14px; color:#333; line-height:20px; position:relative; top:1px; ">' +
+              '<td>' +
               'IP：'+ tl[i].IP +'<br />' +
-              'MAC：'+ tl[i].MAC +'<br />' +
               '版本：' + tl[i].TermVersion + 
               '</td>' +
               '<td><a class="pointer">编辑</a> <br/>'+snap+'</td>' +
@@ -519,8 +553,12 @@ define(function(require, exports, module) {
             var li = $(this).parent().parent();
             configOneTerm.termID = Number(li.attr("tid"));
             configOneTerm.termName = li.attr("tname");
+            configOneTerm.diskInfo = li.attr("disk");
+            configOneTerm.CPU = li.attr("cpu");
             configOneTerm.IP = li.attr("ip");
+            configOneTerm.Mem = li.attr("mem");
             configOneTerm.MAC = li.attr("mac");
+            configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 
@@ -844,13 +882,14 @@ define(function(require, exports, module) {
                   "categoryID": nodeId,
                   "newName": change
                 }
-
+                _editTreeClassInput = input;
+                
                 UTIL.ajax(
                   'POST', 
                   CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
                   JSON.stringify(data), 
                   function(data){
-                    var a = $('#termclass-tree').find('.focus').children('a');
+                    var a = _editTreeClassInput.parent().parent();
                     var input = a.children('div').children('input');
                     var t = a.children('span');
                     if(data.rescode == '200'){

@@ -24,7 +24,7 @@ define(function (require, exports, module) {
 				isValid:1				
             }
             var data = JSON.stringify({
-                project_name: 'newui_dev',
+                project_name:CONFIG.projectName,
                 action:'POST',
                 Data: name
             });

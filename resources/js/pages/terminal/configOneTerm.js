@@ -6,6 +6,8 @@ define(function(require, exports, module) {
   exports.termID;
   exports.termName;
   exports.IP;
+  exports.CPU;
+  exports.Mem;
   exports.MAC;
   exports.requireJS;
   exports.diskInfo;
@@ -269,6 +271,7 @@ define(function(require, exports, module) {
           JSON.stringify(data), 
           function(data){
             if(data.rescode === '200'){
+              alert('保存成功');
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
@@ -282,6 +285,8 @@ define(function(require, exports, module) {
 
   function inputInit(){
 
+    $(".select2").select2();
+    
     $.fn.bootstrapSwitch.defaults.onText = '开';
     $.fn.bootstrapSwitch.defaults.offText = '关';
 
@@ -323,6 +328,7 @@ define(function(require, exports, module) {
     $('#CO-downloadStart').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-downloadEnd').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
     $('#CO-restartTime').inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+
   }
 
   function loadInfo(){
@@ -332,6 +338,8 @@ define(function(require, exports, module) {
     $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
+    $('#CO-CPU').html(exports.CPU + '%');
+    $('#CO-Mem').html(exports.Mem);
 
       var data = {
         "project_name": CONFIG.projectName,

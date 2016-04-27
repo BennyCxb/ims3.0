@@ -21,7 +21,7 @@ define(function (require, exports, module) {
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#rolesLisTitle").html("角色列表");
         var data = JSON.stringify({
-			project_name: 'newui_dev',
+			project_name:CONFIG.projectName,
             action: 'GetPage',
             Pager: {
 				"total":-1,
@@ -96,6 +96,16 @@ define(function (require, exports, module) {
 //					});
 					
 				//alert(stringArry);
+				if(rID===1){
+					var roltr = '<tr rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+                    '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
+                    '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
+					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + users + '</td>' + 
+					'<td></td>' +
+					'<td><a class="roles_assign">分配用户</a></td>' +
+                    '</tr>';
+                $("#rolesTable tbody").append(roltr);
+					}else{
                 var roltr = '<tr rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
@@ -104,6 +114,7 @@ define(function (require, exports, module) {
 					'<td><a class="roles_assign">分配用户</a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
+				}
             }
 			//删除
 			$(".roles_delete").click(function () {
@@ -111,7 +122,7 @@ define(function (require, exports, module) {
 				var currentID = self.parent().parent().attr("rolesID");
 				if (confirm("确定删除该角色？")) {
 					var data = JSON.stringify({
-						project_name: 'newui_dev',
+						project_name:CONFIG.projectName,
 						action: 'Delete'		
 					});
 					var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + currentID;

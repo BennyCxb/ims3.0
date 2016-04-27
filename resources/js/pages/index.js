@@ -74,10 +74,10 @@ define(function (require, exports, module) {
                 case 1:		//终端管理
                 	if (jdtData[a].ReadWriteAuth == 1){
                 		$(".sidebar-menu").append('<li id="treeview_term" class="treeview">'+
-                  	          '<a href="#"><i class="fa fa-desktop"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i></a>'+
+                  	          '<a href="#"><i class="fa fa-dashboard"></i> <span>控制台</span> <i class="fa fa-angle-left pull-right"></i></a>'+
                   	          '<ul class="treeview-menu">'+
-                  	          	'<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>'+
-                  	          	'<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-circle-o"></i> 日志</a></li>'+
+                  	          	'<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> 终端</a></li>'+
+                  	          	'<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> 日志</a></li>'+
                   	          '</ul>'+
                   	        '</li>');
                 	}
@@ -85,10 +85,10 @@ define(function (require, exports, module) {
                 case 2:		//频道管理
                 	if (jdtData[a].ReadWriteAuth == 1){
 	                	$(".sidebar-menu").append('<li id="treeview_channel" class="treeview">'+
-	                	          '<a href="#"><i class="glyphicon glyphicon-inbox"></i><span>&nbsp;频道</span><i class="fa fa-angle-left pull-right"></i></a>'+
+	                	          '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
-	                	            '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
-	                	            '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
+	                	            '<li><a href="#channel/list"><i class="fa fa-caret-square-o-right"></i> 频道</a></li>'+
+	                	            // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
 	                	          '</ul>'+
 	                	        '</li>');
                 	}
@@ -97,7 +97,7 @@ define(function (require, exports, module) {
                 	if (jdtData[a].ReadWriteAuth == 1){
 	                	$(".sidebar-menu").append('<li id="treeview_mtr" class="treeview">'+
 	              	          '<a href="#materials/materials_list">'+
-	              	            '<i class="fa fa-book"></i> <span>资源</span>'+
+	              	            '<i class="fa fa-server"></i> <span>资源存储</span>'+
 	              	          '</a>'+
 	              	        '</li>');
                 	}
@@ -110,23 +110,23 @@ define(function (require, exports, module) {
 		                	$(".sidebar-menu").append('<li id="treeview_channel" class="treeview">'+
 		              	          '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;布局</span><i class="fa fa-angle-left pull-right"></i></a>'+
 		              	          '<ul class="treeview-menu">'+
-		              	            '<li><a href="#layout/list"><i class="fa fa-circle-o"></i> 布局列表</a></li>'+
+		              	            '<li><a href="#layout/list"><i class="fa fa-newspaper-o"></i> 布局列表</a></li>'+
 		              	          '</ul>'+
 		              	        '</li>');
 	                	}else {
-	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-circle-o"></i> 布局列表</a></li>');
+	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-newspaper-o"></i>节目模板</a></li>');
 	                	}
                 	}
                     break;
                 case 6:		//用户管理
                 	if (jdtData[a].ReadWriteAuth == 1){
 	                	$(".sidebar-menu").append('<li id="treeview_user" class="treeview">'+
-	                	          '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;用户</span><i class="fa fa-angle-left pull-right"></i></a>'+
+	                	          '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
-	                	            '<li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>'+
-	                	            '<li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>'+
-                                    '<li><a href="#funcmodule/list"><i class="fa fa-circle-o"></i> 功能模块</a></li>'+
-                                    '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-circle-o"></i> 操作日志</a></li>'+
+	                	            '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>'+
+	                	            '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色</a></li>'+
+                                    '<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
+                                    '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>'+
 	                	          '</ul>'+
 	                	        '</li>');
 	                    break;

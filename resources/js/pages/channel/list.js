@@ -57,7 +57,7 @@ define(function(require, exports, module) {
                 ev.stopPropagation();
             }
         });
-        $('#channel-list-nav button').click(function (ev) {
+        $('#channel-list-nav .glyphicon-search').click(function (ev) {
             onSearch($('#channel-list-nav input').val());
         });
         

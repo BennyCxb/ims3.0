@@ -19,9 +19,9 @@ define(function (require, exports, module) {
         $("#usersLisTitle").html("");
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#usersLisTitle").html("用户列表");
+        $("#usersLisTitle").html("全部用户");
         var data = JSON.stringify({
-			project_name: 'newui_dev',
+			project_name:CONFIG.projectName,
             action: 'GetUsersAll',
             Pager: {
 				"total":-1,
@@ -62,10 +62,10 @@ define(function (require, exports, module) {
         if (json.Users != undefined) {
             var rolData = json.Users;
 			$("#usersTable tbody").append('<tr>'+                              
+                                    // '<th class="users_ID">UID</th>'+
                                     '<th class="users_name">用户名</th>'+
-                                    '<th class="users_ID">用户ID</th>'+
-									'<th class="users_email">邮箱</th>'+
 									'<th class="description">备注</th>'+
+									'<th class="users_email">邮箱</th>'+
 									'<th class="roles">角色</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
@@ -79,23 +79,35 @@ define(function (require, exports, module) {
 				var email = rolData[x].EMAIL;
 				var uPass = rolData[x].PASSWORD;
 				if(rName!==undefined){
-                var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '">' +
-                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
-                    '<td class="users_id">ID：' + uID + '</td>' + 
-					'<td class="users_email">' + email + '</td>' + 
+					if(uID===1){
+						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
-					'<td><a class="users_delete">删除</a></td>' +
+					'<td></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
-				}else{
-					var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '">' +
-                    '<td class="users_name"><a class="user_name">' + uName + '</a></td>' +
-                    '<td class="users_id">ID：' + uID + '</td>' + 
-					'<td class="users_email">' + email + '</td>' +
+						}else{
+                var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' + 
+					'<td class="role_name">' + rName + '</td>' + 
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+                    '</tr>';
+                $("#usersTable tbody").append(roltr);
+				}
+				}else{
+					var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+                    // '<td class="users_id">' + uID + '</td>' + 
+                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
+					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
+					'<td class="users_email">' + email + '</td>' +
 					'<td class="role_name">未分配</td>' + 
-					'<td><a class="users_delete">删除</a></td>' +
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                		$("#usersTable tbody").append(roltr);
 					}
@@ -106,7 +118,7 @@ define(function (require, exports, module) {
 				var currentID = self.parent().parent().attr("userID");
 				if (confirm("确定删除该用户？")) {
 					var data = JSON.stringify({
-						project_name: 'newui_dev',
+						project_name:CONFIG.projectName,
 						action: 'DELETE'		
 					});
 					var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/' + currentID;
@@ -124,11 +136,13 @@ define(function (require, exports, module) {
 				var uEmail = self.parent().parent().attr("userEmail");
 				var uDes = self.parent().parent().attr("userDes");
 				var uPass = self.parent().parent().attr("userPass");
+				var rID = self.parent().parent().attr("roleID");
 				exports.userName = uName;
 				exports.userID = currentID;
 				exports.userEmail = uEmail;
 				exports.userDes = uDes;
 				exports.userPass = uPass;
+				exports.roleID = rID;
 				UTIL.cover.load('resources/pages/user/user_edit.html');
 				});
         }

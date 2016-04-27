@@ -239,6 +239,7 @@ define(function(require, exports, module) {
           JSON.stringify(data), 
           function(data){
             if(data.rescode === '200'){
+              alert('保存成功');
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
