@@ -275,9 +275,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td><input type="checkbox"></td> <td>布局名称:'+
+'"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#layout/edit?id='+
+((__t=(id))==null?'':__t)+
+'" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</td> <td>布局宽:'+
+'</a></td> <td>布局宽:'+
 ((__t=(width))==null?'':__t)+
 '</td> <td>布局高:'+
 ((__t=(height))==null?'':__t)+
@@ -285,9 +287,7 @@ __p+='<tr data-layout-id="'+
 ((__t=(background_color))==null?'':__t)+
 '</td> <td>上传时间:'+
 ((__t=(create_time))==null?'':__t)+
-'</td> <td><a href="#layout/edit?id='+
-((__t=(id))==null?'':__t)+
-'" class="btn-table-detail">编辑</a></td> </tr>';
+'</td><!-- <td>编辑</td> --> </tr>';
 }
 return __p;
 };});
