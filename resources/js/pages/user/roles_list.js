@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         $("#rolesLisTitle").html("");
         $("#rolesTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#rolesLisTitle").html("角色列表");
+        $("#rolesLisTitle").html("全部角色");
         var data = JSON.stringify({
 			project_name:CONFIG.projectName,
             action: 'GetPage',
@@ -62,11 +62,9 @@ define(function (require, exports, module) {
         if (json.Roles != undefined) {
             var rolData = json.Roles;
 			$("#rolesTable tbody").append('<tr>'+                              
-                                    '<th class="roles_name">角色名</th>'+
-                                    '<th class="roles_ID">角色ID</th>'+
+                                    '<th class="roles_name" style="width:150px;">角色名</th>'+
 									'<th class="users">用户</th>'+
-									'<th class=""></th>'+
-									'<th class=""></th>'+
+									'<th class="" style="width:1px;"></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
 				//var stringArry;
@@ -97,21 +95,19 @@ define(function (require, exports, module) {
 					
 				//alert(stringArry);
 				if(rID===1){
-					var roltr = '<tr rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+					var roltr = '<tr class="rol-row" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
-                    '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + users + '</td>' + 
+                    // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
+					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users + '</a></td>' + 
 					'<td></td>' +
-					'<td><a class="roles_assign">分配用户</a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
 					}else{
-                var roltr = '<tr rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+                var roltr = '<tr class="rol-row" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
-                    '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + users + '</td>' + 
-					'<td><a class="roles_delete">删除</a></td>' +
-					'<td><a class="roles_assign">分配用户</a></td>' +
+                    // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
+					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users + '</a></td>' + 
+					'<td><a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
 				}

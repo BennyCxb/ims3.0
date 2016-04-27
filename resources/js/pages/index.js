@@ -124,7 +124,7 @@ define(function (require, exports, module) {
 	                	          '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
 	                	            '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>'+
-	                	            '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色</a></li>'+
+	                	            '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>'+
                                     '<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
                                     '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>'+
 	                	          '</ul>'+

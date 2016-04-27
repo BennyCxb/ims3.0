@@ -544,6 +544,10 @@ a {
 
 
 /*user*/
+.user_name{
+  /*font-weight: bold;*/
+}
+
 .users_name .fa-user{
   color: #3c8dbc;
   padding-right: 7px;
@@ -555,11 +559,11 @@ a {
  }
 
  
-.user-row:hover .user-delete{
-  opacity: .6
+.user-row:hover .user-delete , .rol-row:hover .user-delete{
+  opacity: .6;
   }
 
-.users_delete:hover .user-delete{
+.users_delete:hover .user-delete , .roles_delete:hover .user-delete{
   opacity: 1;
  }
   
