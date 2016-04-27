@@ -96,9 +96,13 @@ define(function (require, exports, module) {
                 case 3:		//资源管理
                 	if (jdtData[a].ReadWriteAuth == 1){
 	                	$(".sidebar-menu").append('<li id="treeview_mtr" class="treeview">'+
-	              	          '<a href="#materials/materials_list">'+
-	              	            '<i class="fa fa-book"></i> <span>资源</span>'+
-	              	          '</a>'+
+	              	         
+							   '<a href="#"><i class="fa fa-book"></i><span>&nbsp;资源</span><i class="fa fa-angle-left pull-right"></i></a>'+
+	                	          '<ul class="treeview-menu">'+
+	                	            '<li><a href="#materials/materials_list"><i class="fa fa-book"></i> 资源</a></li>'+
+	                	            '<li><a href="#materials/materials_list_check"><i class="fa fa-book"></i> 资源审核</a></li>'+
+	                	          '</ul>'+
+	                	        
 	              	        '</li>');
                 	}
                     break;
@@ -142,12 +146,12 @@ define(function (require, exports, module) {
             }
 
             //选择资源
-            $("#treeview_mtr").click(function () {
-                $(".sidebar-menu li").attr("class", "treeview");
-                $(".sidebar-menu li ul").css("display", "none");
-                $("#treeview_mtr").attr("class", "treeview active");
-                loadPage();
-            })
+           // $("#treeview_mtr").click(function () {
+//                $(".sidebar-menu li").attr("class", "treeview");
+//                $(".sidebar-menu li ul").css("display", "none");
+//                $("#treeview_mtr").attr("class", "treeview active");
+//                loadPage();
+//            })
 
             if ($(".sidebar-menu li").length == 0){
         		alert("您没有任何权限，请联系管理员！");

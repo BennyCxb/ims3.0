@@ -5,12 +5,14 @@ define(function (require, exports, module) {
     var nDisplayItems = 10;
 
     exports.init = function () {
+		var loadType;
         exports.loadRolesPage(1); //加载默认页面
         //添加
         $("#roles_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"
             //INDEX.coverArea(page);
-			UTIL.cover.load('resources/pages/user/roles_add.html');
+			//exports.loadType = "addRole";
+			UTIL.cover.load('resources/pages/user/roles_edit.html');
         })
     }
 
@@ -143,6 +145,7 @@ define(function (require, exports, module) {
 				var currentID = self.parent().parent().attr("rolesID");
 				exports.roleName = rName;
 				exports.roleID = currentID;
+				//exports.loadType = "editRole";
 				UTIL.cover.load('resources/pages/user/roles_edit.html');
 				});
 			//分配用户

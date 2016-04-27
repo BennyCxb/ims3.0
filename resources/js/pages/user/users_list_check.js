@@ -10,7 +10,7 @@ define(function (require, exports, module) {
         $("#user_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"
             //INDEX.coverArea(page);
-			UTIL.cover.load('resources/pages/user/user_edit.html');
+			UTIL.cover.load('resources/pages/user/user_add.html');
         })
     }
 

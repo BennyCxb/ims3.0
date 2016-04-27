@@ -12,6 +12,7 @@ define(function (require, exports, module) {
 		var uDes = USERS.userDes;
 		var uPass = USERS.userPass;
 		var rID = USERS.roleID;
+		if(uID){
 		$("#user_name1").val(uName);
 		$("#email1").val(uEmail);
 		$("#description1").val(uDes);
@@ -52,6 +53,50 @@ define(function (require, exports, module) {
 				USERS.loadUsersPage(1);			
             });
         });
+		}
+		else{
+			$("#user_name1").val("");
+			$("#password1").val("");
+			$("#email1").val("");
+			$("#description1").val("");
+			//确定
+			$("#user_create1").click(function () {
+				var uName = $("#user_name1").val();
+				var uPassword = $("#password1").val();
+				var uEmail = $("#email1").val();
+				var uDescription = $("#description1").val();
+				if(uName===""){
+					alert("用户名不能为空！");
+					 $("#user_name1")[0].focus();
+					return false
+					}
+				var name = {
+					USERNAME: uName,
+					PASSWORD: uPassword,
+					EMAIL:uEmail,
+					RoleID:-1,
+					Description:uDescription,
+					isValid:1				
+				}
+				var data = JSON.stringify({
+					project_name:CONFIG.projectName,
+					action:'POST',
+					Data: name
+				});
+				var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
+				UTIL.ajax('post', url, data, function(msg){
+					if(msg.rescode == 200){
+						UTIL.cover.close();   
+						alert("添加用户成功");
+					}else if(msg.rescode==500){
+						alert("用户名已存在!");
+					}else{
+						alert("添加用户失败")
+						}	
+					USERS.loadUsersPage(1);			
+				});
+        });
+			}
 		 //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();

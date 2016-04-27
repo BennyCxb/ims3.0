@@ -8,6 +8,11 @@ define(function (require, exports, module) {
         //确定
         $("#roles_updata").click(function () {
         	var rolesName = $("#roles_name").val();
+			if(rolesName===""){
+				alert("角色名不能为空！");
+				 $("#roles_name")[0].focus();
+				return false
+				}
             var name = {
                 RoleName: rolesName
             }

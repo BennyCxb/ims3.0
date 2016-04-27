@@ -15,6 +15,11 @@ define(function (require, exports, module) {
 			var uPassword = $("#password").val();
 			var uEmail = $("#email").val();
 			var uDescription = $("#description").val();
+			if(uName===""){
+				alert("用户名不能为空！");
+				 $("#user_name")[0].focus();
+				return false
+				}
             var name = {
                 USERNAME: uName,
 				PASSWORD: uPassword,
