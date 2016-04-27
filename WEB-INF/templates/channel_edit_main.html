@@ -1,12 +1,15 @@
 <div id="channel-editor-wrapper">
 
     <div class="channel-editor-header">
-        <button class="btn-channel-editor-close">返回</button>
+        <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button>
+        <h1 class="header-title">频道编辑</h1>
+    </div>
+
         <input class="channel-editor-property" data-key="name" value="<%=name%>" />
         <button class="btn-channel-editor-save">保存</button>
         <button class="btn-channel-editor-publish">保存并发布</button>
-    </div>
 
+        
     <div class="channel-editor-body">
         <div class="channel-program-list">
             <div class="channel-program-list-timed">
