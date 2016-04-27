@@ -2,27 +2,64 @@
 
     <div class="channel-editor-header">
         <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button>
-        <h1 class="header-title">频道编辑</h1>
+        
+        <input class="direct-name-002 channel-editor-property" data-key="name" value="<%=name%>" />
+        <small class="direct-name-001-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px;">
+            <i class="glyphicon glyphicon-edit" style="color: white"></i>
+        </small>
+
+
+        <button type="button" class="header-button-left btn-channel-editor-save pull-right">
+            <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px;"></i>
+            保存
+        </button>
+        <button class="header-button-left btn-channel-editor-save pull-right btn-channel-editor-publish">
+            <i class="fa fa-rocket" style="position: relative; font-size: 15px;"></i>
+            保存并发布
+        </button>
     </div>
 
-        <input class="channel-editor-property" data-key="name" value="<%=name%>" />
-        <button class="btn-channel-editor-save">保存</button>
-        <button class="btn-channel-editor-publish">保存并发布</button>
 
         
     <div class="channel-editor-body">
+
+
+
         <div class="channel-program-list">
-            <div class="channel-program-list-timed">
-                <div>
-                    <h3>定时节目</h3>
-                    <button class="btn-program-delete" data-program-type="Timed">删除</button>
-                    <button class="btn-program-new" data-program-type="Timed">新建</button>
+            
+
+
+            <div class="channel-program-list-timed box box-solid">
+                <small style="position: absolute; bottom: 10px; right: 15px;">
+                    点击添加新节目
+                    <i class="glyphicon glyphicon-hand-up"></i>
+                </small>
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px;"></i>
+                        定时节目
+                    </h3>
+                    <div class="tools">
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                     </div>
                 </div>
-                <ul></ul>
+                <ul>
+                    
+                </ul>
             </div>
-            <div class="channel-program-list-regular">
-                <div>
-                    <h3>常规节目</h3>
+
+
+
+            <div class="channel-program-list-regular box box-solid">
+                <small style="position: absolute; bottom: 10px; right: 15px;">
+                    点击添加新节目
+                    <i class="glyphicon glyphicon-hand-up"></i>
+                </small>
+                <div class="box-header with-border">
+                    <i class="glyphicon glyphicon-repeat" style="position: relative; top: 3px; font-size: 16px; margin-right: 0;"></i>
+                    <h3 class="box-title">常规节目</h3>
+
                     <select class="channel-program-schedule-type">
                         <% var type = JSON.parse(overall_schedule_params).Type; %>
                         <% if (type === 'Sequence') { %>
@@ -41,11 +78,17 @@
                         <option value="Percent">比例</option>
                         <% } %>
                     </select>
-                    <button class="btn-program-delete" data-program-type="Regular">删除</button>
-                    <button class="btn-program-new" data-program-type="Regular">新建</button>
+                     <div class="tools">
+                        <a class="btn btn-default btn-xs btn-program-delete" title="删除"><i class="glyphicon glyphicon-trash" style="font-size:12px;"></i></a>
+                        <a  class="btn btn-default btn-xs btn-program-new" title="添加"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
+                     </div>
                 </div>
                 <ul></ul>
             </div>
+
+
+
+            
         </div>
         <div class="channel-program-editor">
             正在加载数据...
@@ -56,3 +99,63 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+
+    function getLength(str){  
+            var realLength = 0;  
+            for (var i = 0; i < str.length; i++){  
+                var charCode = str.charCodeAt(i);
+                
+                if (charCode >= 0 && charCode <= 128)   
+                realLength += 1;  
+                else   
+                realLength += 2;
+
+            }
+
+            return realLength;  
+        }  
+
+
+    function directName(obj,hint){
+        //get name
+        var $obj = $(obj);
+        var t = $obj.val();
+        var length = getLength(t);
+        var width = parseFloat($obj.css('font-size'));
+        var left = length * width/2 +77;
+
+        //get hint
+        var $hint = $(hint);
+        
+        //ux fix
+        $obj.css('cursor','pointer');
+
+        //reposition
+        $hint.css('left',left);
+
+        //event
+        $hint.click(function(){
+            $obj.focus().val(t);
+        });
+        $obj.focus(function(){
+            $hint.css('display','none');
+            $obj.css('cursor','');
+        });
+        $obj.blur(function(){
+            $hint.css('display','');
+            $obj.css('cursor','pointer');
+            //reposition
+            var t = $obj.val();
+            var length = getLength(t);
+            var width = parseFloat($obj.css('font-size'));
+            var left = length * width/2 +77;
+            $hint.css('left',left);
+        });
+    }
+
+    directName('.direct-name-002','.direct-name-001-hint');
+
+
+</script>

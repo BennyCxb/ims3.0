@@ -155,7 +155,6 @@ define(function (require, exports, module) {
         });
         //拼接
         if (json.Users != undefined) {
-			console.log(checkedArr);
             var rolData = json.Users;
 			 $("#usersTable tbody").append('<tr>'+
                                     '<th class=""></th>'+
@@ -164,13 +163,13 @@ define(function (require, exports, module) {
                                 '</tr>');
 			//当前角色已绑定的用户
 			var userList = ROLES.uList;
-			var uArry = userList.split(",");
+			var userArry = userList.split(",");
             for (var i = 0; i < rolData.length; i++) {	
 				var userName = rolData[i].USERNAME;
 				var userID = rolData[i].ID;
 				var hasUser = false;	
-				for(var x=0;x<uArry.length;x++){
-					   if(uArry[x]==userName){
+				for(var x=0;x<userArry.length;x++){
+					   if(userArry[x]==userName){
 						   hasUser = true; 
 						   break;
 						   }	 
