@@ -28,7 +28,9 @@
   <link rel="stylesheet" href="resources/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="resources/css/common/base.css">
   <link rel="stylesheet" href="resources/css/pages/layout/list_dialog.css">
+  <link rel="stylesheet" href="resources/css/pages/channel/timer.css">
   <link rel="stylesheet" href="resources/plugins/iCheck/all.css"/>
+  <link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -230,6 +232,8 @@
 <script src="resources/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 <!-- Bootstrap switch -->
 <script src="resources/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
+<!-- Select 2 -->
+<script src="resources/plugins/select2/select2.full.min.js"></script>
 <script>
 	seajs.config({
 	  base: "./resources/js/"
