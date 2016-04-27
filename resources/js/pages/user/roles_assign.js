@@ -155,6 +155,7 @@ define(function (require, exports, module) {
         });
         //拼接
         if (json.Users != undefined) {
+			console.log(checkedArr);
             var rolData = json.Users;
 			 $("#usersTable tbody").append('<tr>'+
                                     '<th class=""></th>'+
@@ -174,6 +175,18 @@ define(function (require, exports, module) {
 						   break;
 						   }	 
 			   	   };
+				for(var l=0;l<checkedArr.length;l++){
+						if(checkedArr[l]==userID){
+							hasUser = true;
+							break;
+							}
+					};
+				for(var m=0;m<uncheckedArr.length;m++){
+						if(uncheckedArr[m]==userID){
+							hasUser = false;
+							break;
+							}
+					};
 				   if(hasUser == true){
 					  var roltr = '<tr userID="' + userID + '">' +
 						  '<td class="user_checkbox"><input class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +

@@ -96,6 +96,16 @@ define(function (require, exports, module) {
 //					});
 					
 				//alert(stringArry);
+				if(users===""){
+					users="点击分配用户"
+					}else{
+						var uArray = users.split(",");
+						users="";
+						for(var n = 0;n<uArray.length;n++){
+							var uString = '<i class="fa fa-user"></i>'+uArray[n]+'&nbsp;';
+							users = users + uString;
+							}
+						}
 				if(rID===1){
 					var roltr = '<tr class="rol-row" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
@@ -147,7 +157,7 @@ define(function (require, exports, module) {
 			//分配用户
 			$(".roles_assign").click(function(){
 				var self = $(this);
-				var userList = self.parent().prev().prev().html();
+				var userList = self.html();
 				exports.uList = userList;
 				var rName = self.parent().parent().attr("rolesName");
 				exports.roleName = rName;

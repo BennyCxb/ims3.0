@@ -88,7 +88,7 @@ define(function (require, exports, module) {
 	                	          '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
 
-	                	            '<li><a href="#channel/list"><i class="fa fa-caret-square-o-right"></i> 频道</a></li>'+
+	                	            '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> 频道</a></li>'+
                                     // '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
                                     // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
                                     // '<li><a href="#channel/list_check"><i class="fa fa-circle-o"></i> 频道审核</a></li>'+
@@ -125,11 +125,11 @@ define(function (require, exports, module) {
 		                	$(".sidebar-menu").append('<li id="treeview_channel" class="treeview">'+
 		              	          '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;布局</span><i class="fa fa-angle-left pull-right"></i></a>'+
 		              	          '<ul class="treeview-menu">'+
-		              	            '<li><a href="#layout/list"><i class="fa fa-newspaper-o"></i> 布局列表</a></li>'+
+		              	            '<li><a href="#layout/list"><i class="fa fa-object-group"></i> 布局列表</a></li>'+
 		              	          '</ul>'+
 		              	        '</li>');
 	                	}else {
-	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-newspaper-o"></i>节目模板</a></li>');
+	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-object-group"></i>节目模板</a></li>');
 	                	}
                 	}
                     break;

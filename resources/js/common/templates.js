@@ -1,9 +1,9 @@
 define(function(require, exports, module){exports['channel_edit_main']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="channel-editor-wrapper"> <div class="channel-editor-header"> <button class="btn-channel-editor-close">返回</button> <input class="channel-editor-property" data-key="name" value="'+
+__p+='<div id="channel-editor-wrapper"> <div class="channel-editor-header"> <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button> <h1 class="header-title">频道编辑</h1> </div> <input class="channel-editor-property" data-key="name" value="'+
 ((__t=(name))==null?'':__t)+
-'"> <button class="btn-channel-editor-save">保存</button> <button class="btn-channel-editor-publish">保存并发布</button> </div> <div class="channel-editor-body"> <div class="channel-program-list"> <div class="channel-program-list-timed"> <div> <h3>定时节目</h3> <button class="btn-program-delete" data-program-type="Timed">删除</button> <button class="btn-program-new" data-program-type="Timed">新建</button> </div> <ul></ul> </div> <div class="channel-program-list-regular"> <div> <h3>常规节目</h3> <select class="channel-program-schedule-type"> ';
+'"> <button class="btn-channel-editor-save">保存</button> <button class="btn-channel-editor-publish">保存并发布</button> <div class="channel-editor-body"> <div class="channel-program-list"> <div class="channel-program-list-timed"> <div> <h3>定时节目</h3> <button class="btn-program-delete" data-program-type="Timed">删除</button> <button class="btn-program-new" data-program-type="Timed">新建</button> </div> <ul></ul> </div> <div class="channel-program-list-regular"> <div> <h3>常规节目</h3> <select class="channel-program-schedule-type"> ';
  var type = JSON.parse(overall_schedule_params).Type; 
 __p+=' ';
  if (type === 'Sequence') { 
@@ -172,17 +172,17 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-channel-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td><input type="checkbox"></td> <td>频道名称:'+
+'"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#channel/edit?id='+
+((__t=(id))==null?'':__t)+
+'" class="btn-channel-detail"><i class="fa fa-newspaper-o"></i>&nbsp&nbsp'+
 ((__t=(name))==null?'':__t)+
-'</td> <td>调度类型:'+
+'</a></td> <td>调度类型:'+
 ((__t=(schedule_type))==null?'':__t)+
 '</td> <td>调度参数:'+
 ((__t=(schedule_params))==null?'':__t)+
 '</td> <td>版本:'+
 ((__t=(version))==null?'':__t)+
-'</td> <td><a href="#channel/edit?id='+
-((__t=(id))==null?'':__t)+
-'" class="btn-channel-detail">编辑</a></td> </tr>';
+'</td><!-- <td>编辑</td> --> </tr>';
 }
 return __p;
 };
@@ -275,9 +275,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td><input type="checkbox"></td> <td>布局名称:'+
+'"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#layout/edit?id='+
+((__t=(id))==null?'':__t)+
+'" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</td> <td>布局宽:'+
+'</a></td> <td>布局宽:'+
 ((__t=(width))==null?'':__t)+
 '</td> <td>布局高:'+
 ((__t=(height))==null?'':__t)+
@@ -285,9 +287,7 @@ __p+='<tr data-layout-id="'+
 ((__t=(background_color))==null?'':__t)+
 '</td> <td>上传时间:'+
 ((__t=(create_time))==null?'':__t)+
-'</td> <td><a href="#layout/edit?id='+
-((__t=(id))==null?'':__t)+
-'" class="btn-table-detail">编辑</a></td> </tr>';
+'</td><!-- <td>编辑</td> --> </tr>';
 }
 return __p;
 };});

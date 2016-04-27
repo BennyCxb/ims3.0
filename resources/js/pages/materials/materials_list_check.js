@@ -181,6 +181,7 @@ define(function (require, exports, module) {
             action: 'GetPage',
             project_name: CONFIG.projectName,
             material_type: mtrType,
+			CheckLevel:0,
             Pager: pager
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
@@ -220,6 +221,7 @@ define(function (require, exports, module) {
             $("#mtrTable tbody").append('<tr>'+
                                     '<th class="mtr_checkbox"></th>'+
                                     '<th class="mtr_name">文件名</th>'+
+									
                                     '<th class="mtr_size">大小</th>'+
                                     '<th class="mtr_time">时长</th>'+
                                     '<th class="mtr_uploadUser">上传人</th>'+
@@ -229,6 +231,8 @@ define(function (require, exports, module) {
             	var material_type = mtrData[0].Type_Name;
                 if (material_type == "文本" || material_type == "Live"){		//文本和直播无预览效果
                 	for (var x = 0; x < mtrData.length; x++) {
+						//var checkState;
+						//if(mtrData[x].CheckLevel){}
                         var mtrtr = '<tr mtrID="' + mtrData[x].ID + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
                             '<td class="mtr_name" title="' +mtrData[x].Name+ '">' + mtrData[x].Name + '</td>' +
