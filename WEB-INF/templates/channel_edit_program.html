@@ -1,5 +1,16 @@
-<div class="channel-program-header">
-    <input value="<%=name%>" data-field="name" type="text" />
+<div class="channel-program-header box-header with-border">
+    <input value="<%=name%>" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold;" />
+    <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px;">
+        <i class="glyphicon glyphicon-edit" style="color: #555"></i>
+    </small>
+    <button class="btn-channel-preview btn btn-default pull-right" style="position: relative; top: 0px; margin-left: 15px;">
+        <i class="fa  fa-play-circle-o"></i>
+        &nbsp&nbsp预览节目
+    </button>
+</div>
+
+
+
     <div class="channel-program-timer">
         <label>
             开始时间
@@ -45,14 +56,16 @@
         <input type="number" data-field="count" value="<%=count%>">
         </label>
     </div>
-</div>
+
+
+
 <div class="channel-program-body">
     <div class="channel-program-layout">
         <div class="channel-program-layout-header">
-            <span>布局:<%=layout.name%></span>
-            <span>宽:<%=layout.width%></span>
-            <span>高:<%=layout.height%></span>
-            <button class="btn-channel-preview">预览</button>
+            <span class="channel-program-layout-header-info">布局:<%=layout.name%></span>
+            <span class="channel-program-layout-header-info">宽:<%=layout.width%></span>
+            <span  class="channel-program-layout-header-info">高:<%=layout.height%></span>
+
         </div>
         <div class="channel-program-layout-body">
         </div>
@@ -64,6 +77,62 @@
         正在加载数据
     </div>
 </div>
-<div class="channel-program-footer">
 
-</div>
+<script type="text/javascript">
+
+
+    (function (obj,hint){
+
+    function getLength(str){  
+            var realLength = 0;  
+            for (var i = 0; i < str.length; i++){  
+                var charCode = str.charCodeAt(i);
+                
+                if (charCode >= 0 && charCode <= 128)   
+                realLength += 1;  
+                else   
+                realLength += 2;
+
+            }
+
+            return realLength;  
+        }  
+
+        //get name
+        var $obj = $(obj);
+        var t = $obj.val();
+        var length = getLength(t);
+        var width = parseFloat($obj.css('font-size'));
+        var left = length * width/2 +47;
+
+        //get hint
+        var $hint = $(hint);
+        
+        //ux fix
+        $obj.css('cursor','pointer');
+
+        //reposition
+        $hint.css('left',left);
+
+        //event
+        $hint.click(function(){
+            $obj.focus().val(t);
+        });
+        $obj.focus(function(){
+            $hint.css('display','none');
+            $obj.css('cursor','');
+        });
+        $obj.blur(function(){
+            $hint.css('display','');
+            $obj.css('cursor','pointer');
+            //reposition
+            var t = $obj.val();
+            var length = getLength(t);
+            var width = parseFloat($obj.css('font-size'));
+            var left = length * width/2 +47;
+            $hint.css('left',left);
+        });
+    }('.direct-name-003','.direct-name-003-hint'))
+
+
+</script>
