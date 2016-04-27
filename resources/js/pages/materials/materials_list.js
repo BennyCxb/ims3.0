@@ -365,7 +365,6 @@ define(function (require, exports, module) {
 	                                '<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>'+
 	                                '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>'+
 	                                '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'+
-	                                '<li><a id="mtr_addMtr" typeid="1"><i class="fa fa-circle-o text-light-blue"></i> 频道添加直播</a></li>'+
 	                            '</ul>'+
 	                        '</div>'+
 	                    '</div>');
@@ -394,12 +393,6 @@ define(function (require, exports, module) {
             // 添加直播按钮点击
             $('#mtr_addLive').click(function () {
             	openLive();
-            })
-
-            // 频道添加直播
-            $('#mtr_addMtr').click(function () {
-                var page = "resources/pages/channel/addMtr.html";
-                UTIL.cover.load(page);
             })
         });
     }
