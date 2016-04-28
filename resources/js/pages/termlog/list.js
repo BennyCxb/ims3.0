@@ -75,7 +75,8 @@ define(function (require, exports, module) {
             var rolData = json.content;
 			$("#termlogTable tbody").append('<tr>'+       
                                     '<th class="termID">终端ID</th>'+
-                                    '<th class="level">等级</th>'+
+                                    //'<th class="level">等级</th>'+
+                                    '<th class="level">终端名</th>'+
 									'<th class="eventType">类型</th>'+
 									'<th class="termIP">IP</th>'+
 									'<th class="date">日期</th>'+
@@ -97,11 +98,13 @@ define(function (require, exports, module) {
                     eventS = "开始播放："+eventJson['Name']
                 else if (eventS.indexOf("\"Operate\":\"stop\"") != -1)
                     eventS = "停止播放："+eventJson['Name']
-                
+                if (rolData[x].termName == null)
+                    rolData[x].termName="";
                 
                 var roltr = '<tr termID="' + rolData[x].termID + '">' +
                     '<td class="termID">' + rolData[x].termID + '</td>' + 
-                    '<td class="level">' + rolData[x].level + '</td>' + 
+                    //'<td class="level">' + rolData[x].level + '</td>' + 
+                    '<td class="termName">' + rolData[x].termName + '</td>' + 
                     '<td class="eventType">' + eventTypes + '</td>' + 
                     '<td class="termIP">' + rolData[x].termIP + '</td>' + 
                     '<td class="date">' + rolData[x].date + '</td>' + 

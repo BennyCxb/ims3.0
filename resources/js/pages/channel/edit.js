@@ -913,7 +913,7 @@ define(function(require, exports, module) {
 				deferred.reject(res);
 				return;
 			}
-			if (checkSwitch === 1) {
+			if (checkSwitch === 0) {
 				data = JSON.stringify({
 					project_name: projectName,
 					action: 'checkPass',
