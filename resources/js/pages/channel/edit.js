@@ -143,7 +143,7 @@ define(function(require, exports, module) {
             var deferredGet = $.Deferred(),
                 deferredGetPrograms = $.Deferred(),
                 dataGet = JSON.stringify({
-                    Action: 'Get',
+                    action: 'Get',
                     Project: projectName
                 }),
                 dataGetPrograms = JSON.stringify({
@@ -162,7 +162,7 @@ define(function(require, exports, module) {
                 deferredGetPrograms.resolve(res.Programs);
             });
 
-            util.ajax('post', requestUrl + '/backend_mgt/v1/channels/' + channelId, dataGet, function (res) {
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channelId, dataGet, function (res) {
                 deferredGet.resolve(res.Channel[0]);
             });
 
@@ -247,7 +247,7 @@ define(function(require, exports, module) {
 
     function parseChannelData(data) {
         return {
-            id: data.ID,
+            id: Number(data.ID),
             name: data.Name,
             name_eng: data.Name_eng,
             overall_schedule_params: data.Overall_Schedule_Paras,
@@ -426,7 +426,7 @@ define(function(require, exports, module) {
 	function registerEventListeners() {
 		$('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor);
         $('#channel-editor-wrapper .btn-channel-editor-save').click(onSaveChannel);
-        $('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
+        //$('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
         $('#channel-editor-wrapper .btn-program-new').click(function () {
             var type = this.getAttribute('data-program-type');
 			layoutDialog.open();
@@ -546,17 +546,22 @@ define(function(require, exports, module) {
 				}
 				deferred.resolve();
 			});
-		} else if (changedChannels.length > 0) {
-			channel = changedChannels[0];
+		} else if (checkSwitch === 1) {
+
 			data = JSON.stringify({
 				project_name: projectName,
 				action: 'setCheckLevel2Edit',
 				ChannelIDs: [channelId]
 			});
 
-			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
+			channel = changedChannels[0];
+			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channelId, data, function (res) {
 				if (Number(res.rescode) !== 200) {
 					deferred.reject(res);
+					return;
+				}
+				if (changedChannels.length === 0) {
+					deferred.resolve();
 					return;
 				}
 				var data = JSON.stringify({
@@ -580,8 +585,6 @@ define(function(require, exports, module) {
 					deferred.resolve();
 				});
 			});
-		} else {
-			deferred.resolve();
 		}
 		return deferred.promise();
 	}

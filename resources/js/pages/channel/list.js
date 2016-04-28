@@ -142,11 +142,11 @@ define(function(require, exports, module) {
             keyword: keyword
         };
         var data = JSON.stringify({
-            Action: 'GetPage',
-            Project: projectName,
+            action: 'GetPage',
+            project_name: projectName,
             Pager: pager
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, render);
+        util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, render);
     }
 
     // 渲染界面
@@ -167,18 +167,18 @@ define(function(require, exports, module) {
 
         $('#channel-table>tbody').html('');
         json.Channels.forEach(function (el, idx, arr) {
-            var schedule_type = el.Overall_Schedule_Type === 'Regular' ? '常规' : '定时';
+            /*var schedule_type = el.Overall_Schedule_Type === 'Regular' ? '常规' : '定时';
             var schedule_params = {
                 'Sequence': '顺序',
                 'Percent': '比例',
                 'Random': '随机'
             }[el.Overall_Schedule_Paras.Type];
-            schedule_params = schedule_params ? schedule_params : '其它';
+            schedule_params = schedule_params ? schedule_params : '其它';*/
             var data = {
                 id: el.ID,
                 name: el.Name,
-                schedule_type: schedule_type,
-                schedule_params: schedule_params,
+                schedule_type: '',//schedule_type,
+                schedule_params: '',//schedule_params,
                 version: el.Version
             };
             $('#channel-table>tbody').append(templates.channel_table_row(data));

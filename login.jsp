@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>CLEAR IMS 3.0</title>
+    <link rel="shortcut icon" href="resources/favicon.ico">
 	<!-- Bootstrap 3.3.6 -->
 	<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
 	<!-- Theme style -->
