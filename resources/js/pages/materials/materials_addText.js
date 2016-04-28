@@ -21,7 +21,13 @@ define(function (require, exports, module) {
 
         $('#Tmtr_viewlast').click(function(){
             var viewText = require("pages/materials/materials_viewText.js");
-            //viewText.
+            var mtrId;
+            for (var x = 0; x < $(".mtr_cb").length; x++) {
+                if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
+                    mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID");
+                }
+            }
+            viewText.materialID = mtrId;
             var page = "resources/pages/materials/materials_viewText.html";
             UTIL.cover.load(page);
         })

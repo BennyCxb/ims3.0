@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
 
-	exports.ajax = function(type, url, data, successFn){
-		ajax(type, url, data, successFn);
+	exports.ajax = function(type, url, data, successFn, dataType){
+		ajax(type, url, data, successFn, dataType);
 	};
 
 	exports.cover = {
@@ -64,16 +64,17 @@ define(function(require, exports, module) {
 		}
 	};
 
-	function ajax(type, url, data, successFn){
+	function ajax(type, url, data, successFn, dataType){
 
 		var data = JSON.parse(data);
 		data.user = $('#USER-NAME').html();
 		data = JSON.stringify(data);
+		var dataType = (dataType===undefined?'json':dataType);
 
 		var ajax = $.ajax({
 		  type: type,
 		  url: url,
-		  dataType: 'json',
+		  dataType: dataType,
 		  data: data,
 		  timeout: 60000,
 		  success: function(data){
