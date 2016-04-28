@@ -174,9 +174,9 @@ __p+='<tr data-channel-id="'+
 ((__t=(id))==null?'':__t)+
 '"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#channel/edit?id='+
 ((__t=(id))==null?'':__t)+
-'" class="btn-channel-detail"><i class="fa fa-newspaper-o"></i>&nbsp&nbsp'+
+'" class="btn-channel-detail"><b><i class="fa fa-newspaper-o"></i>&nbsp&nbsp'+
 ((__t=(name))==null?'':__t)+
-'</a></td> <td>调度类型:'+
+'</b></a></td> <td>调度类型:'+
 ((__t=(schedule_type))==null?'':__t)+
 '</td> <td>调度参数:'+
 ((__t=(schedule_params))==null?'':__t)+
