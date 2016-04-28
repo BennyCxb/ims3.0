@@ -2,84 +2,64 @@
 <section class="content-header">
     <h1>
         资源管理
-        <small>Material management</small>
     </h1>
 </section>
 
 <!-- Main content -->
 <div class="content">
     <div class="row">
-        <div class="col-md-3">
-            <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">资源分类</h3>
-                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body no-padding">
-                    <ul id="mtrChoise" class="nav nav-pills nav-stacked">
-                    	<li class="active" typeId="1"><a id="mtrVideo"><i class="fa fa-video-camera"></i> 视频
-                            <!--<span class="label label-primary pull-right">12</span>-->
-                        </a></li>
-                        <li typeId="2"><a id="mtrImage"><i class="fa fa-image"></i> 图片</a></li>
-                        <li typeId="3"><a id="mtrAudio"><i class="fa fa-music"></i>  &nbsp;音频</a></li>
-                        <li typeId="4"><a id="mtrText"><i class="fa fa-font"></i> &nbsp;文本</a></li>
-                        <li typeId="5"><a id="mtrLive"><i class="fa fa-cloud"></i> 直播</a></li>
-                    </ul>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /. box -->
-            <!-- 上传区域 -->
-            <!-- <div class="box box-solid">
-                <div class="box-header with-border">
-                    <h3 class="box-title">添加资源</h3>
 
-                    <div class="box-tools">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body no-padding">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>
-                        <li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>
-                        <li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>
-                        <li><a id="mtr_addMtr" typeid="1"><i class="fa fa-circle-o text-light-blue"></i> 频道添加直播</a></li>
-                    </ul>
-                </div>
-            </div> -->
-            <!-- /.box -->
-        </div>
         <!-- /.col -->
-        <div id="list_box" class="col-md-9">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 id="mtrLisTitle" class="box-title"></h3>
+        <div id="list_box" class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul id="mtrChoise" class="nav nav-tabs">
+                    <li class="active" typeId="1"><a id="mtrVideo"><i class="fa fa-video-camera"></i> 视频</a></li>
+                    <li typeId="2"><a id="mtrImage"><i class="fa fa-image"></i> 图片</a></li>
+                    <li typeId="3"><a id="mtrAudio"><i class="fa fa-music"></i>  &nbsp;音频</a></li>
+                    <li typeId="4"><a id="mtrText"><i class="fa fa-font"></i> &nbsp;文本</a></li>
+                    <li typeId="5"><a id="mtrLive"><i class="fa fa-cloud"></i> 直播</a></li>
 
-                    <div class="box-tools pull-right">
+                    
+
+                    <div class="box-tools pull-right" style="padding: 6px;">
                         <div class="has-feedback">
                             <input id="mtrSearch" type="text" class="form-control input-sm">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </div>
+
+
                     <!-- /.box-tools -->
-                </div>
+                </ul>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                     <div class="mailbox-controls">
                         <!-- Check all button -->
                         <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i></button>
-                        <a><button id="mtr_download" type="button" class="btn btn-default btn-sm" disabled>下载</button></a>
-                        <button id="mtr_edit" type="button" class="btn btn-default btn-sm" disabled>编辑</button>
-                        <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
                         
+                        <div class="btn-group">
+                            <button id="mtr_download" type="button" class="btn btn-default btn-sm" disabled><a style="color: #333">下载</a></button>
+                            <button id="mtr_edit" type="button" class="btn btn-default btn-sm" disabled>编辑</button>
+                            <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
+                        </div>
+
                         <!-- 审核 -->
-                        <button id="mtr_submit" type="button" class="btn btn-default btn-sm" disabled>提交审核</button>
-                        <button id="mtr_approve" type="button" class="btn btn-default btn-sm" disabled>审核通过</button>
-                        <button id="mtr_reject" type="button" class="btn btn-default btn-sm" disabled>审核不通过</button>
+                        <div class="btn-group">
+                            <button id="mtr_submit" type="button" class="btn btn-default btn-sm" disabled>提交审核</button>
+                            <button id="mtr_approve" type="button" class="btn btn-default btn-sm" disabled>审核通过</button>
+                            <button id="mtr_reject" type="button" class="btn btn-default btn-sm" disabled>审核不通过</button>
+                        </div>
+
+                        <div class="input-group-btn" style="display: inline; margin-right: 4px;">
+                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">添加资源
+                                <span class="fa fa-caret-down"></span>
+                            </button>
+                            <ul id="ad-material-list" class="dropdown-menu" style="margin-top: 15px;">
+                               <!--  <li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>
+                                <li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>
+                                <li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li> -->
+                            </ul>
+                        </div>
 
                         <!-- /.btn-group -->
                         <button id="mtr_refresh" type="button" class="btn btn-default btn-sm" title="刷新列表"><i class="fa fa-refresh"></i></button>
@@ -91,7 +71,10 @@
                           <button type="button" class="btn btn-default btn-sm" value="2">已通过</button>
                           <button type="button" class="btn btn-default btn-sm" value="3">未通过</button>
                         </div>
+
                         <!-- /.pull-right -->
+
+
                     </div>
                     <div class="table-responsive mailbox-messages">
                         <!-- 资源列表 -->
