@@ -220,9 +220,10 @@ define(function(require, exports, module) {
                             if (err) { console.error(err); return; }
                             console.log('控件更新成功!');
                             alert('保存成功!');
-                            if (isNewLayout) {
+                            /*if (isNewLayout) {
                                 location.hash = '#layout/edit?id=' + json.id
-                            }
+                            }*/
+                            location.refresh();
                         });
                     });
                 });
