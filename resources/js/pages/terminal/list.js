@@ -541,7 +541,7 @@ define(function(require, exports, module) {
           $(this).find('button.log').click(function(e){
             e.preventDefault();
             e.stopPropagation();
-            var termlog = require('pages/terminal/list.js');
+            var termlog = require('pages/termlog/list.js');
             termlog.mac = $(this).parent().parent().attr("mac");
             window.location.hash = 'termlog/list';
           })

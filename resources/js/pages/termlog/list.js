@@ -18,7 +18,14 @@ define(function (require, exports, module) {
     }*/
     
     exports.init = function () {
-        exports.loadTermlogPage(1); //加载默认页面
+        if(exports.mac != ''){
+            $('#termlogSearch').val(exports.mac);
+            exports.mac = '';
+            onSearch($('#termlogSearch').val());
+        }else{
+            exports.loadTermlogPage(1); //加载默认页面
+        }
+        
         
       //搜索
         $('#termlogSearch').bind('input propertychange', function () {
