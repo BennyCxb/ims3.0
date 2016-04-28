@@ -472,7 +472,7 @@ define(function(require, exports, module) {
                 '</div>' +
               '</td>' +
               '<td  style="padding-top:30px; float:right; position:relative">' +
-              snap + '<button style=" position:absolute; top:16px; right:10px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
+              snap + '<button style=" position:absolute; top:16px; right:39px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
               '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
               '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' + 
               '</td>' +
