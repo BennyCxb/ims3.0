@@ -111,13 +111,21 @@ define(function (require, exports, module) {
                 $("#mtrChoiseSearch").attr("typeId", "4");
                 break;
         }
+        var checkSwitch = UTIL.getLocalParameter('config_checkSwitch');
+        if (checkSwitch == 1){
+            var status = "2";
+        }else {
+            var status = "";
+        }
+
         var pager = {
             page: String(pageNum),
             total: '0',
             per_page: nDisplayItems,
             orderby: 'CreateTime',
             sortby: 'DESC',
-            keyword: keyword
+            keyword: keyword,
+            status: status
         };
         var data = JSON.stringify({
             action: 'GetPage',
