@@ -521,8 +521,8 @@ define(function(require, exports, module) {
 		if (newChannels.length > 0) {
 			channel = newChannels[0];
 			data = JSON.stringify({
-				Project: projectName,
-				Action: 'Post',
+				project_name: projectName,
+				action: 'Post',
 				Data: {
 					Name: channel.name,
 					Name_eng: channel.name_eng,
@@ -543,8 +543,8 @@ define(function(require, exports, module) {
 		} else if (changedChannels.length > 0 && checkSwitch === 0) {
 			channel = changedChannels[0];
 			data = JSON.stringify({
-				Project: projectName,
-				Action: 'Put',
+				project_name: projectName,
+				action: 'Put',
 				Data: {
 					Name: channel.name,
 					Name_eng: channel.name_eng,
@@ -580,8 +580,8 @@ define(function(require, exports, module) {
 					return;
 				}
 				var data = JSON.stringify({
-					Project: projectName,
-					Action: 'Put',
+					project_name: projectName,
+					action: 'Put',
 					Data: {
 						Name: channel.name,
 						Name_eng: channel.name_eng,
@@ -913,7 +913,7 @@ define(function(require, exports, module) {
 				deferred.reject(res);
 				return;
 			}
-			if (checkSwitch === 1) {	
+			if (checkSwitch === 1) {
 				data = JSON.stringify({
 					project_name: projectName,
 					action: 'checkPass',
