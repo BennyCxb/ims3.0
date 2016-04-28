@@ -176,8 +176,6 @@ __p+='<tr data-channel-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-channel-detail"><i class="fa fa-newspaper-o"></i>&nbsp&nbsp'+
 ((__t=(name))==null?'':__t)+
-'</a></td> <td>审核状态:'+
-((__t=(CheckLevel))==null?'':__t)+
 '</a></td> <td>调度类型:'+
 ((__t=(schedule_type))==null?'':__t)+
 '</td> <td>调度参数:'+
@@ -283,9 +281,9 @@ __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></td> <td>布局宽:'+
+'</a></td> <td>宽:'+
 ((__t=(width))==null?'':__t)+
-'</td> <td>布局高:'+
+'</td> <td>高:'+
 ((__t=(height))==null?'':__t)+
 '</td> <td>背景色:'+
 ((__t=(background_color))==null?'':__t)+
