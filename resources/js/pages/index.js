@@ -3,6 +3,10 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
 
     exports.init = function () {
+        
+        // 存储权限
+        initUserConfigs();
+
     	checkJurisdiction();
 
     	//登出
@@ -139,7 +143,7 @@ define(function (require, exports, module) {
 	                	          '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>'+
 	                	          '<ul class="treeview-menu">'+
 	                	            // '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>审核</a></li>'+
-                                    '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>'+
+                                    '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>'+
                                     '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>'+
                                     '<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
                                     '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>'+
@@ -174,5 +178,51 @@ define(function (require, exports, module) {
 
     function render(data) {
         var proData = data.Projects;
+    }
+
+    function initUserConfigs(){
+
+        var data = {
+          "project_name": CONFIG.projectName,
+          "action": "GetKey",
+          "key":"CheckLevel"
+        }
+
+        UTIL.ajax(
+            'POST',
+            CONFIG.serverRoot + '/backend_mgt/v2/userconfigs',
+            JSON.stringify(data), 
+            function(data){
+                if(data.rescode === '200'){
+                    UTIL.setLocalParameter('config_checkSwitch',data.UserConfigs[0].ConfigValue);
+                    if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
+                        setUserConfig_check();
+                    }
+                }else{
+                    console.log('获取审核权限开关失败');
+                }
+                
+            }
+        )
+    }
+
+    function setUserConfig_check(){
+        var data = {
+          "project_name": CONFIG.projectName,
+          "action": "HasCheckModule"
+        }
+
+        UTIL.ajax(
+            'POST',
+            CONFIG.serverRoot + '/backend_mgt/v2/userdetails',
+            JSON.stringify(data), 
+            function(data){
+                if(data.rescode === '200'){
+                    UTIL.setLocalParameter('config_canCheck',data.hasCheckModule);
+                }else{
+                    console.log('获取是否有审核权限失败');
+                }  
+            }
+        )
     }
 });

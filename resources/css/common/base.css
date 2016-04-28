@@ -155,31 +155,33 @@ a {
 }
 
 .mtr_name {
-	width: 37%;
 	max-width: 431px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
+.mtr_check{
+  min-width: 80px;
+  text-align: center;
+}
+
 .mtr_size {
-	width: 10%;
     text-align: center;
 }
 
 .mtr_time {
-	width: 15%;
     text-align: center;
 }
 
 .mtr_uploadUser {
-	width: 10%;
-    text-align: center;
+  min-width: 60px;
+  text-align: center;
 }
 
 .mtr_uploadDate {
-	width: 20%;
     text-align: center;
+    min-width: 150px;
 }
 
 /*资源上传页面*/
