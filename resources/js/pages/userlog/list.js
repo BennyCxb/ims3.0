@@ -12,6 +12,7 @@ define(function (require, exports, module) {
         /*$("#user_add").click(function () {
 			UTIL.cover.load('resources/pages/user/user_add.html');
         })*/
+
     }
 
     // 加载页面数据

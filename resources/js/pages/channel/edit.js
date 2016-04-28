@@ -940,7 +940,7 @@ define(function(require, exports, module) {
 		db.commit();
 		db.beginTransaction();
 		alert('保存成功!');
-        location.refresh();
+        location.reload();
 	}
 
 	function onSaveChannelFail() {
