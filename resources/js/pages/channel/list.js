@@ -82,7 +82,7 @@ define(function(require, exports, module) {
 				//var cList = JSON.stringify(data.categoryList);
 				//var tList = JSON.stringify(data.termList);
 				var post_data = JSON.stringify({
-					project_name:config.project_name,
+					project_name:config.projectName,
 					action:'publishChannel',
 					channelID:channelID,
 					categoryList:data.categoryList,
@@ -90,11 +90,11 @@ define(function(require, exports, module) {
 					});
 				var url = config.serverRoot + '/backend_mgt/v2/termcategory';
 				util.ajax('post',url,post_data,function(msg){
-					if(msg.rescode===200){
-						alert("1111")
+					if(msg.rescode==200){
+						alert("频道发布成功！")
 						}
 					else{
-						alert("22")
+						alert("频道发布失败！")
 						}
 					});
 				util.cover.close();
