@@ -181,7 +181,7 @@ define(function(require, exports, module) {
     }
     
     function publishChannel() {
-		var channelID = $(".checked").parent().parent().attr("data-channel-id");
+		var channelID = $(".checked").parent().parent().attr("chnID");
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');		  
 			  getClassAndTerm.channelID = channelID;
 			  getClassAndTerm.title = '发布到...';
