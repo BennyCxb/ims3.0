@@ -60,6 +60,129 @@ define(function (require, exports, module) {
                 exports.loadPage(1, Number(typeId));
               })
             })
+
+            //获取已选资源ids
+            function getSourceIds(){
+                var ids = new Array();
+                $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
+                    ids.push(Number($(e).parent().parent().parent().attr('mtrid')));
+                })
+                return ids;
+            }
+
+            function loadPage(){
+                var pageNum = $("#materials-table-pager li.active").find("a").text();
+                var typeId = $("#mtrChoise li.active").attr("typeid");
+                exports.loadPage(pageNum, Number(typeId));
+            }
+
+            function getType(typeId){
+                var type = '';
+                switch(typeId){
+                    case '1':
+                        type = 'Video';
+                        break;
+                    case '2':
+                        type = 'Image';
+                        break;  
+                    case '3':
+                        type = 'Audio';
+                        break; 
+                    case '4':
+                        type = 'WebText';
+                        break; 
+                    case '5':
+                        type = 'Live';
+                        break;               
+                    default:
+                        break;
+                }
+                return type;
+            }
+
+            //提交审核
+            $('#mtr_submit').click(function(){
+                
+                if(!$('#mtr_submit').attr('disabled')){
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                      "project_name": CONFIG.projectName,
+                      "action": "submitToCheck",
+                      "material_type": type,
+                      "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST', 
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function(data){
+                            if(data.rescode === '200'){
+                                alert('已提交');
+                                loadPage();
+                            }else{
+                                alert('提交失败');
+                            }
+                        }
+                    )
+                }
+            })
+
+            //审核通过
+            $('#mtr_approve').click(function(){
+                
+                if(!$('#mtr_approve').attr('disabled')){
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                      "project_name": CONFIG.projectName,
+                      "action": "checkPass",
+                      "material_type": type,
+                      "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST', 
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function(data){
+                            if(data.rescode === '200'){
+                                alert('已审核');
+                                loadPage();
+                            }else{
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                }
+            })
+
+            //审核不通过
+            $('#mtr_reject').click(function(){
+                
+                if(!$('#mtr_reject').attr('disabled')){
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                      "project_name": CONFIG.projectName,
+                      "action": "checkFailed",
+                      "material_type": type,
+                      "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST', 
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function(data){
+                            if(data.rescode === '200'){
+                                alert('已审核');
+                                loadPage();
+                            }else{
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                }
+            })
         }
 
         //删除和批量删除
