@@ -11,20 +11,17 @@ define(function (require, exports, module) {
 		var rID = Number(ROLES.roleID);
 		//var loadType = ROLES.loadType;
 		var type = ROLES.type;
-		if(type==="add"){
+		if(rID){
+			$("#role_name").val(rName);
+			}
+		else if(ROLEEDIT.roleID){
+			rID=ROLEEDIT.roleID;
+			rName=ROLEEDIT.roleName;
+			$("#role_name").val(rName);
+		}else{
 			$("#role_name").val();
 			$("#term").val();
-			rID = -1;
 			}
-		else if(rID){
-			$("#role_name").val(rName);
-			}else{
-				rID = ROLEEDIT.roleID;
-				rName = ROLEEDIT.roleName;
-				if(rID){
-					$("#role_name").val(rName);
-					}	
-		}
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
 			 	project_name:CONFIG.projectName,
@@ -148,8 +145,37 @@ define(function (require, exports, module) {
 				UTIL.ajax('post', url, data, function(msg){
 					if(msg.rescode == 200){
 						rID=msg.RoleID;
-						exports.roleID = rID;
-						exports.roleName = roleName;
+						//exports.roleID = rID;
+						//exports.roleName = roleName;
+						getClass.title = '请选取';
+						getClass.roleID = rID;
+						getClass.save = function(data){
+							console.log(data);
+							var ajax_data = JSON.stringify({
+								project_name:CONFIG.projectName,
+								action: 'updateTreeRoleInfo',
+								roleID:rID,
+								categoryList:data
+								})
+							var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
+							UTIL.ajax('post',url,ajax_data,function(msg){
+								if(msg.rescode==200){
+									alert("保存成功！")
+									UTIL.cover.close();
+									exports.roleID = rID;
+									exports.roleName = roleName;
+									//alert(ROLEEDIT.roleID);
+									UTIL.cover.load('resources/pages/user/roles_edit.html');
+									}
+								else{
+									alert("保存失败!")
+									}
+								})
+								//关闭窗口
+								$(".CA_close").click(function () {
+									UTIL.cover.close();
+								});
+						}
 					}else{
 						flag5=false;
 					}	
@@ -182,17 +208,16 @@ define(function (require, exports, module) {
 		 //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
+			parent.location.reload(); 
         });
     }
 	exports.loadModulePage = function () {
 		var rID = ROLES.roleID;
 		var type = ROLES.type;
-		if(type==="add"){
-			rID = -1;
-			}
-		if(rID){}else{
-			rID = ROLEEDIT.roleID;
-			}
+		
+		if(rID){}else if(ROLEEDIT.roleID){
+			rID=ROLEEDIT.roleID;
+			}else{rID=-100;}
         $("#moduleTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
 		var authArr = [];
