@@ -10,6 +10,7 @@ define(function (require, exports, module) {
     exports.init = function () {
         checkCheck();
     	checkJurisdiction();
+        bind();
 
         exports.loadPage(1, 1); //加载默认页面
         //审核状态筛选
@@ -378,7 +379,7 @@ define(function (require, exports, module) {
     }
     
     //绑定事件
-    $(function(){
+    function bind(){
         //加载视频列表
         $('#mtrVideo').click(function () {
             mtrChoise($(this));
@@ -491,7 +492,7 @@ define(function (require, exports, module) {
             $(this).data("clicks", !clicks);
             mtrCb();
         });
-    })
+    }
     
     //列表分类点击事件
     function mtrChoise(obj) {
