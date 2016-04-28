@@ -75,6 +75,12 @@ define(function (require, exports, module) {
             $(this).parent().attr("id", "DT_radio");
         })
         var widget = JSON.parse(localStorage.getItem('currentWidget'));
+        if (widget == null){
+            $("#mtrCtrl_Title").html("当前无控件");
+            $("#box_datetimeEffect").hide();
+            $("#box_tableHeader").hide();
+            return;
+        }
         exports.loadPage(widget);
     }
 
@@ -101,36 +107,47 @@ define(function (require, exports, module) {
             switch (wtype) {
                 case 'VideoBox':
                     $("#mtrCtrl_Title").html("视频控件");
+                    $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "1");
                     break;
                 case 'ImageBox':
                     $("#mtrCtrl_Title").html("图片控件");
+                    $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "2");
                     break;
                 case 'AudioBox':
                     $("#mtrCtrl_Title").html("音频控件");
+                    $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "3");
                     break;
                 case 'WebBox':
                     $("#mtrCtrl_Title").html("文本控件");
+                    $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "4");
                     $("#box_effect").show();
                     $("#mtrC_effect").hide();
+                    $("#mtrC_flip").hide();
                     break;
                 case 'ClockBox':
                     $("#mtrCtrl_Title").html("时钟控件");
                     $("#box_datetime").show();
                     $("#box_datetimeEffect").show();
-                    $("#box_tableHeader").hide();
                     $("#mtrCtrl_Table").hide();
                     $("#box_datetime").show();
                     break;
                 case 'WeatherBox':
                     $("#mtrCtrl_Title").html("天气控件");
-                    $("#box_tableHeader").hide();
                     $("#mtrCtrl_Table").hide();
                     break;
             }
+            //控件颜色
+            var widgetColor;
+            $(".channel-program-layout-footer ul li").each(function(){
+                if ($(this).attr("data-id") == widget.id.toString()){
+                    widgetColor = $(this).find("i").css("background-color");
+                }
+            })
+            $("#mtrCtrl_Title").prev().css("background-color",widgetColor);
             $("#mtrCtrl_Title").attr("widget_id", widget.id);
 
             widgetLoad(widget);
@@ -143,9 +160,11 @@ define(function (require, exports, module) {
     //加载控件属性
     function widgetLoad(widgetData) {
         //color picker with addon
-        $(".my-colorpicker2").colorpicker().on('changeColor', function (ev) {
+        $("#text_color").colorpicker().on('changeColor', function (ev) {
             textAttrSave();
-            //console.log(ev.color.toRGB());
+        });
+        $("#clockText_color").colorpicker().on('changeColor', function (ev) {
+            clockTextColor();
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
@@ -171,7 +190,6 @@ define(function (require, exports, module) {
                     var wStyle = JSON.parse(widgetData.style);
                     $("#mtrC_textType").val(wStyle.Type);
                     if (wStyle.Type == "Marquee") {
-                        $("#mtrC_flip").hide();
                         $("#mtrC_effect").show();
                     } else {
                         $("#mtrC_flip").show();
@@ -526,13 +544,9 @@ define(function (require, exports, module) {
     }
     //时钟修改
     function clockAttrSave() {
-        //时钟字体颜色
+        //时钟字体颜色事件
         $("#clockText_color").bind("input propertychange", function () {
-            var wstyle = {
-                TextColor: $("#clockText_color").val(),
-                Type: $("input:radio:checked").attr("clocktype"),
-            }
-            DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+            clockTextColor();
         })
         //时钟类型
         $(".rd_clock").next().click(function () {
@@ -542,6 +556,15 @@ define(function (require, exports, module) {
             }
             DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
         })
+    }
+
+    //时钟字体颜色
+    function clockTextColor(){
+        var wstyle = {
+            TextColor: $("#clockText_color").val(),
+            Type: $("input:radio:checked").attr("clocktype"),
+        }
+        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
     //校验复选框勾选的个数

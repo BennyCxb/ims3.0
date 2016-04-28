@@ -538,7 +538,7 @@ define(function(require, exports, module) {
           })
 
           // 截屏
-          $(this).find('a:nth(1)').click(function(e){
+          $(this).find('button:nth(0)').click(function(e){
             e.preventDefault();
             e.stopPropagation();
             _snapTermID = Number($(this).parent().parent().attr("tid"));

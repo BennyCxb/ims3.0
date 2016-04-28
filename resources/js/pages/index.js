@@ -145,7 +145,7 @@ define(function (require, exports, module) {
 	                	            // '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>审核</a></li>'+
                                     '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>'+
                                     '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>'+
-                                    '<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
+                                    //'<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
                                     '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>'+
 	                	          '</ul>'+
 	                	        '</li>');
