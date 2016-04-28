@@ -74,7 +74,7 @@
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header" style="padding-left:0; padding-right:0">
+              <li class="user-header" style="padding-left:0; padding-right:0; height: 132px;">
                 <!-- <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
 
                 <p>
@@ -83,13 +83,9 @@
                   </small>
                 </p>
                 <a class="index-header-user-option"><i class="fa fa-unlock-alt"></i>修改密码 </a>
+                <a id="logout" class="index-header-user-option" style="width: 100%;"><i class="glyphicon glyphicon-log-out"></i>退出</a>
               </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="">
-                  <a id="logout" class="btn btn-block btn-default" style="width: 100%;">登出</a>
-                </div>
-              </li>
+
             </ul>
           </li>
         </ul>
