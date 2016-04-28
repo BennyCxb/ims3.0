@@ -74,6 +74,8 @@ define(function (require, exports, module) {
         $('input[type="radio"].flat-red').each(function () {
             $(this).parent().attr("id", "DT_radio");
         })
+
+        $("#box_tableHeader").hide();
         var widget = JSON.parse(localStorage.getItem('currentWidget'));
         if (widget == null){
             $("#mtrCtrl_Title").html("当前无控件");
@@ -138,6 +140,7 @@ define(function (require, exports, module) {
                 case 'WeatherBox':
                     $("#mtrCtrl_Title").html("天气控件");
                     $("#mtrCtrl_Table").hide();
+                    $("#box_weather").show();
                     break;
             }
             //控件颜色
@@ -173,16 +176,19 @@ define(function (require, exports, module) {
             case 'VideoBox':
                 if (wOsp.Type != undefined) {
                     $("#mtrCtrl_playType").val(wOsp.Type);
+                    playTypeSave ();
                 }
                 break;
             case 'ImageBox':
                 if (wOsp.Type != undefined) {
                     $("#mtrCtrl_playType").val(wOsp.Type);
+                    playTypeSave ();
                 }
                 break;
             case 'AudioBox':
                 if (wOsp.Type != undefined) {
                     $("#mtrCtrl_playType").val(wOsp.Type);
+                    playTypeSave ();
                 }
                 break;
             case 'WebBox':
@@ -199,9 +205,11 @@ define(function (require, exports, module) {
                     $("#btn_text_color i").css("background-color", wStyle.TextColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
+
                 }else {
                     $("#mtrC_pageDownPeriod").val(0);
                 }
+                textAttrSave();
                 break;
             case 'ClockBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
@@ -234,6 +242,7 @@ define(function (require, exports, module) {
                             break;
                     }
                 }
+                clockTextColor();
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
@@ -261,12 +270,12 @@ define(function (require, exports, module) {
         if (widgetType != "ClockBox") {
             exports.getSelectedID(mtrData, true);
         }
+        save();
         clockAttrSave();
     }
 
     //将数据添加到列表
     exports.getSelectedID = function (mtrData, getWidgetMtr) {
-        $("#box_tableHeader").show();
         mtrData.sort(function (a, b) {
             return a.sequence - b.sequence
         });
@@ -326,6 +335,8 @@ define(function (require, exports, module) {
                             maxsequence = mtrsequence;
                         }
                     })
+                }else {
+                    var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
                     switch (mtrData[x].Type_ID) {
@@ -350,6 +361,7 @@ define(function (require, exports, module) {
                         var mtrDuration = "15";
                     }else {
                         var mtrDuration = formatSecond(mtrData[x].Duration).toString();
+                        if (mtrDuration == 0) mtrDuration = 15;
                     }
                     var dbduration = {
                         duration: mtrDuration     //将时间转为秒
@@ -460,7 +472,6 @@ define(function (require, exports, module) {
                 onSort: onResortMaterial
             });
 
-            save();
             mtrAttrSave()
         }
     }
@@ -488,23 +499,22 @@ define(function (require, exports, module) {
         })
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
-            if ($("#mtrCtrl_playType").val() == "Percent") {
-                var overall_schedule_params = {
-                    Type: $(this).val(),
-                    count: 1
-                };
-            }else {
-                var overall_schedule_params = {
-                    Type: $(this).val()
-                };
-            }
-            DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+            playTypeSave ();
         })
     }
 
+    //播放顺序保存
+    function playTypeSave () {
+        if (!inputCheck()) return;
+        var overall_schedule_params = {
+            Type: $(this).val()
+        };
+        DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+    }
     //文本效果保存
     function textAttrSave() {
         if ($("#mtrC_textType").val() == "Marquee") {
+            if (!inputCheck()) return;
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
@@ -523,12 +533,14 @@ define(function (require, exports, module) {
     //资源修改
     function mtrAttrSave() {
         $(".mtrCtrl_time").change(function(){
+            if (!inputCheck()) return;
             var time = {
                 duration: formatSecond($(this).val())
             };
             DB.collection("material").update({schedule_params: JSON.stringify(time)}, {resource_id: Number($(this).parent().parent().attr("mtrid"))});
         })
         $(".mtrC_times").change(function(){
+            if (!inputCheck()) return;
             if ($("#mtrCtrl_playType").val() == "Percent") {
                 var schedule_params = {
                     duration: formatSecond($(this).parent().prev().find("input").val()),
@@ -550,6 +562,7 @@ define(function (require, exports, module) {
         })
         //时钟类型
         $(".rd_clock").next().click(function () {
+            if (!inputCheck()) return;
             var wstyle = {
                 TextColor: $("#clockText_color").val(),
                 Type: $("input:radio:checked").attr("clocktype"),
@@ -560,11 +573,55 @@ define(function (require, exports, module) {
 
     //时钟字体颜色
     function clockTextColor(){
+        if (!inputCheck()) return;
         var wstyle = {
             TextColor: $("#clockText_color").val(),
             Type: $("input:radio:checked").attr("clocktype"),
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+    }
+
+    //function weatherSave(){
+    //    //时钟类型
+    //    $(".rd_clock").next().click(function () {
+    //        var wstyle = {
+    //            TextColor: $("#clockText_color").val(),
+    //            Type: $("input:radio:checked").attr("clocktype"),
+    //        }
+    //        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+    //    })
+    //}
+
+    //校验
+    function inputCheck(){
+        var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
+        var errorMsg = "";
+        if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4){
+            $(".mtrCtrl_time").each(function(){
+                if($(this).val() == "") errorMsg += "请输入资源时长！/n"; return;
+            })
+            $(".mtrC_times").each(function(){
+                if($(this).val() == null) errorMsg += "请输入资源次数！/n"; return;
+            })
+        }
+        if (widgetData.type_id == 3){
+            if ($("#mtrC_textType").val() == "Normal"){
+                if($("mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！/n"; return;
+            }else {
+                if($("text_color").val() == "") errorMsg += "请选择字体颜色！/n"; return;
+                if($("mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！/n"; return;
+            }
+        }
+        if (widgetData.type_id == 5) {
+            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！/n"; return;
+        }
+        if (errorMsg != ""){
+            alert(errorMsg);
+            return false;
+        }else {
+            return true;
+        }
+
     }
 
     //校验复选框勾选的个数
@@ -618,12 +675,46 @@ define(function (require, exports, module) {
             } else if (time > 60 && time < 3600) {
                 var m = parseInt(time / 60);
                 var s = parseInt(time % 60);
-                time = "00:" + m + ":" + s;
+                if (m < 10 && s < 10) {
+                    time = "00:0" + m + ":0" + s;
+                }else if (m < 10 && s >= 10){
+                    time = "00:0" + m + ":" + s;
+                }else {
+                    time = "00:" + m + ":" + s;
+                }
             } else if (time >= 3600 && time < 86400) {
                 var h = parseInt(time / 3600);
                 var m = parseInt(time % 3600 / 60);
                 var s = parseInt(time % 3600 % 60 % 60);
-                time = h + ":" + m + ":" + s;
+                if (h < 10) {
+                    if(m < 10) {
+                        if (s < 10) {
+                            time = "0" + h + ":0" + m + ":0" + s;
+                        }else {
+                            time = "0" + h + ":0" + m + ":" + s;
+                        }
+                    }else {
+                        if (s < 10) {
+                            time = "0" + h + ":" + m + ":0" + s;
+                        }else {
+                            time = "0" + h + ":" + m + ":" + s;
+                        }
+                    }
+                }else {
+                    if(m < 10) {
+                        if (s < 10) {
+                            time = h + ":0" + m + ":0" + s;
+                        }else {
+                            time = h + ":0" + m + ":" + s;
+                        }
+                    }else {
+                        if (s < 10) {
+                            time = h + ":" + m + ":0" + s;
+                        }else {
+                            time = h + ":" + m + ":" + s;
+                        }
+                    }
+                }
             }
         }
         return time;

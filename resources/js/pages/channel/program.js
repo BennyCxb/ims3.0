@@ -83,7 +83,7 @@ define(function (require, exports, module) {
 
     function loadWidget(widget) {
         //console.log(widget);
-      //资源控件页面加载
+        //资源控件页面加载
 		var page = "resources/pages/channel/mtrCtrl.html";
 		$(".channel-program-widget").load(page);
         localStorage.setItem('currentWidget', JSON.stringify(widget));

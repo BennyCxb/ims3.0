@@ -235,7 +235,7 @@ a {
 	width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader #mtrC_flip{
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip{
 	display: none;
 }
 
@@ -244,6 +244,10 @@ a {
     width: 90px;
     border-color: #d2d6de;
     background-color: transparent;
+}
+
+#box_weather img {
+    width: 100%;
 }
 
 #mtrCtrl_Table input {
