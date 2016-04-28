@@ -32,8 +32,7 @@
     height: 80px;
     width: 100%;
     background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
+    background: no-repeat center center;
 }
 
 #layout-list-dialog .layout-list>li>span {

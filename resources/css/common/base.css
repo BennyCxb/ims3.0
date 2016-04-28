@@ -655,7 +655,5 @@ a {
 /*////// marquee //////*/
 .marquee {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background: #ccc;
 }
 /*////// /marquee /////*/

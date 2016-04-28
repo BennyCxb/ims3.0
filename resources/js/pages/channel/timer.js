@@ -66,16 +66,16 @@ define(function (require, exports, module) {
     Timer.prototype.notifySave = function () {
         var self = this;
         this.tMonths = [];
-        $('#channel-editor-timer .month-selector li').each(function (idx, el) {
-            self.tMonths.push(parseInt(el.getAttribute('data-id')));
+        $('#channel-editor-timer .month-selector input').each(function (idx, el) {
+            el.checked && self.tMonths.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDates = [];
-        $('#channel-editor-timer .date-selector li').each(function (idx, el) {
-            self.tDates.push(parseInt(el.getAttribute('data-id')));
+        $('#channel-editor-timer .date-selector input').each(function (idx, el) {
+            el.checked && self.tDates.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDays = [];
-        $('#channel-editor-timer .day-selector li').each(function (idx, el) {
-            self.tDays.push(parseInt(el.getAttribute('data-id')));
+        $('#channel-editor-timer .day-selector input').each(function (idx, el) {
+            el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tHours = $('#channel-editor-timer .hour-selector select').val().map(function (el) {
             return parseInt(el);

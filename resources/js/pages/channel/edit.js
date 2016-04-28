@@ -940,6 +940,9 @@ define(function(require, exports, module) {
 		db.commit();
 		db.beginTransaction();
 		alert('保存成功!');
+		if (location.hash.indexOf('?id=') === -1) {
+			location.hash = '#layout/edit?id=' + channelId;
+		}
         location.reload();
 	}
 
