@@ -235,7 +235,7 @@ a {
 	width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader #mtrC_flip{
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip{
 	display: none;
 }
 
@@ -244,6 +244,10 @@ a {
     width: 90px;
     border-color: #d2d6de;
     background-color: transparent;
+}
+
+#box_weather img {
+    width: 100%;
 }
 
 #mtrCtrl_Table input {
@@ -288,13 +292,25 @@ a {
 }
     
 #DT_radio {
-	margin: 50px 0px 0px 10px;	
+	position: absolute;
+  top: 28px;
+  left: 20px;
 }
 
 .mtrC_datetime {
-	width: 90%;
+    width: calc(100% - 15px);
     margin: auto;
+    margin-left: 12px;
     display: inline-table;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-top: 0px;
+}
+
+.info-box-content{
+  margin-left: 30px;
+  margin-top:-2px;
 }
 
 /*资源选择页面*/
@@ -304,6 +320,7 @@ a {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
 }
 
 .mtr_choise_status {

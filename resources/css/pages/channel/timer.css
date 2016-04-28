@@ -1,6 +1,9 @@
 
 #channel-editor-timer {
+    position: relative;
+    left: 50%;
     margin: auto;
+    margin-left: -300px;
     width: 600px;
 }
 

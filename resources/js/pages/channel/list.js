@@ -17,7 +17,9 @@ define(function(require, exports, module) {
 
     // 初始化页面
 	exports.init = function() {
+		checkCheck();
         loadPage(1);
+		
         registerEventListeners();
 		//筛选审核状态
 				if(util.getLocalParameter('config_checkSwitch') == '1'){
@@ -473,13 +475,13 @@ define(function(require, exports, module) {
 
     }
 	function checkCheck(){
-        if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
+        if(util.getLocalParameter('config_checkSwitch') == 0){
             $('#chn_submit').css('display','none');
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
             $('#chn_toBeCheckedDiv').css('display','none');
         }
-        else if(UTIL.getLocalParameter('config_canCheck') == 0){
+        else if(util.getLocalParameter('config_canCheck') == 0){
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
         }
