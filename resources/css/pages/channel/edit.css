@@ -279,3 +279,9 @@
     padding-bottom: 3px;
 
 }
+
+#widget_attribute label{
+    position: relative;
+    top: 7px;
+    margin-left: 30px;
+}
