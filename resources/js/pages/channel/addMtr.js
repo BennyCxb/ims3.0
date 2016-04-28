@@ -166,12 +166,12 @@ define(function (require, exports, module) {
                 var material_type = mtrData[0].Type_Name;
                 if (material_type == "文本") {		//文本无预览效果
                     for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'>' +
+                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">0:00:00</td>' +
-                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
                             '</tr>';
                         $("#mtr_choiseTable tbody").append(mtrtr);
                     }
@@ -183,7 +183,7 @@ define(function (require, exports, module) {
 	                            '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
 	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
 	                            '<td class="mtr_time">0:00:00</td>' +
-	                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
 	                            '</tr>';
 	                        $("#mtr_choiseTable tbody").append(mtrtr);
                     	}else {
@@ -192,7 +192,7 @@ define(function (require, exports, module) {
 	                            '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
 	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
 	                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-	                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
 	                            '</tr>';
 	                        $("#mtr_choiseTable tbody").append(mtrtr);
                     	}
