@@ -277,11 +277,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#layout/edit?id='+
+'"> <td style="width: 32px"><input type="checkbox"></td> <td><b><a href="#layout/edit?id='+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></td> <td>宽:'+
+'</a></b></td> <td>宽:'+
 ((__t=(width))==null?'':__t)+
 '</td> <td>高:'+
 ((__t=(height))==null?'':__t)+
