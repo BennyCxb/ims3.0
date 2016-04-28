@@ -176,6 +176,8 @@ __p+='<tr data-channel-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-channel-detail"><i class="fa fa-newspaper-o"></i>&nbsp&nbsp'+
 ((__t=(name))==null?'':__t)+
+'</a></td> <td>审核状态:'+
+((__t=(CheckLevel))==null?'':__t)+
 '</a></td> <td>调度类型:'+
 ((__t=(schedule_type))==null?'':__t)+
 '</td> <td>调度参数:'+

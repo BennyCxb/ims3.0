@@ -202,6 +202,7 @@ define(function(require, exports, module) {
             var data = {
                 id: el.ID,
                 name: el.Name,
+				CheckLevel:"111",
                 schedule_type: '',//schedule_type,
                 schedule_params: '',//schedule_params,
                 version: el.Version
