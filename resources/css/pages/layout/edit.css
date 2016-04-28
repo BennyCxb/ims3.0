@@ -211,3 +211,7 @@
 .layout-edit-propoties-name:focus{
     border: 1px solid #ccc !important;
 }
+
+.layout-preview-text {
+    font-size: 40px;
+}

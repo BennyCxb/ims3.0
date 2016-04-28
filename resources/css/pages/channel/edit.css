@@ -84,8 +84,7 @@
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 4px;
-    background-color: #f4f4f4;
-    background-image: url(../../../img/img_grid.png);
+    background: #f4f4f4 url(../../../img/img_grid.png);
 }
 
 #channel-editor-wrapper .channel-program-widget {

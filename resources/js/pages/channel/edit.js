@@ -19,6 +19,7 @@ define(function(require, exports, module) {
 		requestUrl = config.serverRoot,
 		db = null,
         channelId = null,
+		proramHandle = null,
 		/**
 		 * 保存常规节目的序列
 		 */
@@ -202,7 +203,7 @@ define(function(require, exports, module) {
                 ProgramID: program.id
             }),
             promises = [];
-        util.ajax('post', requestUrl + '/backend_mgt/v1/programs', data, function (res) {
+        util.ajax('post', requestUrl + '/backend_mgt/v2/programs', data, function (res) {
             if (Number(res.rescode) !== 200) {
                 deferred.reject(res);
                 return;
@@ -407,6 +408,20 @@ define(function(require, exports, module) {
 		});
 		//timedSortable = Sortable.create(ul[0], {});
 	}
+	
+	function onProgramNameChange(data) {
+		$('#channel-editor-wrapper .program-list-item[data-id="' + data.id + '"] .program-list-item-title').text(data.name);
+	}
+
+
+	var messageReceiver = (function () {
+		return {
+			subscribeEvent: function (handle) {
+				proramHandle = handle;
+				handle.on('program_name.change', onProgramNameChange);
+			}
+		};
+	}());
 
 	/**
 	 * 加载节目
@@ -417,7 +432,7 @@ define(function(require, exports, module) {
 		if (program) {
 			$('#channel-editor-wrapper ul>li[data-id=' + program.id + ']').addClass('selected');
 		}
-		programCtrl.load(program);
+		programCtrl.load(program, messageReceiver);
 	}
 
 	/**
@@ -455,7 +470,7 @@ define(function(require, exports, module) {
         $('#channel-editor-wrapper .channel-program-schedule-type').change(function () {
             var value = JSON.stringify({Type: this.value});
             db.collection('channel').update({overall_schedule_params: value}, {});
-            // TODO notify change
+            proramHandle.send('channel_overall_schedule_params.change', this.value);
         });
 	}
 
@@ -620,7 +635,7 @@ define(function(require, exports, module) {
 						}
 					}),
 					oldProgramId = program.id, oldTemplateId = program.template_id;
-				util.ajax('post', requestUrl + '/backend_mgt/v1/programs', data, function (res) {
+				util.ajax('post', requestUrl + '/backend_mgt/v2/programs', data, function (res) {
 					if (!failed && Number(res.rescode) !== 200) {
 						deferred.reject(res);
 						failed = true;
@@ -674,7 +689,7 @@ define(function(require, exports, module) {
 							Layout_ID: program.layout_id
 						}
 					});
-				util.ajax('post', requestUrl + '/backend_mgt/v1/programs/' + program.id, data, function (res) {
+				util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
 					if (!failed && Number(res.rescode) !== 200) {
 						deferred.reject(res);
 						failed = true;
@@ -708,14 +723,16 @@ define(function(require, exports, module) {
 						Overall_Schedule_Paras: widget.overall_schedule_params,
 						Overall_Schedule_Type: widget.overall_schedule_type,
 						Z: widget.z_index,
+						ID: widget.id,
 						ControlBox_Material: widget.material,
 						Top: widget.top,
 						Left: widget.left,
 						ControlBox_Type_ID: widget.type_id,
 						ControlBox_Type_Name: widget.type_name,
-						ControlBox_Type_Type: widget.type,
+						ControlBox_Type: widget.type,
 						Program_ID: widget.program_template_id,
-						Height: widget.height
+						Height: widget.height,
+						Width: widget.width
 					}
 				});
 				util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes/' + widget.id, data, function (res) {
@@ -864,7 +881,7 @@ define(function(require, exports, module) {
 					Project: projectName,
 					Action: 'Delete'
 				});
-				util.ajax('post', requestUrl + '/backend_mgt/v1/programs/' + program.id, data, function (res) {
+				util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
 					if (!failed && Number(res.rescode) !== 200) {
 						failed = true;
 						deferred.reject(res);
@@ -932,13 +949,6 @@ define(function(require, exports, module) {
 	}
 
 	/**************** end of saveChannel  *****************/
-
-	/**
-	 * 保存并发布的回调函数
-	 */
-    function onPublishChannel() {
-        console.log('save & publish');
-    }
 	
 	function onNewLayout(type, layoutId) {
 		var data = JSON.stringify({
@@ -1046,7 +1056,7 @@ define(function(require, exports, module) {
 				id: program.id,
 				name: program.name
 			};
-        db.collection('program').update({template_id: programId}, {program_id: programId});
+        db.collection('program').update({template_id: programId}, {id: programId});
 		widgets.forEach(function (widget) {
 			widget.program_id = programId;
             widget.program_template_id = programId;

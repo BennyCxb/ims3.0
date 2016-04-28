@@ -14,9 +14,11 @@ define(function (require, exports, module) {
         layoutId = null,
         editor = null,
         editMode = false,
-        widgetId = null;
+        widgetId = null,
+        container = null;
     
-    function load(program) {
+    function load(program, _container) {
+        container = _container;
         if (program === null) {
             $('#channel-editor-wrapper .channel-program-editor').html('没有频道!');
             return;
@@ -180,6 +182,13 @@ define(function (require, exports, module) {
     }
 
     function registerEventListeners () {
+        messageDispatcher.reset();
+        container.subscribeEvent(messageDispatcher);
+        messageDispatcher.on('channel_overall_schedule_params.change', function (data) {
+            $('#channel-editor-wrapper .channel-program-timer')
+                .toggleClass('percent-channel', data === 'Percent');
+        });
+
         editor.onFocusChanged(function () {
             var focusedWidget = editor.getLayout().getFocusedWidget();
             if (focusedWidget) {
@@ -267,7 +276,10 @@ define(function (require, exports, module) {
                 break;
         }
         if (updates) {
-            db.collection('program').update({id: programId}, updates);
+            db.collection('program').update(updates, {id: programId});
+            if (field === 'name') {
+                messageDispatcher.send('program_name.change', {id: programId, name: this.value});
+            }
         }
     }
 
@@ -301,6 +313,27 @@ define(function (require, exports, module) {
      function onSelectWidget (widget) {
         loadWidget(widget);
     }
+
+    var messageDispatcher = (function () {
+
+        var callbacks = {};
+
+        return {
+            on: function (name, cb) {
+                if (callbacks.hasOwnProperty(name)) {
+                    throw new Error('event ' + name + ' has been subscribed!');
+                }
+                callbacks[name] = cb;
+            },
+            send: function (name, data) {
+                typeof callbacks[name] === 'function' && callbacks[name](data);
+            },
+            reset: function () {
+                callbacks = {};
+            }
+        }
+
+    }());
 
     exports.load = load;
 

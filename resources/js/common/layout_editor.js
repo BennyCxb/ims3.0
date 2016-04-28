@@ -38,6 +38,11 @@ define(function (require, exports, module) {
      * @type {number} 初始画布时，layout占屏幕的最大比例
      */
     var MIN_CANVAS_SCALE = 0.9;
+    /**
+     *
+     * @type {number} 默认文本控件的字体大小
+     */
+    var DEFAULT_FONT_SIZE = 40;
 
     /**
      * 生成一个颜色迭代器，能够确保色相尽量分散
@@ -1337,16 +1342,18 @@ define(function (require, exports, module) {
              return;
          }
 
+        var scale = this.mContext.mZoomFactor;
         if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.textContent = data.material;
-            marquee.setAttribute('class', 'marquee');
+            marquee.setAttribute('class', 'marquee layout-preview-text');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.9) + 'px';
             marquee.style.color = data.style.color;
             this.mElement.appendChild(marquee);
             $(marquee).marquee({
                 direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
             });
+                //.css({'transform': 'scale(' + scale + ',' + scale + ')'});
         } else {
             var iFrame = document.createElement('iframe');
             iFrame.setAttribute('frameborder', '0');
@@ -1362,6 +1369,7 @@ define(function (require, exports, module) {
 
         }
 
+
     };
 
     /**
@@ -1376,7 +1384,11 @@ define(function (require, exports, module) {
     ClockWidget.prototype.showPreview = function (resource) {
         //
     };
-    
+
+    /**
+     * 天气控件
+     * @constructor
+     */
     function WeatherWidget() {
         Widget.apply(this, arguments);
     }
