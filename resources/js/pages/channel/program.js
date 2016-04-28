@@ -228,6 +228,7 @@ define(function (require, exports, module) {
             });
         });
         $('#channel-editor-wrapper .channel-program-header input').change(onProgramEdit);
+        $('#channel-editor-wrapper .channel-program-timer input').change(onProgramEdit);
     }
     
     function onProgramEdit() {
@@ -245,7 +246,7 @@ define(function (require, exports, module) {
                 break;
             case 'duration':
             case 'count':
-                var schedule_params = JSON.parse(db.collection('program')[0].schedule_params);
+                var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
                 var params = {};
                 if (field === 'count') {
                     params.count = parseInt(this.value);
