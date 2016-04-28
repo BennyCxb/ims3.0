@@ -10,17 +10,20 @@ define(function (require, exports, module) {
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
 		//var loadType = ROLES.loadType;
-		if(rID){
+		var type = ROLES.type;
+		if(type==="add"){
+			$("#role_name").val();
+			$("#term").val();
+			rID = -1;
+			}
+		else if(rID){
 			$("#role_name").val(rName);
 			}else{
 				rID = ROLEEDIT.roleID;
 				rName = ROLEEDIT.roleName;
 				if(rID){
 					$("#role_name").val(rName);
-					}
-				else{
-					$("#role_name").val();
-					}		
+					}	
 		}
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
@@ -183,6 +186,10 @@ define(function (require, exports, module) {
     }
 	exports.loadModulePage = function () {
 		var rID = ROLES.roleID;
+		var type = ROLES.type;
+		if(type==="add"){
+			rID = -1;
+			}
 		if(rID){}else{
 			rID = ROLEEDIT.roleID;
 			}
