@@ -6,12 +6,12 @@ define(function(require, exports, module) {
 
 	exports.cover = {
 		'load': function(url){
-			$('#cover_area').load(url);
 			$('#cover_area').css('display','flex');
+			$('#cover_area').load(url);
 		},
 		'close': function(){
-			$('#cover_area').empty();
 			$('#cover_area').css('display','none');
+			$('#cover_area').empty();
 		}
 	};
 
