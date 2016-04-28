@@ -19,6 +19,113 @@ define(function(require, exports, module) {
 	exports.init = function() {
         loadPage(1);
         registerEventListeners();
+		//筛选审核状态
+				if(util.getLocalParameter('config_checkSwitch') == '1'){
+					$('#chn_toBeCheckedDiv button').each(function(i,e){
+					  $(this).click(function(){
+						$(this).siblings().removeClass('btn-primary');
+						$(this).siblings().addClass('btn-defalut');
+		
+						var isFocus = $(this).hasClass('btn-primary');
+						$(this).removeClass(isFocus?'btn-primary':'btn-defalut');
+						$(this).addClass(isFocus?'btn-defalut':'btn-primary');
+						loadPage(1);
+					  })
+					})
+					//获取已选频道ids
+					function getChannelIds(){
+						var ids = new Array();
+						$("#channel-table input[type='checkBox']:checked").each(function(i,e){
+							ids.push(Number($(e).parent().parent().parent().attr('chnID')));
+						})
+						return ids;
+					}
+					//提交审核
+					$('#chn_submit').click(function(){
+						
+						if(!$('#chn_submit').attr('disabled')){
+							
+							var data = {
+							  "project_name": config.projectName,
+							  "action": "submitToCheck",
+							  "ChannelIDs": getChannelIds()
+							}
+							util.ajax(
+								'POST', 
+								config.serverRoot + '/backend_mgt/v2/channels',
+								JSON.stringify(data),
+								function(data){
+									if(data.rescode === '200'){
+										alert('已提交');
+										loadPage(1);
+									}else{
+										alert('提交失败');
+									}
+								}
+							)
+						}
+					})
+		
+					//审核通过
+					$('#chn_pass').click(function(){
+						
+						if(!$('#chn_pass').attr('disabled')){
+							
+							var data = {
+							  "project_name": config.projectName,
+							  "action": "checkPass",
+							  "ChannelIDs": getChannelIds()
+							}
+							util.ajax(
+								'POST', 
+								config.serverRoot + '/backend_mgt/v2/channels',
+								JSON.stringify(data),
+								function(data){
+									if(data.rescode === '200'){
+										alert('已审核');
+										loadPage(1);
+									}else{
+										alert('审核失败');
+									}
+								}
+							)
+						}
+					})
+		
+					//审核不通过
+					$('#chn_unpass').click(function(){
+						
+						if(!$('#chn_unpass').attr('disabled')){
+							var ids = getChannelIds();
+							var unpassChn = [];
+							for(var i=0;i<ids.length;i++){
+								//ids[i].failInfo="这里是审核不通过的反馈信息"
+								var a = {"channelID":ids[i],"failInfo":"这里是审核不通过的反馈信息"}
+								unpassChn[i] = a;
+								
+								}
+							var data = {
+							  "project_name": config.projectName,
+							  "action": "checkFailed",
+							  "CheckFeedBack": unpassChn
+							}
+							util.ajax(
+								'POST', 
+								config.serverRoot + '/backend_mgt/v2/channels',
+								JSON.stringify(data),
+								function(data){
+									if(data.rescode === '200'){
+										alert('已审核');
+										loadPage(1);
+									}else{
+										alert('审核失败');
+									}
+								}
+							)
+						}
+					})
+				}
+
     };
 
     function registerEventListeners() {
@@ -142,6 +249,7 @@ define(function(require, exports, module) {
         $('#channel-list-controls .btn-publish-later').prop('disabled', selectedCount !== 1);
         $('#channel-list-controls .btn-copy').prop('disabled', selectedCount !== 1);
         $('#channel-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
+		
     }
 
     function getChannelId(el) {
@@ -158,13 +266,19 @@ define(function(require, exports, module) {
 
     // 加载页面数据
     function loadPage(pageNum) {
+		var status = "";
+		$("#channel-table tbody").html("");
+        if($('#chn_toBeCheckedDiv button.btn-primary').length > 0){
+          status = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
+        }
         var pager = {
             page: String(pageNum),
             total: '0',
             per_page: String(nDisplayItems),
             orderby: 'ID',
             sortby: '',
-            keyword: keyword
+            keyword: keyword,
+			status: status
         };
         var data = JSON.stringify({
             action: 'GetPage',
@@ -182,6 +296,11 @@ define(function(require, exports, module) {
         $('#channel-table-pager').jqPaginator({
             totalPages: totalPages,
             visiblePages: 10,
+            first: config.pager.first,
+            prev: config.pager.prev,
+            next: config.pager.next,
+            last: config.pager.last,
+            page: config.pager.page,
             currentPage: Number(json.Pager.page),
             onPageChange: function (num, type) {
                 if (type === 'change') {
@@ -189,33 +308,173 @@ define(function(require, exports, module) {
                 }
             }
         });
+		
+		
+		//拼接
+        if (json.Channels != undefined) {
+            var chnData = json.Channels;
+            var check_th = '';
+            if(util.getLocalParameter('config_checkSwitch') == '1'){
+                check_th = '<th class="chn_check">审核状态</th>';
+            }
 
-        $('#channel-table>tbody').html('');
-        json.Channels.forEach(function (el, idx, arr) {
-            /*var schedule_type = el.Overall_Schedule_Type === 'Regular' ? '常规' : '定时';
-            var schedule_params = {
-                'Sequence': '顺序',
-                'Percent': '比例',
-                'Random': '随机'
-            }[el.Overall_Schedule_Paras.Type];
-            schedule_params = schedule_params ? schedule_params : '其它';*/
-            var data = {
-                id: el.ID,
-                name: el.Name,
-				CheckLevel:"111",
-                schedule_type: '',//schedule_type,
-                schedule_params: '',//schedule_params,
-                version: el.Version
-            };
-            $('#channel-table>tbody').append(templates.channel_table_row(data));
-        });
-        onSelectedItemChanged();
+            $("#channel-table tbody").append('<tr>'+
+                                    '<th class="chn_checkbox"></th>'+
+                                    '<th class="chn_name">频道名</th>'+
+                                    check_th+
+                                    
+                                '</tr>');
+            if (chnData.length != 0){
+                	for (var x = 0; x < chnData.length; x++) {
+                        // 审核状态
+                        var check_td = '';
+                        var check_status = '';
+                        if(util.getLocalParameter('config_checkSwitch') == '1'){
+                            var status;
+                            check_status = "check_status=" + chnData[x].CheckLevel;
+                            switch(chnData[x].CheckLevel){
+                                case 0:
+                                    status = '待提交';
+                                    break;
+                                case 1:
+                                    status = '待审核';
+                                    break; 
+                                case 2:
+                                    status = '已通过';
+                                    break; 
+                                case 3:
+                                    status = '未通过';
+                                    break;       
+                                default:
+                                    break;
+                            } 
+                           check_td = '<th class="chn_check">'+status+'</th>';
+                        }
 
+                        var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
+                            '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                            '<td class="chn_name" title="' +chnData[x].Name+ '">' + chnData[x].Name + '</td>' +
+                            check_td +
+                            
+                            '</tr>';
+                        $("#channel-table tbody").append(chntr);
+                    }
+						}else {
+							for (var x = 0; x < chnData.length; x++) {
+								
+								// 未审核状态
+								var check_td = '';
+								var check_status = '';
+								var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
+                            '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                            '<td class="chn_name" title="' +chnData[x].Name+ '">' + chnData[x].Name + '</td>' +
+                            check_td +
+                            
+                            '</tr>';
+                        $("#channel-table tbody").append(chntr);
+							}
+					}
+		checkCheckBtns();
+            
+        }
+
+        //复选框样式
         $('#channel-table input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
             radioClass: 'iradio_flat-blue'
         });
+		
+		 //
+        $(".icheckbox_flat-blue").parent().parent().click(function () {
+        	$(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+            var obj = $(this).find("input");
+            if ($(this).find("input").prop("checked") == true) {
+                $(this).find("input").prop("checked", false);
+                $(this).find("div").prop("class", "icheckbox_flat-blue");
+                $(this).find("div").prop("aria-checked", "false");
+            } else {
+                $(this).find("input").prop("checked", true);
+                $(this).find("div").prop("class", "icheckbox_flat-blue checked");
+                $(this).find("div").prop("aria-checked", "true");
+            }
+            checkCheckBtns();
+        })
+        $(".icheckbox_flat-blue ins").click(function () {
+            checkCheckBtns();
+        })
+		//校验批量操作的审核功能
+		function checkCheckBtns(){
+			if($("#channel-table input[type='checkBox']:checked").length === 0){
+				$('#chn_submit').attr('disabled',true);
+				$('#chn_pass').attr('disabled',true);
+				$('#chn_unpass').attr('disabled',true);
+				$('#channel-list-controls .btn-publish').prop('disabled', true);
+				$('#channel-list-controls .btn-publish-later').prop('disabled', true);
+				$('#channel-list-controls .btn-copy').prop('disabled', true);
+				$('#channel-list-controls .btn-delete').prop('disabled', true);
+			}else{
+				$("#channel-table input[type='checkBox']:checked").each(function(i,e){		
+					//待提交
+					if($(e).parent().parent().parent().attr('check_status') == '0'){
+						$('#chn_submit').attr('disabled',false);
+						$('#chn_pass').attr('disabled',true);
+						$('#chn_unpass').attr('disabled',true);
+					}
+					//待审核
+					else if($(e).parent().parent().parent().attr('check_status') == '1'){
+						$('#chn_submit').attr('disabled',true);
+						$('#chn_pass').attr('disabled',false);
+						$('#chn_unpass').attr('disabled',false);
+					}
+					//已通过和未通过
+					else {
+						$('#chn_submit').attr('disabled',true);
+						$('#chn_pass').attr('disabled',true);
+						$('#chn_unpass').attr('disabled',true);
+					}
+	
+				})
+			}
+	
+		}
+		
+		//mark
+        //$('#channel-table>tbody').html('');
+//        json.Channels.forEach(function (el, idx, arr) {
+//            /*var schedule_type = el.Overall_Schedule_Type === 'Regular' ? '常规' : '定时';
+//            var schedule_params = {
+//                'Sequence': '顺序',
+//                'Percent': '比例',
+//                'Random': '随机'
+//            }[el.Overall_Schedule_Paras.Type];
+//            schedule_params = schedule_params ? schedule_params : '其它';*/
+//            var data = {
+//                id: el.ID,
+//                name: el.Name,
+//				CheckLevel:"111",
+//                schedule_type: '',//schedule_type,
+//                schedule_params: '',//schedule_params,
+//                version: el.Version
+//            };
+//            $('#channel-table>tbody').append(templates.channel_table_row(data));
+//        });
+//
+//        $('#channel-table input[type="checkbox"]').iCheck({
+//            checkboxClass: 'icheckbox_flat-blue',
+//            radioClass: 'iradio_flat-blue'
+//        });
 
     }
-	
+	function checkCheck(){
+        if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
+            $('#chn_submit').css('display','none');
+            $('#chn_pass').css('display','none');
+            $('#chn_unpass').css('display','none');
+            $('#chn_toBeCheckedDiv').css('display','none');
+        }
+        else if(UTIL.getLocalParameter('config_canCheck') == 0){
+            $('#chn_pass').css('display','none');
+            $('#chn_unpass').css('display','none');
+        }
+    }
 });
