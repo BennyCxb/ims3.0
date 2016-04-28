@@ -413,21 +413,22 @@ define(function(require, exports, module) {
 				$('#channel-list-controls .btn-copy').prop('disabled', true);
 				$('#channel-list-controls .btn-delete').prop('disabled', true);
 			}else{
-				$("#channel-table input[type='checkBox']:checked").each(function(i,e){		
+				var checked = $("#channel-table input[type='checkBox']:checked");
+				for(var n=0;n<checked.length;n++){		
 					//已通过和未通过
-					if($(e).parent().parent().parent().attr('check_status') == '2'){
+					if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
 						
 					}
-					else if($(e).parent().parent().parent().attr('check_status') == '3'){
+					else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
 					}
 					//待审核
-					else if($(e).parent().parent().parent().attr('check_status') == '1'){
+					else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',false);
 						$('#chn_unpass').attr('disabled',false);
@@ -439,7 +440,7 @@ define(function(require, exports, module) {
 						$('#chn_unpass').attr('disabled',true);
 					}
 	
-				})
+				}
 			}
 	
 		}
