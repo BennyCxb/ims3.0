@@ -353,7 +353,7 @@ define(function(require, exports, module) {
 
                         var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                            '<td class="chn_name" title="' +chnData[x].Name+ '">' + chnData[x].Name + '</td>' +
+                            '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
                             check_td +
                             
                             '</tr>';
@@ -367,7 +367,7 @@ define(function(require, exports, module) {
 								var check_status = '';
 								var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                            '<td class="chn_name" title="' +chnData[x].Name+ '">' + chnData[x].Name + '</td>' +
+                           '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
                             check_td +
                             
                             '</tr>';
