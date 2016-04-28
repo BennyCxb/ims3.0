@@ -4,7 +4,7 @@
         <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button>
         
         <input class="direct-name-002 channel-editor-property" data-key="name" value="<%=name%>" />
-        <small class="direct-name-001-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px;">
+        <small class="direct-name-002-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px;">
             <i class="glyphicon glyphicon-edit" style="color: white"></i>
         </small>
 
@@ -30,11 +30,12 @@
 
 
             <div class="channel-program-list-timed ">
-                <small style="position: absolute; bottom: 10px; right: 15px;">
+
+                <small style="position: absolute; bottom: 12px; right: 15px;">
                     点击添加新节目
                     <i class="glyphicon glyphicon-hand-up"></i>
                 </small>
-                <div class="box-header with-border" style="position: fixed; z-index: 2; background: white; width: 256px;">
+                <div class="box-header with-border" style="position: relative; z-index: 2; background: white; width: 256px;">
                     <h3 class="box-title">
                         <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px;"></i>
                         定时节目
@@ -44,7 +45,6 @@
                         <a  class="btn btn-default btn-xs btn-program-new" title="添加" data-program-type="Timed"><i class="glyphicon glyphicon-plus" style="font-size:12px;"></i></a>
                      </div>
                 </div>
-                <div class="sticky-item-replace"></div>
                 <ul>
                     
                 </ul>
@@ -53,16 +53,17 @@
 
 
             <div class="channel-program-list-regular">
-                <small style="position: absolute; bottom: 10px; right: 15px;">
+
+                <small style="position: absolute; bottom: 12px; right: 15px;">
                     点击添加新节目
                     <i class="glyphicon glyphicon-hand-up"></i>
                 </small>
-                <div class="box-header with-border" style="position: absolute; width: 256px; background: white; z-index: 2"> 
+                <div class="box-header with-border" style="position: relative; width: 256px; background: white; z-index: 2; border-top: 1px solid #f4f4f4;">
                     <i class="glyphicon glyphicon-repeat" style="position: relative; top: 2px; font-size: 14px; margin-right: 0;"></i>
                     <h3 class="box-title">常规节目</h3>
 
                      <div class="tools">
-                        <select class="channel-program-schedule-type">
+                        <select class="channel-program-schedule-type btn-default btn" style="height: 24px; padding: 0; padding-left: 5px;">
                             <% var type = JSON.parse(overall_schedule_params).Type; %>
                             <% if (type === 'Sequence') { %>
                             <option value="Sequence" selected>顺序</option>
@@ -85,7 +86,6 @@
                      </div>
                 
                 </div>
-                <div class="sticky-item-replace"></div>
                 <ul>
                     
                 </ul>
@@ -95,13 +95,12 @@
 
             
         </div>
-        <div class="channel-program-editor">
+        <div class="channel-program-editor box box-default" >
             正在加载数据...
         </div>
     </div>
 
-    <div class="channel-editor-footer">
-    </div>
+    
 
 </div>
 
@@ -159,7 +158,7 @@
             var left = length * width/2 +77;
             $hint.css('left',left);
         });
-    }('.direct-name-002','.direct-name-001-hint'))
+    }('.direct-name-002','.direct-name-002-hint'))
 
 
 </script>

@@ -87,7 +87,6 @@ define(function(require, exports, module) {
             ChannelID: getCurrentChannelId()
         });
         util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, function (res) {
-            console.log(res);
             alert(Number(res.rescode) === 200 ? '复制成功' : '复制失败');
         });
     }
@@ -98,8 +97,8 @@ define(function(require, exports, module) {
             Project: projectName
         });
         util.ajax('post', requestUrl + '/backend_mgt/v1/channels/' + getCurrentChannelId(), data, function (res) {
-            console.log(res);
             alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
+            loadPage(1);
         });
     }
 
@@ -129,7 +128,7 @@ define(function(require, exports, module) {
     }
     
     function getCurrentChannelId() {
-        return Number($('#channel-table div.checked')[0].parentNode.getAttribute('data-channel-id'));
+        return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('data-channel-id'));
     }
 
     // 加载页面数据

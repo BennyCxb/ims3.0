@@ -34,9 +34,6 @@ define(function (require, exports, module) {
         renderProgramView(program, layout, widgets);
         registerEventListeners();
         
-        //资源控件页面加载
-		var page = "resources/pages/channel/mtrCtrl.html";
-		$(".channel-program-widget").load(page);
     }
 
     function renderProgramView(program, layout, widgets) {
@@ -83,7 +80,11 @@ define(function (require, exports, module) {
 
 
     function loadWidget(widget) {
-        console.log(widget);
+        //console.log(widget);
+      //资源控件页面加载
+		var page = "resources/pages/channel/mtrCtrl.html";
+		$(".channel-program-widget").load(page);
+        localStorage.setItem('currentWidget', JSON.stringify(widget));
     }
 
     function renderEditor (layout, widgets) {
@@ -139,7 +140,43 @@ define(function (require, exports, module) {
     }
 
     function showPreview(editor) {
-        console.log('show preview');
+        var data = {}, style;
+        db.collection('widget').select({program_id: programId}).forEach(function (w) {
+            switch (w.type) {
+                case 'AudioBox':
+                    data[w.id] = {};
+                    break;
+                case 'VideoBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'WebBox':
+                    style = JSON.parse(w.style);
+                    if (style.Type === 'Marquee') {
+                        style = {
+                            type: style.Type,
+                            color: style.TextColor,
+                            direction: style.ScrollDriection,
+                            speed: Number(style.ScrollSpeed)
+                        };
+                    } else {
+                        style = {
+                            type: style.Type
+                        };
+                    }
+                    data[w.id] = {material: w.material, style: style};
+                    break;
+                case 'ClockBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'WeatherBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'ImageBox':
+                    data[w.id] = {material: w.material};
+                    break;
+            }
+        });
+        editor.showPreview(data);
     }
 
     function registerEventListeners () {

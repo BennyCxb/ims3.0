@@ -10,6 +10,7 @@ define(function (require, exports, module) {
         $("#user_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"
             //INDEX.coverArea(page);
+			exports.type = "add";
 			UTIL.cover.load('resources/pages/user/user_edit.html');
         })
     }
@@ -20,6 +21,7 @@ define(function (require, exports, module) {
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#usersLisTitle").html("全部用户");
+		exports.pNum = pageNum;
         var data = JSON.stringify({
 			project_name:CONFIG.projectName,
             action: 'GetUsersAll',
@@ -82,7 +84,7 @@ define(function (require, exports, module) {
 					if(uID===1){
 						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
+                    '<td class="users_name"><i class="fa fa-user"></i>' + uName + '</td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
@@ -131,6 +133,7 @@ define(function (require, exports, module) {
 			//编辑
 			$(".user_name").click(function(){
 				var self = $(this);
+				exports.type = "edit";
 				var uName = self.html();
 				var currentID = self.parent().parent().attr("userID");
 				var uEmail = self.parent().parent().attr("userEmail");

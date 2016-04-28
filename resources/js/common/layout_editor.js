@@ -1000,6 +1000,8 @@ define(function (require, exports, module) {
                 return new AudioWidget(obj, layout);
             case 'VideoBox':
                 return new VideoWidget(obj, layout);
+            case 'WeatherBox':
+                return new WeatherWidget(obj, layout);
         }
     };
 
@@ -1236,7 +1238,12 @@ define(function (require, exports, module) {
     ImageWidget.prototype.constructor = ImageWidget;
     ImageWidget.prototype.showPreview = function (data) {
 
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
+
         if (data.material.length === 0) {
+            this.mElement.textContent = this.mTypeName;
             return;
         }
 
@@ -1245,6 +1252,7 @@ define(function (require, exports, module) {
         img.setAttribute('height', '100%');
         img.setAttribute('src', data.material);
         this.mElement.appendChild(img);
+
     };
 
     /**
@@ -1262,7 +1270,12 @@ define(function (require, exports, module) {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         }
 
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
+
         if (data.material.length === 0) {
+            this.mElement.textContent = this.mTypeName;
             return;
         }
         
@@ -1302,17 +1315,7 @@ define(function (require, exports, module) {
     }
     AudioWidget.prototype = Object.create(Widget.prototype);
     AudioWidget.prototype.constructor = AudioWidget;
-    AudioWidget.prototype.showPreview = function (data) {
-
-        if (data.material.length === 0) {
-            return;
-        }
-        var img = document.createElement('img');
-        img.setAttribute('width', '100%');
-        img.setAttribute('height', '100%');
-        img.setAttribute('src', data.material);
-        this.mElement.appendChild(img);
-    };
+    AudioWidget.prototype.showPreview = function (data) {};
 
     /**
      * Web文本控件
@@ -1325,32 +1328,40 @@ define(function (require, exports, module) {
     HTMLWidget.prototype.constructor = HTMLWidget;
     HTMLWidget.prototype.showPreview = function (data) {
 
-        if (data.material.length === 0) {
-            return;
-        }
-        if (data.style.Type === 'Marquee') {
-            var marquee = document.createElement('marquee');
-            marquee.setAttribute('width', '100%');
-            marquee.setAttribute('height', '100%');
-            marquee.setAttribute('direction', 'left');
+         while (this.mElement.firstChild) {
+             this.mElement.removeChild(this.mElement.firstChild);
+         }
+
+         if (data.material.length === 0) {
+         this.mElement.textContent = this.mTypeName;
+             return;
+         }
+
+        if (data.style.type === 'Marquee') {
+            var marquee = document.createElement('div');
+            marquee.textContent = data.material;
+            marquee.setAttribute('class', 'marquee');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.9) + 'px';
-            marquee.textContent(data.material);
+            marquee.style.color = data.style.color;
             this.mElement.appendChild(marquee);
+            $(marquee).marquee({
+                direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
+            });
         } else {
-            var iframe = document.createElement('iframe');
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('scrolling', 'no');
-            iframe.setAttribute('seamless', 'seamless');
-            iframe.setAttribute('allowtransparency', 'true');
-            iframe.style.width =
-                iframe.style.height = '100%';
-            iframe.style.overflowY = 'hidden';
-            this.mElement.appendChild(iframe);
-            var frameWindow = iframe.contentWindow || iframe.contentWindow.document || iframe.contentDocument;
-            frameWindow.document.open();
-            frameWindow.document.write(data.material);
-            frameWindow.document.close();
+            var iFrame = document.createElement('iframe');
+            iFrame.setAttribute('frameborder', '0');
+            iFrame.setAttribute('scrolling', 'no');
+            iFrame.setAttribute('seamless', 'seamless');
+            iFrame.setAttribute('allowtransparency', 'true');
+            iFrame.style.width =
+                iFrame.style.height = '100%';
+            iFrame.style.overflowY = 'hidden';
+            // http://stackoverflow.com/questions/8240101/set-content-of-iframe
+            iFrame.src = 'data:text/html;charset=utf-8,' + escape(data.material);
+            this.mElement.appendChild(iFrame);
+
         }
+
     };
 
     /**
@@ -1363,6 +1374,15 @@ define(function (require, exports, module) {
     ClockWidget.prototype = Object.create(Widget.prototype);
     ClockWidget.prototype.constructor = ClockWidget;
     ClockWidget.prototype.showPreview = function (resource) {
+        //
+    };
+    
+    function WeatherWidget() {
+        Widget.apply(this, arguments);
+    }
+    WeatherWidget.prototype = Object.create(Widget.prototype);
+    WeatherWidget.prototype.constructor = WeatherWidget;
+    WeatherWidget.prototype.showPreview = function (resource) {
         //
     };
 

@@ -11,6 +11,7 @@ define(function (require, exports, module) {
             //var page = "resources/pages/materials/materials_edit.html"
             //INDEX.coverArea(page);
 			//exports.loadType = "addRole";
+			exports.type = "add";
 			UTIL.cover.load('resources/pages/user/roles_edit.html');
         })
     }
@@ -107,17 +108,17 @@ define(function (require, exports, module) {
 						}
 				if(rID===1){
 					var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
-                    '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
+                    '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users1 + '</a></td>' + 
+					'<td class="users"><a class="roles_assign" title="分配用户" style=" display: inline-block;width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' + 
 					'<td></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
 					}else{
                 var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
-                    '<td class="roles_name"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
+                    '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users" style="width:300px;overflow:hidden;text-overflow:ellipsis;"><a class="roles_assign" title="分配用户">' + users1 + '</a></td>' + 
+					'<td class="users"><a class="roles_assign" title="分配用户"  style=" display:inline-block;width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' + 
 					'<td><a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
@@ -146,6 +147,7 @@ define(function (require, exports, module) {
 			//编辑
 			$(".role_name").click(function(){
 				var self = $(this);
+				exports.type = "edit";
 				var rName = self.html();
 				var currentID = self.parent().parent().attr("rolesID");
 				exports.roleName = rName;

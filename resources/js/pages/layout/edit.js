@@ -191,6 +191,7 @@ define(function(require, exports, module) {
         $('#layout-editor-wrapper .btn-layout-editor-exit').click(function () {
             $('#edit-page-container').empty().addClass('none');
             location.hash = '#layout/list';
+            window.onpopstate = undefined;
         });
 
     }
@@ -517,6 +518,10 @@ define(function(require, exports, module) {
             case 'clock':
                 json.type = 'ClockBox';
                 json.typeName = '时钟控件';
+                break;
+            case 'weather':
+                json.type = 'WeatherBox';
+                json.typeName = '天气控件';
                 break;
         }
         var widget = layoutEditor.Widget.create(json, editor.getLayout());
