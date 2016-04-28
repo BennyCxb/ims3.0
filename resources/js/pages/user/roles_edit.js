@@ -184,7 +184,7 @@ define(function (require, exports, module) {
 			getClass.title = '请选取';
 			getClass.roleID = rID;
 			getClass.save = function(data){
-				console.log(data);
+				//console.log(data);
 				var ajax_data = JSON.stringify({
 					project_name:CONFIG.projectName,
             		action: 'updateTreeRoleInfo',
