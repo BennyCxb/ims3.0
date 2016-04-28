@@ -26,7 +26,7 @@ define(function(require, exports, module) {
     // 保存
     $('#term_sel_save').click(function(){
       var categoryList = _tree.getSelectedNodeID();
-      categoryList = JSON.parse(JSON.stringify(categoryList).replace(/nodeId/,'categoryID'));
+      categoryList = JSON.parse(JSON.stringify(categoryList).replace(/nodeId/g,'categoryID'));
       var termList = _checkList;
       if(categoryList.length === 0 && termList.length ===0){
         alert('请选择终端分类/终端');
