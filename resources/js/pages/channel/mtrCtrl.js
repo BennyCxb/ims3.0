@@ -153,10 +153,10 @@ define(function (require, exports, module) {
                 break;
             case 'WebBox':
                 $("#mtrC_textType").val(wStyle.Type);
-                if (wStyle.Type == "Marquee"){
-                	$("#mtrC_effect").show();
-                }else {
-                	$("#mtrC_flip").show();
+                if (wStyle.Type == "Marquee") {
+                    $("#mtrC_effect").show();
+                } else {
+                    $("#mtrC_flip").show();
                 }
                 $("#mtrC_flip").text(wStyle.PageDownPeriod);
                 $("#text_color").val(wStyle.TextColor);
@@ -338,7 +338,7 @@ define(function (require, exports, module) {
                 ScrollDriection: $("#mtrC_scrollDirection").val(),
                 ScrollSpeed: $("#mtrC_scrollSpeed").val()
             }
-        }else {
+        } else {
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 PageDownPeriod: $("#mtrC_flip").text(),
