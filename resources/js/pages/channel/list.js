@@ -96,7 +96,7 @@ define(function(require, exports, module) {
             Action: 'Delete',
             Project: projectName
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v1/channels/' + getCurrentChannelId(), data, function (res) {
+        util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
             alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
             loadPage(1);
         });

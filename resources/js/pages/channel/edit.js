@@ -147,8 +147,8 @@ define(function(require, exports, module) {
                     Project: projectName
                 }),
                 dataGetPrograms = JSON.stringify({
-                    Action: 'GetPrograms',
-                    Project: projectName,
+                    action: 'GetPrograms',
+                    project_name: projectName,
                     ChannelID: String(channelId)
                 });
 
@@ -158,7 +158,7 @@ define(function(require, exports, module) {
                     initChannelView(channelId);
                 });
 
-            util.ajax('post', requestUrl + '/backend_mgt/v1/channels', dataGetPrograms, function (res) {
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels', dataGetPrograms, function (res) {
                 deferredGetPrograms.resolve(res.Programs);
             });
 
@@ -502,12 +502,12 @@ define(function(require, exports, module) {
 		var deferred = $.Deferred(),
 			newChannels = db.collection('channel').getLocalInsertedRows(),
 			changedChannels = db.collection('channel').getLocalUpdatedRows(),
-			data, channel;
+			data, channel, checkSwitch = Number(util.getLocalParameter('config_checkSwitch'));
 		if (newChannels.length > 0) {
 			channel = newChannels[0];
 			data = JSON.stringify({
 				Project: projectName,
-				Action: 'PostWithID',
+				Action: 'Post',
 				Data: {
 					Name: channel.name,
 					Name_eng: channel.name_eng,
@@ -516,17 +516,16 @@ define(function(require, exports, module) {
 					Overall_Schedule_Paras: channel.overall_schedule_params
 				}
 			});
-			util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, function (res) {
+			util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
 				if (Number(res.rescode) !== 200) {
 					deferred.reject(res);
 					return;
 				}
-				var _channelId = Number(res.ChannelID);
-                channelId = _channelId;
+                channelId = Number(res.ChannelID);
 				db.collection('channel').update({id: channelId}, {});
 				deferred.resolve();
 			});
-		} else if (changedChannels.length > 0) {
+		} else if (changedChannels.length > 0 && checkSwitch === 0) {
 			channel = changedChannels[0];
 			data = JSON.stringify({
 				Project: projectName,
@@ -537,16 +536,49 @@ define(function(require, exports, module) {
 					Overall_Schedule_Type: channel.overall_schedule_type,
 					Overall_Schedule_Paras: channel.overall_schedule_params,
 					Version: channel.version,
-					Description: '',
-					ID: channel.id
+					Description: ''
 				}
 			});
-			util.ajax('post', requestUrl + '/backend_mgt/v1/channels/' + channel.id, data, function (res) {
+			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
 				if (Number(res.rescode) !== 200) {
 					deferred.reject(res);
 					return;
 				}
 				deferred.resolve();
+			});
+		} else if (changedChannels.length > 0) {
+			channel = changedChannels[0];
+			data = JSON.stringify({
+				project_name: projectName,
+				action: 'setCheckLevel2Edit',
+				ChannelIDs: [channelId]
+			});
+
+			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
+				if (Number(res.rescode) !== 200) {
+					deferred.reject(res);
+					return;
+				}
+				var data = JSON.stringify({
+					Project: projectName,
+					Action: 'Put',
+					Data: {
+						Name: channel.name,
+						Name_eng: channel.name_eng,
+						Overall_Schedule_Type: channel.overall_schedule_type,
+						Overall_Schedule_Paras: channel.overall_schedule_params,
+						Version: channel.version,
+						Description: ''
+					}
+				});
+
+				util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
+					if (Number(res.rescode) !== 200) {
+						deferred.reject(res);
+						return;
+					}
+					deferred.resolve();
+				});
 			});
 		} else {
 			deferred.resolve();
@@ -847,18 +879,41 @@ define(function(require, exports, module) {
 	
 	function remoteSubmitVersion() {
 		var deferred = $.Deferred(),
-			data = JSON.stringify({
-				Action: 'SubmitVersion',
-				Project: projectName,
-				ChannelID: channelId
-			});
-		util.ajax('post', requestUrl + '/backend_mgt/v1/channels/' + channelId, data, function (res) {
+			checkSwitch = Number(util.getLocalParameter('config_checkSwitch')),
+			data;
+
+
+		data = JSON.stringify({
+			action: 'SubmitVersion',
+			Project: projectName,
+			ChannelID: channelId
+		});
+
+		util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
 			if (Number(res.rescode) !== 200) {
 				deferred.reject(res);
 				return;
 			}
-			deferred.resolve();
+			if (checkSwitch === 1) {
+				data = JSON.stringify({
+					project_name: projectName,
+					action: 'checkPass',
+					ChannelIDs: [
+						channelId
+					]
+				});
+				util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+					if (Number(res.rescode) !== 200) {
+						deferred.reject(res);
+						return;
+					}
+					deferred.resolve()
+				});
+			} else {
+				deferred.resolve();
+			}
 		});
+
 		return deferred.promise();
 	}
 
