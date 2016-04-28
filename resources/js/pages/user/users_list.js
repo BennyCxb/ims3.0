@@ -70,6 +70,7 @@ define(function (require, exports, module) {
 									'<th class="users_email">邮箱</th>'+
 									'<th class="roles">角色</th>'+
 									'<th class=""></th>'+
+									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
 				//var stringArry;
@@ -89,6 +90,7 @@ define(function (require, exports, module) {
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
 					'<td></td>' +
+					'<td class=""><a class="reset_psw">重置密码</a></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 						}else{
@@ -99,6 +101,7 @@ define(function (require, exports, module) {
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
 					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+					'<td class=""><a class="reset_psw">重置密码</a></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 				}
@@ -110,6 +113,7 @@ define(function (require, exports, module) {
 					'<td class="users_email">' + email + '</td>' +
 					'<td class="role_name">未分配</td>' + 
 					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+					'<td class=""><a class="reset_psw">重置密码</a></td>' +
                     '</tr>';
                		$("#usersTable tbody").append(roltr);
 					}
@@ -147,6 +151,15 @@ define(function (require, exports, module) {
 				exports.userPass = uPass;
 				exports.roleID = rID;
 				UTIL.cover.load('resources/pages/user/user_edit.html');
+				});
+			//重置密码
+			$(".reset_psw").click(function(){
+				var self = $(this);
+				var currentID = self.parent().parent().attr("userID");
+				var uName = self.parent().parent().attr("userName");
+				exports.userName1 = uName;
+				exports.userID1 = currentID;
+				UTIL.cover.load('resources/pages/user/user_psw.html');
 				});
         }
     }

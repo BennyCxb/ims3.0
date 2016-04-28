@@ -17,7 +17,9 @@ define(function(require, exports, module) {
 
     // 初始化页面
 	exports.init = function() {
+		checkCheck();
         loadPage(1);
+		
         registerEventListeners();
 		//筛选审核状态
 				if(util.getLocalParameter('config_checkSwitch') == '1'){
@@ -181,7 +183,7 @@ define(function(require, exports, module) {
     }
     
     function publishChannel() {
-		var channelID = $(".checked").parent().parent().attr("data-channel-id");
+		var channelID = $(".checked").parent().parent().attr("chnID");
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');		  
 			  getClassAndTerm.channelID = channelID;
 			  getClassAndTerm.title = '发布到...';
@@ -319,7 +321,7 @@ define(function(require, exports, module) {
             }
 
             $("#channel-table tbody").append('<tr>'+
-                                    '<th class="chn_checkbox"></th>'+
+                                    '<th class="chn_checkbox" style="width:32px;"></th>'+
                                     '<th class="chn_name">频道名</th>'+
                                     check_th+
                                     
@@ -353,7 +355,7 @@ define(function(require, exports, module) {
 
                         var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                            '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
+                            '<td class="chn_name" title="' +chnData[x].Name+ '"><b><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></b></td>' +
                             check_td +
                             
                             '</tr>';
@@ -473,13 +475,13 @@ define(function(require, exports, module) {
 
     }
 	function checkCheck(){
-        if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
+        if(util.getLocalParameter('config_checkSwitch') == 0){
             $('#chn_submit').css('display','none');
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
             $('#chn_toBeCheckedDiv').css('display','none');
         }
-        else if(UTIL.getLocalParameter('config_canCheck') == 0){
+        else if(util.getLocalParameter('config_canCheck') == 0){
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
         }

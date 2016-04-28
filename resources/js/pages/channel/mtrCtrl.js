@@ -264,7 +264,7 @@ define(function (require, exports, module) {
         var wtop = widgetData.top;
         var wwidth = widgetData.width;
         var wheight = widgetData.height;
-        $("#widget_attribute").append('<span>左距离：' + wleft + '</span><span>上距离：' + wtop + '</span><span>尺寸：' + wwidth + '×' + wheight + '</span>');
+        $("#widget_attribute").append('<label>左距离：' + wleft + '</label><label>上距离：' + wtop + '</label><label>尺寸：' + wwidth + '×' + wheight + '</label>');
 
         var mtrData = DB.collection("material").select({widget_id: widgetData.id});
         if (widgetType != "ClockBox") {

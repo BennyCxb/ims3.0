@@ -5,9 +5,27 @@ define(function (require, exports, module) {
     var nDisplayItems = 10;
     var termMac = '';
     var pageNumC=1;
-
-    exports.init = function () {
+     
+    exports.mac;
+    /* = function(mac){
+        termMac = mac;
         exports.loadTermlogPage(1); //加载默认页面
+        $('#termlogSearch').val(termMac);
+      //搜索
+        $('#termlogSearch').bind('input propertychange', function () {
+            onSearch($('#termlogSearch').val());
+        });
+    }*/
+    
+    exports.init = function () {
+        if(exports.mac != ''){
+            $('#termlogSearch').val(exports.mac);
+            exports.mac = '';
+            onSearch($('#termlogSearch').val());
+        }else{
+            exports.loadTermlogPage(1); //加载默认页面
+        }
+        
         
       //搜索
         $('#termlogSearch').bind('input propertychange', function () {
