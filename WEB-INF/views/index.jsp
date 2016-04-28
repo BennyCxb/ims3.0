@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Clear信息发布平台</title>
+  <link rel="shortcut icon" href="resources/favicon.ico">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -73,7 +74,7 @@
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+              <li class="user-header" style="padding-left:0; padding-right:0">
                 <!-- <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
 
                 <p>
@@ -81,11 +82,12 @@
                   <small>${project_name_cn}
                   </small>
                 </p>
+                <a class="index-header-user-option"><i class="fa fa-unlock-alt"></i>修改密码 </a>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
-                <div class="pull-right">
-                  <a id="logout" class="btn btn-default btn-flat">登出</a>
+                <div class="">
+                  <a id="logout" class="btn btn-block btn-default" style="width: 100%;">登出</a>
                 </div>
               </li>
             </ul>
