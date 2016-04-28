@@ -36,6 +36,8 @@
     <link rel="stylesheet" href="resources/css/pages/channel/list.css"/>
     <link rel="stylesheet" href="resources/css/pages/layout/edit.css">
     <link rel="stylesheet" href="resources/css/pages/layout/list.css"/>
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -243,6 +245,9 @@
 <!--  -->
 <script src="resources/js/bower_components/jquery-sticky/jquery.sticky.js"></script>
 <script src="resources/plugins/iCheck/icheck.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+
 <script>
 	seajs.config({
 	  base: "./resources/js/"
