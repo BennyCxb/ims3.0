@@ -334,7 +334,7 @@ define(function (require, exports, module) {
 
                         var mtrtr = '<tr '+check_status+' mtrID="' + mtrData[x].ID + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_name" title="' +mtrData[x].Name+ '"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
+                            '<td class="mtr_name" title="' +mtrData[x].Name+ '"><b><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></b></td>' +
                             check_td +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +

@@ -259,5 +259,18 @@
 .channel-program-timer .input-group{
     float: left;
     width: 287px;
+    height: 28px;
 }
 
+
+.channel-program-timer .input-group .input-group-addon{
+    font-size: 12px;
+    
+
+}
+
+.channel-program-timer .input-group .input-group-addon{
+    font-size: 12px;
+    
+
+}

@@ -36,9 +36,9 @@ __p+='<div class="channel-program-header box-header with-border"> <input value="
 ((__t=(lifetime_start))==null?'':__t)+
 '"> </div> <div class="input-group"> <span class="input-group-addon">结束</span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <label> 结束时间 </label> <label> 持续时间 <input type="number" step="1" data-field="duration" value="'+
+'"> </div> <div class="input-group"> <span class="input-group-addon">持续时间长</span> <input type="number" class="form-control" data-field="duration" value="'+
 ((__t=(duration))==null?'':__t)+
-'"> </label> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
+'"> </div> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
 ((__t=(count))==null?'':__t)+
 '"> </label> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">布局:'+
 ((__t=(layout.name))==null?'':__t)+
@@ -277,11 +277,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td style="width: 32px"><input type="checkbox"></td> <td><a href="#layout/edit?id='+
+'"> <td style="width: 32px"><input type="checkbox"></td> <td><b><a href="#layout/edit?id='+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></td> <td>宽:'+
+'</a></b></td> <td>宽:'+
 ((__t=(width))==null?'':__t)+
 '</td> <td>高:'+
 ((__t=(height))==null?'':__t)+
