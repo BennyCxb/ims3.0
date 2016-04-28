@@ -71,14 +71,14 @@ define(function (require, exports, module) {
 			$("#funcModuleTable tbody").append('<tr>'+                              
                                     '<th class="ModuleID">ID</th>'+
                                     '<th class="ModuleName">模块名</th>'+
-									'<th class="UrlPath">模块权限路径</th>'+
+									//'<th class="UrlPath">模块权限路径</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
                 var roltr = '<tr UrlPath="' + rolData[x].UrlPath + '"  ModuleID="' + rolData[x].ModuleID + '"  ModuleName = "' + rolData[x].ModuleName + '">' +
                     '<td class="ModuleID">' + rolData[x].ModuleID + '</td>' +
                     '<td class="ModuleName"><a class="module_name">' + rolData[x].ModuleName + '</a></td>' + 
-                    '<td class="UrlPath">' + rolData[x].UrlPath + '</td>' + 
+                    //'<td class="UrlPath">' + rolData[x].UrlPath + '</td>' + 
                     '<td><a class="func_module_delete">删除</a></td>' +
                     '</tr>';
                 $("#funcModuleTable tbody").append(roltr);

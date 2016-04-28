@@ -1,6 +1,6 @@
 <!-- general form elements -->
 <div class="" style="height: 100%;">
-    <div class="box-header with-border">
+    <div class="box-header with-border" style="height: 54px;">
         <h3 id="mtrCtrl_Title" class="box-title">视频控件</h3>
         <div id="widget_attribute" class="pull-right"></div>
     </div>
@@ -17,8 +17,8 @@
             </div>
             <div id="mtrC_flip" class="pull-right">
                 <div class="btn-group">
-                    <div id="box_text_color" class="input-group my-colorpicker2">
-                        <input id="mtrC_pageDownPeriod" type="text" class="form-control"  placeholder="请输入翻页时间">
+                    <div id="box_text_time" class="input-group">
+                        <input id="mtrC_pageDownPeriod" type="number" class="form-control"  placeholder="请输入翻页时间">
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div id="" class="btn-group">
                     <div id="box_text_color" class="input-group my-colorpicker2">
 	                  <input id="text_color" type="text" class="form-control"  placeholder="颜色">
-	                  <div class="input-group-addon">
+	                  <div id="btn_text_color" class="input-group-addon">
 	                    <i></i>
 	                  </div>
 	                </div>
@@ -61,7 +61,7 @@
         	<div id="" class="btn-group">
                 <div class="input-group my-colorpicker2">
                   <input id="clockText_color" type="text" class="form-control"  placeholder="请选择时钟字体颜色">
-                  <div class="input-group-addon">
+                  <div id="btn_clock_color" class="input-group-addon">
                     <i></i>
                   </div>
                 </div>
@@ -71,6 +71,8 @@
             <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i>
             </button>
 
+            <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
+            <button id="mtr_addMtr" type="button" class="btn btn-primary btn-sm" typeid="1">添加资源</button>                
             <div class="pull-right">
                 <div id="mtr_dplist" class="btn-group">
                     <select id="mtrCtrl_playType" class="form-control select2"
@@ -80,24 +82,20 @@
                         <option value="Percent">比例播放</option>
                     </select>
                 </div>
-                <div class="btn-group">
-                    <button id="mtr_addMtr" type="button" class="btn btn-default btn-sm" typeid="1">添加
-                    </button>
-                    <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
-                </div>
             </div>
             <!-- /.box-tools -->
         </div>
-        <div class="mtr_choise table-responsive" style="height: 90%;">
+        <div class="mtr_choise table-responsive" style="height: calc(100% - 140px);">
             <!-- 资源列表 -->
             <table id="mtrCtrl_Table" class="table table-hover table-striped">
-                <tbody>
-                </tbody>
+                <thead></thead>
+                <tbody></tbody>
             </table>
             <!-- /.table -->
+            <!-- 时间控件 -->
             <div id="box_datetime" style="display: none;">
             	<div>
-                    <input id="mtrC_dtTime" type="radio" name="r3" class="flat-red" checked>
+                    <input id="mtrC_dtTime" type="radio" clockType="Time" name="r3" class="flat-red rd_clock" checked>
 
                     <div class="info-box bg-red mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -109,7 +107,7 @@
                     </div>
                 </div>
                 <div>
-                    <input id="mtrC_dtDate" type="radio" name="r3" class="flat-red">
+                    <input id="mtrC_dtDate" type="radio" clockType="Date" name="r3" class="flat-red rd_clock">
 
                     <div class="info-box bg-orange mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -123,7 +121,7 @@
 
                 <!-- /.info-box -->
                 <div>
-                    <input id="mtrC_dtWeek" type="radio" name="r3" class="flat-red">
+                    <input id="mtrC_dtWeek" type="radio" clockType="Week" name="r3" class="flat-red rd_clock">
 
                     <div class="info-box bg-yellow mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -136,7 +134,7 @@
                     <!-- /.info-box -->
                 </div>
                 <div>
-                    <input id="mtrC_dtDateTime" type="radio" name="r3" class="flat-red">
+                    <input id="mtrC_dtDateTime" type="radio" clockType="DateTime" name="r3" class="flat-red rd_clock">
 
                     <div class="info-box bg-green mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -149,7 +147,7 @@
                     <!-- /.info-box -->
                 </div>
                 <div>
-                    <input id="mtrC_dtDateTimeWeekH" type="radio" name="r3" class="flat-red">
+                    <input id="mtrC_dtDateTimeWeekH" type="radio" clockType="DateTimeWeekH" name="r3" class="flat-red rd_clock">
 
                     <div class="info-box bg-aqua mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -163,7 +161,7 @@
                     <!-- /.info-box -->
                 </div>
                 <div>
-                    <input id="mtrC_dtDateTimeWeekV" type="radio" name="r3" class="flat-red">
+                    <input id="mtrC_dtDateTimeWeekV" type="radio" clockType="DateTimeWeekV" name="r3" class="flat-red rd_clock">
 
                     <div class="info-box bg-blue mtrC_datetime">
                         <span class="info-box-icon"></span>
@@ -179,6 +177,22 @@
                 </div>
             </div>
 
+            <!-- 天气控件 -->
+            <div id="box_weather" style="display: none;">
+                <div>
+                    <input id="mtrC_tTiwme" type="radio" clockType="Time" name="r3" class="flat-red rd_clock" checked>
+
+                    <div class="info-box bg-red mtrC_datetime">
+                        <span class="info-box-icon"></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-number">10:12:00</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+            </div>
+
             <div class="box-footer no-padding text-center">
             </div>
 
@@ -187,12 +201,6 @@
     </form>
 </div>
 <!-- /.box -->
-
-<!-- Bootstrap Color Picker -->
-<link rel="stylesheet" href="resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
-
-<!-- bootstrap color picker -->
-<script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 
 <script>
 

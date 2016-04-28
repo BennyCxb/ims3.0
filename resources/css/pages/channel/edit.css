@@ -58,7 +58,7 @@
 #channel-editor-wrapper .channel-program-footer {  }
 
 #channel-editor-wrapper .channel-program-layout {
-    width: calc(100% - 500px);
+    width: calc(100% - 466px);
     height: 100%;
     float: left;
 }
@@ -88,7 +88,7 @@
 }
 
 #channel-editor-wrapper .channel-program-widget {
-    width: 500px;
+    width: 465px;
     height: 100%;
     float: left;
 }
@@ -240,7 +240,24 @@
     border: solid 1px #ddd;
 }
 
+.channel-program-timer label{
+    font-weight: 400;
+}
 
 
 
+
+.channel-program-timer.timed-program label:nth-of-type(1),.channel-program-timer.timed-program label:nth-of-type(2){
+    display: none;
+}
+
+.channel-program-timer.timed-program .input-group:nth-of-type(1),.channel-program-timer.timed-program .input-group:nth-of-type(2){
+    display: none;
+}
+
+
+.channel-program-timer .input-group{
+    float: left;
+    width: 287px;
+}
 

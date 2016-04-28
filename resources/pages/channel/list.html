@@ -1,6 +1,6 @@
 <section id="" class="content-header">
 	<h1>频道</h1>
-	<small class="tips" style="position: absolute; top:20px; right: 16px;"><i class="fa fa-info-circle"></i>&nbsp把频道绑定到您的终端上，它们将按照计划播出内容</small>
+	<small class="tips" style="position: absolute; top:22px; right: 16px; font-size: 12px;"><i class="fa fa-info-circle"></i>&nbsp把频道发布到终端后，如果频道内容发生变化，终端的播放内容也会随之更改。</small>
 	
 </section>
 <section class="content" id="channel-list-nav">
@@ -40,6 +40,7 @@
                 <button type="button" class="btn btn-default btn-sm" value="2">已通过</button>
                 <button type="button" class="btn btn-default btn-sm" value="3">未通过</button>
             </div>
+			<a href="#channel/edit" class="btn btn-primary btn-sm btn-add-channel">添加频道</a>
 		</div>
 		<div class="table-responsive">
 			<table id="channel-table" class="table table-hover table-striped">
@@ -54,13 +55,6 @@
     </div>
 	</div>
 </section>
-<!-- icheck -->
-<link rel="stylesheet" href="resources/plugins/iCheck/all.css"/>
-<link rel="stylesheet" href="resources/css/pages/channel/list.css"/>
-<script src="resources/plugins/iCheck/icheck.min.js"></script>
-<script src="resources/plugins/jqPaginator/jqPaginator.min.js"></script>
-<!--<script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="resources/plugins/datatables/dataTables.bootstrap.min.js"></script>-->
 <script>
 	seajs.use('pages/channel/list', function(channelList) {
 		channelList.init();

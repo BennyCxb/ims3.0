@@ -49,6 +49,8 @@ define(function (require, exports, module) {
         //保存
         $("#amtr_add").click(function () {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
+                $("#mtr_allCheck").hide();
+                $("#mtr_addStatus").hide();
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
             	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
             	LAYOUTEDIT.updateBackground(mtrId, url);
@@ -56,17 +58,8 @@ define(function (require, exports, module) {
             	var datalist = [];
                 for (var x = 0; x < $(".amtr_cb").length; x++) {
                     if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
-                        var mtrId = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrid");
-                        var mtrName = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrname");
-                        var duration = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("duration");
-                        var mtrtype = $(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("mtrtype");
-                        var data = {
-                    		mtrId : mtrId,
-                    		mtrName : mtrName,
-                            duration : duration,
-                            mtrtype :mtrtype
-                        };
-                        datalist.push(data);
+                        var mtrData = JSON.parse(unescape($(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("data")));
+                        datalist.push(mtrData);
                     }
                 }
                 MTRCTRL.getSelectedID(datalist);
@@ -175,33 +168,33 @@ define(function (require, exports, module) {
                 var material_type = mtrData[0].Type_Name;
                 if (material_type == "文本") {		//文本无预览效果
                     for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" mtrname="' + mtrData[x].Name + '" duration="" mtrtype="' + mtrData[x].Type_Name + '">' +
+                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">0:00:00</td>' +
-                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
                             '</tr>';
                         $("#mtr_choiseTable tbody").append(mtrtr);
                     }
                 } else {
                     for (var x = 0; x < mtrData.length; x++) {
                     	if (mtrData[x].Is_Live == 1){	//直播
-                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" mtrname="' + mtrData[x].Name + '" duration="" mtrtype="Live">' +
+                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
 	                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
 	                            '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
 	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
 	                            '<td class="mtr_time">0:00:00</td>' +
-	                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
 	                            '</tr>';
 	                        $("#mtr_choiseTable tbody").append(mtrtr);
                     	}else {
-                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" mtrname="' + mtrData[x].Name + '" duration="' + mtrData[x].Duration + '" mtrtype="' + mtrData[x].Type_Name + '">' +
+                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
 	                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
 	                            '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
 	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
 	                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-	                            '<th class="mtr_choise_status"><span style="display: none;">已添加</span></th>' +
+	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
 	                            '</tr>';
 	                        $("#mtr_choiseTable tbody").append(mtrtr);
                     	}

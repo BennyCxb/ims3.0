@@ -32,11 +32,20 @@
   <link rel="stylesheet" href="resources/css/pages/channel/timer.css">
   <link rel="stylesheet" href="resources/plugins/iCheck/all.css"/>
   <link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="resources/css/pages/channel/edit.css">
+    <link rel="stylesheet" href="resources/css/pages/channel/list.css"/>
+    <link rel="stylesheet" href="resources/css/pages/layout/edit.css">
+    <link rel="stylesheet" href="resources/css/pages/layout/list.css"/>
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <!-- icheck -->
+
   <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini" >
@@ -218,7 +227,6 @@
 <script src="resources/dist/js/app.min.js"></script>
 <!-- Sea.js 3.0.0 -->
 <script src="resources/js/common/sea.js"></script>
-<script src="resources/plugins/iCheck/icheck.min.js"></script>
 <script src="resources/plugins/jqPaginator/jqPaginator.min.js"></script>
 <!-- RubaXa/Sortable -->
 <script src="resources/js/bower_components/Sortable/Sortable.min.js"></script>
@@ -236,6 +244,10 @@
 <script src="resources/js/bower_components/jquery.marquee/jquery.marquee.min.js"></script>
 <!--  -->
 <script src="resources/js/bower_components/jquery-sticky/jquery.sticky.js"></script>
+<script src="resources/plugins/iCheck/icheck.min.js"></script>
+<!-- bootstrap color picker -->
+<script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+
 <script>
 	seajs.config({
 	  base: "./resources/js/"

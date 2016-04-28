@@ -45,12 +45,12 @@
                 </ul>
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
-            <small style="font-size: 12px; margin-bottom: 4px; line-height: 20px; position: relative; top: -8px;">账号格式为 <strong>用户名@项目名</strong>，如 root@cleartv </small>
+            <!-- <small style="font-size: 12px; margin-bottom: 4px; line-height: 20px; position: relative; top: -8px;">账号格式为 <strong>用户名@项目名</strong>，如 root@cleartv </small> -->
             <div class="form-group has-feedback">
                 <input id="l_password" name="j_password" type="password" class="form-control" placeholder="密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
-            <small style="font-size: 12px; margin-bottom: 4px; line-height: 50px; position: relative; top: -21px;">如果忘记密码，可以联系管理员重置 </small>
+            <!-- <small style="font-size: 12px; margin-bottom: 4px; line-height: 50px; position: relative; top: -21px;">如果忘记密码，可以联系管理员重置 </small> -->
 			<input id="j_username" name="j_username"  type="text" style="display: none;" />
 			<input id="j_project_name" name="j_project_name"  type="text" style="display: none;" />
             <div class="row">

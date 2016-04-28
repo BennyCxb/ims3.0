@@ -223,6 +223,7 @@ define(function(require, exports, module) {
                             if (isNewLayout) {
                                 location.hash = '#layout/edit?id=' + json.id
                             }
+                            location.reload();
                         });
                     });
                 });

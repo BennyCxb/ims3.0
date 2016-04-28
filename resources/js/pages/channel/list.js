@@ -414,9 +414,15 @@ define(function(require, exports, module) {
 				$('#channel-list-controls .btn-delete').prop('disabled', true);
 			}else{
 				$("#channel-table input[type='checkBox']:checked").each(function(i,e){		
-					//待提交
-					if($(e).parent().parent().parent().attr('check_status') == '0'){
-						$('#chn_submit').attr('disabled',false);
+					//已通过和未通过
+					if($(e).parent().parent().parent().attr('check_status') == '2'){
+						$('#chn_submit').attr('disabled',true);
+						$('#chn_pass').attr('disabled',true);
+						$('#chn_unpass').attr('disabled',true);
+						
+					}
+					else if($(e).parent().parent().parent().attr('check_status') == '3'){
+						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
 					}
@@ -426,9 +432,9 @@ define(function(require, exports, module) {
 						$('#chn_pass').attr('disabled',false);
 						$('#chn_unpass').attr('disabled',false);
 					}
-					//已通过和未通过
+					//待提交
 					else {
-						$('#chn_submit').attr('disabled',true);
+						$('#chn_submit').attr('disabled',false);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
 					}

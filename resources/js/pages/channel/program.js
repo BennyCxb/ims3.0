@@ -20,7 +20,7 @@ define(function (require, exports, module) {
     function load(program, _container) {
         container = _container;
         if (program === null) {
-            $('#channel-editor-wrapper .channel-program-editor').html('没有频道!');
+            $('#channel-editor-wrapper .channel-program-editor').html('没有节目!');
             return;
         }
         db = crud.Database.getInstance();

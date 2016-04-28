@@ -48,6 +48,7 @@ define(function(require, exports, module) {
 			});
 			onSelectedItemChanged();
 		});
+		$('#layout-list-controls .btn-delete').click(onDeleteLayout);
 		$('#channel-list-search').keyup(function (ev) {
 			if (ev.which === 13) {
 				onSearch(this.value);
@@ -79,6 +80,24 @@ define(function(require, exports, module) {
 		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
 	}
 
+	function onDeleteLayout(ev) {
+		var data = JSON.stringify({
+			project_name: projectName,
+			action: 'delete',
+			data: {
+				layout_id: getCurrentLayoutId()
+			}
+		});
+		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+            if (Number(res.rescode) === 200) {
+                alert('删除成功!');
+            } else {
+                alert('删除失败，有频道正在使用它!');
+            }
+			loadPage(1);
+		});
+	}
+
 	function getLayoutId(el) {
 		var idAttr;
 		while (el && !(idAttr = el.getAttribute('data-layout-id'))) {
@@ -88,7 +107,7 @@ define(function(require, exports, module) {
 	}
 
 	function getCurrentLayoutId() {
-		return Number($('#layout-table div.checked')[0].parentNode.getAttribute('data-layout-id'));
+		return Number($('#layout-table div.checked')[0].parentNode.parentNode.getAttribute('data-layout-id'));
 	}
 
 	// 加载页面数据
