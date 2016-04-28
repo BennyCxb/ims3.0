@@ -12,6 +12,7 @@ define(function (require, exports, module) {
         /*$("#user_add").click(function () {
 			UTIL.cover.load('resources/pages/user/user_add.html');
         })*/
+
     }
 
     // 加载页面数据
@@ -67,7 +68,7 @@ define(function (require, exports, module) {
                                     '<th class="OperationObject">操作对象</th>'+
 									'<th class="Operation">操作</th>'+
 									'<th class="Datetime">时间</th>'+
-									'<th class="Detail">详情</th>'+
+									//'<th class="Detail">详情</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
@@ -76,7 +77,7 @@ define(function (require, exports, module) {
                     '<td class="OperationObject">' + rolData[x].OperationObject + '</td>' + 
                     '<td class="Operation">' + rolData[x].Operation + '</td>' + 
                     '<td class="Datetime">' + rolData[x].Datetime + '</td>' +  
-                    '<td class="Detail">' + rolData[x].Detail + '</td>' + 
+                    //'<td class="Detail">' + rolData[x].Detail + '</td>' + 
                     '</tr>';
                 
                 
