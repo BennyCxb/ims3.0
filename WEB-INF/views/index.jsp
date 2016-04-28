@@ -114,70 +114,7 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-      <!-- Sidebar user panel -->
-
-      <!--<div class="user-panel">-->
-        <!--<div class="pull-left image">-->
-          <!--<img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
-        <!--</div>-->
-        <!--<div class="pull-left info">-->
-          <!--<p ><sec:authentication property="name"/></p>-->
-          <!--<h6 class="gray-light">${project_name_cn}</h6>-->
-        <!--</div>-->
-      <!--</div>-->
-
-      <!-- search form -->
-      <!--<form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="搜索...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>-->
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
-        <!-- <li id="treeview_term" class="treeview active">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>终端</span> <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-circle-o"></i> 终端</a></li>
-            <li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-circle-o"></i> 日志</a></li>
-          </ul>
-        </li> -->
-        <!-- <li id="treeview_mtr" class="treeview">
-          <a href="#materials/materials_list">
-            <i class="fa fa-book"></i> <span>资源</span>
-          </a>
-        </li> -->
-        <!-- <li id="treeview_user" class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-user"></i>
-            <span>用户</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#user/users_list"><i class="fa fa-circle-o"></i> 用户</a></li>
-            <li><a href="#user/roles_list"><i class="fa fa-circle-o"></i> 角色</a></li>
-            <li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-circle-o"></i> 操作日志</a></li>
-          </ul>
-        </li> -->
-		<!-- <li id="treeview_channel" class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-user"></i>
-            <span>频道</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>
-            <li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>
-            <li><a href="#layout/list"><i class="fa fa-circle-o"></i> 布局列表</a></li>
-          </ul>
-        </li> -->
-		
       </ul>
     </section>
     <!-- /.sidebar -->
