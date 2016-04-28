@@ -34,9 +34,6 @@ define(function (require, exports, module) {
         renderProgramView(program, layout, widgets);
         registerEventListeners();
         
-        //资源控件页面加载
-		var page = "resources/pages/channel/mtrCtrl.html";
-		$(".channel-program-widget").load(page);
     }
 
     function renderProgramView(program, layout, widgets) {
@@ -83,7 +80,11 @@ define(function (require, exports, module) {
 
 
     function loadWidget(widget) {
-        console.log(widget);
+        //console.log(widget);
+      //资源控件页面加载
+		var page = "resources/pages/channel/mtrCtrl.html";
+		$(".channel-program-widget").load(page);
+        localStorage.setItem('currentWidget', JSON.stringify(widget));
     }
 
     function renderEditor (layout, widgets) {

@@ -2,37 +2,47 @@
 <div class="box box-primary" style="height: 90%;">
     <div class="box-header with-border">
         <h3 id="mtrCtrl_Title" class="box-title">视频控件</h3>
+        <div id="widget_attribute" class="pull-right"></div>
     </div>
     <!-- /.box-header -->
     <!-- form start -->
     <form role="form" style="height: 90%;">
         <div id="box_effect" class="box-header with-border">
             <div id="" class="btn-group mtrCtrl_select">
-                <select id="" class="form-control select2 "
+                <select id="mtrC_textType" class="form-control select2 "
                         style="width: 100%; height: 30px; padding: 0px 10px;">
-                    <option selected="selected" value=1>常规</option>
-                    <option value=2>走马灯</option>
+                    <option selected="selected" value="Normal">常规</option>
+                    <option value="Marquee">走马灯</option>
                 </select>
             </div>
-            <div class="pull-right">
+            <div id="mtrC_flip" class="pull-right">
+                <div class="btn-group">
+                    <div id="box_text_color" class="input-group my-colorpicker2">
+                        <input id="mtrC_pageDownPeriod" type="text" class="form-control"  placeholder="请输入翻页时间">
+                    </div>
+                </div>
+            </div>
+            <div id="mtrC_effect" class="pull-right">
 
                 <div id="" class="btn-group">
-                    <span>颜色：</span>
-                    <input id="text_color" type="color"/>
+                    <div id="box_text_color" class="input-group my-colorpicker2">
+	                  <input id="text_color" type="text" class="form-control"  placeholder="颜色">
+	                  <div class="input-group-addon">
+	                    <i></i>
+	                  </div>
+	                </div>
                 </div>
                 <div id="" class="btn-group mtrCtrl_select">
-                    <select id="" class="form-control select2 "
+                    <select id="mtrC_scrollDirection" class="form-control select2 "
                             style="width: 100%; height: 30px; padding: 0px 10px;">
-                        <option selected="selected" value=-1>方向</option>
-                        <option value=0>从左到右</option>
-                        <option value=1>从右到左</option>
+                        <option selected="selected" value="Left_2_Right">从左到右</option>
+                        <option value="Right_2_Left">从右到左</option>
                     </select>
                 </div>
                 <div id="" class="btn-group mtrCtrl_select">
-                    <select id="" class="form-control select2 "
+                    <select id="mtrC_scrollSpeed" class="form-control select2 "
                             style="width: 100%; height: 30px; padding: 0px 10px;">
-                        <option selected="selected" value=-1>速度</option>
-                        <option value=0>静止</option>
+                        <option selected="selected" value=0>静止</option>
                         <option value=1>1</option>
                         <option value=2>2</option>
                         <option value=3>3</option>
@@ -47,7 +57,17 @@
                 </div>
             </div>
         </div>
-        <div class="box-header with-border">
+        <div id="box_datetimeEffect" class="box-header with-border">
+        	<div id="" class="btn-group">
+                <div class="input-group my-colorpicker2">
+                  <input id="clockText_color" type="text" class="form-control"  placeholder="请选择时钟字体颜色">
+                  <div class="input-group-addon">
+                    <i></i>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div id="box_tableHeader" class="box-header with-border">
             <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i>
             </button>
 
@@ -55,13 +75,14 @@
                 <div id="mtr_dplist" class="btn-group">
                     <select id="mtrCtrl_playType" class="form-control select2"
                             style="width: 100%; height: 30px; padding: 0px 10px;">
-                        <option selected="selected" value=1>顺序播放</option>
-                        <option value=2>随机播放</option>
-                        <option value=3>比例播放</option>
+                        <option selected="selected" value="Sequence">顺序播放</option>
+                        <option value="Random">随机播放</option>
+                        <option value="Percent">比例播放</option>
                     </select>
                 </div>
                 <div class="btn-group">
-                    <button id="mtr_addMtr" type="button" class="btn btn-default btn-sm" typeid="1">添加</button>
+                    <button id="mtr_addMtr" type="button" class="btn btn-default btn-sm" typeid="1">添加
+                    </button>
                     <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
                 </div>
             </div>
@@ -74,89 +95,107 @@
                 </tbody>
             </table>
             <!-- /.table -->
-            <div id="box_datetime" style="display: none;"> 
+            <div id="box_datetime" style="display: none;">
             	<div>
-                <input type="radio" name="r3" class="flat-red" checked>
+                    <input id="mtrC_dtTime" type="radio" name="r3" class="flat-red" checked>
 
-                <div class="info-box bg-yellow mtrC_datetime">
-                    <span class="info-box-icon"></span>
+                    <div class="info-box bg-red mtrC_datetime">
+                        <span class="info-box-icon"></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-number">2016-04-27</span>
+                        <div class="info-box-content">
+                            <span class="info-box-number">10:12:00</span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
                 </div>
-            </div>
+                <div>
+                    <input id="mtrC_dtDate" type="radio" name="r3" class="flat-red">
 
-            <!-- /.info-box -->
-            <div>
-                <input type="radio" name="r3" class="flat-red">
+                    <div class="info-box bg-orange mtrC_datetime">
+                        <span class="info-box-icon"></span>
 
-                <div class="info-box bg-green mtrC_datetime">
-                    <span class="info-box-icon"></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-number">星期三</span>
+                        <div class="info-box-content">
+                            <span class="info-box-number">2016-04-27</span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
                 </div>
+
                 <!-- /.info-box -->
-            </div>
-            <div>
-                <input type="radio" name="r3" class="flat-red">
+                <div>
+                    <input id="mtrC_dtWeek" type="radio" name="r3" class="flat-red">
 
-                <div class="info-box bg-red mtrC_datetime">
-                    <span class="info-box-icon"></span>
+                    <div class="info-box bg-yellow mtrC_datetime">
+                        <span class="info-box-icon"></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-number">2016-04-27 10:12:00</span>
+                        <div class="info-box-content">
+                            <span class="info-box-number">星期三</span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <div>
-                <input type="radio" name="r3" class="flat-red">
+                <div>
+                    <input id="mtrC_dtDateTime" type="radio" name="r3" class="flat-red">
 
-                <div class="info-box bg-aqua mtrC_datetime">
-                    <span class="info-box-icon"></span>
+                    <div class="info-box bg-green mtrC_datetime">
+                        <span class="info-box-icon"></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-number">2016-04-27 10:12:00</span>
-                        <span class="info-box-number">星期三</span>
+                        <div class="info-box-content">
+                            <span class="info-box-number">2016-04-27 10:12:00</span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                 </div>
-                <!-- /.info-box -->
-            </div>
-            <div>
-                <input type="radio" name="r3" class="flat-red">
+                <div>
+                    <input id="mtrC_dtDateTimeWeekH" type="radio" name="r3" class="flat-red">
 
-                <div class="info-box bg-blue mtrC_datetime">
-                    <span class="info-box-icon"></span>
+                    <div class="info-box bg-aqua mtrC_datetime">
+                        <span class="info-box-icon"></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-number">2016-04-27</span>
-                        <span class="info-box-number">10:12:00</span>
-                        <span class="info-box-number">星期三</span>
+                        <div class="info-box-content">
+                            <span class="info-box-number">2016-04-27 10:12:00</span>
+                            <span class="info-box-number">星期三</span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                 </div>
-                <!-- /.info-box -->
-            </div>
-            
+                <div>
+                    <input id="mtrC_dtDateTimeWeekV" type="radio" name="r3" class="flat-red">
 
-                <div class="box-footer no-padding text-center">
+                    <div class="info-box bg-blue mtrC_datetime">
+                        <span class="info-box-icon"></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-number">2016-04-27</span>
+                            <span class="info-box-number">10:12:00</span>
+                            <span class="info-box-number">星期三</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
                 </div>
             </div>
+
+            <div class="box-footer no-padding text-center">
+            </div>
+
             <!-- /.box-body -->
         </div>
     </form>
 </div>
 <!-- /.box -->
 
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet" href="resources/plugins/colorpicker/bootstrap-colorpicker.min.css">
+
+<!-- bootstrap color picker -->
+<script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
 
 <script>
+
     seajs.use("pages/channel/mtrCtrl.js", function (mtrCtrl) {
         mtrCtrl.init()
     })

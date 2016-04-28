@@ -204,9 +204,23 @@ a {
 }
 
 /*资源控件页面*/
+#widget_attribute span {
+	margin: 5px;	
+	display: table-cell;
+    width: 100px;
+}
+#widget_attribute span:last-of-type {
+	margin: 5px;	
+	display: table-cell;
+    width: 120px;
+}
+
+#box_text_color {
+	width: 120px;
+}
 
 .mtrCtrl_select {
-	width: 80px;
+	width: 100px;
 }
 
 #box_effect {
@@ -215,7 +229,7 @@ a {
 
 #text_color {
 	height: 30px;
-    width: 80px;
+    width: 90px;
     border-color: #d2d6de;
     background-color: transparent;
 }
@@ -231,6 +245,7 @@ a {
 
 .mtrCtrl_name {
 	width: 250px;
+	max-width: 250px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -256,9 +271,17 @@ a {
 	width: 10%;
 }
 
+#box_datetime {
+	padding-bottom: 15px;
+}
+    
+#DT_radio {
+	margin: 50px 0px 0px 10px;	
+}
+
 .mtrC_datetime {
 	width: 90%;
-    margin: 10px auto;
+    margin: auto;
     display: inline-table;
 }
 
