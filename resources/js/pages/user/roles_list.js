@@ -3,6 +3,9 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var templates = require('common/templates');
     var nDisplayItems = 10;
+	
+	//缓存分配用户数组
+	var userListArr = [];
 
     exports.init = function () {
         exports.loadRolesPage(1); //加载默认页面
@@ -72,6 +75,7 @@ define(function (require, exports, module) {
 				//var stringArry;
 				var rID = rolData[x].RoleID;
 				var users = rolData[x].Users;
+				userListArr[x] = users;
 //				var data = JSON.stringify({
 //					project_name: 'newui_dev',
 //					action: 'GetUsers',
@@ -107,7 +111,7 @@ define(function (require, exports, module) {
 							}
 						}
 				if(rID===1){
-					var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+					var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
 					'<td class="users"><a class="roles_assign" title="分配用户" style=" display: inline-block;width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' + 
@@ -115,7 +119,7 @@ define(function (require, exports, module) {
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
 					}else{
-                var roltr = '<tr class="rol-row" users="' + users + '"  rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
+                var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
 					'<td class="users"><a class="roles_assign" title="分配用户"  style=" display:inline-block;width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' + 
@@ -158,7 +162,8 @@ define(function (require, exports, module) {
 			//分配用户
 			$(".roles_assign").click(function(){
 				var self = $(this);
-				var userList = self.parent().parent().attr("users");
+				var number = self.parent().parent().attr("num");
+				userList = userListArr[number];
 				exports.uList = userList;
 				var rName = self.parent().parent().attr("rolesName");
 				exports.roleName = rName;

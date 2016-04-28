@@ -7,14 +7,14 @@ define(function (require, exports, module) {
     exports.init = function () {
 		//加载用户信息
 		var uID = USERS.userID;
-		var uName = USERS.userName;
+		var uName1 = USERS.userName;
 		var uEmail = USERS.userEmail;
 		var uDes = USERS.userDes;
 		var uPass = USERS.userPass;
 		var rID = USERS.roleID;
 		var type = USERS.type;
 		if(type==="edit"){
-		$("#user_name1").val(uName);
+		$("#user_name1").val(uName1);
 		$("#email1").val(uEmail);
 		$("#description1").val(uDes);
 		$("#password1").val(uPass);

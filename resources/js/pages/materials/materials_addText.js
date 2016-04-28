@@ -98,7 +98,7 @@ define(function (require, exports, module) {
             });
     	}else {
     	    $.ajax({
-    	        url: CONFIG.serverRoot + "/backend_mgt/v1/channels?project="+ UTIL.getCookie("project_name") +"&action=UpdateWebMaterial&ID="+ mtrId +"&name="+encodeURIComponent($("#Tmtr_name").val()),
+    	        url: CONFIG.serverRoot + "/backend_mgt/v1/channels?project="+ UTIL.getCookie("project_name") +"&action=UpdateWebMaterial&ID="+ mtrId +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
     	        type: "POST",
     	        data: editor_data,
     	        dataType: "json",

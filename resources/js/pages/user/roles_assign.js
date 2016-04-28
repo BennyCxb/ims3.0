@@ -94,6 +94,7 @@ define(function (require, exports, module) {
     }
 	 // 加载页面数据
     exports.loadUserPage = function (pageNum) {
+		var pageNum = pageNum;
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         var data = JSON.stringify({
@@ -161,15 +162,36 @@ define(function (require, exports, module) {
                                     '<th class="users_name">用户名</th>'+
                                     '<th class="users_ID">用户ID</th>'+
                                 '</tr>');
-			//当前角色已绑定的用户
-			var userList = ROLES.uList;
-			var userArry = userList.split(",");
-            for (var i = 0; i < rolData.length; i++) {	
+			//获取当前角色已绑定的用户
+			var userList = [];
+			var rID = ROLES.roleID;
+			var udata = JSON.stringify({
+				project_name:CONFIG.projectName,
+				action: 'GetUsers',
+				Pager: {
+					"total":-1,
+					"per_page":999,
+					"page":1,
+					"orderby":"",
+					"sortby":"desc",
+					"keyword":""
+				 }
+				})
+			var uurl = CONFIG.serverRoot + '/backend_mgt/v2/roles/'+rID;
+			UTIL.ajax('post', uurl, udata, function(msg){
+				if(msg.Users!=undefined){
+					for(var n=0;n<msg.Users.length;n++){
+						var uname = msg.Users[n].USERNAME;
+						userList.push(uname);
+						} 
+					}
+					//console.log(userList)
+					for (var i = 0; i < rolData.length; i++) {	
 				var userName = rolData[i].USERNAME;
 				var userID = rolData[i].ID;
 				var hasUser = false;	
-				for(var x=0;x<userArry.length;x++){
-					   if(userArry[x]==userName){
+				for(var x=0;x<userList.length;x++){
+					   if(userList[x]==userName){
 						   hasUser = true; 
 						   break;
 						   }	 
@@ -186,7 +208,15 @@ define(function (require, exports, module) {
 							break;
 							}
 					};
-				   if(hasUser == true){
+					if(userID ===1){
+						 var roltr = '<tr userID="' + userID + '">' +
+						  '<td class="user_checkbox"><input disabled="disabled" class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +
+						  '<td class="user_name">' + userName + '</td>' +
+						  '<td class="user_id">ID：' + userID + '</td>' + 
+						  '</tr>';
+					  $("#usersTable tbody").append(roltr);
+						}
+				  else if(hasUser == true){
 					  var roltr = '<tr userID="' + userID + '">' +
 						  '<td class="user_checkbox"><input class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +
 						  '<td class="user_name">' + userName + '</td>' +
@@ -203,11 +233,15 @@ define(function (require, exports, module) {
 				 }		
                 
             }
-        }
-		 //复选框样式
+			 //复选框样式
         $('.mailbox-messages input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
             radioClass: 'iradio_flat-blue'
         });
+				});
+			
+            
+        }
+		
     }
 })
