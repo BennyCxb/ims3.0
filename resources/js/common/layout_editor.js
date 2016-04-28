@@ -1000,6 +1000,8 @@ define(function (require, exports, module) {
                 return new AudioWidget(obj, layout);
             case 'VideoBox':
                 return new VideoWidget(obj, layout);
+            case 'WeatherBox':
+                return new WeatherWidget(obj, layout);
         }
     };
 
@@ -1335,7 +1337,7 @@ define(function (require, exports, module) {
              return;
          }
 
-        if (data.style.Type === 'Marquee') {
+        if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.textContent = data.material;
             marquee.setAttribute('class', 'marquee');
@@ -1346,19 +1348,18 @@ define(function (require, exports, module) {
                 direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
             });
         } else {
-            var iframe = document.createElement('iframe');
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('scrolling', 'no');
-            iframe.setAttribute('seamless', 'seamless');
-            iframe.setAttribute('allowtransparency', 'true');
-            iframe.style.width =
-                iframe.style.height = '100%';
-            iframe.style.overflowY = 'hidden';
-            this.mElement.appendChild(iframe);
-            var frameWindow = iframe.contentWindow || iframe.contentWindow.document || iframe.contentDocument;
-            frameWindow.document.open();
-            frameWindow.document.write(data.material);
-            frameWindow.document.close();
+            var iFrame = document.createElement('iframe');
+            iFrame.setAttribute('frameborder', '0');
+            iFrame.setAttribute('scrolling', 'no');
+            iFrame.setAttribute('seamless', 'seamless');
+            iFrame.setAttribute('allowtransparency', 'true');
+            iFrame.style.width =
+                iFrame.style.height = '100%';
+            iFrame.style.overflowY = 'hidden';
+            // http://stackoverflow.com/questions/8240101/set-content-of-iframe
+            iFrame.src = 'data:text/html;charset=utf-8,' + escape(data.material);
+            this.mElement.appendChild(iFrame);
+
         }
 
     };
@@ -1373,6 +1374,15 @@ define(function (require, exports, module) {
     ClockWidget.prototype = Object.create(Widget.prototype);
     ClockWidget.prototype.constructor = ClockWidget;
     ClockWidget.prototype.showPreview = function (resource) {
+        //
+    };
+    
+    function WeatherWidget() {
+        Widget.apply(this, arguments);
+    }
+    WeatherWidget.prototype = Object.create(Widget.prototype);
+    WeatherWidget.prototype.constructor = WeatherWidget;
+    WeatherWidget.prototype.showPreview = function (resource) {
         //
     };
 

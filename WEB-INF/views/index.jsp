@@ -236,6 +236,8 @@
 <script src="resources/plugins/select2/select2.full.min.js"></script>
 <!-- jQuery.Marquee -->
 <script src="resources/js/bower_components/jquery.marquee/jquery.marquee.min.js"></script>
+<!--  -->
+<script src="resources/js/bower_components/jquery-sticky/jquery.sticky.js"></script>
 <script>
 	seajs.config({
 	  base: "./resources/js/"

@@ -22,11 +22,7 @@ define(function(require, exports, module) {
 		/**
 		 * 保存常规节目的序列
 		 */
-		 regularSortable,
-		/**
-		 * 定时节目的序列
-		 */
-		timedSortable;
+		 regularSortable;
 
 	/**
 	 * 初始化数据库
@@ -34,14 +30,14 @@ define(function(require, exports, module) {
 	function configDatabase() {
 		try {
 			db.rollback();
+		} catch (err) {}
+		try {
 			db.drop('channel');
 			db.drop('program');
 			db.drop('layout');
 			db.drop('widget');
 			db.drop('material');
-		} catch (err) {
-			console.error(err);
-		}
+		} catch (err) {}
 		db.create('channel', [
 			{name: 'id',						type: 'number',	autoIncrement: true},
 			{name: 'name',						type: 'string'},
@@ -123,6 +119,10 @@ define(function(require, exports, module) {
 	 * 页面入口
 	 */
 	exports.init = function() {
+		window.onpopstate = function () {
+			onCloseEditor();
+			window.onpopstate = undefined;
+		};
 		db = crud.Database.getInstance();
 		configDatabase();
 		var channelId = Number(util.getHashParameters().id);
@@ -405,7 +405,7 @@ define(function(require, exports, module) {
 			};
 			ul.append(templates.channel_edit_program_list_item(data));
 		});
-		timedSortable = Sortable.create(ul[0], {});
+		//timedSortable = Sortable.create(ul[0], {});
 	}
 
 	/**
@@ -463,15 +463,20 @@ define(function(require, exports, module) {
 	 * 关闭页面的回调函数
 	 */
     function onCloseEditor() {
-		db.rollback();
-		db.drop('channel');
-		db.drop('program');
-		db.drop('layout');
-		db.drop('widget');
-		db.drop('material');
+		try {
+			db.rollback();
+		} catch (err) {}
+		try {
+			db.drop('channel');
+			db.drop('program');
+			db.drop('layout');
+			db.drop('widget');
+			db.drop('material');
+		} catch (err) {}
         $('#edit-page-container')
 			.empty()
 			.addClass('none');
+		window.onpopstate = undefined;
         location.hash = '#channel/list';
     }
 
@@ -915,7 +920,11 @@ define(function(require, exports, module) {
                     type = 'ClockBox';
                     type_name = '时钟';
                     type_id = 5;
-                }
+                } else if (el.Type === 'WeatherBox') {
+					type = 'WeatherBox';
+					type_name = '天气';
+					type_id = 6;
+				}
 				return {
 					layout_id: layoutId,
 					type_id: type_id,

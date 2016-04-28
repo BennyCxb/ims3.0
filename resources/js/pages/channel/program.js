@@ -155,7 +155,7 @@ define(function (require, exports, module) {
                         style = {
                             type: style.Type,
                             color: style.TextColor,
-                            direction: style.Right_2_Left,
+                            direction: style.ScrollDriection,
                             speed: Number(style.ScrollSpeed)
                         };
                     } else {
@@ -166,6 +166,9 @@ define(function (require, exports, module) {
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ClockBox':
+                    data[w.id] = {material: w.material};
+                    break;
+                case 'WeatherBox':
                     data[w.id] = {material: w.material};
                     break;
                 case 'ImageBox':
