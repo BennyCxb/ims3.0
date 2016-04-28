@@ -217,7 +217,19 @@ define(function (require, exports, module) {
                     }
                 }
                 break;
-            case 'ClockBox':
+            case 'WeatherBox':
+                var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
+                if (wStyle.Type == undefined){
+                    $("#mtrC_clock1").next().trigger("click");
+                }
+                //else {
+                //    var wctype = wStyle.Type;
+                //    switch (wctype) {
+                //        case 'Time':
+                //            $("#mtrC_clock1").next().trigger("click");
+                //            break;
+                //    }
+                //}
                 break;
         }
 
@@ -316,8 +328,13 @@ define(function (require, exports, module) {
                             var dbtype_name = "文本";
                             break;
                     }
+                    if (mtrData[x].Duration == undefined){
+                        var mtrDuration = "15";
+                    }else {
+                        var mtrDuration = formatSecond(mtrData[x].Duration).toString();
+                    }
                     var dbduration = {
-                        duration: formatSecond(mtrData[x].Duration).toString()     //将时间转为秒
+                        duration: mtrDuration     //将时间转为秒
                     }
                     if($("#mtrCtrl_playType").val() == "Sequence"){
                         maxsequence ++;
