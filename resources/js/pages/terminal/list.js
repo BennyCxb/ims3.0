@@ -444,16 +444,16 @@ define(function(require, exports, module) {
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
-          var snap = (tl[i].Online === 0)?'':'<a class="pointer">截屏</a>';
+          var snap = (tl[i].Online === 0)?'':'<button style=" position:absolute; top:16px; right:10px;" class="btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
 
           $('#term_list').append('' +
             '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
-              '<td style="padding-left:0;"><strong>'+ tl[i].Name +'</strong><small class="term-status-small">('+statusName+')</small><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
+              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
               '<td style="line-height:26px; padding-top:10px;">当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
               '</td>' +
-              '<td  style=" padding-top:10px;">' +
+              '<td  style=" padding-top:11px;">' +
                 '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
                 '<div style="visibility:'+downloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
                    '<div class="progress-bar progress-bar-success" role="progressbar" ' +
@@ -462,7 +462,7 @@ define(function(require, exports, module) {
                       '<span class="sr-only">'+ downloadStatus +' 完成（成功）</span>' +
                    '</div>' +
                 '</div>' +
-                '<span title="'+preloadNum+'" style="font-size: 12px; color: grey;">预下载：'+preloadStatus+'</span>' +
+                '<span title="'+preloadNum+'" style="font-size: 12px; color: grey; position:relative; top:6px; line-height:31px;">预下载：'+preloadStatus+'</span>' +
                 '<div style="visibility:'+preloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
                    '<div class="progress-bar progress-bar-success" role="progressbar" ' +
                       'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
@@ -471,11 +471,11 @@ define(function(require, exports, module) {
                    '</div>' +
                 '</div>' +
               '</td>' +
-              '<td  style="line-height:26px; padding-top:10px;">' +
-              'IP：'+ tl[i].IP +'<br />' +
-              '版本：' + tl[i].TermVersion + 
+              '<td  style="padding-top:30px; float:right; position:relative">' +
+              snap + '</br>' +
+              '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
+              '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' + 
               '</td>' +
-              '<td><a class="pointer">编辑</a> <br/>'+snap+'</td>' +
             '</tr>'
           )
         }
