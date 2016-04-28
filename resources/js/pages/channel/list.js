@@ -6,7 +6,8 @@ define(function(require, exports, module) {
     var templates = require('common/templates'),
         config    = require('common/config'),
         util      = require('common/util'),
-        toast     = require('common/toast');
+        toast     = require('common/toast'),
+		getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
 
     // global variables
     var requestUrl    = config.serverRoot,
@@ -73,7 +74,31 @@ define(function(require, exports, module) {
     }
     
     function publishChannel() {
-        alert('终端树还没有实现');
+		var channelID = $(".checked").parent().parent().attr("data-channel-id");
+        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');		  
+			  getClassAndTerm.channelID = channelID;
+			  getClassAndTerm.title = '发布到...';
+			  getClassAndTerm.save = function(data){
+				var cList = JSON.stringify(data.categoryList);
+				var tList = JSON.stringify(data.termList);
+				var post_data = {
+					project_name:config.project_name,
+					action:'publishChannel',
+					channelID:channelID,
+					categoryList:cList,
+					termList:tList
+					}
+				var url = config.serverRoot + '/backend_mgt/v2/termcategory';
+				util.ajax('post',url,post_data,function(msg){
+					if(msg.rescode===200){
+						alert("发布成功！")
+						}
+					else{
+						alert("发布失败！")
+						}
+					});
+				util.cover.close();
+		}
     }
     
     function publishChannelLater() {
