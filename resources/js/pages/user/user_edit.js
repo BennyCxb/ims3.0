@@ -73,6 +73,7 @@ define(function (require, exports, module) {
         });
 		}
 		else if(type==="add"){
+			$("#password1").parent().css("display","block");
 			$("#user_name1").val("");
 			$("#password1").val("");
 			$("#email1").val("");
