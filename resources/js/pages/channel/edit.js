@@ -882,7 +882,6 @@ define(function(require, exports, module) {
 			checkSwitch = Number(util.getLocalParameter('config_checkSwitch')),
 			data;
 
-
 		data = JSON.stringify({
 			action: 'SubmitVersion',
 			Project: projectName,
