@@ -34,7 +34,7 @@
         <a style="cursor:default;color: white; font-size: 36px;"><b>CLEAR</b>&nbsp;信息发布系统</a>
     </div>
     <!-- /.login-logo -->
-    <div class="login-box-body">
+    <div class="login-box-body" style="background-color: rgba(255,255,255,.85)">
         <!--<p class="login-box-msg">Sign in to start your session</p>-->
         <h3 style="margin-bottom: 30px;">登录 Clear Cloud 账户</h3>
         <form method='POST' action='<c:url value='/j_spring_security_check' />' onsubmit="return inputCheck()">
