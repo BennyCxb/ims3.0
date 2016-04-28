@@ -152,7 +152,7 @@ define(function (require, exports, module) {
                     data[w.id] = {material: w.material};
                     break;
                 case 'WebBox':
-                    style = JSON.parse(w.style);
+                    style = w.style === '' ? {} : JSON.parse(w.style);
                     if (style.Type === 'Marquee') {
                         style = {
                             type: style.Type,
@@ -168,10 +168,12 @@ define(function (require, exports, module) {
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ClockBox':
-                    data[w.id] = {material: w.material};
+                    style = w.style === '' ? {} : JSON.parse(w.style);
+                    data[w.id] = {material: w.material, style: style};
                     break;
                 case 'WeatherBox':
-                    data[w.id] = {material: w.material};
+                    style = w.style === '' ? {} : JSON.parse(w.style);
+                    data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ImageBox':
                     data[w.id] = {material: w.material};
@@ -213,9 +215,17 @@ define(function (require, exports, module) {
             if (!editMode) {
                 showPreview(editor);
                 editMode = true;
+                $(this).children('i')
+                    .addClass('fa-stop')
+                    .removeClass('fa-play-circle-o');
+                $(this).get(0).lastChild.nodeValue = '   取消预览 ';
             } else {
                 editor.hidePreview();
                 editMode = false;
+                $(this).children('i')
+                    .removeClass('fa-stop')
+                    .addClass('fa-play-circle-o');
+                $(this).get(0).lastChild.nodeValue = '   预览节目 ';
             }
         });
         $('#channel-editor-wrapper .btn-channel-setup-timer').click(function () {
