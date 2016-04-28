@@ -444,7 +444,7 @@ define(function(require, exports, module) {
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
-          var snap = (tl[i].Online === 0)?'':'<button style=" position:absolute; top:16px; right:10px;" class="btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
+          var snap = (tl[i].Online === 0)?'':'<button style=" position:absolute; top:16px; right:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
 
           $('#term_list').append('' +
             '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
@@ -472,7 +472,7 @@ define(function(require, exports, module) {
                 '</div>' +
               '</td>' +
               '<td  style="padding-top:30px; float:right; position:relative">' +
-              snap + '</br>' +
+              snap + '<button style=" position:absolute; top:16px; right:10px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
               '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
               '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' + 
               '</td>' +
@@ -537,8 +537,17 @@ define(function(require, exports, module) {
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
 
+          // 日志
+          $(this).find('button.log').click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            var termlog = require('pages/terminal/list.js');
+            termlog.mac = $(this).parent().parent().attr("mac");
+            window.location.hash = 'termlog/list';
+          })
+
           // 截屏
-          $(this).find('button:nth(0)').click(function(e){
+          $(this).find('button.snap').click(function(e){
             e.preventDefault();
             e.stopPropagation();
             _snapTermID = Number($(this).parent().parent().attr("tid"));
