@@ -79,22 +79,22 @@ define(function(require, exports, module) {
 			  getClassAndTerm.channelID = channelID;
 			  getClassAndTerm.title = '发布到...';
 			  getClassAndTerm.save = function(data){
-				var cList = JSON.stringify(data.categoryList);
-				var tList = JSON.stringify(data.termList);
-				var post_data = {
+				//var cList = JSON.stringify(data.categoryList);
+				//var tList = JSON.stringify(data.termList);
+				var post_data = JSON.stringify({
 					project_name:config.project_name,
 					action:'publishChannel',
 					channelID:channelID,
-					categoryList:cList,
-					termList:tList
-					}
+					categoryList:data.categoryList,
+					termList:data.termList
+					});
 				var url = config.serverRoot + '/backend_mgt/v2/termcategory';
 				util.ajax('post',url,post_data,function(msg){
 					if(msg.rescode===200){
-						alert("发布成功！")
+						alert("1111")
 						}
 					else{
-						alert("发布失败！")
+						alert("22")
 						}
 					});
 				util.cover.close();
