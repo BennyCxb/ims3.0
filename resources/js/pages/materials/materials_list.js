@@ -770,5 +770,9 @@ define(function (require, exports, module) {
             $('#mtr_reject').css('display','none');
             $('#mtr_toBeCheckedDiv').css('display','none');
         }
+        else if(UTIL.getLocalParameter('config_canCheck') == 0){
+            $('#mtr_approve').css('display','none');
+            $('#mtr_reject').css('display','none');
+        }
     }
 })
