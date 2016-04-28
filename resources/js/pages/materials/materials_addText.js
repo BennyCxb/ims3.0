@@ -18,6 +18,13 @@ define(function (require, exports, module) {
         $("#Tmtr_back").click(function () {
             back();
         });
+
+        $('#Tmtr_viewlast').click(function(){
+            var viewText = require("pages/materials/materials_viewText.js");
+            //viewText.
+            var page = "resources/pages/materials/materials_viewText.html";
+            UTIL.cover.load(page);
+        })
     }
 
     function loadPage() {

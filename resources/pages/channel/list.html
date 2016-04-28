@@ -27,6 +27,7 @@
 				<button type="button" class="btn btn-default btn-sm btn-publish-later">预发布</button>
 				<button type="button" class="btn btn-default btn-sm btn-copy">复制</button>
 				<button type="button" class="btn btn-default btn-sm btn-delete">删除</button>
+				<a href="#channel/edit" class="btn btn-default btn-add-channel">添加频道</a>
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -42,13 +43,6 @@
     </div>
 	</div>
 </section>
-<!-- icheck -->
-<link rel="stylesheet" href="resources/plugins/iCheck/all.css"/>
-<link rel="stylesheet" href="resources/css/pages/channel/list.css"/>
-<script src="resources/plugins/iCheck/icheck.min.js"></script>
-<script src="resources/plugins/jqPaginator/jqPaginator.min.js"></script>
-<!--<script src="resources/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="resources/plugins/datatables/dataTables.bootstrap.min.js"></script>-->
 <script>
 	seajs.use('pages/channel/list', function(channelList) {
 		channelList.init();
