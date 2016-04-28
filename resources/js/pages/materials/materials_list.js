@@ -301,9 +301,11 @@ define(function (require, exports, module) {
                         
                         // 审核状态
                         var check_td = '';
+                        var check_status = '';
                         if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
 
                             var status;
+                            check_status = "check_status=" + mtrData[x].CheckLevel;
                             switch(mtrData[x].CheckLevel){
                                 case 0:
                                     status = '待提交';
@@ -323,7 +325,7 @@ define(function (require, exports, module) {
                            check_td = '<th class="mtr_check">'+status+'</th>';
                         }
 
-                        var mtrtr = '<tr mtrID="' + mtrData[x].ID + '">' +
+                        var mtrtr = '<tr '+check_status+' mtrID="' + mtrData[x].ID + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
                             '<td class="mtr_name" title="' +mtrData[x].Name+ '"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
                             check_td +
@@ -493,15 +495,37 @@ define(function (require, exports, module) {
     
     //校验批量操作的审核功能
     function checkCheckBtns(){
-        $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
-            $('#mtr_submit').attr('disabled',false);
-            $('#mtr_approve').attr('disabled',false);
-            $('#mtr_reject').attr('disabled',false);
+        if($("#mtrTable input[type='checkBox']:checked").length === 0){
+            $('#mtr_submit').attr('disabled',true);
+            $('#mtr_approve').attr('disabled',true);
+            $('#mtr_reject').attr('disabled',true);
+        }else{
 
-            if(i !== 0){
-                //$(e).attr('check_status')
-            }
-        })
+            $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
+
+                if($('#mtr_submit').attr('disabled')&&$('#mtr_approve').attr('disabled')&&$('#mtr_reject').attr('disabled')){
+                    return false;
+                }
+
+                //待提交
+                if($(e).parent().parent().parent().attr('check_status') == '0'){
+                    $('#mtr_approve').attr('disabled',true);
+                    $('#mtr_reject').attr('disabled',true);
+                }
+                //待审核
+                else if($(e).parent().parent().parent().attr('check_status') == '1'){
+                    $('#mtr_submit').attr('disabled',true);
+                }
+                //已通过和未通过
+                else {
+                    $('#mtr_submit').attr('disabled',true);
+                    $('#mtr_approve').attr('disabled',true);
+                    $('#mtr_reject').attr('disabled',true);
+                }
+
+            })
+        }
+
     }    
 
     //校验复选框勾选的个数
@@ -530,6 +554,9 @@ define(function (require, exports, module) {
         }
 
         if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
+            $('#mtr_submit').attr('disabled',false);
+            $('#mtr_approve').attr('disabled',false);
+            $('#mtr_reject').attr('disabled',false);
             checkCheckBtns();
         }
 
