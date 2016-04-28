@@ -34,7 +34,8 @@ define(function (require, exports, module) {
 			var data1 = JSON.stringify({
 				project_name:CONFIG.projectName,
 				action:'GetByUserNameCount',
-				UserName:uName
+				UserName:uName,
+				UserID:uID
 				})
 			var url1 = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
 			UTIL.ajax('post',url1,data1,function(msg){
@@ -59,7 +60,7 @@ define(function (require, exports, module) {
 						var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+uID;
 						UTIL.ajax('post', url, data, function(msg){
 							if(msg.rescode == 200){
-								UTIL.cover.close();   
+								UTIL.cover.close();
 								alert("修改用户成功");
 							}
 							else{

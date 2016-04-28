@@ -12,39 +12,6 @@ define(function (require, exports, module) {
     	checkJurisdiction();
 
         exports.loadPage(1, 1); //加载默认页面
-
-        //加载视频列表
-        $('#mtrVideo').click(function () {
-            mtrChoise($(this));
-            exports.loadPage(1, 1);
-        })
-        //加载图片列表
-        $('#mtrImage').click(function () {
-            mtrChoise($(this));
-            exports.loadPage(1, 2);
-        })
-        //加载音频列表
-        $('#mtrAudio').click(function () {
-            mtrChoise($(this));
-            exports.loadPage(1, 3);
-        })
-        //加载文本列表
-        $('#mtrText').click(function () {
-            mtrChoise($(this));
-            exports.loadPage(1, 4);
-        })
-        //加载直播列表
-        $('#mtrLive').click(function () {
-            mtrChoise($(this));
-            exports.loadPage(1, 5);
-        })
-        
-        //搜索
-        $('#mtrSearch').bind('input propertychange', function () {
-            var typeId = $("#mtrSearch").attr("typeId");
-            onSearch($('#mtrSearch').val(), typeId);
-        })
-
         //审核状态筛选
         // 筛选终端
         if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
@@ -185,86 +152,6 @@ define(function (require, exports, module) {
             })
         }
 
-        //删除和批量删除
-        $("#mtr_delete").click(function () {
-            var w = false;
-            var MaterialIDs = [];
-            for (var x = 0; x < $(".mtr_cb").length; x++) {
-                if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                    w = true;
-                    break;
-                }
-            }
-            if (w) {
-                if (confirm("删除资源会删除频道对应的资源,确定删除资源？")) {
-                	var mtrId;
-                	var typeId = $("#mtrChoise li.active").attr("typeid");
-                    for (var x = 0; x < $(".mtr_cb").length; x++) {
-                        if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                        	mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID")
-                            MaterialIDs.push(Number(mtrId));
-                        }
-                    }
-                    var pageNum = $("#materials-table-pager li.active").find("a").text();
-                    if (typeId == "4"){
-                    	var data = JSON.stringify({
-                            Action: 'DeleteMulti',
-                            Project: CONFIG.projectName,
-                            MaterialIDs: MaterialIDs,
-                        });
-                    	var url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
-                    }else {
-                    	var data = JSON.stringify({
-                            action: 'DeleteMulti',
-                            project_name: CONFIG.projectName,
-                            MaterialIDs: MaterialIDs,
-                        });
-                    	var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
-                    }
-                    UTIL.ajax('post', url, data, function () {
-                        exports.loadPage(pageNum, Number(typeId)); //刷新页面
-                    });
-                }
-            }
-        });
-
-        //刷新按钮
-        $("#mtr_refresh").click(function () {
-        	var typeId = $("#mtrChoise li.active").attr("typeid");
-            exports.loadPage(1, Number(typeId));
-        })
-
-        //编辑
-        $("#mtr_edit").click(function () {
-        	var typeId = $("#mtrChoise li.active").attr("typeid");
-        	if (typeId == "4"){			//编辑文本
-        		$("#mtr_edit").attr("edit_type", "文本");
-        		openEditor();
-        	}else if (typeId == "5"){	//编辑直播
-        		$("#mtr_edit").attr("edit_type", "直播");
-        		openLive();
-        	}else {
-        		var page = "resources/pages/materials/materials_edit.html";
-        		UTIL.cover.load(page);
-        	}
-        })
-
-        //全选和全不选
-        $(".checkbox-toggle").click(function () {
-            var clicks = $(this).data('clicks');
-            
-            if (clicks) {
-                //Uncheck all checkboxes
-                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-            } else {
-                //Check all checkboxes
-                $(".mailbox-messages input[type='checkbox']").iCheck("check");
-                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-            }
-            $(this).data("clicks", !clicks);
-            mtrCb();
-        });
 
     }
 
@@ -272,8 +159,8 @@ define(function (require, exports, module) {
     exports.loadPage = function (pageNum, type) {
     	$("#addtext_box").empty();
         $("#list_box").css("display","block");
-        $("#mtrLisTitle").html("");
-        $("#mtrTable tbody").html("");
+        $("#mtrLisTitle").empty();
+        $("#mtrTable tbody").empty();
         $(".checkbox-toggle").data("clicks", false)
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         mtrCb();
@@ -332,8 +219,6 @@ define(function (require, exports, module) {
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
         UTIL.ajax('post', url, data, render);
-
-
     }
 
     function render(json) {
@@ -376,9 +261,7 @@ define(function (require, exports, module) {
                                     '<th class="mtr_uploadDate">上传时间</th>'+
                                 '</tr>');
             if (mtrData.length != 0){
-
             	var material_type = mtrData[0].Type_Name;
-                
                 if (material_type == "文本" || material_type == "Live"){		//文本和直播无预览效果
                 	for (var x = 0; x < mtrData.length; x++) {
 
