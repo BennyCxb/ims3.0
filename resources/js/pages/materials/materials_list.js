@@ -9,7 +9,7 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         checkCheck();
-    	checkJurisdiction();
+    	//checkJurisdiction();
         bind();
 
         exports.loadPage(1, 1); //加载默认页面
