@@ -244,7 +244,7 @@
 }
 
 .channel-program-timer label{
-    font-weight: 400;
+    
 }
 
 
@@ -275,7 +275,7 @@
 }
 
 .channel-program-timer .input-group .form-control{
-    line-height: 30px;
+    line-height: 29px;
     height: 30px;
     padding-right: 0px;
     padding-top: 2px;
