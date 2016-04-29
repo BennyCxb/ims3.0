@@ -1377,10 +1377,12 @@ define(function (require, exports, module) {
                 iFrame.style.height = '100%';
             iFrame.style.overflowY = 'hidden';  
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
-            iFrame.srcdoc = data.material;
+            iFrame.srcdoc = '<html><head><style>body {font-size:' +
+                (0.5 * DEFAULT_FONT_SIZE * this.mContext.mZoomFactor) +
+                'px}</style></head><body>' +
+                data.material +
+                '</body></html>';
             this.mElement.appendChild(iFrame);
-            console.log(iFrame.contentDocument);
-            iFrame.contentDocument.body.style.fontSize = (0.5 * scale * DEFAULT_FONT_SIZE)  + 'px';
         }
 
 
@@ -1419,12 +1421,15 @@ define(function (require, exports, module) {
             format = 'hh:MM:ss';
         }
         var text = now.format(format),
-            div = document.createElement('div');
+            div = document.createElement('div'),
+            lines = (text.match(/<br>/g) || []).length + 1,
+            cHeight = this.mHeight * this.mContext.mZoomFactor;
         div.style.textAlign = 'center';
-        div.style.fontSize = (this.mHeight * this.mContext.mZoomFactor * 0.3) + 'px';
+        div.style.fontSize = cHeight * 0.3 + 'px';
         div.style.color = resource.style.TextColor;
         div.style.overflow = 'hidden';
         div.style.whiteSpace = 'nowrap';
+        div.style.lineHeight = cHeight / lines + 'px';
         div.style.height = '100%';
         div.innerHTML = text;
         this.mElement.appendChild(div);

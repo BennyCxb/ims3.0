@@ -56,7 +56,6 @@ define(function (require, exports, module) {
     };
 
     Timer.prototype.updateGranularity = function (selector) {
-        $('#channel-editor-timer ')
         $('#channel-editor-timer .timer-container')
             .removeClass('granularity-' + this.tGranularity)
             .addClass('granularity-' + selector);
@@ -152,31 +151,45 @@ define(function (require, exports, module) {
         return obj;
 
     };
-    
+
+    function checkRange(array, n, start) {
+        if (typeof start !== 'number') {
+            start = 1;
+        }
+        for (var i = start; i < (n + start); i++) {
+            if (array.indexOf(i) === -1) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     Timer.encode = function (timer) {
-        var segments = [];
+        var segments = [], bool;
         if (timer.tGranularity === 'date' || timer.tGranularity === 'month') {
             segments[6] = '*';
-            if (timer.tGranularity === 'month') {
+            bool = checkRange(timer.tMonths, 12, 1);
+            if (!bool && timer.tGranularity === 'month') {
                 segments[4] = timer.tMonths.join(',');
             } else {
                 segments[4] = '*';
             }
-            segments[3] = timer.tDates.join(',');
+            bool = checkRange(timer.tDates, 31, 1);
+            segments[3] = bool ? '*' : timer.tDates.join(',');
         } else {
             segments[4] = '*';
             segments[3] = '*';
-            if (timer.tGranularity === 'day') {
+            bool = checkRange(timer.tDays, 7, 1);
+            if (!bool && timer.tGranularity === 'day') {
                 segments[6] = timer.tDays.join(',');
             } else {
                 segments[6] = '*';
             }
         }
         segments[5] = '*';
-        segments[0] = timer.tSeconds.join(',');
-        segments[1] = timer.tMinutes.join(',');
-        segments[2] = timer.tHours.join(',');
+        segments[0] = checkRange(timer.tSeconds, 60, 0) ? '*' : timer.tSeconds.join(',');
+        segments[1] = checkRange(timer.tSeconds, 60, 0) ? '*' : timer.tMinutes.join(',');
+        segments[2] = checkRange(timer.tSeconds, 24, 0) ? '*' : timer.tHours.join(',');
         return segments.join(' ');
     };
 
