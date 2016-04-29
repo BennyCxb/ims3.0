@@ -174,7 +174,6 @@ define(function (require, exports, module) {
 								})
 						}
 						getClass.close = function(){
-							alert("123");
 							UTIL.cover.close();
 							UTIL.cover.load('resources/pages/user/roles_edit.html');
 							}
@@ -204,6 +203,10 @@ define(function (require, exports, module) {
 						}
 					})
 			}
+			getClass.close = function(){
+						UTIL.cover.close();	
+						UTIL.cover.load('resources/pages/user/roles_edit.html');
+							}
 			UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
 			})
 		 //关闭窗口
