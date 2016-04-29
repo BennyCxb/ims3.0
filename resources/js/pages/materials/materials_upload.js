@@ -6,36 +6,35 @@ define(function (require, exports, module) {
     var _upl_list = new Array(); //记录上传xhr, status(success, uploading);
 
     exports.init = function () {
-        
-        
+
+
         var DispClose = false;
-        $(window).bind('beforeunload',function(){ 
-            $("#Tbe_filesList tr").each(function(){
-            	if ($(this).attr("status") == "uploading") {
-            		DispClose = true;
+        $(window).bind('beforeunload', function () {
+            $("#Tbe_filesList tr").each(function () {
+                if ($(this).attr("status") == "uploading") {
+                    DispClose = true;
                 }
             })
-    	    if (DispClose)
-    	    {
-    	    	return "当前正在上传文件，是否离开当前页面?";
-    	    }
-    	})
-    	
-    	loadPage();
+            if (DispClose) {
+                return "当前正在上传文件，是否离开当前页面?";
+            }
+        })
+
+        loadPage();
     }
 
     function loadPage() {
         exports.beginUpload();
-        
+
         //显示上传页面
-        $("#dpUpl").click(function(){
-        	$("#page_upload").css("display","flex");
-            $("#upload_box").css("display","block");
+        $("#dpUpl").click(function () {
+            $("#page_upload").css("display", "flex");
+            $("#upload_box").css("display", "block");
         })
 
         //最小化上传窗口
         $('#BtMinimize').click(function () {
-        	alert("可点击右上方的云按钮重新打开上传页面！");
+            alert("可点击右上方的云按钮重新打开上传页面！");
             $("#page_upload").css("display", "none");
             $("#dpUpl").css("display", "block");
         })
@@ -43,8 +42,8 @@ define(function (require, exports, module) {
         //关闭上传窗口
         $("#BtClose").click(function () {
             var status = "";
-            $("#Tbe_filesList tr").each(function(){
-            	if ($(this).attr("status") == "uploading") {
+            $("#Tbe_filesList tr").each(function () {
+                if ($(this).attr("status") == "uploading") {
                     status = "uploading";
                 }
             })
@@ -57,7 +56,7 @@ define(function (require, exports, module) {
                         }
                     }
                     closeUpl_list();	//关闭上传窗口
-                    
+
                 }
             } else {
                 closeUpl_list();	//关闭上传窗口
@@ -88,9 +87,9 @@ define(function (require, exports, module) {
                 $("#upl_status_" + i).html("已取消");
                 _upl_list[i].status = 'end';
             })
-            
+
             $("#box_fileList").attr("status", "uploading");
-            
+
             for (var a = 1, b = 0, c = 0; a < $("#Tbe_filesList tr").length; a++, b++) {
                 if ($("#upl_tr_" + b).attr("status") == "") {
                     upload(b, c);
@@ -99,7 +98,7 @@ define(function (require, exports, module) {
             }
         }
     }
-    
+
     //关闭上传窗口
     function closeUpl_list() {
         status = "";
@@ -109,7 +108,7 @@ define(function (require, exports, module) {
         $("#dpUpl").css("display", "none");
         _upl_list.splice(0, _upl_list.length); //清空_upl_list
     }
-    
+
     //定义upl_file
     function upl_file(xhr, status) {
         this.xhr = xhr;
@@ -118,7 +117,7 @@ define(function (require, exports, module) {
 
     //上传模块
     function upload(num1, num2) {
-    	$("#dpUpl").css("display", "block");
+        $("#dpUpl").css("display", "block");
         // 上传
         var Qiniu_upload = function (f) {
             var xhr = new XMLHttpRequest();
@@ -151,8 +150,8 @@ define(function (require, exports, module) {
                     $("#upl_tr_" + num1).attr("status", "uploading");
                     $("#progressbar_" + num1).css("width", percentComplete + "%");
                     $("#upl_speed_" + num1).html(formatSpeed);
-                    if (num1 <= _upl_list.length){
-                    	_upl_list[num1].status = 'uploading';
+                    if (num1 <= _upl_list.length) {
+                        _upl_list[num1].status = 'uploading';
                     }
                 }
             }, false);
@@ -160,12 +159,12 @@ define(function (require, exports, module) {
 
             //入库
             xhr.onreadystatechange = function (response) {
-            	try{
-            		var fileName = $("#file")[0].files[num2].name;
-            	}catch(e){}
-                
-                if (xhr.readyState == 4 && xhr.status == 200
-                    && xhr.responseText != "") {
+                try {
+                    var fileName = $("#file")[0].files[num2].name;
+                } catch (e) {
+                }
+
+                if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
                     var blkRet = JSON.parse(xhr.responseText);
                     var material = {
                         name: fileName,
@@ -196,18 +195,18 @@ define(function (require, exports, module) {
                             _upl_list[num1].status = "end";
                             var status = "uploading";
                             //判断是否全部上传完毕
-                            for(var b = 0, c=0; b<_upl_list.length; b++){
-                                if (_upl_list[b].status == "end"){
+                            for (var b = 0, c = 0; b < _upl_list.length; b++) {
+                                if (_upl_list[b].status == "end") {
                                     c++;
-                                    if (c==_upl_list.length){
+                                    if (c == _upl_list.length) {
                                         status = "end";
                                     }
                                 }
                             }
-                            if(status == "end"){
+                            if (status == "end") {
                                 $("#box_fileList").attr("status", "end");
                                 var typeId = $("#mtrChoise li.active").attr("typeid");
-                                if(typeId == "1" || typeId == "2" || typeId == "3"){
+                                if (typeId == "1" || typeId == "2" || typeId == "3") {
                                     MTR.loadPage(1, Number(typeId));
                                 }
 
