@@ -1,7 +1,6 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var templates = require('common/templates');
     var nDisplayItems = 10;
     var termMac = '';
     var pageNumC=1;
@@ -18,7 +17,7 @@ define(function (require, exports, module) {
     }*/
     
     exports.init = function () {
-        if(exports.mac != ''){
+        if(exports.mac !== '' && exports.mac !== undefined){
             $('#termlogSearch').val(exports.mac);
             exports.mac = '';
             onSearch($('#termlogSearch').val());
