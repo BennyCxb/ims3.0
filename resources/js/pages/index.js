@@ -13,9 +13,16 @@ define(function (require, exports, module) {
         $("#logout").click(function () {
             window.location.href = "login.jsp";
         });
+		//修改密码
+		$("#repassword").click(function(){
+				exports.type = "resetpsw";
+				var uName = $("#USER-NAME").html();
+				exports.userName = uName;
+				UTIL.cover.load('resources/pages/user/user_psw.html');
+			});
     };
     //上传弹层页面
-    exports.upl = function () {
+    exports.upl = function () {alert(2)
         $("#page_upload").load("resources/pages/materials/materials_upload.html");
         $("#page_upload").css("display", "flex");
     }

@@ -91,7 +91,7 @@
                   <small>${project_name_cn}
                   </small>
                 </p>
-                <a class="index-header-user-option"><i class="fa fa-unlock-alt"></i>修改密码 </a>
+                <a id="repassword" class="index-header-user-option"><i class="fa fa-unlock-alt"></i>修改密码 </a>
                 <a id="logout" class="index-header-user-option" style="width: 100%;"><i class="glyphicon glyphicon-log-out"></i>退出</a>
               </li>
 
@@ -184,6 +184,8 @@
 <script src="resources/plugins/iCheck/icheck.min.js"></script>
 <!-- bootstrap color picker -->
 <script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- date.format -->
+<script src="resources/js/common/date.format.js"></script>
 
 <script>
 	seajs.config({

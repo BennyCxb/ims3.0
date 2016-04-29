@@ -6,12 +6,12 @@ define(function (require, exports, module) {
 
     exports.init = function () {
 		//加载用户信息
-		var uID = USERS.userID;
+		var uID = Number(USERS.userID);
 		var uName1 = USERS.userName;
 		var uEmail = USERS.userEmail;
 		var uDes = USERS.userDes;
 		var uPass = USERS.userPass;
-		var rID = USERS.roleID;
+		var rID = Number(USERS.roleID);
 		var type = USERS.type;
 		if(type==="edit"){
 		$("#user_name1").val(uName1);

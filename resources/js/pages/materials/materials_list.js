@@ -380,6 +380,28 @@ define(function (require, exports, module) {
     
     //绑定事件
     function bind(){
+        // 上传文件按钮点击
+        $('#mtr_upload').click(function () {
+            $('#file').trigger("click");
+        })
+        $("#file").unbind( "change" ).change(function () {
+            if ($("#page_upload").children().length == 0) {
+                INDEX.upl();
+            } else {
+                $("#page_upload").css("display", "flex");
+                $("#upload_box").css("display", "block");
+                MTRU.beginUpload();
+            }
+
+        });
+        // 添加文本按钮点击
+        $('#mtr_addText').click(function () {
+            openEditor();
+        })
+        // 添加直播按钮点击
+        $('#mtr_addLive').click(function () {
+            openLive();
+        })
         //加载视频列表
         $('#mtrVideo').click(function () {
             mtrChoise($(this));
