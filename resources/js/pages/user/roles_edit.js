@@ -15,12 +15,14 @@ define(function (require, exports, module) {
 			$("#role_name").val(rName);
 			}
 		else if(ROLEEDIT.roleID){
-			rID=ROLEEDIT.roleID;
+			rID=Number(ROLEEDIT.roleID);
 			rName=ROLEEDIT.roleName;
 			$("#role_name").val(rName);
+			$(".modal-title").html("新建角色");
 		}else{
 			$("#role_name").val();
 			$("#term").val();
+			$(".modal-title").html("新建角色");
 			}
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
@@ -160,7 +162,6 @@ define(function (require, exports, module) {
 							var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
 							UTIL.ajax('post',url,ajax_data,function(msg){
 								if(msg.rescode==200){
-									alert("保存成功！")
 									UTIL.cover.close();
 									exports.roleID = rID;
 									exports.roleName = roleName;
@@ -168,14 +169,15 @@ define(function (require, exports, module) {
 									UTIL.cover.load('resources/pages/user/roles_edit.html');
 									}
 								else{
-									alert("保存失败!")
+									return false;
 									}
 								})
-								//关闭窗口
-								$(".CA_close").click(function () {
-									UTIL.cover.close();
-								});
 						}
+						getClass.close = function(){
+							alert("123");
+							UTIL.cover.close();
+							UTIL.cover.load('resources/pages/user/roles_edit.html');
+							}
 					}else{
 						flag5=false;
 					}	
@@ -194,12 +196,11 @@ define(function (require, exports, module) {
 				var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
 				UTIL.ajax('post',url,ajax_data,function(msg){
 					if(msg.rescode==200){
-						alert("保存成功！")
 						UTIL.cover.close();
 						UTIL.cover.load('resources/pages/user/roles_edit.html');
 						}
 					else{
-						alert("保存失败!")
+						return false;
 						}
 					})
 			}
@@ -212,12 +213,12 @@ define(function (require, exports, module) {
         });
     }
 	exports.loadModulePage = function () {
-		var rID = ROLES.roleID;
+		var rID = Number(ROLES.roleID);
 		var type = ROLES.type;
 		
 		if(rID){}else if(ROLEEDIT.roleID){
-			rID=ROLEEDIT.roleID;
-			}else{rID=-100;}
+			rID=Number(ROLEEDIT.roleID);
+			}else{}
         $("#moduleTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
 		var authArr = [];
@@ -267,7 +268,7 @@ define(function (require, exports, module) {
 							var roltr = '<tr moduleID="' + ModuleID + '">' +
 								  '<td class="module_checkbox"><input checked="checked" class="module" type="checkbox" moduleID="' + ModuleID + '"   moduleName="' + ModuleName + '"></td>' +
 								  '<td class="module_name">' + ModuleName + '</td>' +
-								  '<td class="module_id">ID：' + ModuleID + '</td>' + 
+								  //'<td class="module_id">ID：' + ModuleID + '</td>' + 
 								  '</tr>';
 							  $("#moduleTable tbody").append(roltr);
 
@@ -275,7 +276,7 @@ define(function (require, exports, module) {
 								var roltr = '<tr moduleID="' + ModuleID + '">' +
 								  '<td class="module_checkbox"><input class="module" type="checkbox" moduleID="' + ModuleID + '"   moduleName="' + ModuleName + '"></td>' +
 								  '<td class="module_name">' + ModuleName + '</td>' +
-								  '<td class="module_id">ID：' + ModuleID + '</td>' + 
+								 // '<td class="module_id">ID：' + ModuleID + '</td>' + 
 								  '</tr>';
 							  $("#moduleTable tbody").append(roltr);
 

@@ -16,7 +16,7 @@ define(function (require, exports, module) {
             UTIL.cover.close();
         });
 		var rName = ROLES.roleName;
-		var rID = ROLES.roleID;
+		var rID = Number(ROLES.roleID);
 		//确定
 		$("#users_updata").click(function(){
 			var suc=true;
@@ -164,7 +164,7 @@ define(function (require, exports, module) {
                                 '</tr>');
 			//获取当前角色已绑定的用户
 			var userList = [];
-			var rID = ROLES.roleID;
+			var rID = Number(ROLES.roleID);
 			var udata = JSON.stringify({
 				project_name:CONFIG.projectName,
 				action: 'GetUsers',

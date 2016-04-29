@@ -1,7 +1,6 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var templates = require('common/templates');
     var nDisplayItems = 10;
     var termMac = '';
     var pageNumC=1;
@@ -18,7 +17,7 @@ define(function (require, exports, module) {
     }*/
     
     exports.init = function () {
-        if(exports.mac != ''){
+        if(exports.mac !== '' && exports.mac !== undefined){
             $('#termlogSearch').val(exports.mac);
             exports.mac = '';
             onSearch($('#termlogSearch').val());
@@ -43,7 +42,7 @@ define(function (require, exports, module) {
         $("#termlogLisTitle").html("");
         $("#termlogTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#termlogLisTitle").html("日志列表");
+        $("#termlogLisTitle").html("终端日志");
         
         pageNumC = pageNum;
         var data = JSON.stringify({

@@ -427,7 +427,7 @@ define(function(require, exports, module) {
             downloadDisplay = 'hidden';
           }else{
             downloadNum = "已下载：" + downloadStatus.DownloadFiles +'个，未下载' + (downloadStatus.AllFiles - downloadStatus.DownloadFiles)+'个';
-            downloadStatus = Number(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
+            downloadStatus = Math.floor(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
           }
 
           var preloadStatus = JSON.parse(tl[i].PreDownloadInfo),
@@ -439,7 +439,7 @@ define(function(require, exports, module) {
             preloadDisplay = 'hidden';
           }else{
             preloadNum = "已下载：" + preloadStatus.DownloadFiles +'个，未下载' + (preloadStatus.AllFiles - preloadStatus.DownloadFiles)+'个';
-            preloadStatus = Number(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
+            preloadStatus = Math.floor(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
           }
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');

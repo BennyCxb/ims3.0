@@ -13,6 +13,13 @@ define(function (require, exports, module) {
         $("#logout").click(function () {
             window.location.href = "login.jsp";
         });
+		//修改密码
+		$("#repassword").click(function(){
+				exports.type = "resetpsw";
+				var uName = $("#USER-NAME").html();
+				exports.userName = uName;
+				UTIL.cover.load('resources/pages/user/user_psw.html');
+			});
     };
     //上传弹层页面
     exports.upl = function () {

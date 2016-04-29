@@ -294,10 +294,10 @@ define(function(require, exports, module) {
 
     // 加载页面数据
     function loadPage(pageNum) {
-		var status = "";
+		var CheckLevel = -1;
 		$("#channel-table tbody").html("");
         if($('#chn_toBeCheckedDiv button.btn-primary').length > 0){
-          status = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
+          CheckLevel = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
         }
         var pager = {
             page: String(pageNum),
@@ -306,11 +306,12 @@ define(function(require, exports, module) {
             orderby: 'ID',
             sortby: '',
             keyword: keyword,
-			status: status
+			status: ''
         };
         var data = JSON.stringify({
             action: 'GetPage',
             project_name: projectName,
+			CheckLevel:CheckLevel,
             Pager: pager
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, render);
@@ -350,7 +351,8 @@ define(function(require, exports, module) {
                                     '<th class="chn_checkbox" style="width:32px;"></th>'+
                                     '<th class="chn_name">频道名</th>'+
                                     check_th+
-                                    
+                                    '<th class="chn_create">创建人</th>'+
+									'<th class="chn_createTime">创建时间</th>'+
                                 '</tr>');
             if (chnData.length != 0){
                 	for (var x = 0; x < chnData.length; x++) {
@@ -383,7 +385,8 @@ define(function(require, exports, module) {
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' +chnData[x].Name+ '"><b><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></b></td>' +
                             check_td +
-                            
+                            '<td class="chn_create" title="' +chnData[x].CreateUserName+ '"><b>' + chnData[x].CreateUserName + '</b></td>' +
+							'<td class="chn_createTime" title="' +chnData[x].CreateTime+ '"><b>' + chnData[x].CreateTime + '</b></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
                     }
@@ -397,7 +400,8 @@ define(function(require, exports, module) {
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                            '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
                             check_td +
-                            
+                             '<td class="chn_create" title="' +chnData[x].CreateUserName+ '"><b>' + chnData[x].CreateUserName + '</b></td>' +
+							'<td class="chn_createTime" title="' +chnData[x].CreateTime+ '"><b>' + chnData[x].CreateTime + '</b></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
 							}

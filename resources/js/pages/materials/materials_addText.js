@@ -5,6 +5,10 @@ define(function (require, exports, module) {
     var _mtrId;
     exports.init = function () {
     	
+        if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
+            $('#Tmtr_viewlast').hide();
+            $('#Tmtr_submit').hide();
+        }
         loadPage();
         
         //销毁
