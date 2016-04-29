@@ -17,11 +17,16 @@
                 </select>
             </div>
             <div id="mtrC_flip" class="pull-right">
-                <div class="btn-group">
-                    <div id="box_text_time" class="input-group">
-                        <input id="mtrC_pageDownPeriod" type="number" class="form-control"  placeholder="请输入翻页时间">
-                    </div>
+
+               
+                <div id="box_text_time" class="input-group">
+                    <span class="input-group-addon">翻页</span>
+                    <input id="mtrC_pageDownPeriod" type="number" class="form-control"  placeholder="请输入翻页时间">
+                    <span class="input-group-addon">秒</span>
                 </div>
+               
+
+
             </div>
             <div id="mtrC_effect" class="pull-right">
 
@@ -86,7 +91,7 @@
             </div>
             <!-- /.box-tools -->
         </div>
-        <div class="mtr_choise table-responsive" style="height: calc(100% - 140px);">
+        <div class="mtr_choise table-responsive" style="height: calc(100% - 163px); border: 1px solid #ddd; border-radius: 3px;">
             <!-- 资源列表 -->
             <table id="mtrCtrl_Table" class="table table-hover table-striped">
                 <thead></thead>
@@ -173,7 +178,7 @@
             <!-- 天气控件 -->
             <div id="box_weather" style="display: none;">
                 <div>
-                    <input id="mtrC_weather1" type="radio" clockType="Time" name="r3" class="flat-red rd_clock" checked>
+                    <input id="mtrC_weather1" type="radio" clockType="Time" name="r3" class="flat-red rd_weather" checked>
 
                     <div class="info-box bg-red mtrC_datetime">
                         <img src="resources/img/weather1.png">

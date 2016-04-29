@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         $("#mtrC_textType").change(function () {
             if ($("#mtrC_textType").val() == "Normal") {
                 $("#mtrC_effect").hide();
-                $("#mtrC_flip").show();
+                $("#mtrC_flip").css('display','inline');
             } else {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
@@ -198,7 +198,7 @@ define(function (require, exports, module) {
                     if (wStyle.Type == "Marquee") {
                         $("#mtrC_effect").show();
                     } else {
-                        $("#mtrC_flip").show();
+                        $("#mtrC_flip").css('display','inline');
                     }
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
@@ -207,14 +207,17 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
+                    $("#mtrC_flip").css('display','inline');
                     $("#mtrC_pageDownPeriod").val(0);
                 }
                 textAttrSave();
                 break;
             case 'ClockBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
+                clockAttrSave();
                 $("#clockText_color").val(wStyle.TextColor);
                 $("#btn_clock_color i").css("background-color", wStyle.TextColor);
+
                 if (wStyle.Type == undefined){
                     $("#clockText_color").val("#000000");
                     $("#btn_clock_color i").css("background-color", "#000000");
@@ -246,6 +249,7 @@ define(function (require, exports, module) {
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
+                weatherSave();
                 if (wStyle.Type == undefined){
                     $("#mtrC_clock1").next().trigger("click");
                 }
@@ -513,8 +517,8 @@ define(function (require, exports, module) {
     }
     //文本效果保存
     function textAttrSave() {
+        if (!inputCheck()) return;
         if ($("#mtrC_textType").val() == "Marquee") {
-            if (!inputCheck()) return;
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
@@ -581,16 +585,16 @@ define(function (require, exports, module) {
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //function weatherSave(){
-    //    //时钟类型
-    //    $(".rd_clock").next().click(function () {
-    //        var wstyle = {
-    //            TextColor: $("#clockText_color").val(),
-    //            Type: $("input:radio:checked").attr("clocktype"),
-    //        }
-    //        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
-    //    })
-    //}
+    //天气控件
+    function weatherSave(){
+        //天气类型
+        $(".rd_weather").next().click(function () {
+            var wstyle = {
+                Type: $("input:radio:checked").attr("weathertype"),
+            }
+            DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+        })
+    }
 
     //校验
     function inputCheck(){
@@ -598,28 +602,28 @@ define(function (require, exports, module) {
         var errorMsg = "";
         if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4){
             $(".mtrCtrl_time").each(function(){
-                if($(this).val() == "") errorMsg += "请输入资源时长！/n"; return;
+                if($(this).val() == "") errorMsg += "请输入资源时长！\n";
             })
             $(".mtrC_times").each(function(){
-                if($(this).val() == null) errorMsg += "请输入资源次数！/n"; return;
+                if($(this).val() == null) errorMsg += "请输入资源次数！\n";
             })
         }
         if (widgetData.type_id == 3){
             if ($("#mtrC_textType").val() == "Normal"){
-                if($("mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！/n"; return;
+                if($("#mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！\n";
             }else {
-                if($("text_color").val() == "") errorMsg += "请选择字体颜色！/n"; return;
-                if($("mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！/n"; return;
+                if($("#text_color").val() == "") errorMsg += "请选择字体颜色！\n";
+                if($("#mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！\n";
             }
         }
         if (widgetData.type_id == 5) {
-            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！/n"; return;
+            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！\n";
         }
-        if (errorMsg != ""){
+        if (errorMsg == ""){
+            return true;
+        }else {
             alert(errorMsg);
             return false;
-        }else {
-            return true;
         }
 
     }
