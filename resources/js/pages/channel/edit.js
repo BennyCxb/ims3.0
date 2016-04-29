@@ -403,7 +403,7 @@ define(function(require, exports, module) {
 		programs.forEach(function (el, idx, arr) {
 			var layout = db.collection('layout').select({id: el.layout_id})[0];
 			var backgroundStyle = layout.background_image_url ?
-			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
 			'background-color:' + layout.background_color;
 			var data = {
 				id: el.id,
@@ -423,7 +423,7 @@ define(function(require, exports, module) {
 		programs.forEach(function (el, idx, arr) {
 			var layout = db.collection('layout').select({id: el.layout_id})[0];
 			var backgroundStyle = layout.background_image_url ?
-			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
 			'background-color:' + layout.background_color;
 			var data = {
 				id: el.id,
@@ -1085,7 +1085,7 @@ define(function(require, exports, module) {
 				'#channel-editor-wrapper .channel-program-list-timed ul'
 			),
 			backgroundStyle = layout.background_image_url ?
-				'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+				'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
 				'background-color:' + layout.background_color,
 			data = {
 				id: program.id,
