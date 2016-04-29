@@ -499,15 +499,15 @@ define(function (require, exports, module) {
         })
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
-            playTypeSave ();
+            playTypeSave(this);
         })
     }
 
     //播放顺序保存
-    function playTypeSave () {
+    function playTypeSave (self) {
         if (!inputCheck()) return;
         var overall_schedule_params = {
-            Type: $(this).val()
+            Type: $(self).val()
         };
         DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
