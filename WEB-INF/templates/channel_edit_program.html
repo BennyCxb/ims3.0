@@ -13,19 +13,7 @@
 
 
     <div class="channel-program-timer">
-        <div class="input-group">
-            <span class="input-group-addon">开始</span>
-            <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start%>">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon">结束</span>
-            <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_end%>">
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon">时长</span>
-            <input type="number" class="form-control"  data-field="duration" value="<%=duration%>">
-        </div>
-
+        
 
         <label class="channel-editor-program-trigger">
             <label class="timer-field timer-field-date">
@@ -56,8 +44,36 @@
         </label>
         <label class="channel-editor-program-count">
             播放次数
-        <input type="number" data-field="count" value="<%=count%>">
+            <input type="number" data-field="count" value="<%=count%>">
         </label>
+
+
+        <div class="input-group">
+            <span class="input-group-addon" title="生效时间">
+                <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start%>">
+        </div>
+        <label style="float: left; position: relative; top: 10px; left: 8px;">-</label>
+        <div class="input-group">
+            <span class="input-group-addon" title="失效时间">
+                <i class="fa fa-calendar-times-o"></i>
+            </span>
+            <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_end%>">
+        </div>
+        <div class="input-group" style="width: 150px;">
+            <span class="input-group-addon"  title="播放时长">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
+            <input type="number" class="form-control"  data-field="duration" value="<%=duration%>">
+            <span class="input-group-addon"  title="播放时长">
+                秒
+            </span>
+        </div>
+
+
+
+
     </div>
 
 

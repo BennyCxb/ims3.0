@@ -105,6 +105,7 @@
     bottom: 15px;
     left: 15px;
     right: 500px;
+    overflow: hidden;
 }
 
 #channel-editor-wrapper .channel-program-layout-footer>ul {
@@ -258,7 +259,7 @@
 
 .channel-program-timer .input-group{
     float: left;
-    width: 271px;
+    width: calc(50% - 105px);
     height: 28px;
     margin-top: 7px;
     margin-left: 15px;

@@ -32,15 +32,15 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header box-header with-border"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon">开始</span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
-((__t=(lifetime_start))==null?'':__t)+
-'"> </div> <div class="input-group"> <span class="input-group-addon">结束</span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
-((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group"> <span class="input-group-addon">时长</span> <input type="number" class="form-control" data-field="duration" value="'+
-((__t=(duration))==null?'':__t)+
-'"> </div> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
+'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
 ((__t=(count))==null?'':__t)+
-'"> </label> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">布局:'+
+'"> </label> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
+((__t=(lifetime_start))==null?'':__t)+
+'"> </div> <label style="float: left; position: relative; top: 10px; left: 8px">-</label> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
+((__t=(lifetime_end))==null?'':__t)+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="duration" value="'+
+((__t=(duration))==null?'':__t)+
+'"> <span class="input-group-addon" title="播放时长"> 秒 </span> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">布局:'+
 ((__t=(layout.name))==null?'':__t)+
 '</span> <span class="channel-program-layout-header-info">宽:'+
 ((__t=(layout.width))==null?'':__t)+
