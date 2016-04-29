@@ -196,7 +196,7 @@ return __p;
 exports['layout_edit_property']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 24px">编辑</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
+__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 30px">编辑</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
 ((__t=(name))==null?'':__t)+
 '" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property" style="width: 101px"> <label class="col-sm-3 control-label property-name-inline">宽</label> <input class="form-control" type="text" value="'+
 ((__t=(width))==null?'':__t)+

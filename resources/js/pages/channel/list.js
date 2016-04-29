@@ -21,6 +21,16 @@ define(function(require, exports, module) {
         loadPage(1);
 		
         registerEventListeners();
+
+        //获取已选频道ids
+        function getChannelIds(){
+            var ids = new Array();
+            $("#channel-table input[type='checkBox']:checked").each(function(i,e){
+                ids.push(Number($(e).parent().parent().parent().attr('chnID')));
+            })
+            return ids;
+        }
+
 		//筛选审核状态
 				if(util.getLocalParameter('config_checkSwitch') == '1'){
 					$('#chn_toBeCheckedDiv button').each(function(i,e){
@@ -34,14 +44,7 @@ define(function(require, exports, module) {
 						loadPage(1);
 					  })
 					})
-					//获取已选频道ids
-					function getChannelIds(){
-						var ids = new Array();
-						$("#channel-table input[type='checkBox']:checked").each(function(i,e){
-							ids.push(Number($(e).parent().parent().parent().attr('chnID')));
-						})
-						return ids;
-					}
+
 					//提交审核
 					$('#chn_submit').click(function(){
 						
