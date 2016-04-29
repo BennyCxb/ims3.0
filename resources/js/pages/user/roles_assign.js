@@ -3,7 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
 	var ROLES = require("pages/user/roles_list.js");
 	var templates = require('common/templates');
-    var nDisplayItems = 5;
+    var nDisplayItems = 7;
 	//缓存数组
 	var checkedArr = [];
 	var uncheckedArr = [];
@@ -102,7 +102,7 @@ define(function (require, exports, module) {
             action: 'GetUsersAll',
             Pager: {
 				"total":-1,
-				"per_page":5,
+				"per_page":7,
 				"page":pageNum,
 				"orderby":"",
 				"sortby":"desc",
