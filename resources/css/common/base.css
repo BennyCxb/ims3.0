@@ -198,7 +198,7 @@ a {
 #upload_box, #mtrEdit_box, #mtrUplLive_box, #mtrChoise_box {
 	width: 600px;
     margin: auto;
-    max-height: 80%;
+    
 }
 
 #box_fileList{

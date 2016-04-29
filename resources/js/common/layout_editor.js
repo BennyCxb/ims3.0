@@ -544,7 +544,7 @@ define(function (require, exports, module) {
         this.mContent.style.position        = 'absolute';
         this.mContent.style.top             = this.mTopMargin + 'px';
         this.mContent.style.left            = this.mLeftMargin + 'px';
-        this.mContent.style.backgroundSize  = 'contain';
+        this.mContent.style.backgroundSize  = '100% 100%';
         this.mElement.appendChild(this.mContent);
         this.mElement.style.boxShadow = '0 5px 10px 0 rgba(0, 0, 0, 0.26)';
 
