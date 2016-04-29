@@ -75,7 +75,7 @@ define(function (require, exports, module) {
         });
         this.tDays = [];
         $('#channel-editor-timer .day-selector input').each(function (idx, el) {
-            el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.getAttribute('data-id')));
+            el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tHours = $('#channel-editor-timer .hour-selector select').val().map(function (el) {
             return parseInt(el);

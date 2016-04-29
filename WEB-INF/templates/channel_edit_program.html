@@ -13,39 +13,54 @@
 
 
     <div class="channel-program-timer">
+
+        <div class="channel-editor-program-trigger input-group input-group-sm">
+            <div class="input-group-btn"  style="float: left;">
+              <button type="button" class="btn btn-danger btn-channel-setup-timer">
+                <i class="fa fa-fw fa-bomb"></i>
+                <b>定时触发</b>
+              </button>
+            </div>
+
+
+            <!-- /btn-group -->
+            <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline;">
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                    月
+                </label>
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                    日
+                </label>
+                <label class="timer-field timer-field-day">
+                    <span></span>
+                    日
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    点
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    分
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    秒
+                </label>
+            </label>
+
+
+        </div>
         
 
-        <label class="channel-editor-program-trigger">
-            <label class="timer-field timer-field-date">
-                <span></span>
-                月
-            </label>
-            <label class="timer-field timer-field-date">
-                <span></span>
-                日
-            </label>
-            <label class="timer-field timer-field-day">
-                <span></span>
-                日
-            </label>
-            <label class="timer-field">
-                <span></span>
-                点
-            </label>
-            <label class="timer-field">
-                <span></span>
-                分
-            </label>
-            <label class="timer-field">
-                <span></span>
-                秒
-            </label>
-            <button class="btn-channel-setup-timer">定时设置</button>
-        </label>
-        <label class="channel-editor-program-count">
+       
+
+        <!-- <label class="channel-editor-program-count">
             播放次数
             <input type="number" data-field="count" value="<%=count%>">
-        </label>
+        </label> -->
 
 
         <div class="input-group">

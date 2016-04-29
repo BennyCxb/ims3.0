@@ -135,7 +135,7 @@
 #channel-editor-wrapper .timed-program .channel-editor-program-trigger {
     display: inherit;
     float: left;
-    width: calc(100% - 175px);
+    width: calc(100% - 190px);
 }
 
 #channel-editor-wrapper .percent-channel .channel-editor-program-count {
@@ -254,7 +254,7 @@
     display: none;
 }
 
-.channel-program-timer.timed-program .input-group:nth-of-type(1),.channel-program-timer.timed-program .input-group:nth-of-type(2){
+.channel-program-timer.timed-program .input-group:nth-of-type(2),.channel-program-timer.timed-program .input-group:nth-of-type(3){
     display: none;
 }
 
@@ -275,10 +275,10 @@
 }
 
 .channel-program-timer .input-group .form-control{
-    line-height: 28px;
-    height: 28px;
+    line-height: 30px;
+    height: 30px;
     padding-right: 0px;
-    padding-top: 3px;
+    padding-top: 2px;
     padding-bottom: 3px;
 
 }
@@ -290,5 +290,5 @@
 }
 
 #mtrC_flip{
-    width: 150px;
+    width: 185px;
 }
