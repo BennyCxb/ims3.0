@@ -67,7 +67,7 @@ define(function(require, exports, module) {
           img.src = data.SnapshotPicURL;
           img.onload = function(){
             $('#snap_info').css('display','none');
-            $('#snap_box').css('background','url('+img.src+')');
+            $('#snap_box').css('background','url('+img.src+') no-repeat').css('background-size','contain');
           }
         }
       }
