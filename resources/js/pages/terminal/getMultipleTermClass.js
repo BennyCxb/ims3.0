@@ -17,8 +17,8 @@ define(function(require, exports, module) {
     // 关闭
     $('#mul-term-class-close').click(function(){
       if(exports.close !== undefined && exports.close !== ''){
-        exports.close = '';
         exports.close();
+        exports.close = '';
       }else{
         UTIL.cover.close();
       }
