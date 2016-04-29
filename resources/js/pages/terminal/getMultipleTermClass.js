@@ -39,6 +39,7 @@ define(function(require, exports, module) {
 
     if(exports.roleID){
       dataParameter.roleID = Number(exports.roleID);
+      exports.roleID = '';
     }
 
     UTIL.ajax(
