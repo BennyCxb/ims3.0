@@ -42,7 +42,7 @@ define(function (require, exports, module) {
         $("#termlogLisTitle").html("");
         $("#termlogTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#termlogLisTitle").html("日志列表");
+        $("#termlogLisTitle").html("终端日志");
         
         pageNumC = pageNum;
         var data = JSON.stringify({
