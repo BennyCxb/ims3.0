@@ -86,7 +86,7 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('已审核');
+										alert('审核');
 										loadPage(1);
 									}else{
 										alert('审核失败');
@@ -162,7 +162,6 @@ define(function(require, exports, module) {
         });
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
-        $('#channel-list-controls .btn-copy').click(copyChannel);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
         $('#channel-list-nav').keyup(function (ev) {
             if (ev.which === 13) {
@@ -277,7 +276,6 @@ define(function(require, exports, module) {
             .toggleClass('fa-check-square-o', !hasUncheckedItems);
         $('#channel-list-controls .btn-publish').prop('disabled', selectedCount !== 1);
         $('#channel-list-controls .btn-publish-later').prop('disabled', selectedCount !== 1);
-        $('#channel-list-controls .btn-copy').prop('disabled', selectedCount !== 1);
         $('#channel-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
 		
     }
@@ -383,7 +381,7 @@ define(function(require, exports, module) {
                            check_td = '<th class="chn_check">'+status+'</th>';
                         }
 
-                        var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
+                        var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' +chnData[x].Name+ '"><b><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></b></td>' +
                             check_td +
@@ -398,7 +396,7 @@ define(function(require, exports, module) {
 								// 未审核状态
 								var check_td = '';
 								var check_status = '';
-								var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '">' +
+								var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                            '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
                             check_td +
@@ -438,53 +436,118 @@ define(function(require, exports, module) {
         })
 		//校验批量操作的审核功能
 		function checkCheckBtns(){
-			if(util.getLocalParameter('config_checkSwitch') == '0'){}else{
-			if($("#channel-table input[type='checkBox']:checked").length === 0){
-				$('#chn_submit').attr('disabled',true);
-				$('#chn_pass').attr('disabled',true);
-				$('#chn_unpass').attr('disabled',true);
-				$('#channel-list-controls .btn-publish').prop('disabled', true);
-				$('#channel-list-controls .btn-publish-later').prop('disabled', true);
-				$('#channel-list-controls .btn-copy').prop('disabled', true);
-				$('#channel-list-controls .btn-delete').prop('disabled', true);
-			}else{
-				var checked = $("#channel-table input[type='checkBox']:checked");
-				for(var n=0;n<checked.length;n++){		
-					//已通过和未通过
-					if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
+			if(util.getLocalParameter('config_checkSwitch') == '0'){
+				}else{
+				  if(util.getLocalParameter('config_canCheck') == '0'){
+					  if($("#channel-table input[type='checkBox']:checked").length === 0){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
-						$('#channel-list-controls .btn-publish-later').attr('disabled',false);
-						$('#channel-list-controls .btn-publish').attr('disabled',false);
-					}
-					else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
+						$('#channel-list-controls .btn-publish').prop('disabled', true);
+						$('#channel-list-controls .btn-publish-later').prop('disabled', true);
+						$('#channel-list-controls .btn-delete').prop('disabled', true);
+					}else{
+						var checked = $("#channel-table input[type='checkBox']:checked");
+						for(var n=0;n<checked.length;n++){		
+							//已通过
+							if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
+								
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
+								$('#channel-list-controls .btn-publish').attr('disabled',false);
+								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								$('#channel-list-controls .btn-delete').prop('disabled', false);
+								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
+							}
+							//未通过
+							else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
+								
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								$('#channel-list-controls .btn-delete').prop('disabled', false);
+								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
+							}
+							//待审核
+							else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
+								
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								$('#channel-list-controls .btn-delete').prop('disabled', false);
+								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
+							}
+							//待提交
+							else {
+								
+								$('#chn_submit').attr('disabled',false);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								$('#channel-list-controls .btn-delete').prop('disabled', false);
+								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
+							}
+						}
+			
+						}
+					  }
+				  else{
+					if($("#channel-table input[type='checkBox']:checked").length === 0){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
-						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-						$('#channel-list-controls .btn-publish').attr('disabled',true);
-					}
-					//待审核
-					else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
-						$('#chn_submit').attr('disabled',true);
-						$('#chn_pass').attr('disabled',false);
-						$('#chn_unpass').attr('disabled',false);
-						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-						$('#channel-list-controls .btn-publish').attr('disabled',true);
-					}
-					//待提交
-					else {
-						$('#chn_submit').attr('disabled',false);
-						$('#chn_pass').attr('disabled',true);
-						$('#chn_unpass').attr('disabled',true);
-						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-						$('#channel-list-controls .btn-publish').attr('disabled',true);
+						$('#channel-list-controls .btn-publish').prop('disabled', true);
+						$('#channel-list-controls .btn-publish-later').prop('disabled', true);
+						$('#channel-list-controls .btn-delete').prop('disabled', true);
+					}else{
+						var checked = $("#channel-table input[type='checkBox']:checked");
+						for(var n=0;n<checked.length;n++){		
+							//已通过和未通过
+							if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
+								$('#channel-list-controls .btn-publish').attr('disabled',false);
+							}
+							else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+							}
+							//待审核
+							else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
+								$('#chn_submit').attr('disabled',true);
+								$('#chn_pass').attr('disabled',false);
+								$('#chn_unpass').attr('disabled',false);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+							}
+							//待提交
+							else {
+								$('#chn_submit').attr('disabled',false);
+								$('#chn_pass').attr('disabled',true);
+								$('#chn_unpass').attr('disabled',true);
+								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+								$('#channel-list-controls .btn-publish').attr('disabled',true);
+							}
+						}
+			
+						}
 					}
 				}
-	
-				}
-			}
 	
 		}
 		
