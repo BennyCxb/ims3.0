@@ -19,7 +19,7 @@ define(function (require, exports, module) {
     
     function load(program, _container) {
         container = _container;
-        if (program === null) {
+        if (!program) {
             $('#channel-editor-wrapper .channel-program-editor').html('没有节目!');
             return;
         }
