@@ -233,7 +233,9 @@ define(function (require, exports, module) {
             scheduleStr = scheduleStr.trigger ? scheduleStr.trigger : '0 0 0 * * * *';
             var instance = new timer.Timer(timer.Timer.decode(scheduleStr));
             instance.open(function (data) {
-                db.collection('program').update({schedule_params: JSON.stringify({trigger: data})}, {id: programId});
+                var p = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
+                p.trigger = data;
+                db.collection('program').update({schedule_params: JSON.stringify(p)}, {id: programId});
                 updateTimer(data);
             });
         });

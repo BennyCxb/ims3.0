@@ -238,7 +238,8 @@ define(function(require, exports, module) {
                     alert("频道预发布失败！")
                 }
             });
-            
+            util.cover.close();
+            parent.location.reload();
         }
     }
     
