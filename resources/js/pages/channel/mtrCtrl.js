@@ -384,6 +384,12 @@ define(function (require, exports, module) {
                     if($("#mtrCtrl_playType").val() == "Sequence"){
                         maxsequence ++;
                     }
+                    var dbtype_id = typeof mtrData[x].Type_ID === 'number' ? mtrData[x].Type_ID : {
+                        '文本': 4,
+                        '音频': 3,
+                        '图片': 2,
+                        '视频': 1
+                    }[mtrData[x].Type_Name];
                     var intDate = {
                         is_time_segment_limit: 0,
                         lifetime_end: "2030-01-01 00:00:00",
@@ -396,7 +402,7 @@ define(function (require, exports, module) {
                         sequence: maxsequence,
                         time_segment_duration: 99999,
                         time_segment_start: "",
-                        type_id: mtrData[x].Type_ID,
+                        type_id: dbtype_id,
                         type_name: dbtype_name,
                         url: mtrData[x].URL,
                         widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
@@ -404,7 +410,7 @@ define(function (require, exports, module) {
                     DB.collection("material").insert(intDate);                      //存入缓存
                     var data_id = DB.collection("material").lastInsertId();         //查询刚添加的ID
                     //拼接
-                    if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0)|| mtrData[x].Type_Name == "Audio") {
+                    if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0)|| mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
@@ -413,7 +419,7 @@ define(function (require, exports, module) {
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
                         $("#mtrCtrl_Table tbody").append(mtrtr);
-                    } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本") {
+                    } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本" || mtrData[x].Type_Name === 'WebText') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
