@@ -130,17 +130,17 @@ define(function (require, exports, module) {
                     break;
                 case 4:		//资源添加
                     break;
-                case 5:		//布局管理
+                case 5:		//模版管理
                 	if (jdtData[a].ReadWriteAuth == 1){
 	                	if ($("#treeview_channel ul").length == 0){
 		                	$(".sidebar-menu").append('<li id="treeview_channel" class="treeview">'+
-		              	          '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;布局</span><i class="fa fa-angle-left pull-right"></i></a>'+
+		              	          '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;模版</span><i class="fa fa-angle-left pull-right"></i></a>'+
 		              	          '<ul class="treeview-menu">'+
-		              	            '<li><a href="#layout/list"><i class="fa fa-object-group"></i> 布局列表</a></li>'+
+		              	            '<li><a href="#layout/list"><i class="fa fa-object-group"></i> 模版列表</a></li>'+
 		              	          '</ul>'+
 		              	        '</li>');
 	                	}else {
-	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-object-group"></i>节目模板</a></li>');
+	                		$("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-object-group"></i>节目模版</a></li>');
 	                	}
                 	}
                     break;

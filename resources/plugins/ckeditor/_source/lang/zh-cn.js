@@ -554,12 +554,12 @@ CKEDITOR.lang['zh-cn'] =
 
 	templates :
 	{
-		button			: '模板',
-		title			: '内容模板',
-		options : '模板选项',
+		button			: '模版',
+		title			: '内容模版',
+		options : '模版选项',
 		insertOption	: '替换当前内容',
-		selectPromptMsg	: '请选择编辑器内容模板:',
-		emptyListMsg	: '(没有模板)'
+		selectPromptMsg	: '请选择编辑器内容模版:',
+		emptyListMsg	: '(没有模版)'
 	},
 
 	showBlocks : '显示区块',

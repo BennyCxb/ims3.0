@@ -19,7 +19,7 @@ define(function (require, exports, module) {
 
     function openDialog() {
         if (instance) {
-            console.error('布局列表对话框已经存在!');
+            console.error('模版列表对话框已经存在!');
             return;
         }
         instance = {
