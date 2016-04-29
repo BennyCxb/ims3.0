@@ -39,7 +39,7 @@ define(function(require, exports, module) {
         } else {
             var defaultLayout = {
                 ID: -1,
-                Name: '新建布局',
+                Name: '新建模版',
                 Name_eng: 'new layout',
                 Width: '1920',
                 Height: '1080',
@@ -197,7 +197,7 @@ define(function(require, exports, module) {
     }
 
     /**
-     * 保存布局数据
+     * 保存模版数据
      */
     function onSaveLayout() {
 
@@ -206,13 +206,13 @@ define(function(require, exports, module) {
 
         httpCheckLayoutExists(json, function (err) {
             if (err) { console.error(err); return; }
-            console.log('布局添加成功!');
+            console.log('模版添加成功!');
             httpUpdateLayout(json, function (err) {
                 if (err) { console.error(err); return; }
-                console.log('布局更新成功');
+                console.log('模版更新成功');
                 httpDeleteWidgets(json, function (err) {
                     if (err) { console.error(err); return; }
-                    console.log('布局删除成功!');
+                    console.log('模版删除成功!');
                     httpAddWidgets(json, function (err) {
                         if (err) { console.error(err); return; }
                         console.log('控件添加成功!');

@@ -209,6 +209,7 @@ define(function(require, exports, module) {
 						}
 					});
 				util.cover.close();
+				parent.location.reload();
 		}
     }
     
@@ -231,12 +232,13 @@ define(function(require, exports, module) {
             util.ajax('post',url,post_data,function(msg){
                 if(msg.rescode==200){
                     alert("频道预发布成功！")
+					
                 }
                 else{
                     alert("频道预发布失败！")
                 }
             });
-            util.cover.close();
+            
         }
     }
     
@@ -517,6 +519,8 @@ define(function(require, exports, module) {
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
             $('#chn_toBeCheckedDiv').css('display','none');
+			$('#channel-list-controls .btn-publish-later').attr('disabled',false);
+			$('#channel-list-controls .btn-publish').attr('disabled',false);
         }
         else if(util.getLocalParameter('config_canCheck') == 0){
             $('#chn_pass').css('display','none');

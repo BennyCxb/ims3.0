@@ -44,21 +44,24 @@ define(function (require, exports, module) {
 					Data: psw
 				});
 				var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+uName;
-				UTIL.ajax('post', url, data, function(msg){
-					if(msg.rescode == 200){
-						UTIL.cover.close();   
-						alert("修改密码成功");
-					}else{
-						alert("修改密码失败")
-						}	
-					USERS.loadUsersPage(1);			
-				});
+				UTIL.ajax(
+					'post', url, data, 
+					function(msg){
+						if(msg.rescode == 200){  
+							alert("修改密码成功");
+							UTIL.cover.close(); 
+							USERS.loadUsersPage(1);	
+						}else{
+							alert("修改密码失败")
+						}			
+					}
+				);
 				}
 			});
 			}else{
 			var uName = USERS.userName1;
 			$("#user_name").val(uName);
-			var uID = Number(USERS.userID1);
+			var uID = USERS.userID1;
 			$("#password").val("");
 			$("#password1").val("");
 			//提交
@@ -83,25 +86,25 @@ define(function (require, exports, module) {
 								$("#password")[0].focus();
 								return false
 								}else{
-				var psw = {
-					PASSWORD: uPassword			
-				}
-				var data = JSON.stringify({
-					project_name:CONFIG.projectName,
-					action:'UpdateUserPass',
-					Data: psw
-				});
-				var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+uID;
-				UTIL.ajax('post', url, data, function(msg){
-					if(msg.rescode == 200){
-						UTIL.cover.close();   
-						alert("重置密码成功");
-					}else{
-						alert("重置密码失败")
-						}	
-					USERS.loadUsersPage(1);			
-				});
-				}
+									var psw = {
+										PASSWORD: uPassword			
+									}
+									var data = JSON.stringify({
+										project_name:CONFIG.projectName,
+										action:'UpdateUserPass',
+										Data: psw
+									});
+									var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+uID;
+									UTIL.ajax('post', url, data, function(msg){
+										if(msg.rescode == 200){
+											UTIL.cover.close();   
+											alert("重置密码成功");
+										}else{
+											alert("重置密码失败")
+											}	
+										USERS.loadUsersPage(1);			
+									});
+								}
 			});
 			}
 		

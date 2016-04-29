@@ -77,7 +77,6 @@ define(function (require, exports, module) {
 									
 									'<th class="Datetime">时间</th>'+
 									//'<th class="Detail">详情</th>'+
-									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
                 var roltr = '<tr>' +

@@ -78,7 +78,7 @@
 #channel-editor-wrapper .channel-program-layout-body {
     position: absolute;
     top: 160px;
-    bottom: 80px;
+    bottom: 102px;
     left: 15px;
     right: 480px;
     border: 1px solid #ddd;
@@ -101,16 +101,19 @@
 
 #channel-editor-wrapper .channel-program-layout-footer {
     position: absolute;
-    height: 50px;
+    padding-left: 15px;
+    height: 72px;
     bottom: 15px;
     left: 15px;
-    right: 500px;
-    overflow: auto;
+    right: 479px;
+    overflow: hidden;
+    overflow-y:auto; 
+
 }
 
 #channel-editor-wrapper .channel-program-layout-footer>ul {
     display: inline-block;
-    white-space: nowrap;
+    
     padding: 0;
 }
 
@@ -125,6 +128,7 @@
     cursor: pointer;
     border: solid 1px #ddd;
     border-radius: 3px;
+    margin-bottom: 8px;
 }
 
 #channel-editor-wrapper .channel-program-layout-footer li:hover{
