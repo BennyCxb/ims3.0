@@ -134,6 +134,8 @@
 
 #channel-editor-wrapper .timed-program .channel-editor-program-trigger {
     display: inherit;
+    float: left;
+    width: calc(100% - 105px);
 }
 
 #channel-editor-wrapper .percent-channel .channel-editor-program-count {
@@ -248,7 +250,7 @@
 
 
 
-.channel-program-timer.timed-program label:nth-of-type(1),.channel-program-timer.timed-program label:nth-of-type(2){
+.channel-program-timer.timed-program p{
     display: none;
 }
 
@@ -259,7 +261,7 @@
 
 .channel-program-timer .input-group{
     float: left;
-    width: calc(50% - 105px);
+    width: calc(50% - 176px);
     height: 28px;
     margin-top: 7px;
     margin-left: 15px;
