@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 			});
     };
     //上传弹层页面
-    exports.upl = function () {
+    exports.upl = function () {alert(2)
         $("#page_upload").load("resources/pages/materials/materials_upload.html");
         $("#page_upload").css("display", "flex");
     }
