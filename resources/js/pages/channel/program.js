@@ -315,7 +315,7 @@ define(function (require, exports, module) {
             .toggleClass('date-timer', !dayTimer);
         fields[0].textContent = segments[4] === '*' ? '每' : segments[4];
         fields[1].textContent = segments[3] === '*' ? '每' : segments[3];
-        fields[2].textContent = segments[5] === '*' ? '每' : segments[5];
+        fields[2].textContent = segments[6] === '*' ? '每' : segments[6];
         fields[3].textContent = segments[2] === '*' ? '每' : segments[2];
         fields[4].textContent = segments[1] === '*' ? '每' : segments[1];
         fields[5].textContent = segments[0] === '*' ? '每' : segments[0];
