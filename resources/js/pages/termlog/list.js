@@ -98,7 +98,6 @@ define(function (require, exports, module) {
 									'<th class="termIP">IP</th>'+
 									'<th class="date">日期</th>'+
 									'<th class="event">日志内容</th>'+
-									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
                 var eventTypes = rolData[x].eventType;
