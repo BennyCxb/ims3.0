@@ -43,6 +43,7 @@ define(function (require, exports, module) {
 	        });
         }
 
+        $("#mtr_addStatus").hide();
         var type = $("#mtr_addMtr").attr("typeid");
         loadPage(1, Number(type));
 
@@ -212,6 +213,7 @@ define(function (require, exports, module) {
         }
         //清空状态列
         $(".mtr_choise_status").empty();
+
 
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({

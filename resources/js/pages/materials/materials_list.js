@@ -347,6 +347,9 @@ define(function (require, exports, module) {
             }
         }
 
+        if (material_type == "文本" || material_type == "Live" || material_type == "Image") {		//文本和直播无预览效果
+            $(".mtr_time").empty();
+        }
         //复选框样式
         $('.mailbox-messages input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
