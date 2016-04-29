@@ -46,11 +46,15 @@ define(function (require, exports, module) {
         var type = $("#mtr_addMtr").attr("typeid");
         loadPage(1, Number(type));
 
+        if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            $("#mtr_allCheck").hide();
+            $("#mtr_addStatus").hide();
+        }
+
         //保存
         $("#amtr_add").click(function () {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
-                $("#mtr_allCheck").hide();
-                $("#mtr_addStatus").hide();
+
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
             	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
             	LAYOUTEDIT.updateBackground(mtrId, url);
@@ -211,6 +215,8 @@ define(function (require, exports, module) {
                 }
             }
         }
+        //清空状态列
+        $(".mtr_choise_status").empty();
 
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({
@@ -232,7 +238,7 @@ define(function (require, exports, module) {
             mtrCb();
         })
         $(".icheckbox_flat-blue ins").click(function () {
-            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){                      //添加背景图模块
             	$("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
                 var obj = $(this).prev();
                 if ($(this).prev().prop("checked") == true) {

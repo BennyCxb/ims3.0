@@ -227,8 +227,8 @@ define(function(require, exports, module) {
     
     function deleteChannel() {
         var data = JSON.stringify({
-            Action: 'Delete',
-            Project: projectName
+            action: 'Delete',
+            project_name: projectName
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
             alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
@@ -256,14 +256,14 @@ define(function(require, exports, module) {
 
     function getChannelId(el) {
         var idAttr;
-        while (el && !(idAttr = el.getAttribute('data-channel-id'))) {
+        while (el && !(idAttr = el.getAttribute('chnid'))) {
             el = el.parentNode;
         }
         return Number(idAttr);
     }
     
     function getCurrentChannelId() {
-        return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('data-channel-id'));
+        return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('chnid'));
     }
 
     // 加载页面数据
