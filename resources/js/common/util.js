@@ -82,7 +82,7 @@ define(function(require, exports, module) {
 		  },
 		  error: function(XMLHttpRequest, textStatus, errorThrown){
 		  	// XMLHttpRequest.status
-		    alert('连接服务器出错 ' + textStatus + errorThrown);
+		    // alert('连接服务器出错 ' + textStatus + errorThrown);
 		    ajax.abort();
 		  }
 		})
