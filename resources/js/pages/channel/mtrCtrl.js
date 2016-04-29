@@ -169,6 +169,9 @@ define(function (require, exports, module) {
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {
             clockTextColor();
         });
+        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
+            weatherSave();
+        });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
 
@@ -215,14 +218,13 @@ define(function (require, exports, module) {
             case 'ClockBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
                 clockAttrSave();
-                $("#clockText_color").val(wStyle.TextColor);
-                $("#btn_clock_color i").css("background-color", wStyle.TextColor);
-
                 if (wStyle.Type == undefined){
                     $("#clockText_color").val("#000000");
                     $("#btn_clock_color i").css("background-color", "#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
+                    $("#clockText_color").val(wStyle.TextColor);
+                    $("#btn_clock_color i").css("background-color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
                         case 'Time':
@@ -249,18 +251,24 @@ define(function (require, exports, module) {
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
-                weatherSave();
+                $("#box_weatherEffect").show();
                 if (wStyle.Type == undefined){
-                    $("#mtrC_clock1").next().trigger("click");
+                    $("#weatherText_color").val("#000000");
+                    $("#btn_weather_color i").css("background-color", "#000000");
+                    $("#weatherFlip_time").val(10);
+                    $("#mtrC_weatherNormal").next().trigger("click");
+                } else {
+                    $("#weatherText_color").val(wStyle.TextColor);
+                    $("#btn_weather_color i").css("background-color", wStyle.SwitchPeriod);
+                    $("#weatherFlip_time").val(10);
+                    var wctype = wStyle.Type;
+                    switch (wctype) {
+                        case 'Time':
+                            $("#mtrC_weatherNormal").next().trigger("click");
+                            break;
+                    }
                 }
-                //else {
-                //    var wctype = wStyle.Type;
-                //    switch (wctype) {
-                //        case 'Time':
-                //            $("#mtrC_clock1").next().trigger("click");
-                //            break;
-                //    }
-                //}
+                weatherSave();
                 break;
         }
 
@@ -274,8 +282,11 @@ define(function (require, exports, module) {
         if (widgetType != "ClockBox") {
             exports.getSelectedID(mtrData, true);
         }
+
+        //绑定触发事件
         save();
         clockAttrSave();
+        weatherChange();
     }
 
     //将数据添加到列表
@@ -586,14 +597,27 @@ define(function (require, exports, module) {
     }
 
     //天气控件
-    function weatherSave(){
+    function weatherChange(){
+        //字体颜色
+        $("#weatherText_color").bind("input propertychange", function () {
+            weatherSave();
+        })
+        $("#weatherFlip_time").change(function () {
+            weatherSave();
+        })
         //天气类型
         $(".rd_weather").next().click(function () {
-            var wstyle = {
-                Type: $("input:radio:checked").attr("weathertype"),
-            }
-            DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+            weatherSave();
         })
+    }
+    //天气保存
+    function weatherSave(){
+        var wstyle = {
+            Type: $("input:radio:checked").attr("weathertype"),
+            SwitchPeriod: Number($("#weatherFlip_time").val()),
+            TextColor: $("#weatherText_color").val()
+        }
+        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
     //校验
