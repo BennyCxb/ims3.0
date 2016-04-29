@@ -1,8 +1,8 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var	MTRCTRL = require("pages/channel/mtrCtrl");
-    var	LAYOUTEDIT = require("pages/layout/edit");
+    var MTRCTRL = require("pages/channel/mtrCtrl");
+    var LAYOUTEDIT = require("pages/layout/edit");
     var nDisplayItems = 10,
         keyword = "";
 
@@ -26,41 +26,41 @@ define(function (require, exports, module) {
         })
 
         //全选和全不选
-        if ($("#mtr_addMtr").attr("is_choisebg") != "1"){
-	        $("#mtr_allCheck").click(function () {
-	            var clicks = $(this).data('clicks');
-	            if (clicks) {
-	                //Uncheck all checkboxes
-	                $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
-	                $("#mtr_allCheck i").attr("class", "fa fa-square-o");
-	            } else {
-	                //Check all checkboxes
-	                $("#mtr_choiseTable input[type='checkbox']").iCheck("check");
-	                $("#mtr_allCheck i").attr("class", "fa fa-check-square-o");
-	            }
-	            $(this).data("clicks", !clicks);
-	            mtrCb();
-	        });
+        if ($("#mtr_addMtr").attr("is_choisebg") != "1") {
+            $("#mtr_allCheck").click(function () {
+                var clicks = $(this).data('clicks');
+                if (clicks) {
+                    //Uncheck all checkboxes
+                    $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
+                    $("#mtr_allCheck i").attr("class", "fa fa-square-o");
+                } else {
+                    //Check all checkboxes
+                    $("#mtr_choiseTable input[type='checkbox']").iCheck("check");
+                    $("#mtr_allCheck i").attr("class", "fa fa-check-square-o");
+                }
+                $(this).data("clicks", !clicks);
+                mtrCb();
+            });
         }
 
         $("#mtr_addStatus").hide();
         var type = $("#mtr_addMtr").attr("typeid");
         loadPage(1, Number(type));
 
-        if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+        if ($("#mtr_addMtr").attr("is_choisebg") == "1") {
             $("#mtr_allCheck").hide();
             $("#mtr_addStatus").hide();
         }
 
         //保存
         $("#amtr_add").click(function () {
-            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1") { //添加背景图
 
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
-            	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
-            	LAYOUTEDIT.updateBackground(mtrId, url);
-            }else {
-            	var datalist = [];
+                var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
+                LAYOUTEDIT.updateBackground(mtrId, url);
+            } else {
+                var datalist = [];
                 for (var x = 0; x < $(".amtr_cb").length; x++) {
                     if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
                         var mtrData = JSON.parse(unescape($(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("data")));
@@ -124,9 +124,9 @@ define(function (require, exports, module) {
             case 2:
         }
         var checkSwitch = UTIL.getLocalParameter('config_checkSwitch');
-        if (checkSwitch == 1){
+        if (checkSwitch == 1) {
             var status = "2";
-        }else {
+        } else {
             var status = "";
         }
 
@@ -188,7 +188,7 @@ define(function (require, exports, module) {
                 var material_type = mtrData[0].Type_Name;
                 if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
                     for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
+                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
@@ -199,7 +199,7 @@ define(function (require, exports, module) {
                     }
                 } else {
                     for (var x = 0; x < mtrData.length; x++) {
-                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
+                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
                             '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
@@ -207,7 +207,7 @@ define(function (require, exports, module) {
                             '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
                             '</tr>';
                         $("#mtr_choiseTable tbody").append(mtrtr);
-                        }
+                    }
                 }
             }
         }
@@ -235,8 +235,8 @@ define(function (require, exports, module) {
             mtrCb();
         })
         $(".icheckbox_flat-blue ins").click(function () {
-            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){                      //添加背景图模块
-            	$("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1") {                      //添加背景图模块
+                $("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
                 var obj = $(this).prev();
                 if ($(this).prev().prop("checked") == true) {
                     $(this).prev().prop("checked", false);
