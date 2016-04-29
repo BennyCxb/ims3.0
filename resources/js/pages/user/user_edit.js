@@ -79,6 +79,7 @@ define(function (require, exports, module) {
 			$("#password1").val("");
 			$("#email1").val("");
 			$("#description1").val("");
+			$(".modal-title").html("<i class='fa fa-user'></i>新建用户");
 			//确定
 			$("#user_create1").click(function () {
 				var uName = $("#user_name1").val();
