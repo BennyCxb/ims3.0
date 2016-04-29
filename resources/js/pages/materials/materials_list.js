@@ -384,7 +384,7 @@ define(function (require, exports, module) {
         $('#mtr_upload').click(function () {
             $('#file').trigger("click");
         })
-        $("#file").change(function () {
+        $("#file").unbind( "change" ).change(function () {
             if ($("#page_upload").children().length == 0) {
                 INDEX.upl();
             } else {
