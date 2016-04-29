@@ -58,7 +58,7 @@ define(function (require, exports, module) {
 			}else{
 			var uName = USERS.userName1;
 			$("#user_name").val(uName);
-			var uID = USERS.userID1;
+			var uID = Number(USERS.userID1);
 			$("#password").val("");
 			$("#password1").val("");
 			//提交

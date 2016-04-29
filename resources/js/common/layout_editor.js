@@ -38,11 +38,6 @@ define(function (require, exports, module) {
      * @type {number} 初始画布时，layout占屏幕的最大比例
      */
     var MIN_CANVAS_SCALE = 0.9;
-    /**
-     *
-     * @type {number} 默认文本控件的字体大小
-     */
-    var DEFAULT_FONT_SIZE = 40;
 
     /**
      * 生成一个颜色迭代器，能够确保色相尽量分散
@@ -1333,6 +1328,7 @@ define(function (require, exports, module) {
     HTMLWidget.prototype.constructor = HTMLWidget;
     HTMLWidget.prototype.showPreview = function (data) {
 
+         this.mElement.dataset.background = this.mElement.style.backgroundColor;
          while (this.mElement.firstChild) {
              this.mElement.removeChild(this.mElement.firstChild);
          }
@@ -1342,18 +1338,17 @@ define(function (require, exports, module) {
              return;
          }
 
-        var scale = this.mContext.mZoomFactor;
+        this.mElement.style.backgroundColor = 'transparent';
         if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.textContent = data.material;
             marquee.setAttribute('class', 'marquee layout-preview-text');
-            marquee.style.fontSize = (this.mElement.offsetHeight * 0.9) + 'px';
+            marquee.style.fontSize = (this.mElement.offsetHeight * 0.8) + 'px';
             marquee.style.color = data.style.color;
             this.mElement.appendChild(marquee);
             $(marquee).marquee({
                 direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
             });
-                //.css({'transform': 'scale(' + scale + ',' + scale + ')'});
         } else {
             var iFrame = document.createElement('iframe');
             iFrame.setAttribute('frameborder', '0');
@@ -1362,14 +1357,18 @@ define(function (require, exports, module) {
             iFrame.setAttribute('allowtransparency', 'true');
             iFrame.style.width =
                 iFrame.style.height = '100%';
-            iFrame.style.overflowY = 'hidden';
+            iFrame.style.overflowY = 'hidden';  
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
-            iFrame.src = 'data:text/html;charset=utf-8,' + escape(data.material);
+            iFrame.srcdoc = data.material;
             this.mElement.appendChild(iFrame);
 
         }
 
 
+    };
+    HTMLWidget.prototype.hidePreview = function () {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        Widget.prototype.hidePreview.call(this);
     };
 
     /**
@@ -1382,7 +1381,12 @@ define(function (require, exports, module) {
     ClockWidget.prototype = Object.create(Widget.prototype);
     ClockWidget.prototype.constructor = ClockWidget;
     ClockWidget.prototype.showPreview = function (resource) {
-        //
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        this.mElement.style.backgroundColor = 'transparent';
+    };
+    ClockWidget.prototype.hidePreview = function () {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        Widget.prototype.hidePreview.call(this);
     };
 
     /**
@@ -1395,7 +1399,12 @@ define(function (require, exports, module) {
     WeatherWidget.prototype = Object.create(Widget.prototype);
     WeatherWidget.prototype.constructor = WeatherWidget;
     WeatherWidget.prototype.showPreview = function (resource) {
-        //
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        this.mElement.style.backgroundColor = 'transparent';
+    };
+    WeatherWidget.prototype.hidePreview = function () {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        Widget.prototype.hidePreview.call(this);
     };
 
     exports.LayoutEditor = LayoutEditor;
