@@ -164,33 +164,39 @@ define(function (require, exports, module) {
     function widgetLoad(widgetData) {
         //color picker with addon
         $("#text_color").colorpicker().on('changeColor', function (ev) {
+            $("#text_color").css("background-color", $("#text_color").val());
             textAttrSave();
         });
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {
+            $("#clockText_color").css("background-color", $("#clockText_color").val());
             clockTextColor();
         });
         $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
+            $("#weatherText_color").css("background-color", $("#weatherText_color").val());
             weatherSave();
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
-
+        if (wOsp.Type == undefined){
+            var wOspType = "Sequence";
+        }else {
+            var wOspType = wOsp.Type;
+        }
+        $("#mtrCtrl_playType").val(wOspType);
         switch (widgetType) {
             case 'VideoBox':
                 if (wOsp.Type != undefined) {
-                    $("#mtrCtrl_playType").val(wOsp.Type);
+
                     playTypeSave ();
                 }
                 break;
             case 'ImageBox':
                 if (wOsp.Type != undefined) {
-                    $("#mtrCtrl_playType").val(wOsp.Type);
                     playTypeSave ();
                 }
                 break;
             case 'AudioBox':
                 if (wOsp.Type != undefined) {
-                    $("#mtrCtrl_playType").val(wOsp.Type);
                     playTypeSave ();
                 }
                 break;
@@ -205,6 +211,7 @@ define(function (require, exports, module) {
                     }
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
+                    $("#text_color").css("background-color", wStyle.TextColor);
                     $("#btn_text_color i").css("background-color", wStyle.TextColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
@@ -224,6 +231,7 @@ define(function (require, exports, module) {
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
                     $("#clockText_color").val(wStyle.TextColor);
+                    $("#clockText_color").css("background-color", wStyle.TextColor);
                     $("#btn_clock_color i").css("background-color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
@@ -259,8 +267,9 @@ define(function (require, exports, module) {
                     $("#mtrC_weatherNormal").next().trigger("click");
                 } else {
                     $("#weatherText_color").val(wStyle.TextColor);
-                    $("#btn_weather_color i").css("background-color", wStyle.SwitchPeriod);
-                    $("#weatherFlip_time").val(10);
+                    $("#weatherText_color").css("background-color", wStyle.TextColor);
+                    $("#btn_weather_color i").css("background-color", wStyle.TextColor);
+                    $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
                     switch (wctype) {
                         case 'Time':
