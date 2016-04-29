@@ -19,6 +19,15 @@ define(function(require, exports, module) {
 	exports.init = function() {
 		checkCheck();
         loadPage(1);
+
+        //获取已选频道ids
+        function getChannelIds(){
+            var ids = new Array();
+            $("#channel-table input[type='checkBox']:checked").each(function(i,e){
+                ids.push(Number($(e).parent().parent().parent().attr('chnID')));
+            })
+            return ids;
+        }
 		
         registerEventListeners();
 		//筛选审核状态
@@ -34,14 +43,7 @@ define(function(require, exports, module) {
 						loadPage(1);
 					  })
 					})
-					//获取已选频道ids
-					function getChannelIds(){
-						var ids = new Array();
-						$("#channel-table input[type='checkBox']:checked").each(function(i,e){
-							ids.push(Number($(e).parent().parent().parent().attr('chnID')));
-						})
-						return ids;
-					}
+
 					//提交审核
 					$('#chn_submit').click(function(){
 						
@@ -211,7 +213,31 @@ define(function(require, exports, module) {
     }
     
     function publishChannelLater() {
-        alert('终端树还没有实现');
+        var channelID = $(".checked").parent().parent().attr("chnID");
+        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
+        getClassAndTerm.channelID = channelID;
+        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.save = function(data){
+            //var cList = JSON.stringify(data.categoryList);
+            //var tList = JSON.stringify(data.termList);
+            var post_data = JSON.stringify({
+                project_name:config.projectName,
+                action:'publishPreDownloadChannel',
+                channelID:channelID,
+                categoryList:data.categoryList,
+                termList:data.termList
+            });
+            var url = config.serverRoot + '/backend_mgt/v2/termcategory';
+            util.ajax('post',url,post_data,function(msg){
+                if(msg.rescode==200){
+                    alert("频道预发布成功！")
+                }
+                else{
+                    alert("频道预发布失败！")
+                }
+            });
+            util.cover.close();
+        }
     }
     
     function copyChannel() {
@@ -227,8 +253,8 @@ define(function(require, exports, module) {
     
     function deleteChannel() {
         var data = JSON.stringify({
-            Action: 'Delete',
-            Project: projectName
+            action: 'Delete',
+            project_name: projectName
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
             alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
@@ -256,14 +282,14 @@ define(function(require, exports, module) {
 
     function getChannelId(el) {
         var idAttr;
-        while (el && !(idAttr = el.getAttribute('data-channel-id'))) {
+        while (el && !(idAttr = el.getAttribute('chnid'))) {
             el = el.parentNode;
         }
         return Number(idAttr);
     }
     
     function getCurrentChannelId() {
-        return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('data-channel-id'));
+        return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('chnid'));
     }
 
     // 加载页面数据

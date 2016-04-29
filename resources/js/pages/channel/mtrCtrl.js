@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         $("#mtrC_textType").change(function () {
             if ($("#mtrC_textType").val() == "Normal") {
                 $("#mtrC_effect").hide();
-                $("#mtrC_flip").show();
+                $("#mtrC_flip").css('display','inline');
             } else {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
@@ -169,6 +169,9 @@ define(function (require, exports, module) {
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {
             clockTextColor();
         });
+        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
+            weatherSave();
+        });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
 
@@ -198,7 +201,7 @@ define(function (require, exports, module) {
                     if (wStyle.Type == "Marquee") {
                         $("#mtrC_effect").show();
                     } else {
-                        $("#mtrC_flip").show();
+                        $("#mtrC_flip").css('display','inline');
                     }
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
@@ -207,19 +210,21 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
+                    $("#mtrC_flip").css('display','inline');
                     $("#mtrC_pageDownPeriod").val(0);
                 }
                 textAttrSave();
                 break;
             case 'ClockBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
-                $("#clockText_color").val(wStyle.TextColor);
-                $("#btn_clock_color i").css("background-color", wStyle.TextColor);
+                clockAttrSave();
                 if (wStyle.Type == undefined){
                     $("#clockText_color").val("#000000");
                     $("#btn_clock_color i").css("background-color", "#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
+                    $("#clockText_color").val(wStyle.TextColor);
+                    $("#btn_clock_color i").css("background-color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
                         case 'Time':
@@ -246,17 +251,24 @@ define(function (require, exports, module) {
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
+                $("#box_weatherEffect").show();
                 if (wStyle.Type == undefined){
-                    $("#mtrC_clock1").next().trigger("click");
+                    $("#weatherText_color").val("#000000");
+                    $("#btn_weather_color i").css("background-color", "#000000");
+                    $("#weatherFlip_time").val(10);
+                    $("#mtrC_weatherNormal").next().trigger("click");
+                } else {
+                    $("#weatherText_color").val(wStyle.TextColor);
+                    $("#btn_weather_color i").css("background-color", wStyle.SwitchPeriod);
+                    $("#weatherFlip_time").val(10);
+                    var wctype = wStyle.Type;
+                    switch (wctype) {
+                        case 'Time':
+                            $("#mtrC_weatherNormal").next().trigger("click");
+                            break;
+                    }
                 }
-                //else {
-                //    var wctype = wStyle.Type;
-                //    switch (wctype) {
-                //        case 'Time':
-                //            $("#mtrC_clock1").next().trigger("click");
-                //            break;
-                //    }
-                //}
+                weatherSave();
                 break;
         }
 
@@ -270,8 +282,11 @@ define(function (require, exports, module) {
         if (widgetType != "ClockBox") {
             exports.getSelectedID(mtrData, true);
         }
+
+        //绑定触发事件
         save();
         clockAttrSave();
+        weatherChange();
     }
 
     //将数据添加到列表
@@ -499,7 +514,7 @@ define(function (require, exports, module) {
         })
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
-            playTypeSave ();
+            playTypeSave();
         })
     }
 
@@ -507,14 +522,14 @@ define(function (require, exports, module) {
     function playTypeSave () {
         if (!inputCheck()) return;
         var overall_schedule_params = {
-            Type: $(this).val()
+            Type: $("#mtrCtrl_playType").val()
         };
         DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
     //文本效果保存
     function textAttrSave() {
+        if (!inputCheck()) return;
         if ($("#mtrC_textType").val() == "Marquee") {
-            if (!inputCheck()) return;
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
@@ -581,16 +596,29 @@ define(function (require, exports, module) {
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //function weatherSave(){
-    //    //时钟类型
-    //    $(".rd_clock").next().click(function () {
-    //        var wstyle = {
-    //            TextColor: $("#clockText_color").val(),
-    //            Type: $("input:radio:checked").attr("clocktype"),
-    //        }
-    //        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
-    //    })
-    //}
+    //天气控件
+    function weatherChange(){
+        //字体颜色
+        $("#weatherText_color").bind("input propertychange", function () {
+            weatherSave();
+        })
+        $("#weatherFlip_time").change(function () {
+            weatherSave();
+        })
+        //天气类型
+        $(".rd_weather").next().click(function () {
+            weatherSave();
+        })
+    }
+    //天气保存
+    function weatherSave(){
+        var wstyle = {
+            Type: $("input:radio:checked").attr("weathertype"),
+            SwitchPeriod: Number($("#weatherFlip_time").val()),
+            TextColor: $("#weatherText_color").val()
+        }
+        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+    }
 
     //校验
     function inputCheck(){
@@ -598,28 +626,28 @@ define(function (require, exports, module) {
         var errorMsg = "";
         if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4){
             $(".mtrCtrl_time").each(function(){
-                if($(this).val() == "") errorMsg += "请输入资源时长！/n"; return;
+                if($(this).val() == "") errorMsg += "请输入资源时长！\n";
             })
             $(".mtrC_times").each(function(){
-                if($(this).val() == null) errorMsg += "请输入资源次数！/n"; return;
+                if($(this).val() == null) errorMsg += "请输入资源次数！\n";
             })
         }
         if (widgetData.type_id == 3){
             if ($("#mtrC_textType").val() == "Normal"){
-                if($("mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！/n"; return;
+                if($("#mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！\n";
             }else {
-                if($("text_color").val() == "") errorMsg += "请选择字体颜色！/n"; return;
-                if($("mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！/n"; return;
+                if($("#text_color").val() == "") errorMsg += "请选择字体颜色！\n";
+                if($("#mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！\n";
             }
         }
         if (widgetData.type_id == 5) {
-            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！/n"; return;
+            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！\n";
         }
-        if (errorMsg != ""){
+        if (errorMsg == ""){
+            return true;
+        }else {
             alert(errorMsg);
             return false;
-        }else {
-            return true;
         }
 
     }

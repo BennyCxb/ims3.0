@@ -198,7 +198,7 @@ a {
 #upload_box, #mtrEdit_box, #mtrUplLive_box, #mtrChoise_box {
 	width: 600px;
     margin: auto;
-    max-height: 80%;
+    
 }
 
 #box_fileList{
@@ -235,7 +235,7 @@ a {
 	width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip{
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect{
 	display: none;
 }
 

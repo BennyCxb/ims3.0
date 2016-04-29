@@ -46,11 +46,15 @@ define(function (require, exports, module) {
         var type = $("#mtr_addMtr").attr("typeid");
         loadPage(1, Number(type));
 
+        if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            $("#mtr_allCheck").hide();
+            $("#mtr_addStatus").hide();
+        }
+
         //保存
         $("#amtr_add").click(function () {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1"){ //添加背景图
-                $("#mtr_allCheck").hide();
-                $("#mtr_addStatus").hide();
+
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
             	var url = $("input:checkbox[class='amtr_cb']:checked").attr("url");
             	LAYOUTEDIT.updateBackground(mtrId, url);
@@ -88,7 +92,7 @@ define(function (require, exports, module) {
         var mtrType;
         switch (type) {
             case 1:
-                mtrType = "VideoLive";
+                mtrType = "Video";
                 $("#mtr_choiseTitle").html("视频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索视频");
                 $("#mtrChoiseSearch").attr("typeId", "1");
@@ -110,6 +114,13 @@ define(function (require, exports, module) {
                 $("#mtrChoiseSearch").attr("placeholder", "搜索文本");
                 $("#mtrChoiseSearch").attr("typeId", "4");
                 break;
+            case 5:
+                mtrType = "Live";
+                $("#mtr_choiseTitle").html("视频控件资源选择列表");
+                $("#mtrChoiseSearch").attr("placeholder", "搜索直播");
+                $("#mtrChoiseSearch").attr("typeId", "5");
+                break;
+            case 2:
         }
         var checkSwitch = UTIL.getLocalParameter('config_checkSwitch');
         if (checkSwitch == 1){
@@ -174,43 +185,33 @@ define(function (require, exports, module) {
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
-                if (material_type == "文本") {		//文本无预览效果
+                if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
                     for (var x = 0; x < mtrData.length; x++) {
                         var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">0:00:00</td>' +
+                            '<td class="mtr_time">00:00:00</td>' +
                             '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
                             '</tr>';
                         $("#mtr_choiseTable tbody").append(mtrtr);
                     }
                 } else {
                     for (var x = 0; x < mtrData.length; x++) {
-                    	if (mtrData[x].Is_Live == 1){	//直播
-                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
-	                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-	                            '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>' +
-	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-	                            '<td class="mtr_time">0:00:00</td>' +
-	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
-	                            '</tr>';
-	                        $("#mtr_choiseTable tbody").append(mtrtr);
-                    	}else {
-                    		var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
-	                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-	                            '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
-	                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-	                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-	                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
-	                            '</tr>';
-	                        $("#mtr_choiseTable tbody").append(mtrtr);
-                    	}
-                        
-                    }
+                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="'+ escape(JSON.stringify(mtrData[x])) +'">' +
+                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
+                            '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>' +
+                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
+                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
+                            '</tr>';
+                        $("#mtr_choiseTable tbody").append(mtrtr);
+                        }
                 }
             }
         }
+        //清空状态列
+        $(".mtr_choise_status").empty();
 
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({
@@ -232,7 +233,7 @@ define(function (require, exports, module) {
             mtrCb();
         })
         $(".icheckbox_flat-blue ins").click(function () {
-            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){
+            if ($("#mtr_addMtr").attr("is_choisebg") == "1"){                      //添加背景图模块
             	$("#mtr_choiseTable input[type='checkbox']").iCheck("uncheck");
                 var obj = $(this).prev();
                 if ($(this).prev().prop("checked") == true) {

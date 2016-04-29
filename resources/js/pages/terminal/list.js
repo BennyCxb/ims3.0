@@ -427,7 +427,7 @@ define(function(require, exports, module) {
             downloadDisplay = 'hidden';
           }else{
             downloadNum = "已下载：" + downloadStatus.DownloadFiles +'个，未下载' + (downloadStatus.AllFiles - downloadStatus.DownloadFiles)+'个';
-            downloadStatus = Number(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
+            downloadStatus = Math.floor(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
           }
 
           var preloadStatus = JSON.parse(tl[i].PreDownloadInfo),
@@ -439,7 +439,7 @@ define(function(require, exports, module) {
             preloadDisplay = 'hidden';
           }else{
             preloadNum = "已下载：" + preloadStatus.DownloadFiles +'个，未下载' + (preloadStatus.AllFiles - preloadStatus.DownloadFiles)+'个';
-            preloadStatus = Number(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
+            preloadStatus = Math.floor(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
           }
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
@@ -447,7 +447,7 @@ define(function(require, exports, module) {
           var snap = (tl[i].Online === 0)?'':'<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
 
           $('#term_list').append('' +
-            '<tr tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
+            '<tr channel="'+ tl[i].Channel_Name +'" preChannel="'+ tl[i].PreDownload_Channel_Name +'" tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
               '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
@@ -533,6 +533,8 @@ define(function(require, exports, module) {
             configOneTerm.IP = li.attr("ip");
             configOneTerm.Mem = li.attr("mem");
             configOneTerm.MAC = li.attr("mac");
+            configOneTerm.channel = li.attr("channel");
+            configOneTerm.preChannel = li.attr("preChannel");
             configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })

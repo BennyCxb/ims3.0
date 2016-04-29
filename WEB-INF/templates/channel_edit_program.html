@@ -13,51 +13,82 @@
 
 
     <div class="channel-program-timer">
+
+        <div class="channel-editor-program-trigger input-group input-group-sm">
+            <div class="input-group-btn"  style="float: left;">
+              <button type="button" class="btn btn-danger btn-channel-setup-timer">
+                <i class="fa fa-fw fa-bomb"></i>
+                <b>定时触发</b>
+              </button>
+            </div>
+
+
+            <!-- /btn-group -->
+            <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline;">
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                    月
+                </label>
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                    日
+                </label>
+                <label class="timer-field timer-field-day">
+                    <span></span>
+                    日
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    点
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    分
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                    秒
+                </label>
+            </label>
+
+
+        </div>
+        
+
+       
+
+        <!-- <label class="channel-editor-program-count">
+            播放次数
+            <input type="number" data-field="count" value="<%=count%>">
+        </label> -->
+
+
         <div class="input-group">
-            <span class="input-group-addon">开始</span>
+            <span class="input-group-addon" title="生效时间">
+                <i class="fa fa-calendar-check-o"></i>
+            </span>
             <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start%>">
         </div>
+        <p style="float: left; position: relative; top: 10px; left: 8px;">-</p>
         <div class="input-group">
-            <span class="input-group-addon">结束</span>
+            <span class="input-group-addon" title="失效时间">
+                <i class="fa fa-calendar-times-o"></i>
+            </span>
             <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_end%>">
         </div>
-        <div class="input-group">
-            <span class="input-group-addon">时长</span>
+        <div class="input-group" style="width: 150px;">
+            <span class="input-group-addon"  title="播放时长">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
             <input type="number" class="form-control"  data-field="duration" value="<%=duration%>">
+            <span class="input-group-addon"  title="播放时长">
+                秒
+            </span>
         </div>
 
 
-        <label class="channel-editor-program-trigger">
-            <label class="timer-field timer-field-date">
-                <span></span>
-                月
-            </label>
-            <label class="timer-field timer-field-date">
-                <span></span>
-                日
-            </label>
-            <label class="timer-field timer-field-day">
-                <span></span>
-                日
-            </label>
-            <label class="timer-field">
-                <span></span>
-                点
-            </label>
-            <label class="timer-field">
-                <span></span>
-                分
-            </label>
-            <label class="timer-field">
-                <span></span>
-                秒
-            </label>
-            <button class="btn-channel-setup-timer">定时设置</button>
-        </label>
-        <label class="channel-editor-program-count">
-            播放次数
-        <input type="number" data-field="count" value="<%=count%>">
-        </label>
+
+
     </div>
 
 

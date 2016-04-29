@@ -348,8 +348,8 @@ define(function(require, exports, module) {
           if(data.rescode !== '200'){
             alert('获取终端分类配置信息失败');
           }else{
-            $('#CC-Channel').val(data.config.Channel);
-            $('#CC-PreChannel').val(data.config.PreDownload_Channel);
+            $('#CC-Channel').html(data.config.Channel_Name);
+            $('#CC-PreChannel').html(data.config.PreDownload_Channel_Name);
             $('#CC-upgradeURL').val(data.config.UpgradeURL);
             $('#CC-logURL').val(data.config.LogURL);
             

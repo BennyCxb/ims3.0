@@ -32,15 +32,15 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header box-header with-border"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon">开始</span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
-((__t=(lifetime_start))==null?'':__t)+
-'"> </div> <div class="input-group"> <span class="input-group-addon">结束</span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
-((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group"> <span class="input-group-addon">时长</span> <input type="number" class="form-control" data-field="duration" value="'+
-((__t=(duration))==null?'':__t)+
-'"> </div> <label class="channel-editor-program-trigger"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> <button class="btn-channel-setup-timer">定时设置</button> </label> <label class="channel-editor-program-count"> 播放次数 <input type="number" data-field="count" value="'+
+'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> </label> </div><!-- <label class="channel-editor-program-count">\r\n            播放次数\r\n            <input type="number" data-field="count" value="'+
 ((__t=(count))==null?'':__t)+
-'"> </label> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">布局:'+
+'">\r\n        </label> --> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
+((__t=(lifetime_start))==null?'':__t)+
+'"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
+((__t=(lifetime_end))==null?'':__t)+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="duration" value="'+
+((__t=(duration))==null?'':__t)+
+'"> <span class="input-group-addon" title="播放时长"> 秒 </span> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">布局:'+
 ((__t=(layout.name))==null?'':__t)+
 '</span> <span class="channel-program-layout-header-info">宽:'+
 ((__t=(layout.width))==null?'':__t)+
@@ -64,7 +64,7 @@ return __p;
 exports['channel_edit_timer']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title">设置定时</h4> </div> <div class="modal-body timer-container"> <ul class="granularity-selector"> <li> <button data-selector="everyday">每天</button> </li> <li> <button data-selector="day">每周</button> </li> <li> <button data-selector="date">每月</button> </li> <li> <button data-selector="month">每年</button> </li> </ul> <div class="month-selector"> <ul> <label>按月选择</label> ';
+__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title"> 定时触发 </h4> </div> <div class="modal-body timer-container"> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="month" style="width: 129px">每年</button> </div> <i class="fa fa-fw fa-chevron-circle-right" style="position: relative; opacity: 0.5; top: 1px"></i> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="date" style="width: 129px">每月</button> <button class="btn btn-default btn-sm" data-selector="day" style="width: 129px">每周</button> </div> <i class="fa fa-fw fa-chevron-circle-right" style="position: relative; opacity: 0.5; top: 1px"></i> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 129px">每天</button> </div> <div class="month-selector"> <ul><!-- <label>按月选择</label> --> ';
  var numbers = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","二十一","二十二","二十三","二十四","二十五","二十六","二十七","二十八","二十九","三十","三十一"]; 
 __p+=' ';
  for ( var i = 0; i < 12; i++) { 
@@ -80,7 +80,7 @@ __p+=' '+
 ((__t=(numbers[i] + '月'))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="date-selector"> <ul> <label>按天选择</label> ';
+__p+=' </ul> </div> <div class="date-selector"> <ul><!-- <label>按天选择</label> --> ';
  for ( var i = 0; i < 31; i++) { 
 __p+=' <li data-id="'+
 ((__t=(i+1))==null?'':__t)+
@@ -94,7 +94,7 @@ __p+=' '+
 ((__t=((i < 9) ? '0' + (i + 1) : (i + 1)))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="day-selector"> <ul> <label>按天选择</label> ';
+__p+=' </ul> </div> <div class="day-selector"> <ul><!-- <label>按天选择</label> --> ';
  for ( var i = 0; i < 7; i++) { 
 __p+=' <li data-id="'+
 ((__t=(i+1))==null?'':__t)+
@@ -108,7 +108,7 @@ __p+=' '+
 ((__t=('周' + numbers[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector"> <label>小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector"> <label>第...时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
  for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
@@ -122,7 +122,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="minute-selector"> <label>分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
+__p+=' </select> </div> <div class="minute-selector"> <label>第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
  for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
@@ -136,7 +136,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="second-selector"> <label>秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
+__p+=' </select> </div> <div class="second-selector"> <label>第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
  for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
@@ -196,7 +196,7 @@ return __p;
 exports['layout_edit_property']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 24px">编辑</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
+__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 30px">编辑</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
 ((__t=(name))==null?'':__t)+
 '" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property" style="width: 101px"> <label class="col-sm-3 control-label property-name-inline">宽</label> <input class="form-control" type="text" value="'+
 ((__t=(width))==null?'':__t)+
