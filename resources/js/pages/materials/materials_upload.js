@@ -219,7 +219,9 @@ define(function (require, exports, module) {
                         }
                     });
                 } else if (xhr.status != 200 && xhr.responseText) {
-
+                    $("#upl_tr_" + num1).prop("status", "end");
+                    $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-danger");
+                    $("#upl_status_" + num1).html("上传失败");
                 }
             };
             startDate = new Date().getTime();
