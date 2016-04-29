@@ -106,9 +106,9 @@ define(function (require, exports, module) {
                 bottomMargin: layout.bottom_margin,
                 backgroundColor: layout.background_color,
                 backgroundImage: layout.background_image_url ? {
-                    type: 'image',
+                    type: 'Image',
                     url: layout.background_image_url
-                } : {type: 'unknown'},
+                } : {type: 'Unknown'},
                 widgets: widgets.map(function (el) {
                     return {
                         top: el.top,
