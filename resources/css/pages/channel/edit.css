@@ -105,7 +105,7 @@
     bottom: 15px;
     left: 15px;
     right: 500px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #channel-editor-wrapper .channel-program-layout-footer>ul {
