@@ -17,16 +17,11 @@
                 </select>
             </div>
             <div id="mtrC_flip" class="pull-right">
-
-               
                 <div id="box_text_time" class="input-group">
                     <span class="input-group-addon">翻页</span>
-                    <input id="mtrC_pageDownPeriod" type="number" class="form-control"  placeholder="请输入翻页时间">
+                    <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入翻页时间">
                     <span class="input-group-addon">秒</span>
                 </div>
-               
-
-
             </div>
             <div id="mtrC_effect" class="pull-right">
 
@@ -39,10 +34,8 @@
 	                </div>
                 </div>
                 <div id="" class="btn-group mtrCtrl_select">
-                    <select id="mtrC_scrollDirection" class="form-control select2 "
-                            style="width: 100%; height: 30px; padding: 0px 10px;">
-                        <option selected="selected" value="Left_2_Right">从左到右</option>
-                        <option value="Right_2_Left">从右到左</option>
+                    <select id="mtrC_scrollDirection" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
+                        <option selected="selected" value="Right_2_Left">从右到左</option>
                     </select>
                 </div>
                 <div id="" class="btn-group mtrCtrl_select">
@@ -63,6 +56,7 @@
                 </div>
             </div>
         </div>
+        <!-- 时间控件属性 -->
         <div id="box_datetimeEffect" class="box-header with-border">
         	<div id="" class="btn-group">
                 <div class="input-group my-colorpicker2">
@@ -71,6 +65,23 @@
                     <i></i>
                   </div>
                 </div>
+            </div>
+
+        </div>
+        <!-- 天气控件属性 -->
+        <div id="box_weatherEffect" class="box-header with-border">
+            <div id="" class="btn-group">
+                <div class="input-group my-colorpicker2">
+                    <input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色">
+                    <div id="btn_weather_color" class="input-group-addon">
+                        <i></i>
+                    </div>
+                </div>
+            </div>
+            <div id="box_weather_time" class="input-group">
+                <span class="input-group-addon">切换</span>
+                <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入切换间隔时间">
+                <span class="input-group-addon">秒</span>
             </div>
         </div>
         <div id="box_tableHeader" class="box-header with-border">
@@ -98,7 +109,7 @@
                 <tbody></tbody>
             </table>
             <!-- /.table -->
-            <!-- 时间控件 -->
+            <!-- 时间控件类型 -->
             <div id="box_datetime" style="display: none;">
             	<div>
                     <input id="mtrC_dtTime" type="radio" clockType="Time" name="r3" class="flat-red rd_clock" checked>
@@ -178,7 +189,7 @@
             <!-- 天气控件 -->
             <div id="box_weather" style="display: none;">
                 <div>
-                    <input id="mtrC_weather1" type="radio" clockType="Time" name="r3" class="flat-red rd_weather" checked>
+                    <input id="mtrC_weatherNormal" type="radio" weatherType="Normal" name="r3" class="flat-red rd_weather" checked>
 
                     <div class="info-box bg-red mtrC_datetime">
                         <img src="resources/img/weather1.png">
