@@ -600,6 +600,8 @@ define(function(require, exports, module) {
 					deferred.resolve();
 				});
 			});
+		} else {
+			deferred.resolve();
 		}
 		return deferred.promise();
 	}

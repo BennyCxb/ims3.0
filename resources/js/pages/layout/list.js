@@ -155,6 +155,7 @@ define(function(require, exports, module) {
 				width: el.Width,
 				height: el.Height,
 				background_color: el.BackgroundColor,
+				operator: '创建人',
 				create_time: el.CreateTime
 			};
 			$('#layout-table>tbody').append(templates.layout_table_row(data));

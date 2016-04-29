@@ -184,6 +184,8 @@
 <script src="resources/plugins/iCheck/icheck.min.js"></script>
 <!-- bootstrap color picker -->
 <script src="resources/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- date.format -->
+<script src="resources/js/common/date.format.js"></script>
 
 <script>
 	seajs.config({

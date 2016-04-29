@@ -38,6 +38,11 @@ define(function (require, exports, module) {
      * @type {number} 初始画布时，layout占屏幕的最大比例
      */
     var MIN_CANVAS_SCALE = 0.9;
+    /**
+     *
+     * @type {number} 默认字体大小
+     */
+    var DEFAULT_FONT_SIZE = 40;
 
     /**
      * 生成一个颜色迭代器，能够确保色相尽量分散
@@ -455,7 +460,7 @@ define(function (require, exports, module) {
         el.appendChild(this.mElement);
         var self = this, $el = $(el);
         $(window).bind('resize', function () {
-             self.resize($el.width(), $el.height());
+            self.resize($el.width(), $el.height());
         });
     };
 
@@ -1247,12 +1252,18 @@ define(function (require, exports, module) {
             return;
         }
 
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        this.mElement.style.backgroundColor = 'transparent';
         var img = document.createElement('img');
         img.setAttribute('width', '100%');
         img.setAttribute('height', '100%');
         img.setAttribute('src', data.material);
         this.mElement.appendChild(img);
 
+    };
+    ImageWidget.prototype.hidePreview = function (data) {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        Widget.prototype.hidePreview.call(this);
     };
 
     /**
@@ -1278,7 +1289,9 @@ define(function (require, exports, module) {
             this.mElement.textContent = this.mTypeName;
             return;
         }
-        
+
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        this.mElement.style.backgroundColor = 'transparent';
         if (
             suffix.call(data.material, '.jpg') ||
             suffix.call(data.material, '.png') ||
@@ -1304,6 +1317,10 @@ define(function (require, exports, module) {
             video.appendChild(source);
             this.mElement.appendChild(video);
         }
+    };
+    VideoWidget.prototype.hidePreview = function (data) {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        Widget.prototype.hidePreview.call(this);
     };
 
     /**
@@ -1338,10 +1355,11 @@ define(function (require, exports, module) {
              return;
          }
 
+        var scale = this.mContext.mZoomFactor;
         this.mElement.style.backgroundColor = 'transparent';
         if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
-            marquee.textContent = data.material;
+            marquee.innerHTML = data.material;
             marquee.setAttribute('class', 'marquee layout-preview-text');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.8) + 'px';
             marquee.style.color = data.style.color;
@@ -1361,7 +1379,7 @@ define(function (require, exports, module) {
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
             iFrame.srcdoc = data.material;
             this.mElement.appendChild(iFrame);
-
+            iFrame.contentDocument.body.style.fontSize = (0.5 * scale * DEFAULT_FONT_SIZE)  + 'px';
         }
 
 
@@ -1383,6 +1401,34 @@ define(function (require, exports, module) {
     ClockWidget.prototype.showPreview = function (resource) {
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = 'transparent';
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
+
+        var format = {
+            Time: 'hh:MM:ss',
+            Date: 'yyyy-mm-dd',
+            Week: 'dddd',
+            DateTime: 'yyyy-mm-dd hh:MM:ss',
+            DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
+            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
+        }[resource.style.Type],
+            now = new Date();
+        if (!format) {
+            format = 'hh:MM:ss';
+        }
+        var text = now.format(format),
+            div = document.createElement('div');
+        div.style.textAlign = 'center';
+        div.style.fontSize = (this.mHeight * this.mContext.mZoomFactor * 0.8) + 'px';
+        div.style.lineHeight = (this.mHeight * this.mContext.mZoomFactor) + 'px';
+        div.style.color = resource.style.TextColor;
+        div.style.overflow = 'hidden';
+        div.style.whiteSpace = 'nowrap';
+        div.style.height = '100%';
+        div.innerHTML = text;
+        this.mElement.appendChild(div);
+
     };
     ClockWidget.prototype.hidePreview = function () {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
@@ -1399,11 +1445,20 @@ define(function (require, exports, module) {
     WeatherWidget.prototype = Object.create(Widget.prototype);
     WeatherWidget.prototype.constructor = WeatherWidget;
     WeatherWidget.prototype.showPreview = function (resource) {
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
+
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = 'transparent';
+        this.mElement.style.backgroundImage = 'url(resources/img/weather1.png)';
+        this.mElement.style.backgroundSize = 'contain';
+        this.mElement.style.backgroundPosition = 'center';
+        this.mElement.style.backgroundRepeat = 'no-repeat';
     };
     WeatherWidget.prototype.hidePreview = function () {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        this.mElement.style.backgroundImage = 'none';
         Widget.prototype.hidePreview.call(this);
     };
 
