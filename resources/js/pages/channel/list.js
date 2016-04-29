@@ -452,24 +452,31 @@ define(function(require, exports, module) {
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
-						
+						$('#channel-list-controls .btn-publish-later').attr('disabled',false);
+						$('#channel-list-controls .btn-publish').attr('disabled',false);
 					}
 					else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
+						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+						$('#channel-list-controls .btn-publish').attr('disabled',true);
 					}
 					//待审核
 					else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',false);
 						$('#chn_unpass').attr('disabled',false);
+						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+						$('#channel-list-controls .btn-publish').attr('disabled',true);
 					}
 					//待提交
 					else {
 						$('#chn_submit').attr('disabled',false);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
+						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+						$('#channel-list-controls .btn-publish').attr('disabled',true);
 					}
 	
 				}
