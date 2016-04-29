@@ -11,6 +11,8 @@ define(function(require, exports, module) {
   exports.MAC;
   exports.requireJS;
   exports.diskInfo;
+  exports.channel;
+  exports.preChannel;
 
   var _workSeqments,
       _downloadSeqments,
@@ -336,6 +338,8 @@ define(function(require, exports, module) {
     $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
+    $('#CO-channel').html(exports.channel);
+    $('#CO-preChannel').html(exports.preChannel);
     $('#CO-CPU').html(exports.CPU + '%');
     $('#CO-Mem').html(exports.Mem);
 
