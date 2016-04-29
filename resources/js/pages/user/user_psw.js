@@ -44,15 +44,18 @@ define(function (require, exports, module) {
 					Data: psw
 				});
 				var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/'+uName;
-				UTIL.ajax('post', url, data, function(msg){
-					if(msg.rescode == 200){
-						UTIL.cover.close();   
-						alert("修改密码成功");
-					}else{
-						alert("修改密码失败")
-						}	
-					USERS.loadUsersPage(1);			
-				});
+				UTIL.ajax(
+					'post', url, data, 
+					function(msg){
+						if(msg.rescode == 200){  
+							alert("修改密码成功");
+							UTIL.cover.close(); 
+							USERS.loadUsersPage(1);	
+						}else{
+							alert("修改密码失败")
+						}			
+					}
+				);
 				}
 			});
 			}else{
