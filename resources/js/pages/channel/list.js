@@ -119,7 +119,7 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('已审核');
+										alert('审核不通过');
 										loadPage(1);
 									}else{
 										alert('审核失败');
@@ -271,7 +271,7 @@ define(function(require, exports, module) {
                 selectedCount++;
             }
         });
-        var hasUncheckedItems = selectedCount !== $('#channel-table tr').size();
+        var hasUncheckedItems = selectedCount !== ($('#channel-table tr').size()-1);
         $('#channel-list-controls .select-all>i')
             .toggleClass('fa-square-o', hasUncheckedItems)
             .toggleClass('fa-check-square-o', !hasUncheckedItems);
@@ -438,6 +438,7 @@ define(function(require, exports, module) {
         })
 		//校验批量操作的审核功能
 		function checkCheckBtns(){
+			if(util.getLocalParameter('config_checkSwitch') == '0'){}else{
 			if($("#channel-table input[type='checkBox']:checked").length === 0){
 				$('#chn_submit').attr('disabled',true);
 				$('#chn_pass').attr('disabled',true);
@@ -480,6 +481,7 @@ define(function(require, exports, module) {
 						$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 						$('#channel-list-controls .btn-publish').attr('disabled',true);
 					}
+				}
 	
 				}
 			}
@@ -514,15 +516,13 @@ define(function(require, exports, module) {
 
     }
 	function checkCheck(){
-        if(util.getLocalParameter('config_checkSwitch') == 0){
+        if(util.getLocalParameter('config_checkSwitch') == '0'){
             $('#chn_submit').css('display','none');
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
             $('#chn_toBeCheckedDiv').css('display','none');
-			$('#channel-list-controls .btn-publish-later').attr('disabled',false);
-			$('#channel-list-controls .btn-publish').attr('disabled',false);
         }
-        else if(util.getLocalParameter('config_canCheck') == 0){
+        else if(util.getLocalParameter('config_canCheck') == '0'){
             $('#chn_pass').css('display','none');
             $('#chn_unpass').css('display','none');
         }
