@@ -4,6 +4,15 @@ define(function (require, exports, module) {
 
     var templates = require('common/templates');
 
+    Array.prototype.includes = function (val) {
+        for (var i = 0; i < this.length; i++) {
+            if (val === this[i]) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     /**
      *
      * @param obj
