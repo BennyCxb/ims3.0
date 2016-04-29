@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         $("#mtrC_textType").change(function () {
             if ($("#mtrC_textType").val() == "Normal") {
                 $("#mtrC_effect").hide();
-                $("#mtrC_flip").show();
+                $("#mtrC_flip").css('display','inline');
             } else {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
@@ -198,7 +198,7 @@ define(function (require, exports, module) {
                     if (wStyle.Type == "Marquee") {
                         $("#mtrC_effect").show();
                     } else {
-                        $("#mtrC_flip").show();
+                        $("#mtrC_flip").css('display','inline');
                     }
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
@@ -207,7 +207,7 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
-                    $("#mtrC_flip").show();
+                    $("#mtrC_flip").css('display','inline');
                     $("#mtrC_pageDownPeriod").val(0);
                 }
                 textAttrSave();
