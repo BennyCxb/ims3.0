@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var UTIL = require("common/util.js");
 
+    exports.userName = $('#USER-NAME').html();
     exports.serverRoot = 'http://imsoperate.cleartv.cn';
     exports.Resource_UploadURL = "http://imsresource.cleartv.cn/upload";
     exports.projectName = UTIL.getCookie('project_name');

@@ -522,6 +522,15 @@ define(function (require, exports, module) {
         obj.parent().attr("class", "active");
     }
     
+    //校验删除按钮
+    function checkDelBtns(){
+        $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
+            if($(e).parent().parent().parent().find('td.mtr_uploadUser').html() != CONFIG.userName){
+                $('#mtr_delete').attr('disabled',true);
+            }
+        })
+    }
+
     //校验批量操作的审核功能
     function checkCheckBtns(){
         if($("#mtrTable input[type='checkBox']:checked").length === 0){
@@ -587,6 +596,9 @@ define(function (require, exports, module) {
             $('#mtr_approve').attr('disabled',false);
             $('#mtr_reject').attr('disabled',false);
             checkCheckBtns();
+            if(UTIL.getLocalParameter('config_canCheck') == '0'){
+              checkDelBtns();
+            }    
         }
 
         //控制全选按钮全选或者不全选状态
