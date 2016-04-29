@@ -164,60 +164,61 @@ define(function (require, exports, module) {
             		var fileName = $("#file")[0].files[num2].name;
             	}catch(e){}
                 
-                var fileCount = $("#file")[0].files.length;
-                
                 if (xhr.readyState == 4 && xhr.status == 200
                     && xhr.responseText != "") {
                     var blkRet = JSON.parse(xhr.responseText);
-                    var material = {};
-                    material["project_name"] = UTIL.getCookie("project_name");
-                    material["action"] = "Post";
-                    material["material"] = {};
-                    material["material"]["name"] = fileName;
-                    material["material"]["name_eng"] = "";
-                    material["material"]["url_name"] = blkRet.upload_path;
-                    material["material"]["description"] = "";
-                    material["material"]["is_live"] = "0";
-                    material["material"]["Download_Auth_Type"] = "None";
-                    material["material"]["Download_Auth_Paras"] = "";
-                    material["material"]["size"] = blkRet.size;
-                    material["material"]["md5"] = blkRet.md5;
-                    material["material"]["duration"] = blkRet.duration;
-                    material["material"]["create_time"] = getNowFormatDate();
-                    material["material"]["CreateUser"] = $('#USER-NAME').html();
-                    $.post(CONFIG.serverRoot + "/backend_mgt/v1/materials",
-                        JSON.stringify(material), function (data) {
-                            if (parseInt(data.rescode) == 200) {
-                                $("#upl_tr_" + num1).attr("status", "end");
-                                $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-success");
-                                $("#upl_speed_" + num1).html("");
-                                $("#upl_status_" + num1).html("上传成功");
-                                _upl_list[num1].status = "end";
-                                var status = "uploading";
-                                //判断是否全部上传完毕
-                                for(var b = 0, c=0; b<_upl_list.length; b++){
-                                	if (_upl_list[b].status == "end"){
-                                		c++;
-                                		if (c==_upl_list.length){
-                                			status = "end";
-                                		}
-                                	}
+                    var material = {
+                        name: fileName,
+                        name_eng: "",
+                        url_name: blkRet.upload_path,
+                        description: "",
+                        is_live: "0",
+                        Download_Auth_Type: "None",
+                        Download_Auth_Paras: "",
+                        size: blkRet.size,
+                        md5: blkRet.md5,
+                        duration: blkRet.duration,
+                        create_time: getNowFormatDate(),
+                        CreateUser: CONFIG.userName
+                    };
+                    var data = JSON.stringify({
+                        action: 'Post',
+                        project_name: CONFIG.projectName,
+                        material: material
+                    });
+                    var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+                    UTIL.ajax('post', url, data, function (data) {
+                        if (parseInt(data.rescode) == 200) {
+                            $("#upl_tr_" + num1).attr("status", "end");
+                            $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-success");
+                            $("#upl_speed_" + num1).html("");
+                            $("#upl_status_" + num1).html("上传成功");
+                            _upl_list[num1].status = "end";
+                            var status = "uploading";
+                            //判断是否全部上传完毕
+                            for(var b = 0, c=0; b<_upl_list.length; b++){
+                                if (_upl_list[b].status == "end"){
+                                    c++;
+                                    if (c==_upl_list.length){
+                                        status = "end";
+                                    }
                                 }
-                                if(status == "end"){
-                                	$("#box_fileList").attr("status", "end");
-                                	var typeId = $("#mtrChoise li.active").attr("typeid");
-                                	if(typeId == "1" || typeId == "2" || typeId == "3"){
-                                		MTR.loadPage(1, Number(typeId));
-                                	}
-                                	
-                                }
-                            } else {
-                                $("#upl_tr_" + num1).prop("status", "end");
-                                $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-danger");
-                                $("#upl_status_" + num1).html("上传失败");
-                                _upl_list[num1].status = 'end';
                             }
-                        }, "json");
+                            if(status == "end"){
+                                $("#box_fileList").attr("status", "end");
+                                var typeId = $("#mtrChoise li.active").attr("typeid");
+                                if(typeId == "1" || typeId == "2" || typeId == "3"){
+                                    MTR.loadPage(1, Number(typeId));
+                                }
+
+                            }
+                        } else {
+                            $("#upl_tr_" + num1).prop("status", "end");
+                            $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-danger");
+                            $("#upl_status_" + num1).html("上传失败");
+                            _upl_list[num1].status = 'end';
+                        }
+                    });
                 } else if (xhr.status != 200 && xhr.responseText) {
 
                 }
