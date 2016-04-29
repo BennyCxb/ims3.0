@@ -64,7 +64,7 @@ return __p;
 exports['channel_edit_timer']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title"> 定时触发 </h4> </div> <div class="modal-body timer-container"> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px">年</button> <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px">月</button> <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px">周</button> <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px">天</button> </div> <div class="month-selector"> <label>每年第...月</label> <ul style="padding:0"><!-- <label>按月选择</label> --> ';
+__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title"> 定时触发 </h4> </div> <div class="modal-body timer-container"> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px">年</button> <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px">月</button> <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px">周</button> <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px">天</button> </div> <div class="month-selector"> <label>每年...月</label> <ul style="padding:0"><!-- <label>按月选择</label> --> ';
  var numbers = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","二十一","二十二","二十三","二十四","二十五","二十六","二十七","二十八","二十九","三十","三十一"]; 
 __p+=' ';
  for ( var i = 0; i < 12; i++) { 
@@ -94,7 +94,7 @@ __p+=' '+
 ((__t=((i < 9) ? '0' + (i + 1) : (i + 1)))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="day-selector"> <label>每周第...天</label> <br> <ul style="padding: 0"><!-- <label>按天选择</label> --> ';
+__p+=' </ul> </div> <div class="day-selector"> <label>每周...</label> <br> <ul style="padding: 0"><!-- <label>按天选择</label> --> ';
  for ( var i = 0; i < 7; i++) { 
 __p+=' <li data-id="'+
 ((__t=(i+1))==null?'':__t)+
