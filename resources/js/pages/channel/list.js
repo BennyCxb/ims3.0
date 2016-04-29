@@ -19,8 +19,6 @@ define(function(require, exports, module) {
 	exports.init = function() {
 		checkCheck();
         loadPage(1);
-		
-        registerEventListeners();
 
         //获取已选频道ids
         function getChannelIds(){
@@ -30,7 +28,8 @@ define(function(require, exports, module) {
             })
             return ids;
         }
-
+		
+        registerEventListeners();
 		//筛选审核状态
 				if(util.getLocalParameter('config_checkSwitch') == '1'){
 					$('#chn_toBeCheckedDiv button').each(function(i,e){
@@ -214,7 +213,31 @@ define(function(require, exports, module) {
     }
     
     function publishChannelLater() {
-        alert('终端树还没有实现');
+        var channelID = $(".checked").parent().parent().attr("chnID");
+        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
+        getClassAndTerm.channelID = channelID;
+        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.save = function(data){
+            //var cList = JSON.stringify(data.categoryList);
+            //var tList = JSON.stringify(data.termList);
+            var post_data = JSON.stringify({
+                project_name:config.projectName,
+                action:'publishPreDownloadChannel',
+                channelID:channelID,
+                categoryList:data.categoryList,
+                termList:data.termList
+            });
+            var url = config.serverRoot + '/backend_mgt/v2/termcategory';
+            util.ajax('post',url,post_data,function(msg){
+                if(msg.rescode==200){
+                    alert("频道预发布成功！")
+                }
+                else{
+                    alert("频道预发布失败！")
+                }
+            });
+            util.cover.close();
+        }
     }
     
     function copyChannel() {
