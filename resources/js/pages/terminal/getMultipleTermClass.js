@@ -8,6 +8,7 @@ define(function(require, exports, module) {
   exports.save;
   exports.title;
   exports.roleID;
+  exports.close;
 
   exports.init = function() {
     $('#mul-TermClass-title').html(exports.title);
@@ -15,7 +16,12 @@ define(function(require, exports, module) {
 
     // 关闭
     $('#mul-term-class-close').click(function(){
-      UTIL.cover.close();
+      if(exports.close !== undefined && exports.close !== ''){
+        exports.close = '';
+        exports.close();
+      }else{
+        UTIL.cover.close();
+      }
     })
 
     // 保存
