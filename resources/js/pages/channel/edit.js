@@ -835,6 +835,7 @@ define(function(require, exports, module) {
 						Project: projectName,
 						Action: 'UpdateMaterial',
 						Data: {
+							ID: material.id,
 							LifeEndTime: material.lifetime_end,
 							LifeStartTime: material.lifetime_start,
 							ControlBox_ID: material.widget_id,
