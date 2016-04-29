@@ -42,7 +42,7 @@ define(function (require, exports, module) {
      *
      * @type {number} 默认字体大小
      */
-    var DEFAULT_FONT_SIZE = 40;
+    var DEFAULT_FONT_SIZE = 14;
 
     /**
      * 生成一个颜色迭代器，能够确保色相尽量分散
@@ -1291,7 +1291,7 @@ define(function (require, exports, module) {
         }
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
-        this.mElement.style.backgroundColor = 'transparent';
+        this.mElement.style.backgroundColor = '#000';
         if (
             suffix.call(data.material, '.jpg') ||
             suffix.call(data.material, '.png') ||
@@ -1379,6 +1379,7 @@ define(function (require, exports, module) {
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
             iFrame.srcdoc = data.material;
             this.mElement.appendChild(iFrame);
+            console.log(iFrame.contentDocument);
             iFrame.contentDocument.body.style.fontSize = (0.5 * scale * DEFAULT_FONT_SIZE)  + 'px';
         }
 
@@ -1420,8 +1421,7 @@ define(function (require, exports, module) {
         var text = now.format(format),
             div = document.createElement('div');
         div.style.textAlign = 'center';
-        div.style.fontSize = (this.mHeight * this.mContext.mZoomFactor * 0.8) + 'px';
-        div.style.lineHeight = (this.mHeight * this.mContext.mZoomFactor) + 'px';
+        div.style.fontSize = (this.mHeight * this.mContext.mZoomFactor * 0.3) + 'px';
         div.style.color = resource.style.TextColor;
         div.style.overflow = 'hidden';
         div.style.whiteSpace = 'nowrap';
