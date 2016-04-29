@@ -291,6 +291,22 @@ define(function(require, exports, module) {
         };
     }
 
+	function parseLayoutData2(data) {
+		return {
+			name: data.Name,
+			name_eng: data.Name_eng,
+			width: data.Width,
+			height: data.Height,
+			top_margin: data.TopMargin,
+			left_margin: data.LeftMargin,
+			right_margin: data.RightMargin,
+			bottom_margin: data.BottomMargin,
+			background_color: data.BackgroundColor,
+			background_image_url: data.BackgroundPic.URL,
+			background_image_mid: 0
+		};
+	}
+
     function parseWidgetData(data) {
         return {
             id: data.ID,
@@ -385,9 +401,14 @@ define(function(require, exports, module) {
             return a.sequence - b.sequence;
         });
 		programs.forEach(function (el, idx, arr) {
+			var layout = db.collection('layout').select({id: el.layout_id})[0];
+			var backgroundStyle = layout.background_image_url ?
+			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+			'background-color:' + layout.background_color;
 			var data = {
 				id: el.id,
-				name: el.name
+				name: el.name,
+				backgroundStyle: backgroundStyle
 			};
 			ul.append(templates.channel_edit_program_list_item(data));
 		});
@@ -400,9 +421,14 @@ define(function(require, exports, module) {
 		var ul = $('#channel-editor-wrapper .channel-program-list-timed ul');
 		ul.html('');
 		programs.forEach(function (el, idx, arr) {
+			var layout = db.collection('layout').select({id: el.layout_id})[0];
+			var backgroundStyle = layout.background_image_url ?
+			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+			'background-color:' + layout.background_color;
 			var data = {
 				id: el.id,
-				name: el.name
+				name: el.name,
+				backgroundStyle: backgroundStyle
 			};
 			ul.append(templates.channel_edit_program_list_item(data));
 		});
@@ -966,7 +992,7 @@ define(function(require, exports, module) {
 		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
 			var layout = db.collection('layout').select({id: layoutId})[0];
 			if (!layout) {
-                layout = parseLayoutData(res);
+                layout = parseLayoutData2(res);
                 layout.id = layoutId;
 				db.collection('layout').insert(layout);
 			}
@@ -1057,9 +1083,13 @@ define(function(require, exports, module) {
 				'#channel-editor-wrapper .channel-program-list-regular ul' :
 				'#channel-editor-wrapper .channel-program-list-timed ul'
 			),
+			backgroundStyle = layout.background_image_url ?
+				'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:contain;background-position:center' :
+				'background-color:' + layout.background_color,
 			data = {
 				id: program.id,
-				name: program.name
+				name: program.name,
+				backgroundStyle: backgroundStyle
 			};
         db.collection('program').update({template_id: programId}, {id: programId});
 		widgets.forEach(function (widget) {

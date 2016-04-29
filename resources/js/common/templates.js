@@ -55,9 +55,11 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<li class="program-list-item" data-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <div class="program-list-item-title">'+
+'"> <div style="'+
+((__t=(backgroundStyle))==null?'':__t)+
+'"></div> <span>'+
 ((__t=(name))==null?'':__t)+
-'</div> </li>';
+'</span> </li>';
 }
 return __p;
 };

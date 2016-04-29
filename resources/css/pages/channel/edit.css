@@ -198,6 +198,20 @@
     z-index: 1;
 }
 
+.program-list-item {
+    text-align: center;
+    margin: 10px 0;
+    height: 140px;
+}
+
+.program-list-item>div {
+    width: 200px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.program-list-item>span {  }
+
 .program-list-item-title{
     position: absolute;
     bottom: 7px;
