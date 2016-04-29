@@ -287,7 +287,9 @@ __p+='<tr data-layout-id="'+
 ((__t=(height))==null?'':__t)+
 '</td> <td>背景色:'+
 ((__t=(background_color))==null?'':__t)+
-'</td> <td>上传时间:'+
+'</td> <td>创建人:'+
+((__t=(operator))==null?'':__t)+
+'</td> <td>创建时间:'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
 }
