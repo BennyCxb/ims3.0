@@ -530,6 +530,7 @@ define(function (require, exports, module) {
         $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
             if($(e).parent().parent().parent().find('td.mtr_uploadUser').html() != CONFIG.userName){
                 $('#mtr_delete').attr('disabled',true);
+                return false;
             }
         })
     }
