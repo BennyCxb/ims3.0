@@ -437,7 +437,7 @@ define(function (require, exports, module) {
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
                         $("#mtrCtrl_Table tbody").append(mtrtr);
-                    } else if (mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 1) {        //直播资源
+                    } else if (mtrData[x].Type_Name == "Live") {        //直播资源
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '"  mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
@@ -509,6 +509,7 @@ define(function (require, exports, module) {
     function save() {
         //文本类型
         $("#mtrC_textType").change(function () {
+            $("#mtrC_scrollDirection").val("Right_2_Left");
             textAttrSave();
         })
         //翻页时间

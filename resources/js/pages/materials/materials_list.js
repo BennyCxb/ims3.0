@@ -583,8 +583,8 @@ define(function (require, exports, module) {
         	}
             
             $("#mtr_edit").removeAttr("disabled");
-            $("#mtr_download").parent().attr("href", dlurl);
-            $("#mtr_download").parent().attr("download", dlurl);
+            $("#mtr_download").find("a").attr("href", dlurl);
+            $("#mtr_download").find("a").attr("download", dlurl);
         } else {
         	if (Ck == 0) {
                 $("#mtr_delete").attr("disabled", true);
