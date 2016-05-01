@@ -12,7 +12,7 @@ function inputCheck(){
         $("#error_m").next().hide();
         return false;
     }else if ($("#l_username").val().substring(0, $("#l_username").val().indexOf('@')) == ""){
-        errorMsg = "\n用户名格式不正确！";
+        errorMsg = "\n用户名格式不正确！例：xxx@develop";
         $("#error_m").html(errorMsg);
         $("#error_m").next().hide();
         return false;
