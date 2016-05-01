@@ -59,8 +59,8 @@
                     <input id="l_submit" type="submit" class="btn btn-primary btn-block btn-flat" value="登&nbsp;&nbsp;&nbsp;录">
                     <span id="error_m"></span>
                     <c:if test='${not empty param.error}'>
-						<font color='#3c8dbc'> 
-							用户名或密码错误！
+						<font color='#3c8dbc'>
+                            ${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
 						</font>
 					</c:if>
                 </div>

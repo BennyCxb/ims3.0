@@ -5,15 +5,26 @@ function usernameChenge(value) {
 
 //校验是否为空
 function inputCheck(){
+    var errorMsg = "";
 	if ($("#l_username").val() == "") {
-        $("#error_m").html("您还没有输入用户名！");
+        errorMsg = "请您输入用户名！";
+        $("#error_m").html(errorMsg);
+        $("#error_m").next().hide();
+        return false;
+    }else if ($("#l_username").val().substring(0, $("#l_username").val().indexOf('@')) == ""){
+        errorMsg = "\n用户名格式不正确！";
+        $("#error_m").html(errorMsg);
+        $("#error_m").next().hide();
         return false;
     }
 	
 	if ($("#l_password").val() == "") {
-        $("#error_m").html("您还没有输入密码！");
+        errorMsg = "\n请您输入密码！";
+        $("#error_m").html(errorMsg);
+        $("#error_m").next().hide();
         return false;
     }
+
 	
 	var userName = $("#l_username").val();
 	$("#j_username").attr("value", userName.substring(0, userName.indexOf('@')));
