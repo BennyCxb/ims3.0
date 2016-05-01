@@ -4,7 +4,19 @@ define(function (require, exports, module) {
     var MTR = require("pages/materials/materials_list.js");
     var _mtrId;
     exports.init = function () {
-    	
+
+        var DispClose = false;
+        $(window).bind('beforeunload', function () {
+            var editor = CKEDITOR.instances.editor1;//获取编辑器对象,editor1 为 textarea 的ID
+            var data = editor.getData();//获取编辑器内容
+            if (data != "") {
+                DispClose = true;
+            }
+            if (DispClose) {
+                return "当前正在编辑文本，是否离开当前页面?";
+            }
+        })
+
         if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
             $('#Tmtr_viewlast').hide();
             $('#Tmtr_submit').hide();
