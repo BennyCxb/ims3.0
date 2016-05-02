@@ -196,8 +196,11 @@ a {
 }
 
 #upload_box, #mtrEdit_box, #mtrUplLive_box, #mtrChoise_box {
-	width: 600px;
+    width: 600px;
+    position: relative;
     margin: auto;
+    left: 50%;
+    margin-left: -300px;
     
 }
 
