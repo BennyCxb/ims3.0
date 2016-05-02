@@ -675,7 +675,9 @@ define(function(require, exports, module) {
 					db.collection('widget').update({program_id: programId}, {program_id: oldProgramId});
                     db.collection('widget').update({program_template_id: templateId}, {program_template_id: oldTemplateId});
                     res.ControlBoxTypeIDMap.forEach(function (el) {
-                        db.collection('widget').update({id: el.ProgramControlBoxID}, {program_id: programId, layout_widget_id: el.LayoutControlBoxID});
+						var oldWidgetId = db.collection('widget').select({program_id: programId, layout_widget_id: el.LayoutControlBoxID})[0].id;
+                        db.collection('widget').update({id: el.ProgramControlBoxID}, {id: oldWidgetId});
+						db.collection('material').update({widget_id: el.ProgramControlBoxID}, {widget_id: oldWidgetId});
                         var widget = db.collection('widget').select({id: el.ProgramControlBoxID})[0];
                         generatedWidgets.push(widget);
                     });
