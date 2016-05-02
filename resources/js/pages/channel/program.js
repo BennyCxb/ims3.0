@@ -7,7 +7,8 @@ define(function (require, exports, module) {
         util = require('common/util'),
         crud = require('common/crud'),
         layoutEditor = require('common/layout_editor'),
-        timer = require('pages/channel/timer');
+        timer = require('pages/channel/timer'),
+		toast = require('common/toast');
 
     var db = null,
         programId = null,
@@ -213,6 +214,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-preview').click(function () {
             if (!editMode) {
+				toast.show('请先保存节目，才可预览');
                 showPreview(editor);
                 editMode = true;
                 $(this).children('i')
