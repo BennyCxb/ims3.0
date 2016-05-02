@@ -4,7 +4,7 @@ define(function (require, exports, module) {
 
     var templates = require('common/templates');
 
-    Array.prototype.includes = function (val) {
+    Array.prototype.includes = Array.prototype.includes || function (val) {
         for (var i = 0; i < this.length; i++) {
             if (val === this[i]) {
                 return true;
@@ -46,7 +46,8 @@ define(function (require, exports, module) {
         $('#channel-editor-timer input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_minimal-blue'
         });
-        $(".select2").select2();
+        $('#channel-editor-timer .select2')
+			.select2();
         this.registerEventListeners();
     };
     

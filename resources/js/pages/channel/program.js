@@ -34,6 +34,9 @@ define(function (require, exports, module) {
         var program = db.collection('program').select({id: programId})[0],
             layout = db.collection('layout').select({id: layoutId})[0],
             widgets = db.collection('widget').select({program_id: programId});
+		if (editor) {
+			editor.detachFromDOM();
+		}
         renderProgramView(program, layout, widgets);
         registerEventListeners();
         
