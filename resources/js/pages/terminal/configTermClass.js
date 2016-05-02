@@ -234,6 +234,8 @@ define(function(require, exports, module) {
           }
         }
         
+        $('#CC_waiting').show();
+
         UTIL.ajax('POST', 
           CONFIG.serverRoot + '/backend_mgt/v2/termcategory', 
           JSON.stringify(data), 
@@ -243,6 +245,7 @@ define(function(require, exports, module) {
               require(exports.requireJS).loadTermList();
               UTIL.cover.close();
             }else{
+              $('#CC_waiting').hide();
               alert('保存终端分类配置失败' + data.errInfo);
             }
           }

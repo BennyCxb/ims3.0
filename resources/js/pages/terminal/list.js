@@ -65,6 +65,10 @@ define(function(require, exports, module) {
 
     // refresh
     $('#term_refresh').click(function(){
+      if($('#term-status button.btn-primary').length > 0){
+        $('#term-status button.btn-primary').addClass('btn-defalut');
+        $('#term-status button.btn-primary').removeClass('btn-primary');
+      }
       loadTermList(_pageNO);
     })
 
@@ -120,8 +124,8 @@ define(function(require, exports, module) {
             if(data.rescode === '200'){
               // 复原筛选框
               if($('#term-status button.btn-primary').length > 0){
-                $('#term-status button.btn-primary').removeClass('btn-primary');
                 $('#term-status button.btn-primary').addClass('btn-defalut');
+                $('#term-status button.btn-primary').removeClass('btn-primary');
               }
               loadTermList();
             }else{
@@ -221,8 +225,8 @@ define(function(require, exports, module) {
               UTIL.cover.close();
               // 复原筛选框
               if($('#term-status button.btn-primary').length > 0){
-                $('#term-status button.btn-primary').removeClass('btn-primary');
                 $('#term-status button.btn-primary').addClass('btn-defalut');
+                $('#term-status button.btn-primary').removeClass('btn-primary');
               }
               loadTermList(_pageNO);
             }
@@ -681,8 +685,8 @@ define(function(require, exports, module) {
               // alert('loadtermlist: '+$(this).parent().attr('node-id'))
               // 复原筛选框
               if($('#term-status button.btn-primary').length > 0){
-                $('#term-status button.btn-primary').removeClass('btn-primary');
                 $('#term-status button.btn-primary').addClass('btn-defalut');
+                $('#term-status button.btn-primary').removeClass('btn-primary');
               }
               loadTermList();
             })
