@@ -73,8 +73,7 @@ define(function(require, exports, module) {
 					//审核通过
 					$('#chn_pass').click(function(){
 						
-						if(!$('#chn_pass').attr('disabled')){
-							
+						if(!$('#chn_pass').attr('disabled')){	
 							var data = {
 							  "project_name": config.projectName,
 							  "action": "checkPass",
@@ -86,13 +85,14 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('审核');
+										alert('已审核');
 										loadPage(1);
 									}else{
 										alert('审核失败');
 									}
-								}
+								}		
 							)
+							alert('处理中...');
 						}
 					})
 		
@@ -119,7 +119,7 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('审核不通过');
+										alert('已审核');
 										loadPage(1);
 									}else{
 										alert('审核失败');
