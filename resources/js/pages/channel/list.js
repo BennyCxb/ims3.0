@@ -85,7 +85,7 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('审核通过');
+										alert('已审核');
 										loadPage(1);
 									}else{
 										alert('审核失败');
@@ -119,7 +119,7 @@ define(function(require, exports, module) {
 								JSON.stringify(data),
 								function(data){
 									if(data.rescode === '200'){
-										alert('审核不通过');
+										alert('已审核');
 										loadPage(1);
 									}else{
 										alert('审核失败');
