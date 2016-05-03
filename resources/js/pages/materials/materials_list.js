@@ -158,10 +158,10 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadPage = function (pageNum, type) {
-    	$("#addtext_box").empty();
+        $("#addtext_box").empty();
         $("#list_box").css("display","block");
         $("#mtrLisTitle").empty();
-        $("#mtrTable tbody").empty();
+
         $(".checkbox-toggle").data("clicks", false)
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         mtrCb();
@@ -223,6 +223,7 @@ define(function (require, exports, module) {
     }
 
     function render(json) {
+        $("#mtrTable tbody").empty();
         //翻页
         var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);
