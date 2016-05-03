@@ -9,10 +9,12 @@ define(function (require, exports, module) {
     exports.init = function () {
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
+		var isNew = true;
 		//var loadType = ROLES.loadType;
 		var type = ROLES.type;
 		if(rID){
 			$("#role_name").val(rName);
+			isNew = false;
 			}
 		else if(ROLEEDIT.roleID){
 			rID=Number(ROLEEDIT.roleID);
@@ -24,6 +26,25 @@ define(function (require, exports, module) {
 			$("#term").val();
 			$(".modal-title").html("新建角色");
 			}
+		//判断角色名是否已存在
+		$("#role_name").blur(function(){
+			var newName = $("#role_name").val();
+			var data1 = JSON.stringify({
+				project_name:CONFIG.projectName,
+				action:'GetByRoleNameCount',
+				RoleName:newName,
+				RoleID:-1
+				})
+			var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
+			UTIL.ajax('post',url1,data1,function(msg){
+				if(msg.RoleCount!==0){
+					alert("角色名已存在！")
+					$("#role_name")[0].focus();
+					return false;
+					}else{
+						return}
+			})
+			});
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
 			 	project_name:CONFIG.projectName,
@@ -68,7 +89,7 @@ define(function (require, exports, module) {
 				var url = CONFIG.serverRoot + '/backend_mgt/v2/roles';
 				UTIL.ajax('post', url, data, function(msg){
 					if(msg.rescode == 200){
-						rID=msg.RoleID;
+						rID=Number(msg.RoleID);
 					}else{
 						flag5=false;
 					}	
@@ -119,11 +140,17 @@ define(function (require, exports, module) {
 									};
 							});
 				if(flag5){
+					if(!isNew){
 					alert("修改成功！")
 					ROLES.loadRolesPage(1);
 					UTIL.cover.close();
+					}else{alert("创建成功！")
+					ROLES.loadRolesPage(1);
+					UTIL.cover.close();}
 				}else{
+					if(!isNew){
 					alert("修改失败！")
+					}else{alert("创建失败！")}
 					}
 			})
 		//终端分类选择
