@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     // global variables
     var requestUrl    = config.serverRoot,
         projectName   = config.projectName,
-        nDisplayItems = 25,
+        nDisplayItems = 15,
         keyword       = '';
 
     // 初始化页面
@@ -332,7 +332,7 @@ define(function(require, exports, module) {
         totalPages = Math.max(totalPages, 1);
         $('#channel-table-pager').jqPaginator({
             totalPages: totalPages,
-            visiblePages: 10,
+            visiblePages: config.pager.visiblePages,
             first: config.pager.first,
             prev: config.pager.prev,
             next: config.pager.next,
