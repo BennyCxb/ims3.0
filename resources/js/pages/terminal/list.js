@@ -455,7 +455,12 @@ define(function(require, exports, module) {
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
               '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
-              '<td style="line-height:26px; padding-top:10px;">当前频道：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName) +'<br />当前节目：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName) +'<br />当前视频：'+ ((tl[i].CurrentPlayInfo==='')?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo) +
+              '<td style="line-height:26px; padding-top:10px;">当前频道：'+ 
+              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ChannelName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName)) +
+              '<br />当前节目：'+ 
+              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName)) +
+              '<br />当前视频：'+ 
+              ((typeof(tl[i].CurrentPlayInfo)==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
               '</td>' +
               '<td  style=" padding-top:11px;">' +
                 '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
