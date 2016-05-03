@@ -25,6 +25,7 @@ define(function(require, exports, module) {
      * 页面初始化
      */
 	exports.init = function() {
+        savedWidgetIds = [];
         window.onpopstate = onHashChange;
 		layoutId = Number(util.getHashParameters().id);
         if (!isNaN(layoutId)) {
