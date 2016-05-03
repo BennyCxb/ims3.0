@@ -202,13 +202,16 @@ define(function(require, exports, module) {
 				util.ajax('post',url,post_data,function(msg){
 					if(msg.rescode==200){
 						alert("频道发布成功！")
+						util.cover.close();
+						parent.location.reload();
 						}
 					else{
 						alert("频道发布失败！")
+						util.cover.close();
 						}
 					});
-				util.cover.close();
-				parent.location.reload();
+				
+				
 		}
     }
     
@@ -449,8 +452,17 @@ define(function(require, exports, module) {
 						$('#channel-list-controls .btn-delete').prop('disabled', true);
 					}else{
 						var checked = $("#channel-table input[type='checkBox']:checked");
-						for(var n=0;n<checked.length;n++){		
+						alert(checked.length)
+						for(var n=0;n<checked.length;n++){
+							//判断选中个数		
 							//已通过
+						if(checked.length!=='1'){
+							$('#chn_submit').attr('disabled',true);
+							$('#chn_pass').attr('disabled',true);
+							$('#chn_unpass').attr('disabled',true);
+							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+							$('#channel-list-controls .btn-publish').attr('disabled',true);
+							}else{	
 							if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
 								
 								$('#chn_submit').attr('disabled',true);
@@ -502,8 +514,9 @@ define(function(require, exports, module) {
 			
 						}
 					  }
+				  }
 				  else{
-					if($("#channel-table input[type='checkBox']:checked").length === 0){
+					if($("#channel-table input[type='checkBox']:checked").length !== 1){
 						$('#chn_submit').attr('disabled',true);
 						$('#chn_pass').attr('disabled',true);
 						$('#chn_unpass').attr('disabled',true);
