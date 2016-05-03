@@ -163,11 +163,15 @@ define(function(require, exports, module) {
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
-        $('#channel-list-nav').keyup(function (ev) {
-            if (ev.which === 13) {
-                onSearch($('#channel-list-nav input').val());
-                ev.stopPropagation();
-            }
+        //$('#channel-list-nav').keyup(function (ev) {
+        //    if (ev.which === 13) {
+        //        onSearch($('#channel-list-nav input').val());
+        //        ev.stopPropagation();
+        //    }
+        //});
+        //搜索事件
+        $('#channel-list-nav').bind('input propertychange', function (ev) {
+            onSearch($('#channelSearch').val());
         });
         $('#channel-list-nav .glyphicon-search').click(function (ev) {
             onSearch($('#channel-list-nav input').val());
