@@ -229,12 +229,11 @@ define(function (require, exports, module) {
                 clockAttrSave();
                 if (wStyle.Type == undefined){
                     $("#clockText_color").val("#000000");
-                    $("#btn_clock_color i").css("background-color", "#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
                     $("#clockText_color").val(wStyle.TextColor);
                     $("#clockText_color").css("background-color", wStyle.TextColor);
-                    $("#btn_clock_color i").css("background-color", wStyle.TextColor);
+                    $(".mtrC_datetime").css("color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
                         case 'Time':
@@ -265,13 +264,12 @@ define(function (require, exports, module) {
                 if (wStyle.Type == undefined){
                     $("#weatherText_color").val("#000000");
                     $("#weatherText_color").css("background-color", "#000000");
-                    $("#btn_weather_color i").css("background-color", "#000000");
                     $("#weatherFlip_time").val(10);
                     $("#mtrC_weatherNormal").next().trigger("click");
                 } else {
                     $("#weatherText_color").val(wStyle.TextColor);
                     $("#weatherText_color").css("background-color", wStyle.TextColor);
-                    $("#btn_weather_color i").css("background-color", wStyle.TextColor);
+                    $(".mtrC_weather").css("color", wStyle.TextColor);
                     $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
                     switch (wctype) {

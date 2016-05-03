@@ -208,6 +208,8 @@ define(function (require, exports, module) {
             }
         });
         $('#channel-editor-wrapper .channel-program-layout-footer li').click(function () {
+            $('#channel-editor-wrapper .channel-program-layout-footer li').css("border", "solid 1px #ddd");
+            $(this).css("border", "solid 1px #3c8dbc");
             var widgetId = Number(this.getAttribute('data-id')), widgets = editor.mLayout.mWidgets;
             for (var i = 0; i < widgets.length; i++) {
                 if (widgets[i].mId === widgetId) {
@@ -328,7 +330,13 @@ define(function (require, exports, module) {
         fields[5].textContent = segments[0] === '*' ? '每' : segments[0];
     }
 
-     function onSelectWidget (widget) {
+    function onSelectWidget (widget) {
+        $('.channel-program-layout-footer li').css("border", "solid 1px #ddd");     //初始化下方边框
+        $('.channel-program-layout-footer li').each(function(){
+            if ($(this).attr("data-id") == widget.id){
+                $(this).css("border", "solid 1px #3c8dbc");
+            }
+        })
         loadWidget(widget);
     }
 

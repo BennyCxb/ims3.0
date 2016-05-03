@@ -88,8 +88,8 @@ define(function (require, exports, module) {
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
 					'<td class="role_name">' + rName + '</td>' + 
-					'<td></td>' +
 					'<td class=""><a class="reset_psw">重置密码</a></td>' +
+					'<td></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 						}else{
@@ -98,9 +98,9 @@ define(function (require, exports, module) {
                     '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' + 
-					'<td class="role_name">' + rName + '</td>' + 
-					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+					'<td class="role_name">' + rName + '</td>' +
 					'<td class=""><a class="reset_psw">重置密码</a></td>' +
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#usersTable tbody").append(roltr);
 				}
@@ -110,9 +110,9 @@ define(function (require, exports, module) {
                     '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
 					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
 					'<td class="users_email">' + email + '</td>' +
-					'<td class="role_name">未分配</td>' + 
-					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+					'<td class="role_name">未分配</td>' +
 					'<td class=""><a class="reset_psw">重置密码</a></td>' +
+					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                		$("#usersTable tbody").append(roltr);
 					}

@@ -12,7 +12,7 @@ define(function(require, exports, module) {
     // global variables
     var requestUrl    = config.serverRoot,
         projectName   = config.projectName,
-        nDisplayItems = 25,
+        nDisplayItems = 15,
         keyword       = '';
 
     // 初始化页面
@@ -163,11 +163,15 @@ define(function(require, exports, module) {
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
-        $('#channel-list-nav').keyup(function (ev) {
-            if (ev.which === 13) {
-                onSearch($('#channel-list-nav input').val());
-                ev.stopPropagation();
-            }
+        //$('#channel-list-nav').keyup(function (ev) {
+        //    if (ev.which === 13) {
+        //        onSearch($('#channel-list-nav input').val());
+        //        ev.stopPropagation();
+        //    }
+        //});
+        //搜索事件
+        $('#channel-list-nav').bind('input propertychange', function (ev) {
+            onSearch($('#channelSearch').val());
         });
         $('#channel-list-nav .glyphicon-search').click(function (ev) {
             onSearch($('#channel-list-nav input').val());
@@ -328,7 +332,7 @@ define(function(require, exports, module) {
         totalPages = Math.max(totalPages, 1);
         $('#channel-table-pager').jqPaginator({
             totalPages: totalPages,
-            visiblePages: 10,
+            visiblePages: config.pager.visiblePages,
             first: config.pager.first,
             prev: config.pager.prev,
             next: config.pager.next,

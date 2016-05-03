@@ -11,7 +11,8 @@ define(function(require, exports, module) {
       _checkList = [],
       _snapTermID,
       _termStatusCount,
-      _editTreeClassInput;
+      _editTreeClassInput,
+      keyword = "";
 
   exports.init = function(){
     initTree();
@@ -73,7 +74,11 @@ define(function(require, exports, module) {
     })
 
     // serach
-    $('#term_search').click(function(){
+    //$('#term_search').click(function(){
+    //  loadTermList(_pageNO);
+    //})
+    $('#term_search').bind('input propertychange', function () {
+      keyword = typeof($('#term_search').val()) === 'string' ? $('#term_search').val() : '';
       loadTermList(_pageNO);
     })
     .change(function(){
@@ -327,7 +332,7 @@ define(function(require, exports, module) {
     }*/
     
     // loadlist start
-    var searchKeyword = $.trim($('#term_search').val());
+    //var searchKeyword = $.trim($('#term_search').val());
  
     var termClassId = $('#termclass-tree').find('.focus').attr('node-id');
 
@@ -353,7 +358,7 @@ define(function(require, exports, module) {
         "page": _pageNO,
         "orderby": "",
         "sortby": "",
-        "keyword": searchKeyword,
+        "keyword": keyword,
         "status": status
       }
     }
