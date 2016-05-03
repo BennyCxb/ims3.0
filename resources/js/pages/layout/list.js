@@ -49,11 +49,17 @@ define(function(require, exports, module) {
 			onSelectedItemChanged();
 		});
 		$('#layout-list-controls .btn-delete').click(onDeleteLayout);
-		$('#channel-list-search').keyup(function (ev) {
-			if (ev.which === 13) {
-				onSearch(this.value);
-                ev.stopPropagation();
-            }
+
+		//$('#channel-list-search').keyup(function (ev) {
+		//	if (ev.which === 13) {
+		//		onSearch(this.value);
+		//       ev.stopPropagation();
+		//   }
+		//}
+
+		//搜索事件
+		$('#channel-list-search').bind('input propertychange', function (ev) {
+			onSearch($('#channel-list-search').val());
 		});
 
     }
