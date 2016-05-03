@@ -173,6 +173,7 @@ define(function (require, exports, module) {
         });
         $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
             $("#weatherText_color").css("background-color", $("#weatherText_color").val());
+            $("#mtrC_weatherNormal_box").css("color", $("#weatherText_color").val());
             weatherSave();
         });
         var widgetType = widgetData.type;

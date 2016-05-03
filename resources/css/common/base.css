@@ -262,8 +262,34 @@ a {
     background-color: transparent;
 }
 
+#mtrC_weatherNormal_box div {
+    float: left;
+}
+
+#mtrC_weatherNormal_box div:nth-child(2) {
+    padding: 22px 0px 0px 10px;
+}
+
+#mtrC_weatherNormal_box div:nth-child(3) {
+    text-align: right;
+    padding-left: 20px;
+}
+
+#mtrC_weatherNormal_box div:nth-child(3) span {
+    margin-top: 35px;
+    display: block;
+}
+
 #box_weather img {
-    width: 100%;
+
+}
+
+#mtrC_weatherNormal_box {
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f4f4f4 url(../../img/img_grid.png);
+    padding-left: 50px;
 }
 
 #mtrCtrl_Table input {
