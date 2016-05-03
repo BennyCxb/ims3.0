@@ -158,10 +158,12 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadPage = function (pageNum, type) {
+        // loading
+        $("#mtrTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
+
         $("#addtext_box").empty();
         $("#list_box").css("display","block");
         $("#mtrLisTitle").empty();
-
         $(".checkbox-toggle").data("clicks", false)
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         mtrCb();
