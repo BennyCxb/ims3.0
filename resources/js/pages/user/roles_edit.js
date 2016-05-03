@@ -39,7 +39,6 @@ define(function (require, exports, module) {
 			UTIL.ajax('post',url1,data1,function(msg){
 				if(msg.RoleCount!==0){
 					alert("角色名已存在！")
-					$("#role_name")[0].focus();
 					return false;
 					}else{
 						return}
@@ -70,14 +69,21 @@ define(function (require, exports, module) {
 		exports.loadModulePage();//加载功能模块默认页面
 		//确定
         $("#role_updata").click(function () {
-			var flag5 = true;
-			var roleName = $("#role_name").val();
-			if(roleName===""){
-				alert("用户名不能为空！");
-				 $("#role_name")[0].focus();
-				return false
-				}
-            var name = {
+			var newName = $("#role_name").val();
+			var data1 = JSON.stringify({
+				project_name:CONFIG.projectName,
+				action:'GetByRoleNameCount',
+				RoleName:newName,
+				RoleID:-1
+				})
+			var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
+			UTIL.ajax('post',url1,data1,function(msg){
+				if(msg.RoleCount!==0){
+					alert("角色名已存在！")
+					$("#role_name")[0].focus();
+					return false;
+					}else{
+						var name = {
                 RoleName: roleName
             }
 			if(rID){}else{
@@ -152,6 +158,15 @@ define(function (require, exports, module) {
 					alert("修改失败！")
 					}else{alert("创建失败！")}
 					}
+						}
+			})
+			var flag5 = true;
+			var roleName = $("#role_name").val();
+			if(roleName===""){
+				alert("用户名不能为空！");
+				 $("#role_name")[0].focus();
+				return false
+				}
 			})
 		//终端分类选择
 		$("#term_list").click(function(){
