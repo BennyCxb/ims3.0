@@ -456,6 +456,7 @@ define(function(require, exports, module) {
 							$('#chn_unpass').attr('disabled',true);
 							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 							$('#channel-list-controls .btn-publish').attr('disabled',true);
+							$('#channel-list-controls .btn-delete').prop('disabled', true);
 							}else{	
 							//已通过
 							if($(checked).parent().parent().parent().attr('check_status') == '2'){
@@ -512,16 +513,25 @@ define(function(require, exports, module) {
 				  else{
 					
 						var checked = $("#channel-table input[type='checkBox']:checked");
-						for(var n=0;n<checked.length;n++){		
+					
+						if(checked.length!='1'){
+							
+							$('#chn_submit').attr('disabled',true);
+							$('#chn_pass').attr('disabled',true);
+							$('#chn_unpass').attr('disabled',true);
+							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
+							$('#channel-list-controls .btn-publish').attr('disabled',true);
+							$('#channel-list-controls .btn-delete').prop('disabled', true);
+							}else{		
 							//已通过和未通过
-							if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
+							if($(checked).parent().parent().parent().attr('check_status') == '2'){
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',true);
 								$('#chn_unpass').attr('disabled',true);
 								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
 								$('#channel-list-controls .btn-publish').attr('disabled',false);
 							}
-							else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
+							else if($(checked).parent().parent().parent().attr('check_status') == '3'){
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',true);
 								$('#chn_unpass').attr('disabled',true);
@@ -529,7 +539,7 @@ define(function(require, exports, module) {
 								$('#channel-list-controls .btn-publish').attr('disabled',true);
 							}
 							//待审核
-							else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
+							else if($(checked).parent().parent().parent().attr('check_status') == '1'){
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',false);
 								$('#chn_unpass').attr('disabled',false);

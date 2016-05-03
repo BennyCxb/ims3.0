@@ -20,7 +20,6 @@ define(function (require, exports, module) {
         $("#usersLisTitle").html("");
         $("#usersTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#usersLisTitle").html("全部用户");
 		exports.pNum = pageNum;
         var data = JSON.stringify({
 			project_name:CONFIG.projectName,
