@@ -10,7 +10,7 @@ define(function(require, exports, module) {
 	// global variables
 	var requestUrl    = config.serverRoot,
 		projectName   = config.projectName,
-		nDisplayItems = 10,
+		nDisplayItems = 15,
         keyword       = '';
 
 	// 初始化页面
