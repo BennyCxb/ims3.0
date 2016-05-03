@@ -217,7 +217,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-preview').click(function () {
             if (!editMode) {
-				toast.show('请先保存节目，才可预览');
+				toast.show('温馨提示：当前预览是您最后一次保存的内容');
                 showPreview(editor);
                 editMode = true;
                 $(this).children('i')
