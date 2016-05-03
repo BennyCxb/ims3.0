@@ -142,10 +142,10 @@ define(function (require, exports, module) {
 				if(flag5){
 					if(!isNew){
 					alert("修改成功！")
-					ROLES.loadRolesPage(1);
+					parent.location.reload();
 					UTIL.cover.close();
 					}else{alert("创建成功！")
-					ROLES.loadRolesPage(1);
+					parent.location.reload();
 					UTIL.cover.close();}
 				}else{
 					if(!isNew){
