@@ -74,6 +74,8 @@ define(function (require, exports, module) {
     }
 
     function loadPage(pageNum, type) {
+        // loading
+        $("#mtr_choiseTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         //判断是否是视频控件选择列表
         if ($("#mtr_addMtr").attr("typeid") == "1") {
             if (type == 1) {
