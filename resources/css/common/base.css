@@ -231,7 +231,7 @@ a {
 }
 
 #box_text_color {
-	width: 120px;
+	width: 100px;
 }
 
 .mtrCtrl_select {
@@ -252,13 +252,12 @@ a {
     display: inline-table;
 }
 
-#weatherText_color {
+#clockText_color, #weatherText_color {
     height: 30px;
 }
 
 #text_color {
 	height: 30px;
-    width: 90px;
     border-color: #d2d6de;
     background-color: transparent;
 }
