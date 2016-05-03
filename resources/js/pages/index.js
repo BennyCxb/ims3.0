@@ -167,12 +167,12 @@ define(function (require, exports, module) {
         	window.onhashchange = loadPage;
 
             //选择资源
-           // $("#treeview_mtr").click(function () {
-//                $(".sidebar-menu li").attr("class", "treeview");
-//                $(".sidebar-menu li ul").css("display", "none");
-//                $("#treeview_mtr").attr("class", "treeview active");
-//                loadPage();
-//            })
+            $("#treeview_mtr").click(function () {
+                $(".sidebar-menu li").attr("class", "treeview");
+                $(".sidebar-menu li ul").css("display", "none");
+                $("#treeview_mtr").attr("class", "treeview active");
+                loadPage();
+            })
 
             if ($(".sidebar-menu li").length == 0){
         		alert("您没有任何权限，请联系管理员！");
