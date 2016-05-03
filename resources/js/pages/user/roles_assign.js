@@ -14,6 +14,7 @@ define(function (require, exports, module) {
 		 //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
+			exports.loadUserPage(1);
         });
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
