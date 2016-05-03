@@ -443,58 +443,49 @@ define(function(require, exports, module) {
 			if(util.getLocalParameter('config_checkSwitch') == '0'){
 				}else{
 				  if(util.getLocalParameter('config_canCheck') == '0'){
-					  if($("#channel-table input[type='checkBox']:checked").length === 0){
-						$('#chn_submit').attr('disabled',true);
-						$('#chn_pass').attr('disabled',true);
-						$('#chn_unpass').attr('disabled',true);
-						$('#channel-list-controls .btn-publish').prop('disabled', true);
-						$('#channel-list-controls .btn-publish-later').prop('disabled', true);
-						$('#channel-list-controls .btn-delete').prop('disabled', true);
-					}else{
 						var checked = $("#channel-table input[type='checkBox']:checked");
-						alert(checked.length)
-						for(var n=0;n<checked.length;n++){
-							//判断选中个数		
-							//已通过
-						if(checked.length!=='1'){
+						
+							//判断选中个数						
+						if(checked.length!='1'){
 							$('#chn_submit').attr('disabled',true);
 							$('#chn_pass').attr('disabled',true);
 							$('#chn_unpass').attr('disabled',true);
 							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 							$('#channel-list-controls .btn-publish').attr('disabled',true);
 							}else{	
-							if($(checked[n]).parent().parent().parent().attr('check_status') == '2'){
+							//已通过
+							if($(checked).parent().parent().parent().attr('check_status') == '2'){
 								
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',true);
 								$('#chn_unpass').attr('disabled',true);
 								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
 								$('#channel-list-controls .btn-publish').attr('disabled',false);
-								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
 								$('#channel-list-controls .btn-delete').prop('disabled', false);
 								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
 							}
 							//未通过
-							else if($(checked[n]).parent().parent().parent().attr('check_status') == '3'){
+							else if($(checked).parent().parent().parent().attr('check_status') == '3'){
 								
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',true);
 								$('#chn_unpass').attr('disabled',true);
 								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
 								$('#channel-list-controls .btn-delete').prop('disabled', false);
 								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
 							}
 							//待审核
-							else if($(checked[n]).parent().parent().parent().attr('check_status') == '1'){
+							else if($(checked).parent().parent().parent().attr('check_status') == '1'){
 								
 								$('#chn_submit').attr('disabled',true);
 								$('#chn_pass').attr('disabled',true);
 								$('#chn_unpass').attr('disabled',true);
 								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
 								$('#channel-list-controls .btn-delete').prop('disabled', false);
 								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
 							}
@@ -506,24 +497,16 @@ define(function(require, exports, module) {
 								$('#chn_unpass').attr('disabled',true);
 								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
 								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked[n]).parent().parent().parent().attr('chnCU')){
+								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
 								$('#channel-list-controls .btn-delete').prop('disabled', false);
 								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
 							}
-						}
 			
 						}
-					  }
+					  
 				  }
 				  else{
-					if($("#channel-table input[type='checkBox']:checked").length !== 1){
-						$('#chn_submit').attr('disabled',true);
-						$('#chn_pass').attr('disabled',true);
-						$('#chn_unpass').attr('disabled',true);
-						$('#channel-list-controls .btn-publish').prop('disabled', true);
-						$('#channel-list-controls .btn-publish-later').prop('disabled', true);
-						$('#channel-list-controls .btn-delete').prop('disabled', true);
-					}else{
+					
 						var checked = $("#channel-table input[type='checkBox']:checked");
 						for(var n=0;n<checked.length;n++){		
 							//已通过和未通过
@@ -559,7 +542,7 @@ define(function(require, exports, module) {
 							}
 						}
 			
-						}
+						
 					}
 				}
 	
