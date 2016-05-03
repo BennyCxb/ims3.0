@@ -317,3 +317,8 @@
 #mtrC_flip{
     width: 185px;
 }
+
+#box_weather{
+    margin-left: 12px;
+    margin-right: 12px;
+}
