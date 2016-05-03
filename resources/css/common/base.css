@@ -349,6 +349,10 @@ a {
     border-radius: 3px;
     margin-top: 0px;
     min-height: 0;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f4f4f4 url(../../img/img_grid.png);
 }
 
 .info-box-content{

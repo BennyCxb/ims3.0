@@ -169,6 +169,7 @@ define(function (require, exports, module) {
         });
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {
             $("#clockText_color").css("background-color", $("#clockText_color").val());
+            $(".mtrC_datetime").css("color", $("#clockText_color").val());
             clockTextColor();
         });
         $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
