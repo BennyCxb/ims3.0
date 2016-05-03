@@ -262,6 +262,7 @@ define(function (require, exports, module) {
                 $("#box_weatherEffect").show();
                 if (wStyle.Type == undefined){
                     $("#weatherText_color").val("#000000");
+                    $("#weatherText_color").css("background-color", "#000000");
                     $("#btn_weather_color i").css("background-color", "#000000");
                     $("#weatherFlip_time").val(10);
                     $("#mtrC_weatherNormal").next().trigger("click");

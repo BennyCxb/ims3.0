@@ -71,19 +71,20 @@
         </div>
         <!-- 天气控件属性 -->
         <div id="box_weatherEffect" class="box-header with-border">
-            <div id="" class="btn-group">
-                <div class="input-group my-colorpicker2">
+            <div class="btn-group" style="width: 100%;">
+                <div  id="box_weather_color" class="input-group my-colorpicker2">
                     <input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色">
                     <div id="btn_weather_color" class="input-group-addon">
                         <i></i>
                     </div>
                 </div>
+                <div id="box_weather_time" class="input-group pull-right">
+                    <span class="input-group-addon">切换间隔</span>
+                    <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入切换间隔时间">
+                    <span class="input-group-addon">秒</span>
+                </div>
             </div>
-            <div id="box_weather_time" class="input-group">
-                <span class="input-group-addon">切换</span>
-                <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入切换间隔时间">
-                <span class="input-group-addon">秒</span>
-            </div>
+
         </div>
         <div id="box_tableHeader" class="box-header with-border">
             <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i>

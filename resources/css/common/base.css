@@ -242,6 +242,20 @@ a {
 	display: none;
 }
 
+#mtrC_pageDownPeriod, #weatherFlip_time {
+    height: 30px;
+    line-height: 0px;
+}
+
+#box_weather_color, #box_weather_time {
+    width: 200px;
+    display: inline-table;
+}
+
+#weatherText_color {
+    height: 30px;
+}
+
 #text_color {
 	height: 30px;
     width: 90px;
