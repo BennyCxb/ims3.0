@@ -51,10 +51,7 @@
                 </label>
             </label>
 
-
         </div>
-        
-
        
 
         <!-- <label class="channel-editor-program-count">
@@ -80,13 +77,12 @@
             <span class="input-group-addon"  title="播放时长">
                 <i class="glyphicon glyphicon-time"></i>
             </span>
-            <input type="number" class="form-control program-duration"  data-field="duration" value="<%=duration%>">
-            <span class="input-group-addon"  title="播放时长">
+            <input type="text" class="form-control program-duration" data-field="duration-text" value="<%=duration_text%>">
+            <input type="number" class="program-duration-hidden" style="display: none" data-field="duration" value="<%=duration%>">
+            <!--<span class="input-group-addon"  title="播放时长">
                 秒
-            </span>
+            </span>-->
         </div>
-
-
 
 
     </div>
