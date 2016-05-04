@@ -3,6 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var CRUD = require("common/crud.js");
     var DB = CRUD.Database.getInstance();
+    var rgba;
 
     exports.init = function () {
 
@@ -163,16 +164,16 @@ define(function (require, exports, module) {
     //加载控件属性
     function widgetLoad(widgetData) {
         //color picker with addon
-        $("#text_color").colorpicker().on('changeColor', function (ev) {
+        $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
             $("#text_color").css("background-color", $("#text_color").val());
             textAttrSave();
         });
-        $("#clockText_color").colorpicker().on('changeColor', function (ev) {
+        $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
             $("#clockText_color").css("background-color", $("#clockText_color").val());
             $(".mtrC_datetime").css("color", $("#clockText_color").val());
             clockTextColor();
         });
-        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {
+        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {             //天气文本字体颜色
             $("#weatherText_color").css("background-color", $("#weatherText_color").val());
             $("#mtrC_weatherNormal_box").css("color", $("#weatherText_color").val());
             weatherSave();
@@ -209,7 +210,7 @@ define(function (require, exports, module) {
                     if (wStyle.Type == "Marquee") {
                         $("#mtrC_effect").show();
                     } else {
-                        $("#mtrC_flip").css('display','inline');
+                        $("#mtrC_flip").show();
                     }
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
@@ -219,14 +220,13 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
-                    $("#mtrC_flip").css('display','inline');
+                    $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
                 }
                 textAttrSave();
                 break;
             case 'ClockBox':
                 var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
-                clockAttrSave();
                 if (wStyle.Type == undefined){
                     $("#clockText_color").val("#000000");
                     $("#mtrC_dtTime").next().trigger("click");
@@ -334,7 +334,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value=' + duration + '></td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value=' + duration + '></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value="'+ dbcount +'"></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -343,7 +343,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value="' + duration + '"></td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -433,8 +433,8 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" value=1></td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
+                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
                         $("#mtrCtrl_Table tbody").append(mtrtr);
@@ -442,8 +442,8 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '"  mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time"><input type="time" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
+                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
                         $("#mtrCtrl_Table tbody").append(mtrtr);
@@ -451,6 +451,8 @@ define(function (require, exports, module) {
 
                 }
             }
+
+            $(".mtr_time input").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //显示或隐藏次数
             if ($("#mtrCtrl_playType").val() == "Percent") {
@@ -594,12 +596,7 @@ define(function (require, exports, module) {
         })
         //时钟类型
         $(".rd_clock").next().click(function () {
-            if (!inputCheck()) return;
-            var wstyle = {
-                TextColor: $("#clockText_color").val(),
-                Type: $("input:radio:checked").attr("clocktype"),
-            }
-            DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+            clockTextColor();
         })
     }
 
@@ -629,6 +626,7 @@ define(function (require, exports, module) {
     }
     //天气保存
     function weatherSave(){
+        if (!inputCheck()) return;
         var wstyle = {
             Type: $("input:radio:checked").attr("weathertype"),
             SwitchPeriod: Number($("#weatherFlip_time").val()),
@@ -641,29 +639,60 @@ define(function (require, exports, module) {
     function inputCheck(){
         var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
         var errorMsg = "";
+        var obj;
         if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4){
             $(".mtrCtrl_time").each(function(){
-                if($(this).val() == "") errorMsg += "请输入资源时长！\n";
+                if($(this).val() == "") {
+                    errorMsg += "请输入资源时长！\n";
+                    obj = $(this);
+                }
             })
             $(".mtrC_times").each(function(){
-                if($(this).val() == null) errorMsg += "请输入资源次数！\n";
+                if($(this).val() == null) {
+                    errorMsg += "请输入资源次数！\n";
+                    obj = $(this);
+                }
+
             })
         }
         if (widgetData.type_id == 3){
             if ($("#mtrC_textType").val() == "Normal"){
-                if($("#mtrC_pageDownPeriod").val() == null) errorMsg += "请填写翻页间隔时间！\n";
+                if($("#mtrC_pageDownPeriod").val() == null) {
+                    errorMsg += "请填写翻页间隔时间！\n";
+                    obj = $("#mtrC_textType");
+                }
             }else {
-                if($("#text_color").val() == "") errorMsg += "请选择字体颜色！\n";
-                if($("#mtrC_scrollSpeed").val() == "") errorMsg += "请选择滚动速度！\n";
+                if($("#text_color").val() == "") {
+                    errorMsg += "请选择字体颜色！\n";
+                    obj = $("#text_color");
+                }
+                if($("#mtrC_scrollSpeed").val() == "") {
+                    errorMsg += "请选择滚动速度！\n";
+                    obj = $("#mtrC_scrollSpeed");
+                }
             }
         }
         if (widgetData.type_id == 5) {
-            if ($("#clockText_color").val() == "") errorMsg += "请输入时间字体颜色！\n";
+            if ($("#clockText_color").val() == "") {
+                errorMsg += "请输入时间字体颜色！\n";
+                obj = $("#clockText_color")
+            }
+        }
+        if (widgetData.type_id == 6) {
+            if ($("#weatherText_color").val() == "") {
+                errorMsg += "请输入天气字体颜色！\n";
+                obj = $("#weatherText_color")
+            }
+            if ($("#weatherFlip_time").val() == "") {
+                errorMsg += "请输入天气切换间隔时间！\n";
+                obj = $("#weatherFlip_time")
+            }
         }
         if (errorMsg == ""){
             return true;
         }else {
             alert(errorMsg);
+            obj.focus();
             return false;
         }
 
@@ -775,5 +804,25 @@ define(function (require, exports, module) {
         return time;
     }
 
+    function rgbaChange(rgba){
+        var arr = rgba.split(/[(,)]/);
+        var r = Number(arr[1]).toString(16);
+        if (r.length <= 1) {
+            r = "0" + r;
+        }
+        var g = Number(arr[2]).toString(16);
+        if (g.length <= 1) {
+            g = "0" + g;
+        }
+        var b = Number(arr[3]).toString(16);
+        if (b.length <= 1) {
+            b = "0" + b;
+        }
+        var a = parseInt(Number(arr[4])*255).toString(16);
+        if (a.length <= 1) {
+            a = "0" + a;
+        }
+        return "#"+ r + g + b + a;
+    }
 
 })
