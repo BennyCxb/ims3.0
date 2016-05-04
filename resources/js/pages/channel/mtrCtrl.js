@@ -234,9 +234,9 @@ define(function (require, exports, module) {
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
-                    $("#text_bgcolor").val("#000000");
+                    $("#text_bgcolor").val("rgba(0,0,0,0)");
                     $("#text_color").css("background-color", "#000000");
-                    $("#text_bgcolor").css("background-color", "#000000");
+                    $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
                 }
                 textAttrSave();
                 break;
@@ -680,8 +680,8 @@ define(function (require, exports, module) {
                 }
             }else {
                 if($("#text_color").val() == "") {
-                    errorMsg += "请选择字体颜色！\n";
-                    obj = $("#text_color");
+                    $("#text_color").val("#000000");
+                    $("#text_color").css("background-color", "#000000");
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -689,14 +689,14 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#text_bgcolor").val() == "") {
-                errorMsg += "请选择背景颜色！\n";
-                obj = $("#text_bgcolor");
+                $("#text_bgcolor").val("rgba(0,0,0,0)");
+                $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
-                errorMsg += "请输入时间字体颜色！\n";
-                obj = $("#clockText_color")
+                $("#clockText_color").val("#000000");
+                $("#clockText_color").css("background-color", "#000000");
             }
         }
         if (widgetData.type_id == 6) {
