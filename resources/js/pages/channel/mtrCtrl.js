@@ -109,9 +109,6 @@ define(function (require, exports, module) {
         } else {
             $(".mtrCtrl_times").children().hide();
         }
-        $("#box_effect").hide();
-        $("#box_datetimeEffect").hide();
-        $("#box_datetime").hide();
         //载入
         if (widget.type != undefined){
             var wtype = widget.type;
@@ -136,6 +133,7 @@ define(function (require, exports, module) {
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "4");
                     $("#box_effect").show();
+                    $("#mtrC_bgFlip").show();
                     $("#mtrC_effect").hide();
                     $("#mtrC_flip").hide();
                     break;
@@ -174,6 +172,10 @@ define(function (require, exports, module) {
         //color picker with addon
         $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
             $("#text_color").css("background-color", $("#text_color").val());
+            textAttrSave();
+        });
+        $("#text_bgcolor").colorpicker().on('changeColor', function (ev) {                    //文本背景颜色
+            $("#text_bgcolor").css("background-color", $("#text_bgcolor").val());
             textAttrSave();
         });
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
@@ -220,16 +222,20 @@ define(function (require, exports, module) {
                     } else {
                         $("#mtrC_flip").show();
                     }
+
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
                     $("#text_color").css("background-color", wStyle.TextColor);
-                    $("#btn_text_color i").css("background-color", wStyle.TextColor);
+                    $("#text_bgcolor").val(wStyle.BackgroundColor);
+                    $("#text_bgcolor").css("background-color", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
+                    $("#text_bgcolor").val("#000000");
+                    $("#text_bgcolor").css("background-color", "#000000");
                 }
                 textAttrSave();
                 break;
@@ -561,12 +567,14 @@ define(function (require, exports, module) {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
                 ScrollDriection: $("#mtrC_scrollDirection").val(),
-                ScrollSpeed: $("#mtrC_scrollSpeed").val()
+                ScrollSpeed: $("#mtrC_scrollSpeed").val(),
+                BackgroundColor: $("#text_bgcolor").val()
             }
         } else {
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
+                BackgroundColor: $("#text_bgcolor").val()
             }
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
