@@ -235,6 +235,7 @@ define(function (require, exports, module) {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
                     $("#text_bgcolor").val("#000000");
+                    $("#text_color").css("background-color", "#000000");
                     $("#text_bgcolor").css("background-color", "#000000");
                 }
                 textAttrSave();
@@ -672,7 +673,7 @@ define(function (require, exports, module) {
             })
         }
         if (widgetData.type_id == 3){
-            if ($("#mtrC_textType").val() == "Normal"){
+            if ($("#mtrC_textType").val() == "Normal") {
                 if($("#mtrC_pageDownPeriod").val() == null) {
                     errorMsg += "请填写翻页间隔时间！\n";
                     obj = $("#mtrC_textType");
@@ -686,6 +687,10 @@ define(function (require, exports, module) {
                     errorMsg += "请选择滚动速度！\n";
                     obj = $("#mtrC_scrollSpeed");
                 }
+            }
+            if ($("#text_bgcolor").val() == "") {
+                errorMsg += "请选择背景颜色！\n";
+                obj = $("#text_bgcolor");
             }
         }
         if (widgetData.type_id == 5) {
