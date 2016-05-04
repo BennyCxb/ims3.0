@@ -1,9 +1,7 @@
 define(function (require, exports, module) {
-    var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var CRUD = require("common/crud.js");
     var DB = CRUD.Database.getInstance();
-    var rgba;
 
     exports.init = function () {
 
@@ -40,6 +38,16 @@ define(function (require, exports, module) {
         $('#mtr_addMtr').click(function () {
             var page = "resources/pages/channel/addMtr.html";
             UTIL.cover.load(page);
+        })
+
+        // 统计时长
+        $('#mtr_countTime').click(function () {
+            var conutTime = 0;
+            for(var a = 0; a<$(".mtr_time input").length; a++){
+                conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
+            }
+            //conutTime = formatTime(conutTime);
+            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime);
         })
 
         //批量删除
@@ -325,7 +333,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time">' + duration + '</td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -424,7 +432,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -795,7 +803,7 @@ define(function (require, exports, module) {
     }
 
     function formatSecond(longTime) {
-        //转化为 秒
+        //转化为秒
         var arr = longTime.split(":");
         var h = Number(arr[0]);
         var m = Number(arr[1]);

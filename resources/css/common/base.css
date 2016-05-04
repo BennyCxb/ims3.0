@@ -323,8 +323,8 @@ a {
 }
 
 #mtrCtrl_Table input {
-    height: 20px;
     text-align: center;
+    padding: 0px;
 } 
 
 .mtrCtrl_checkbox {
@@ -343,11 +343,12 @@ a {
 	width: 112px;
 }
 .mtr_time input {
-    width: 90px;
+    width: 70px;
 }
 
 .mtrCtrl_times {
 	width: 45px;
+    min-width: 45px;
 }
 
 .mtrCtrl_times label {
