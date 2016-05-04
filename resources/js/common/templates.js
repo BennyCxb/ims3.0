@@ -38,7 +38,7 @@ __p+='<div class="channel-program-header box-header with-border"> <input value="
 ((__t=(lifetime_start))==null?'':__t)+
 '"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="duration" value="'+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control program-duration" data-field="duration" value="'+
 ((__t=(duration))==null?'':__t)+
 '"> <span class="input-group-addon" title="播放时长"> 秒 </span> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
 ((__t=(layout.name))==null?'':__t)+
