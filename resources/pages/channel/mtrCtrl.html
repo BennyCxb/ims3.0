@@ -9,7 +9,7 @@
     <!-- form start -->
     <form role="form" style="height: 90%;">
         <div id="box_effect" class="box-header with-border">
-            <div id="" class="btn-group mtrCtrl_select">
+            <div class="btn-group mtrCtrl_select">
                 <select id="mtrC_textType" class="form-control select2 "
                         style="width: 100%; height: 30px; padding: 0px 10px;">
                     <option selected="selected" value="Normal">常规</option>
@@ -20,7 +20,7 @@
                 <div id="box_text_time" class="input-group">
 
                     <span class="input-group-addon">翻页间隔</span>
-                    <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入翻页时间">
+                    <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
                     <span class="input-group-addon">秒</span>
                 </div>
             </div>
@@ -64,14 +64,13 @@
         <!-- 天气控件属性 -->
         <div id="box_weatherEffect" class="box-header with-border">
             <div class="btn-group" style="width: 100%;">
-                <div  id="box_weather_color" class="input-group my-colorpicker2">
-                    <label class="col-sm-4 control-label">字体颜色:</label>
-                    <div class="col-sm-6"><input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色"></div>
-                    <!--<div id="btn_weather_color" class="input-group-addon"><i></i></div>-->
+                <div  id="box_weather_color" class="input-group pull-left">
+                    <label class="col-sm-3 control-label">字体颜色:</label>
+                    <div class="col-sm-9"><input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色"></div>
                 </div>
                 <div id="box_weather_time" class="input-group pull-right">
                     <span class="input-group-addon">切换间隔</span>
-                    <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入切换间隔时间">
+                    <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入">
                     <span class="input-group-addon">秒</span>
                 </div>
             </div>
