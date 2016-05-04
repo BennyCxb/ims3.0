@@ -60,7 +60,7 @@ define(function(require, exports, module) {
         if (location.hash.indexOf('#layout/edit') !== 0) {
             $('#edit-page-container').empty().addClass('none');
         }
-		editor.detachFromDOM();
+		editor.destroy();
         window.onpopstate = undefined;
     }
 

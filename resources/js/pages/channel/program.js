@@ -20,6 +20,8 @@ define(function (require, exports, module) {
     
     function load(program, _container) {
         container = _container;
+        editor = null;
+        editMode = false;
         if (!program) {
             $('#channel-editor-wrapper .channel-program-editor').html('没有节目!');
             return;
@@ -34,9 +36,6 @@ define(function (require, exports, module) {
         var program = db.collection('program').select({id: programId})[0],
             layout = db.collection('layout').select({id: layoutId})[0],
             widgets = db.collection('widget').select({program_id: programId});
-		if (editor) {
-			editor.detachFromDOM();
-		}
         renderProgramView(program, layout, widgets);
         registerEventListeners();
         
@@ -193,6 +192,9 @@ define(function (require, exports, module) {
         messageDispatcher.on('channel_overall_schedule_params.change', function (data) {
             $('#channel-editor-wrapper .channel-program-timer')
                 .toggleClass('percent-channel', data === 'Percent');
+        });
+        messageDispatcher.on('program.reset', function () {
+            editor.destroy();
         });
 
         editor.onFocusChanged(function () {
