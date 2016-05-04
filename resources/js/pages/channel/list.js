@@ -173,13 +173,7 @@ define(function(require, exports, module) {
         $('#channel-list-nav').bind('input propertychange', function (ev) {
             onSearch($('#channelSearch').val());
         });
-        $('#channel-list-nav .glyphicon-search').click(function (ev) {
-            onSearch($('#channel-list-nav input').val());
-        });
-        $('#channel-list-controls .btn-toast').click(function () {
-            toast.show(Math.random());
-        });
-        
+
     }
     
     function onSearch(_keyword) {
@@ -303,7 +297,6 @@ define(function(require, exports, module) {
     // 加载页面数据
     function loadPage(pageNum) {
 		var CheckLevel = -1;
-		$("#channel-table tbody").html("");
         if($('#chn_toBeCheckedDiv button.btn-primary').length > 0){
           CheckLevel = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
         }
@@ -324,10 +317,9 @@ define(function(require, exports, module) {
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, render);
     }
-
     // 渲染界面
     function render(json) {
-
+        //翻页
         var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);
         $('#channel-table-pager').jqPaginator({
@@ -345,8 +337,8 @@ define(function(require, exports, module) {
                 }
             }
         });
-		
-		
+
+        $("#channel-table tbody").empty();
 		//拼接
         if (json.Channels != undefined) {
             var chnData = json.Channels;
@@ -362,58 +354,60 @@ define(function(require, exports, module) {
                                     '<th class="chn_create">创建人</th>'+
 									'<th class="chn_createTime">创建时间</th>'+
                                 '</tr>');
-            if (chnData.length != 0){
-                	for (var x = 0; x < chnData.length; x++) {
-                        // 审核状态
-                        var check_td = '';
-                        var check_status = '';
-                        if(util.getLocalParameter('config_checkSwitch') == '1'){
-                            var status;
-                            check_status = "check_status=" + chnData[x].CheckLevel;
-                            switch(chnData[x].CheckLevel){
-                                case 0:
-                                    status = '待提交';
-                                    break;
-                                case 1:
-                                    status = '待审核';
-                                    break; 
-                                case 2:
-                                    status = '已通过';
-                                    break; 
-                                case 3:
-                                    status = '未通过';
-                                    break;       
-                                default:
-                                    break;
-                            } 
-                           check_td = '<th class="chn_check">'+status+'</th>';
+            if (chnData.length != 0) {
+                for (var x = 0; x < chnData.length; x++) {
+                    // 审核状态
+                    var check_td = '';
+                    var check_status = '';
+                    if (util.getLocalParameter('config_checkSwitch') == '1') {
+                        var status;
+                        check_status = "check_status=" + chnData[x].CheckLevel;
+                        switch (chnData[x].CheckLevel) {
+                            case 0:
+                                status = '待提交';
+                                break;
+                            case 1:
+                                status = '待审核';
+                                break;
+                            case 2:
+                                status = '已通过';
+                                break;
+                            case 3:
+                                status = '未通过';
+                                break;
+                            default:
+                                break;
                         }
+                        check_td = '<th class="chn_check">' + status + '</th>';
 
-                        var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
+
+                        var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                            '<td class="chn_name" title="' +chnData[x].Name+ '"><b><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></b></td>' +
+                            '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
                             check_td +
-                            '<td class="chn_create" title="' +chnData[x].CreateUserName+ '"><b>' + chnData[x].CreateUserName + '</b></td>' +
-							'<td class="chn_createTime" title="' +chnData[x].CreateTime+ '"><b>' + chnData[x].CreateTime + '</b></td>' +
+                            '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
+                            '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
+
+                    } else {
+                        for (var x = 0; x < chnData.length; x++) {
+
+                            // 未审核状态
+                            var check_td = '';
+                            var check_status = '';
+                            var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
+                                '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                                '<td class="chn_name" title="' + chnData[x].Name + '"><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></td>' +
+                                check_td +
+                                '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
+                                '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
+                                '</tr>';
+                            $("#channel-table tbody").append(chntr);
+                        }
                     }
-						}else {
-							for (var x = 0; x < chnData.length; x++) {
-								
-								// 未审核状态
-								var check_td = '';
-								var check_status = '';
-								var chntr = '<tr '+ check_status +' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
-                            '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                           '<td class="chn_name" title="' +chnData[x].Name+ '"><a href="#channel/edit?id='+chnData[x].ID+'">' + chnData[x].Name + '</a></td>' +
-                            check_td +
-                             '<td class="chn_create" title="' +chnData[x].CreateUserName+ '"><b>' + chnData[x].CreateUserName + '</b></td>' +
-							'<td class="chn_createTime" title="' +chnData[x].CreateTime+ '"><b>' + chnData[x].CreateTime + '</b></td>' +
-                            '</tr>';
-                        $("#channel-table tbody").append(chntr);
-							}
-					}
+                }
+            }
 		checkCheckBtns();
             
         }
