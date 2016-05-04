@@ -220,7 +220,7 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
-                    $("#mtrC_flip").css('display','inline');
+                    $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
                 }
                 textAttrSave();
