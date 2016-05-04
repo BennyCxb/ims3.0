@@ -241,81 +241,97 @@ define(function (require, exports, module) {
 				alert("用户名不能为空！");
 				 $("#role_name")[0].focus();
 				return false
-				}
-            var name = {
-                RoleName: roleName
+				}else{
+                var newName = $("#role_name").val();
+                var data1 = JSON.stringify({
+                    project_name:CONFIG.projectName,
+                    action:'GetByRoleNameCount',
+                    RoleName:newName,
+                    RoleID:-1
+                })
+                var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
+                UTIL.ajax('post',url1,data1,function(msg){
+                    if(msg.RoleCount!==0){
+                        alert("角色名已存在！")
+                        return false;
+                    }else{
+                        var name = {
+                            RoleName: roleName
+                        }
+                        if(rID){}else{
+                            var data = JSON.stringify({
+                                project_name:CONFIG.projectName,
+                                action:'Post',
+                                Data: name
+                            });
+                            var url = CONFIG.serverRoot + '/backend_mgt/v2/roles';
+                            UTIL.ajax('post', url, data, function(msg){
+                                if(msg.rescode == 200){
+                                    rID=msg.RoleID;
+                                    //exports.roleID = rID;
+                                    //exports.roleName = roleName;
+                                    getClass.title = '请选取';
+                                    getClass.roleID = rID;
+                                    getClass.save = function(data){
+                                        console.log(data);
+                                        var ajax_data = JSON.stringify({
+                                            project_name:CONFIG.projectName,
+                                            action: 'updateTreeRoleInfo',
+                                            roleID:rID,
+                                            categoryList:data
+                                        })
+                                        var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
+                                        UTIL.ajax('post',url,ajax_data,function(msg){
+                                            if(msg.rescode==200){
+                                                UTIL.cover.close();
+                                                exports.roleID = rID;
+                                                exports.roleName = roleName;
+                                                //alert(ROLEEDIT.roleID);
+                                                UTIL.cover.load('resources/pages/user/roles_edit.html');
+                                            }
+                                            else{
+                                                return false;
+                                            }
+                                        })
+                                    }
+                                    getClass.close = function(){
+                                        UTIL.cover.close();
+                                        UTIL.cover.load('resources/pages/user/roles_edit.html');
+                                    }
+                                }else{
+                                    flag5=false;
+                                }
+                            });
+                        }
+                        getClass.title = '请选取';
+                        getClass.roleID = rID;
+                        getClass.save = function(data){
+                            //console.log(data);
+                            var ajax_data = JSON.stringify({
+                                project_name:CONFIG.projectName,
+                                action: 'updateTreeRoleInfo',
+                                roleID:rID,
+                                categoryList:data
+                            })
+                            var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
+                            UTIL.ajax('post',url,ajax_data,function(msg){
+                                if(msg.rescode==200){
+                                    UTIL.cover.close();
+                                    UTIL.cover.load('resources/pages/user/roles_edit.html');
+                                }
+                                else{
+                                    return false;
+                                }
+                            })
+                        }
+                        getClass.close = function(){
+                            UTIL.cover.close();
+                            UTIL.cover.load('resources/pages/user/roles_edit.html');
+                        }
+                        UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
+                    }
+                })
             }
-			if(rID){}else{
-				var data = JSON.stringify({
-					project_name:CONFIG.projectName,
-					action:'Post',
-					Data: name
-				});
-				var url = CONFIG.serverRoot + '/backend_mgt/v2/roles';
-				UTIL.ajax('post', url, data, function(msg){
-					if(msg.rescode == 200){
-						rID=msg.RoleID;
-						//exports.roleID = rID;
-						//exports.roleName = roleName;
-						getClass.title = '请选取';
-						getClass.roleID = rID;
-						getClass.save = function(data){
-							console.log(data);
-							var ajax_data = JSON.stringify({
-								project_name:CONFIG.projectName,
-								action: 'updateTreeRoleInfo',
-								roleID:rID,
-								categoryList:data
-								})
-							var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
-							UTIL.ajax('post',url,ajax_data,function(msg){
-								if(msg.rescode==200){
-									UTIL.cover.close();
-									exports.roleID = rID;
-									exports.roleName = roleName;
-									//alert(ROLEEDIT.roleID);
-									UTIL.cover.load('resources/pages/user/roles_edit.html');
-									}
-								else{
-									return false;
-									}
-								})
-						}
-						getClass.close = function(){
-							UTIL.cover.close();
-							UTIL.cover.load('resources/pages/user/roles_edit.html');
-							}
-					}else{
-						flag5=false;
-					}	
-				});
-			}
-			getClass.title = '请选取';
-			getClass.roleID = rID;
-			getClass.save = function(data){
-				//console.log(data);
-				var ajax_data = JSON.stringify({
-					project_name:CONFIG.projectName,
-            		action: 'updateTreeRoleInfo',
-					roleID:rID,
-					categoryList:data
-					})
-				var url = CONFIG.serverRoot + '/backend_mgt/v2/termcategory';
-				UTIL.ajax('post',url,ajax_data,function(msg){
-					if(msg.rescode==200){
-						UTIL.cover.close();
-						UTIL.cover.load('resources/pages/user/roles_edit.html');
-						}
-					else{
-						return false;
-						}
-					})
-			}
-			getClass.close = function(){
-						UTIL.cover.close();	
-						UTIL.cover.load('resources/pages/user/roles_edit.html');
-							}
-			UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
 			})
 		 //关闭窗口
         $(".CA_close").click(function () {
