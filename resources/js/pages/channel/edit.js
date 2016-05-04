@@ -19,11 +19,11 @@ define(function(require, exports, module) {
 		requestUrl = config.serverRoot,
 		db = null,
         channelId = null,
-		proramHandle = null,
+		programHandle = null,
 		/**
 		 * 保存常规节目的序列
 		 */
-		 regularSortable;
+		 regularSortable = null;
 
 	/**
 	 * 初始化数据库
@@ -120,14 +120,17 @@ define(function(require, exports, module) {
 	 * 页面入口
 	 */
 	exports.init = function() {
+		programHandle = null;
+		channelId = null;
+		regularSortable = null;
 		window.onpopstate = function () {
 			onCloseEditor();
 			window.onpopstate = undefined;
 		};
 		db = crud.Database.getInstance();
 		configDatabase();
-		var channelId = Number(util.getHashParameters().id);
-		loadChannelData(isNaN(channelId) ? null : channelId);
+		var _channelId = Number(util.getHashParameters().id);
+		loadChannelData(isNaN(_channelId) ? null : _channelId);
 		
 		
 	};
@@ -443,7 +446,7 @@ define(function(require, exports, module) {
 	var messageReceiver = (function () {
 		return {
 			subscribeEvent: function (handle) {
-				proramHandle = handle;
+				programHandle = handle;
 				handle.on('program_name.change', onProgramNameChange);
 			}
 		};
@@ -457,6 +460,9 @@ define(function(require, exports, module) {
 		$('#channel-editor-wrapper ul>li').removeClass('selected');
 		if (program) {
 			$('#channel-editor-wrapper ul>li[data-id=' + program.id + ']').addClass('selected');
+		}
+		if (programHandle) {
+			programHandle.send('program.reset', null);
 		}
 		programCtrl.load(program, messageReceiver);
 	}
@@ -494,9 +500,17 @@ define(function(require, exports, module) {
             db.collection('channel').update({name: this.value}, {});
         });
         $('#channel-editor-wrapper .channel-program-schedule-type').change(function () {
+            if (this.value === 'Sequence') {
+                var s = 0;
+                $('#channel-editor-wrapper .channel-program-list-regular li').each(function (idx, el) {
+                    var id = parseInt(this.getAttribute('data-id'));
+                    db.collection('program').update({sequence: s}, {id: id});
+                    s++;
+                });
+            }
             var value = JSON.stringify({Type: this.value});
             db.collection('channel').update({overall_schedule_params: value}, {});
-            proramHandle.send('channel_overall_schedule_params.change', this.value);
+            programHandle.send('channel_overall_schedule_params.change', this.value);
         });
 	}
 
@@ -517,6 +531,7 @@ define(function(require, exports, module) {
         $('#edit-page-container')
 			.empty()
 			.addClass('none');
+		programHandle.send('program.reset', null);
 		window.onpopstate = undefined;
         location.hash = '#channel/list';
     }
@@ -1038,7 +1053,7 @@ define(function(require, exports, module) {
 					left: el.Left,
 					style: '',
 					top: el.Top,
-					overall_schedule_params: '{\"duration\":3600,\"count\":null}',
+					overall_schedule_params: '{\"Type\": \"Sequence\"}',
 					overall_schedule_type: 'Regular',
 					z_index: el.Zorder
 				};

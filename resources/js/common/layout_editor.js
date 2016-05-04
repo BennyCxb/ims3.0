@@ -459,7 +459,7 @@ define(function (require, exports, module) {
         this.onDraw();
         el.appendChild(this.mElement);
         var self = this, $el = $(el);
-        $(window).on('resize', function () {
+        $(window).on('resize.canvas', function () {
             self.resize($el.width(), $el.height());
         });
     };
@@ -471,10 +471,6 @@ define(function (require, exports, module) {
     LayoutEditor.prototype.getLayout = function () {
         return this.mLayout;
     };
-	
-	LayoutEditor.prototype.detachFromDOM = function() {
-		$(window).off('resize');
-	};
 
     /**
      * 返回当前的缩放比例
@@ -520,6 +516,15 @@ define(function (require, exports, module) {
 
     LayoutEditor.prototype.hidePreview = function () {
         this.mLayout.hidePreview();
+    };
+
+    LayoutEditor.prototype.destroy = function () {
+        $(window).off('resize.canvas');
+        $(this.mCanvas)
+            .off('mousedown')
+            .off('mouseup')
+            .off('mouseenter')
+            .off('mouseleave');
     };
 
     /**
