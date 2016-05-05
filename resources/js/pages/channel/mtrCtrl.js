@@ -100,7 +100,7 @@ define(function (require, exports, module) {
         $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
             '<th class="mtrCtrl_checkbox"></th>' +
-            '<th class="mtr_choise_name">文件名</th>' +
+            '<th class="mtrCtrl_name">文件名</th>' +
             '<th class="mtr_time">时长</th>' +
             '<th class="mtrCtrl_times"><label>次数</label></th>' +
             '<th class="mtrCtrl_delete"></th>' +
@@ -341,7 +341,7 @@ define(function (require, exports, module) {
                     if (mtrData[x].type_id == 1 || mtrData[x].type_id == 3) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -350,7 +350,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].type_id == "2" || mtrData[x].type_id == "4") {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value=' + duration + '></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value="'+ dbcount +'"></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -359,7 +359,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].type_name == "直播") {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -440,7 +440,7 @@ define(function (require, exports, module) {
                     if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0)|| mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -449,7 +449,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本" || mtrData[x].Type_Name === 'WebText') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -458,7 +458,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '"  mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
