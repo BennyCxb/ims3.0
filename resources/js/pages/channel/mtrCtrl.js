@@ -710,6 +710,7 @@ define(function (require, exports, module) {
             }else {
                 if($("#text_color").val() == "") {
                     $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
+                    $("#text_color").trigger("colorpickersliders.hide");
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -718,16 +719,19 @@ define(function (require, exports, module) {
             }
             if ($("#text_bgcolor").val() == "") {
                 $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
+                $("#text_bgcolor").trigger("colorpickersliders.hide");
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
                 $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
+                $("#clockText_color").trigger("colorpickersliders.hide");
             }
         }
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
                 $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
+                $("#weatherText_color").trigger("colorpickersliders.hide");
             }
             if ($("#weatherFlip_time").val() == "") {
                 errorMsg += "请输入天气切换间隔时间！\n";
