@@ -92,10 +92,26 @@ define(function (require, exports, module) {
             $("#box_tableHeader").hide();
             return;
         }
+        //$("#text_color").blur(function() {
+        //    $("#text_color").trigger("colorpickersliders.hide");
+        //})
+        //$("#text_bgcolor").blur(function() {
+        //    $("#text_bgcolor").trigger("colorpickersliders.hide");
+        //})
+        //$("#clockText_color").blur(function() {
+        //    if($(".cp-popover-container").length != 0){
+        //        $("#clockText_color").trigger("colorpickersliders.hide");
+        //    }
+        //})
+        //$("#weatherText_color").blur(function() {
+        //    $("#weatherText_color").trigger("colorpickersliders.hide");
+        //})
+
         exports.loadPage(widget);
     }
 
     exports.loadPage = function (widget) {
+        $(".cp-popover-container").remove();
         $("#mtrCtrl_Table tbody").empty();	//初始化
         $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
@@ -710,7 +726,9 @@ define(function (require, exports, module) {
             }else {
                 if($("#text_color").val() == "") {
                     $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
-                    $("#text_color").trigger("colorpickersliders.hide");
+                    if($(".cp-popover-container").length != 0) {
+                        $("#text_color").trigger("colorpickersliders.hide");
+                    }
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -719,19 +737,25 @@ define(function (require, exports, module) {
             }
             if ($("#text_bgcolor").val() == "") {
                 $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
-                $("#text_bgcolor").trigger("colorpickersliders.hide");
+                if($(".cp-popover-container").length != 0) {
+                    $("#text_bgcolor").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
                 $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
-                $("#clockText_color").trigger("colorpickersliders.hide");
+                if($(".cp-popover-container").length != 0) {
+                    $("#clockText_color").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
                 $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
-                $("#weatherText_color").trigger("colorpickersliders.hide");
+                if($(".cp-popover-container").length != 0) {
+                    $("#weatherText_color").trigger("colorpickersliders.hide");
+                }
             }
             if ($("#weatherFlip_time").val() == "") {
                 errorMsg += "请输入天气切换间隔时间！\n";
