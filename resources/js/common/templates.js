@@ -38,11 +38,7 @@ __p+='<div class="channel-program-header box-header with-border"> <input value="
 ((__t=(lifetime_start))==null?'':__t)+
 '"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <input type="text" class="form-control program-duration" data-field="duration-text" value="'+
-((__t=(duration_text))==null?'':__t)+
-'"> <input type="number" class="program-duration-hidden" style="display: none" data-field="duration" value="'+
-((__t=(duration))==null?'':__t)+
-'"><!--<span class="input-group-addon"  title="播放时长">\r\n                秒\r\n            </span>--> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <div class="program-duration-container"></div> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
 ((__t=(layout.name))==null?'':__t)+
 '</span> <span class="channel-program-layout-header-info">宽:'+
 ((__t=(layout.width))==null?'':__t)+
@@ -187,6 +183,21 @@ __p+='<tr data-channel-id="'+
 '</td> <td>版本:'+
 ((__t=(version))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
+}
+return __p;
+};
+exports['common_duration_input']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="duration-input-container form-control"> <input type="text" class="duration-input-text"> <input type="number" class="duration-input-hidden" value="'+
+((__t=(duration))==null?'':__t)+
+'"> <span class="duration-input-hour duration-display-item">'+
+((__t=(hour))==null?'':__t)+
+'</span> <span class="duration-display-item">:</span> <span class="duration-input-minute duration-display-item">'+
+((__t=(minute))==null?'':__t)+
+'</span> <span class="duration-display-item">:</span> <span class="duration-input-second duration-display-item">'+
+((__t=(second))==null?'':__t)+
+'</span> </div>';
 }
 return __p;
 };
