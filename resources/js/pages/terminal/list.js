@@ -75,21 +75,22 @@ define(function(require, exports, module) {
     })
 
     // serach
-    $('#term_search').keyup(function(event){
+    $("#term_search").keyup(function(){
       if(event.keyCode == 13) {
-        last = event.timeStamp;       //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
-        setTimeout(function(){        //设时延迟0.5s执行
-          if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
-          {
-            keyword = typeof($('#term_search').val()) === 'string' ? $('#term_search').val() : '';
-            loadTermList(_pageNO);
-          }
-        },500);
+        onSearch(event);
       }
-    })
-    //.change(function(){
-    //  loadTermList(_pageNO);
-    //})
+    });
+    $("#term_search").next().click(onSearch);
+    function onSearch(event) {
+        last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+        setTimeout(function(){          //设时延迟0.5s执行
+            if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            {
+              keyword = typeof($('#term_search').val()) === 'string' ? $('#term_search').val() : '';
+              loadTermList(_pageNO);
+            }
+        },500);
+    }
 
     // 筛选终端
     $('#term-status button').each(function(i,e){
