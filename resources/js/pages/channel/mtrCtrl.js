@@ -297,6 +297,7 @@ define(function (require, exports, module) {
                 break;
         }
 
+        $("#widget_attribute").empty();
         var wleft = widgetData.left;
         var wtop = widgetData.top;
         var wwidth = widgetData.width;
