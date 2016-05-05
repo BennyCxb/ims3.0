@@ -183,7 +183,7 @@ define(function (require, exports, module) {
             }
         });
         $("#text_bgcolor").ColorPickerSliders({             //文本背景颜色
-            color: 'rgba(0,0,0,0)',
+            color: 'rgba(0, 0, 0, 0)',
             size: 'large',
             placement: 'auto',
             swatches: false,
@@ -263,9 +263,9 @@ define(function (require, exports, module) {
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
-                    $("#text_bgcolor").val("rgba(0,0,0,0)");
+                    $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
                     $("#text_color").css("background-color", "#000000");
-                    $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                    $("#text_bgcolor").css("background-color", "rgba(0, 0, 0, 0)");
                 }
                 textAttrSave();
                 break;
@@ -567,6 +567,10 @@ define(function (require, exports, module) {
         $("#text_color").bind("input propertychange", function () {
             textAttrSave();
         })
+        //文本背景颜色
+        $("#text_bgcolor").bind("input propertychange", function () {
+            textAttrSave();
+        })
         //滚动方向
         $("#mtrC_scrollDirection").change(function () {
             textAttrSave();
@@ -718,8 +722,8 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#text_bgcolor").val() == "") {
-                $("#text_bgcolor").val("rgba(0,0,0,0)");
-                $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
+                $("#text_bgcolor").css("background-color", "rgba(0, 0, 0, 0)");
             }
         }
         if (widgetData.type_id == 5) {
@@ -853,26 +857,4 @@ define(function (require, exports, module) {
         var time = h * 3600 + m * 60 + s;
         return time;
     }
-
-    function rgbaChange(rgba){
-        var arr = rgba.split(/[(,)]/);
-        var r = Number(arr[1]).toString(16);
-        if (r.length <= 1) {
-            r = "0" + r;
-        }
-        var g = Number(arr[2]).toString(16);
-        if (g.length <= 1) {
-            g = "0" + g;
-        }
-        var b = Number(arr[3]).toString(16);
-        if (b.length <= 1) {
-            b = "0" + b;
-        }
-        var a = parseInt(Number(arr[4])*255).toString(16);
-        if (a.length <= 1) {
-            a = "0" + a;
-        }
-        return "#"+ r + g + b + a;
-    }
-
 })
