@@ -143,7 +143,7 @@ define(function (require, exports, module) {
             var duration = parseInt(this.value);
             if (duration != self.duration) {
                 self.duration = duration;
-                var texts = duration2TextWithPad();
+                var texts = duration2TextWithPad(duration);
                 self.$hour.text(texts.hour);
                 self.$minute.text(texts.minute);
                 self.$second.text(texts.second);

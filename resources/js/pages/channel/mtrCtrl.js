@@ -47,7 +47,7 @@ define(function (require, exports, module) {
                 conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
             }
             //conutTime = formatTime(conutTime);
-            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime);
+            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime).change();
         })
 
         //批量删除
