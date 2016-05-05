@@ -425,6 +425,11 @@ a {
 	width: 15%;
 }
 
+/*频道列表页面*/
+.chn_check, .chn_create, .chn_createTime {
+    text-align: center;
+}
+
 /*layout edit*/
 .full-screen {
     position: absolute;
