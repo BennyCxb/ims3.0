@@ -179,6 +179,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
+            title: '注：最右侧为透明度',
             onchange: function (ev) {
                 textAttrSave();
             }
@@ -190,6 +191,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
+            title: '注：最右侧为透明度',
             onchange: function (ev) {
                 textAttrSave();
             }
@@ -201,6 +203,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
+            title: '注：最右侧为透明度',
             onchange: function (ev, color) {
                 $(".mtrC_datetime").css("color", color.tiny.toRgbString());
                 clockTextColor();
@@ -213,6 +216,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
+            title: '注：最右侧为透明度',
             onchange: function (ev, color) {
                 $(".mtrC_weather").css("color", color.tiny.toRgbString());
                 weatherSave();
