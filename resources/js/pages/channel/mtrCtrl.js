@@ -96,6 +96,7 @@ define(function (require, exports, module) {
     }
 
     exports.loadPage = function (widget) {
+        $(".cp-popover-container").remove();
         $("#mtrCtrl_Table tbody").empty();	//初始化
         $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
@@ -171,23 +172,51 @@ define(function (require, exports, module) {
     //加载控件属性
     function widgetLoad(widgetData) {
         //color picker with addon
-        $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
-            $("#text_color").css("background-color", $("#text_color").val());
-            textAttrSave();
+        $("#text_color").ColorPickerSliders({               //文本字体颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#text_bgcolor").colorpicker().on('changeColor', function (ev) {                    //文本背景颜色
-            $("#text_bgcolor").css("background-color", $("#text_bgcolor").val());
-            textAttrSave();
+        $("#text_bgcolor").ColorPickerSliders({             //文本背景颜色
+            color: 'rgba(0, 0, 0, 0)',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
-            $("#clockText_color").css("background-color", $("#clockText_color").val());
-            $(".mtrC_datetime").css("color", $("#clockText_color").val());
-            clockTextColor();
+        $("#clockText_color").ColorPickerSliders({          //时钟文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev, color) {
+                $(".mtrC_datetime").css("color", color.tiny.toRgbString());
+                clockTextColor();
+            }
         });
-        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {             //天气文本字体颜色
-            $("#weatherText_color").css("background-color", $("#weatherText_color").val());
-            $("#mtrC_weatherNormal_box").css("color", $("#weatherText_color").val());
-            weatherSave();
+        $("#weatherText_color").ColorPickerSliders({        //天气文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev, color) {
+                $(".mtrC_weather").css("color", color.tiny.toRgbString());
+                weatherSave();
+            }
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
@@ -225,19 +254,17 @@ define(function (require, exports, module) {
                     }
 
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
-                    $("#text_color").val(wStyle.TextColor);
-                    $("#text_color").css("background-color", wStyle.TextColor);
-                    $("#text_bgcolor").val(wStyle.BackgroundColor);
-                    $("#text_bgcolor").css("background-color", wStyle.BackgroundColor);
+                    $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
+                    $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
-                    $("#text_bgcolor").val("rgba(0,0,0,0)");
+                    $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
                     $("#text_color").css("background-color", "#000000");
-                    $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                    $("#text_bgcolor").css("background-color", "rgba(0, 0, 0, 0)");
                 }
                 textAttrSave();
                 break;
@@ -247,8 +274,7 @@ define(function (require, exports, module) {
                     $("#clockText_color").val("#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
-                    $("#clockText_color").val(wStyle.TextColor);
-                    $("#clockText_color").css("background-color", wStyle.TextColor);
+                    $("#clockText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_datetime").css("color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
@@ -283,8 +309,7 @@ define(function (require, exports, module) {
                     $("#weatherFlip_time").val(10);
                     $("#mtrC_weatherNormal").next().trigger("click");
                 } else {
-                    $("#weatherText_color").val(wStyle.TextColor);
-                    $("#weatherText_color").css("background-color", wStyle.TextColor);
+                    $("#weatherText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_weather").css("color", wStyle.TextColor);
                     $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
@@ -539,6 +564,10 @@ define(function (require, exports, module) {
         $("#text_color").bind("input propertychange", function () {
             textAttrSave();
         })
+        //文本背景颜色
+        $("#text_bgcolor").bind("input propertychange", function () {
+            textAttrSave();
+        })
         //滚动方向
         $("#mtrC_scrollDirection").change(function () {
             textAttrSave();
@@ -681,8 +710,10 @@ define(function (require, exports, module) {
                 }
             }else {
                 if($("#text_color").val() == "") {
-                    $("#text_color").val("#000000");
-                    $("#text_color").css("background-color", "#000000");
+                    $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
+                    if($(".cp-popover-container").length != 0) {
+                        $("#text_color").trigger("colorpickersliders.hide");
+                    }
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -690,20 +721,26 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#text_bgcolor").val() == "") {
-                $("#text_bgcolor").val("rgba(0,0,0,0)");
-                $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
+                if($(".cp-popover-container").length != 0) {
+                    $("#text_bgcolor").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
-                $("#clockText_color").val("#000000");
-                $("#clockText_color").css("background-color", "#000000");
+                $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
+                if($(".cp-popover-container").length != 0) {
+                    $("#clockText_color").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
-                errorMsg += "请输入天气字体颜色！\n";
-                obj = $("#weatherText_color")
+                $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
+                if($(".cp-popover-container").length != 0) {
+                    $("#weatherText_color").trigger("colorpickersliders.hide");
+                }
             }
             if ($("#weatherFlip_time").val() == "") {
                 errorMsg += "请输入天气切换间隔时间！\n";
@@ -825,26 +862,4 @@ define(function (require, exports, module) {
         var time = h * 3600 + m * 60 + s;
         return time;
     }
-
-    function rgbaChange(rgba){
-        var arr = rgba.split(/[(,)]/);
-        var r = Number(arr[1]).toString(16);
-        if (r.length <= 1) {
-            r = "0" + r;
-        }
-        var g = Number(arr[2]).toString(16);
-        if (g.length <= 1) {
-            g = "0" + g;
-        }
-        var b = Number(arr[3]).toString(16);
-        if (b.length <= 1) {
-            b = "0" + b;
-        }
-        var a = parseInt(Number(arr[4])*255).toString(16);
-        if (a.length <= 1) {
-            a = "0" + a;
-        }
-        return "#"+ r + g + b + a;
-    }
-
 })

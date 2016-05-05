@@ -472,7 +472,7 @@ define(function(require, exports, module) {
               '<br />当前节目：'+ 
               ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName)) +
               '<br />当前视频：'+ 
-              ((typeof(tl[i].CurrentPlayInfo)==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
+              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
               '</td>' +
               '<td  style=" padding-top:11px;">' +
                 '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
