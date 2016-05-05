@@ -92,21 +92,6 @@ define(function (require, exports, module) {
             $("#box_tableHeader").hide();
             return;
         }
-        //$("#text_color").blur(function() {
-        //    $("#text_color").trigger("colorpickersliders.hide");
-        //})
-        //$("#text_bgcolor").blur(function() {
-        //    $("#text_bgcolor").trigger("colorpickersliders.hide");
-        //})
-        //$("#clockText_color").blur(function() {
-        //    if($(".cp-popover-container").length != 0){
-        //        $("#clockText_color").trigger("colorpickersliders.hide");
-        //    }
-        //})
-        //$("#weatherText_color").blur(function() {
-        //    $("#weatherText_color").trigger("colorpickersliders.hide");
-        //})
-
         exports.loadPage(widget);
     }
 
