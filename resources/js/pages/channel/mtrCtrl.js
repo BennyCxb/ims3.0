@@ -97,6 +97,7 @@ define(function (require, exports, module) {
 
     exports.loadPage = function (widget) {
         $("#mtrCtrl_Table tbody").empty();	//初始化
+        $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
             '<th class="mtrCtrl_checkbox"></th>' +
             '<th class="mtr_choise_name">文件名</th>' +
