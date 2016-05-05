@@ -24,6 +24,11 @@ body,h1,h2,h3,h4,h5,h6{
   padding: 0 !important; 
 }
 
+/*search*/
+.glyphicon-search {
+    cursor: pointer;
+    pointer-events: all;
+}
 
 .index-header-user-option:hover{
   background-color: #367faa !important;
@@ -238,7 +243,7 @@ a {
 	width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect{
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect, #mtrC_bgFlip {
 	display: none;
 }
 
@@ -256,7 +261,15 @@ a {
     width: 185px;
 }
 
-#box_datetimeEffect label {
+#box_text_bgcolor {
+    padding-top: 10px;
+}
+
+#box_text_bgcolor, #box_datetimeEffect {
+    width: 100%;
+}
+
+#box_text_bgcolor label, #box_datetimeEffect label {
     height: 30px;
     line-height: 30px;
     font-size: 14px;
@@ -264,11 +277,11 @@ a {
     margin: 0px;
 }
 
-#box_datetimeEffect div {
+#box_text_bgcolor div, #box_datetimeEffect div {
     padding: 0px;
 }
 
-#clockText_color, #weatherText_color {
+#clockText_color, #weatherText_color, #text_bgcolor {
     height: 30px;
 }
 
@@ -323,8 +336,8 @@ a {
 }
 
 #mtrCtrl_Table input {
-    height: 20px;
     text-align: center;
+    padding: 0px;
 } 
 
 .mtrCtrl_checkbox {
@@ -334,6 +347,7 @@ a {
 .mtrCtrl_name {
 	width: 250px;
 	max-width: 250px;
+    min-width: 250px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -343,11 +357,12 @@ a {
 	width: 112px;
 }
 .mtr_time input {
-    width: 90px;
+    width: 70px;
 }
 
 .mtrCtrl_times {
 	width: 45px;
+    min-width: 45px;
 }
 
 .mtrCtrl_times label {
@@ -409,6 +424,16 @@ a {
 
 .mtr_choise_status {
 	width: 15%;
+}
+
+/*频道列表页面*/
+.chn_check, .chn_create, .chn_createTime {
+    text-align: center;
+}
+
+/*用户列表页面*/
+.role_name, .users_email, .user_resetPwd {
+    text-align: center;
 }
 
 /*layout edit*/

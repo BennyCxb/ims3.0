@@ -5,7 +5,8 @@ define(function (require, exports, module) {
     var MTRU = require("pages/materials/materials_upload.js");
     var templates = require('common/templates');
     var nDisplayItems = 15,
-        keyword = "";
+        keyword = "",
+        last;
 
     exports.init = function () {
         checkCheck();
@@ -377,12 +378,7 @@ define(function (require, exports, module) {
             mtrCb();
         })
     }
-    
-    //搜索事件
-    function onSearch(_keyword, typeId) {
-        keyword = typeof(_keyword) === 'string' ? _keyword : '';
-        exports.loadPage(1, Number(typeId));
-    }
+
     
     //绑定事件
     function bind(){
@@ -435,10 +431,24 @@ define(function (require, exports, module) {
         })
         
         //搜索
-        $('#mtrSearch').bind('input propertychange', function () {
+        $("#mtrSearch").keyup(function(){
+            if(event.keyCode == 13) {
+                var typeId = $("#mtrSearch").attr("typeId");
+                onSearch(event);
+            }
+        });
+        $("#mtrSearch").next().click(onSearch);
+        function onSearch(event) {
             var typeId = $("#mtrSearch").attr("typeId");
-            onSearch($('#mtrSearch').val(), typeId);
-        })
+            last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+            setTimeout(function(){          //设时延迟0.5s执行
+                if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+                {
+                    keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
+                    exports.loadPage(1, Number(typeId));
+                }
+            },500);
+        }
 
         //删除和批量删除
         $("#mtr_delete").click(function () {
