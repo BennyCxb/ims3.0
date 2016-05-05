@@ -19,7 +19,7 @@
   <!-- bootstrap slider -->
   <link rel="stylesheet" href="resources/plugins/bootstrap-slider/slider.css">
   <!-- Select2 -->
-  <link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="resources/js/bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="resources/dist/css/AdminLTE.css">
   <!-- Bootstrap switch -->
@@ -31,7 +31,6 @@
   <link rel="stylesheet" href="resources/css/pages/layout/list_dialog.css">
   <link rel="stylesheet" href="resources/css/pages/channel/timer.css">
   <link rel="stylesheet" href="resources/plugins/iCheck/all.css"/>
-  <link rel="stylesheet" href="resources/plugins/select2/select2.min.css">
   <link rel="stylesheet" href="resources/css/pages/channel/edit.css">
     <link rel="stylesheet" href="resources/css/pages/channel/list.css"/>
     <link rel="stylesheet" href="resources/css/pages/layout/edit.css">
@@ -158,8 +157,6 @@
 <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="resources/plugins/fastclick/fastclick.js"></script>
-<!-- Select2 -->
-<script src="resources/plugins/select2/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="resources/dist/js/app.min.js"></script>
 <!-- Sea.js 3.0.0 -->
@@ -176,7 +173,7 @@
 <!-- Bootstrap switch -->
 <script src="resources/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
 <!-- Select 2 -->
-<script src="resources/plugins/select2/select2.full.min.js"></script>
+<script src="resources/js/bower_components/select2/dist/js/select2.full.js"></script>
 <!-- jQuery.Marquee -->
 <script src="resources/js/bower_components/jquery.marquee/jquery.marquee.min.js"></script>
 <!--  -->

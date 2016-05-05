@@ -101,6 +101,31 @@ define(function (require, exports, module) {
                 ev.preventDefault();
                 return;
             }
+            // backspace
+            if (keyCode === 8) {
+                switch (self.focused) {
+                    case 'hour':
+                        content = self.$hour.text();
+                        content = content.substring(0, content.length - 1);
+                        content = content.length < 2 ? '0' + content : content;
+                        self.$hour.text(content);
+                        break;
+                    case 'minute':
+                        content = self.$minute.text();
+                        content = content.substring(0, content.length - 1);
+                        content = content.length < 2 ? '0' + content : content;
+                        self.$minute.text(content);
+                        break;
+                    case 'second':
+                        content = self.$second.text();
+                        content = content.substring(0, content.length - 1);
+                        content = content.length < 2 ? '0' + content : content;
+                        self.$second.text(content);
+                        break;
+                }
+                ev.preventDefault();
+                return;
+            }
             // others
             digit = keyCode2Number(keyCode);
             if (digit === null) {
@@ -109,29 +134,18 @@ define(function (require, exports, module) {
             // digit
             switch (self.focused) {
                 case 'hour':
-                    if (self.$hour.hasClass('noinput')) {
-                        self.$hour.text('');
-                        self.$hour.removeClass('noinput');
-                    }
                     content = self.$hour.text();
                     content += digit;
+                    content = content.length > 2 && content[0] === '0' ? content.substring(1) : content;
                     self.$hour.text(content);
                     break;
                 case 'minute':
-                    if (self.$minute.hasClass('noinput')) {
-                        self.$minute.text('');
-                        self.$minute.removeClass('noinput');
-                    }
                     content = self.$minute.text();
                     content += digit;
                     content = content.length > 2 ? content.substring(1) : content;
                     self.$minute.text(content);
                     break;
                 case 'second':
-                    if (self.$second.hasClass('noinput')) {
-                        self.$second.text('');
-                        self.$second.removeClass('noinput');
-                    }
                     content = self.$second.text();
                     content += digit;
                     content = content.length > 2 ? content.substring(1) : content;
@@ -178,12 +192,10 @@ define(function (require, exports, module) {
         }
         if ($old !== $current) {
             if ($old !== null) {
-                $old.removeClass('noinput');
                 $old.removeClass('active');
             }
             if ($current !== null) {
                 $current.addClass('active');
-                $current.addClass('noinput');
             }
             this.validate();
         }
@@ -197,13 +209,12 @@ define(function (require, exports, module) {
         var s = parseInt(this.$second.text());
         s = s >= 60 ? 0 : s;
         var duration = h * 3600 + m * 60 + s,
-            texts;
+            texts = duration2TextWithPad(duration);
+        this.$hour.text(texts.hour);
+        this.$minute.text(texts.minute);
+        this.$second.text(texts.second);
         if (duration !== this.duration) {
             this.duration = duration;
-            texts = duration2TextWithPad(duration);
-            this.$hour.text(texts.hour);
-            this.$minute.text(texts.minute);
-            this.$second.text(texts.second);
             typeof this.onChange === 'function' && this.onChange(this.duration);
         }
     };
