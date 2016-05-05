@@ -65,10 +65,10 @@ define(function (require, exports, module) {
 			$("#usersTable tbody").append('<tr>'+                              
                                     // '<th class="users_ID">UID</th>'+
                                     '<th class="users_name">用户名</th>'+
-									'<th class="description">备注</th>'+
+									'<th class="role_name">角色</th>'+
 									'<th class="users_email">邮箱</th>'+
-									'<th class="roles">角色</th>'+
-									'<th class=""></th>'+
+									'<th class="description">备注</th>'+
+									'<th class="user_resetPwd">操作</th>'+
 									'<th class=""></th>'+
                                 '</tr>');
             for (var x = 0; x < rolData.length; x++) {
@@ -82,40 +82,40 @@ define(function (require, exports, module) {
 				var uPass = rolData[x].PASSWORD;
 				if(rName!==undefined){
 					if(uID===1){
-						 var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
-                    // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><i class="fa fa-user"></i>' + uName + '</td>' +
-					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
-					'<td class="users_email">' + email + '</td>' + 
-					'<td class="role_name">' + rName + '</td>' + 
-					'<td class=""><a class="reset_psw">重置密码</a></td>' +
-					'<td></td>' +
-                    '</tr>';
-                $("#usersTable tbody").append(roltr);
-						}else{
-                var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
-                    // '<td class="users_id">' + uID + '</td>' + 
-                    '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
-					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
-					'<td class="users_email">' + email + '</td>' + 
-					'<td class="role_name">' + rName + '</td>' +
-					'<td class=""><a class="reset_psw">重置密码</a></td>' +
-					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
-                    '</tr>';
-                $("#usersTable tbody").append(roltr);
-				}
+						var roltr = '<tr userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+						// '<td class="users_id">' + uID + '</td>' +
+						'<td class="users_name"><i class="fa fa-user"></i>' + uName + '</td>' +
+						'<td class="role_name">' + rName + '</td>' +
+						'<td class="users_email">' + email + '</td>' +
+						'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' +
+						'<td class="user_resetPwd"><a class="reset_psw">重置密码</a></td>' +
+						'<td></td>' +
+						'</tr>';
+						$("#usersTable tbody").append(roltr);
+					}else{
+						var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
+							// '<td class="users_id">' + uID + '</td>' +
+							'<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
+							'<td class="role_name">' + rName + '</td>' +
+							'<td class="users_email">' + email + '</td>' +
+							'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' +
+							'<td class="user_resetPwd"><a class="reset_psw">重置密码</a></td>' +
+							'<td><a class="users_delete pull-right"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+							'</tr>';
+						$("#usersTable tbody").append(roltr);
+					}
 				}else{
 					var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="'+rID+'">' +
                     // '<td class="users_id">' + uID + '</td>' + 
                     '<td class="users_name"><i class="fa fa-user"></i><a class="user_name">' + uName + '</a></td>' +
-					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' + 
-					'<td class="users_email">' + email + '</td>' +
 					'<td class="role_name">未分配</td>' +
-					'<td class=""><a class="reset_psw">重置密码</a></td>' +
-					'<td><a class="users_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
+					'<td class="users_email">' + email + '</td>' +
+					'<td class="description" style="width:300px;overflow:hidden;text-overflow:ellipsis;">' + description + '</td>' +
+					'<td class="user_resetPwd"><a class="reset_psw">重置密码</a></td>' +
+					'<td><a class="users_delete pull-right"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                		$("#usersTable tbody").append(roltr);
-					}
+				}
             }
 			//删除
 			$(".users_delete").click(function () {

@@ -45,7 +45,7 @@ define(function(require, exports, module) {
       "action": "getTree"
     };
     if(exports.channelID){
-      dataParameter.channelID = Number(exports.channelID);
+      // dataParameter.channelID = Number(exports.channelID);
     }
 
     UTIL.ajax(
@@ -191,9 +191,9 @@ define(function(require, exports, module) {
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
 
           var checked = '';
-          if(Number(exports.channelID) === tl[i].Channel_ID){
+          /*if(Number(exports.channelID) === tl[i].Channel_ID){
             checked = 'checked="checked"';
-          }
+          }*/
           $('#term_sel_list').append('' + 
             '<tr tid="'+ tl[i].ID +'" status="' + status + '">' +
               '<td>' +
