@@ -6,6 +6,7 @@ define(function (require, exports, module) {
         config = require('common/config'),
         util = require('common/util'),
         crud = require('common/crud'),
+        durationInput = require('common/duration_input'),
         layoutEditor = require('common/layout_editor'),
         timer = require('pages/channel/timer'),
 		toast = require('common/toast');
@@ -42,13 +43,13 @@ define(function (require, exports, module) {
     }
 
     function renderProgramView(program, layout, widgets) {
-        var p = JSON.parse(program.schedule_params);
-        var data = {
+        var p = program.schedule_params === '' ? {} : JSON.parse(program.schedule_params),
+            duration = typeof p.duration === 'number' ? p.duration : 0,
+            data = {
             name: program.name,
             lifetime_start: program.lifetime_start.replace(' ', 'T'),
             lifetime_end: program.lifetime_end.replace(' ', 'T'),
             count: p.count,
-            duration: p.duration,
             layout: {
                 name: layout.name,
                 width: layout.width,
@@ -57,6 +58,14 @@ define(function (require, exports, module) {
         };
         $('#channel-editor-wrapper .channel-program-editor')
             .html(templates.channel_edit_program(data));
+        new durationInput.DurationInput({
+            onChange: onDurationChange,
+            duration: duration,
+            element: $('#channel-editor-wrapper .program-duration-container')[0]
+        });
+        $('#channel-editor-wrapper .program-duration-container')
+            .find('.duration-input-hidden')
+            .addClass('program-duration-hidden');
         var trigger = JSON.parse(program.schedule_params);
         if (!trigger.trigger) {
             trigger.trigger = '0 0 0 * * * *';
@@ -81,6 +90,23 @@ define(function (require, exports, module) {
             w = null;
         }
         loadWidget(w);
+    }
+    
+    function onDurationChange(duration) {
+        var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params),
+            params = {};
+        if (typeof schedule_params.trigger !== 'string') {
+            params.trigger = '0 0 0 * * * *';
+        } else {
+            params.trigger = schedule_params.trigger;
+        }
+        if (typeof schedule_params.count !== 'number') {
+            params.count = 1;
+        } else {
+            params.count = schedule_params.count;
+        }
+        params.duration = duration;
+        db.collection('program').update({schedule_params: JSON.stringify(params)}, {id: programId});
     }
 
 
@@ -265,34 +291,19 @@ define(function (require, exports, module) {
             case 'lifetime_end':
                 updates = {lifetime_start: this.value.replace('T', ' ')};
                 break;
-            case 'duration':
             case 'count':
                 var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
                 var params = {};
-                if (field === 'count') {
-                    params.count = parseInt(this.value);
-                    if (typeof schedule_params.trigger !== 'string') {
-                        params.trigger = '0 0 0 * * * *';
-                    } else {
-                        params.trigger = schedule_params.trigger;
-                    }
-                    if (typeof schedule_params.duration !== 'number') {
-                        params.duration = 60;
-                    } else {
-                        params.duration = schedule_params.duration;
-                    }
+                params.count = parseInt(this.value);
+                if (typeof schedule_params.trigger !== 'string') {
+                    params.trigger = '0 0 0 * * * *';
                 } else {
-                    params.duration = parseInt(this.value);
-                    if (typeof schedule_params.trigger !== 'string') {
-                        params.trigger = '0 0 0 * * * *';
-                    } else {
-                        params.trigger = schedule_params.trigger;
-                    }
-                    if (typeof schedule_params.count !== 'number') {
-                        params.count = 60;
-                    } else {
-                        params.count = schedule_params.count;
-                    }
+                    params.trigger = schedule_params.trigger;
+                }
+                if (typeof schedule_params.duration !== 'number') {
+                    params.duration = 60;
+                } else {
+                    params.duration = schedule_params.duration;
                 }
                 updates = {schedule_params: JSON.stringify(params)};
                 break;
@@ -338,7 +349,7 @@ define(function (require, exports, module) {
             if ($(this).attr("data-id") == widget.id){
                 $(this).css("border", "solid 1px #3c8dbc");
             }
-        })
+        });
         loadWidget(widget);
     }
 
