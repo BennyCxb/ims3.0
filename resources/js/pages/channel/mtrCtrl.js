@@ -171,23 +171,51 @@ define(function (require, exports, module) {
     //加载控件属性
     function widgetLoad(widgetData) {
         //color picker with addon
-        $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
-            $("#text_color").css("background-color", $("#text_color").val());
-            textAttrSave();
+        $("#text_color").ColorPickerSliders({               //文本字体颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#text_bgcolor").colorpicker().on('changeColor', function (ev) {                    //文本背景颜色
-            $("#text_bgcolor").css("background-color", $("#text_bgcolor").val());
-            textAttrSave();
+        $("#text_bgcolor").ColorPickerSliders({             //文本背景颜色
+            color: 'rgba(0,0,0,0)',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
-            $("#clockText_color").css("background-color", $("#clockText_color").val());
-            $(".mtrC_datetime").css("color", $("#clockText_color").val());
-            clockTextColor();
+        $("#clockText_color").ColorPickerSliders({          //时钟文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev, color) {
+                $(".mtrC_datetime").css("color", color.tiny.toRgbString());
+                clockTextColor();
+            }
         });
-        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {             //天气文本字体颜色
-            $("#weatherText_color").css("background-color", $("#weatherText_color").val());
-            $("#mtrC_weatherNormal_box").css("color", $("#weatherText_color").val());
-            weatherSave();
+        $("#weatherText_color").ColorPickerSliders({        //天气文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            onchange: function (ev, color) {
+                $(".mtrC_weather").css("color", color.tiny.toRgbString());
+                weatherSave();
+            }
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
