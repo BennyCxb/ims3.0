@@ -11,7 +11,8 @@ define(function(require, exports, module) {
 	var requestUrl    = config.serverRoot,
 		projectName   = config.projectName,
 		nDisplayItems = 15,
-        keyword       = '';
+        keyword       = '',
+        last;
 
 	// 初始化页面
 	exports.init = function() {
@@ -58,15 +59,23 @@ define(function(require, exports, module) {
 		//}
 
 		//搜索事件
-		$('#channel-list-search').bind('input propertychange', function (ev) {
-			onSearch($('#channel-list-search').val());
-		});
 
-    }
-
-    function onSearch(_keyword) {
-        keyword = typeof(_keyword) === 'string' ? _keyword : '';
-        loadPage(1);
+        $("#channel-list-search").keyup(function(){
+            if(event.keyCode == 13) {
+                onSearch(event);
+            }
+        });
+        $("#channel-list-search").next().click(onSearch);
+        function onSearch(event) {
+            last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+            setTimeout(function(){          //设时延迟0.5s执行
+                if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+                {
+                    keyword = typeof($('#channel-list-search').val()) === 'string' ? $('#channel-list-search').val() : '';
+                    loadPage(1);
+                }
+            },500);
+        }
     }
 
     function onSelectedItemChanged(adjustCount) {

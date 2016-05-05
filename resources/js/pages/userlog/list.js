@@ -4,14 +4,30 @@ define(function (require, exports, module) {
     var templates = require('common/templates');
     var nDisplayItems = 10;
     var keyword = '';
+    var last;
 
     exports.init = function () {
         exports.loadUserlogPage(1); //加载默认页面
         
         //搜索
-        $('#userlogSearch').bind('input propertychange', function () {
-            onSearch($('#userlogSearch').val());
+        $("#userlogSearch").keyup(function(){
+            if(event.keyCode == 13) {
+                onSearch(event);
+            }
         });
+        $("#userlogSearch").next().click(onSearch);
+        function onSearch(event) {
+            last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+            setTimeout(function(){          //设时延迟0.5s执行
+                if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+                {
+                    keyword = typeof($('#userlogSearch').val()) === 'string' ? $('#userlogSearch').val() : '';
+                    exports.loadUserlogPage(1);
+                }
+            },500);
+        }
+
+
         //添加
         /*$("#user_add").click(function () {
 			UTIL.cover.load('resources/pages/user/user_add.html');
@@ -41,12 +57,7 @@ define(function (require, exports, module) {
         var url = CONFIG.serverRoot + '/backend_mgt/v2/userlog';
         UTIL.ajax('post', url, data, render);
     }
-    
-    function onSearch(_keyword) {
-    	keyword = typeof(_keyword) === 'string' ? _keyword : '';
-        exports.loadUserlogPage(1);
-    }
-    
+
     function render(json) {
         //翻页
         var totalPages = json.pagesNum;
