@@ -430,6 +430,11 @@ a {
     text-align: center;
 }
 
+/*用户列表页面*/
+.role_name, .users_email, .user_resetPwd {
+    text-align: center;
+}
+
 /*layout edit*/
 .full-screen {
     position: absolute;
