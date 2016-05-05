@@ -238,7 +238,7 @@ a {
 	width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect{
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect, #mtrC_bgFlip {
 	display: none;
 }
 
@@ -256,7 +256,15 @@ a {
     width: 185px;
 }
 
-#box_datetimeEffect label {
+#box_text_bgcolor {
+    padding-top: 10px;
+}
+
+#box_text_bgcolor, #box_datetimeEffect {
+    width: 100%;
+}
+
+#box_text_bgcolor label, #box_datetimeEffect label {
     height: 30px;
     line-height: 30px;
     font-size: 14px;
@@ -264,11 +272,11 @@ a {
     margin: 0px;
 }
 
-#box_datetimeEffect div {
+#box_text_bgcolor div, #box_datetimeEffect div {
     padding: 0px;
 }
 
-#clockText_color, #weatherText_color {
+#clockText_color, #weatherText_color, #text_bgcolor {
     height: 30px;
 }
 
@@ -323,8 +331,8 @@ a {
 }
 
 #mtrCtrl_Table input {
-    height: 20px;
     text-align: center;
+    padding: 0px;
 } 
 
 .mtrCtrl_checkbox {
@@ -343,11 +351,12 @@ a {
 	width: 112px;
 }
 .mtr_time input {
-    width: 90px;
+    width: 70px;
 }
 
 .mtrCtrl_times {
 	width: 45px;
+    min-width: 45px;
 }
 
 .mtrCtrl_times label {

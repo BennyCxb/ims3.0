@@ -1,9 +1,7 @@
 define(function (require, exports, module) {
-    var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var CRUD = require("common/crud.js");
     var DB = CRUD.Database.getInstance();
-    var rgba;
 
     exports.init = function () {
 
@@ -40,6 +38,16 @@ define(function (require, exports, module) {
         $('#mtr_addMtr').click(function () {
             var page = "resources/pages/channel/addMtr.html";
             UTIL.cover.load(page);
+        })
+
+        // 统计时长
+        $('#mtr_countTime').click(function () {
+            var conutTime = 0;
+            for(var a = 0; a<$(".mtr_time input").length; a++){
+                conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
+            }
+            //conutTime = formatTime(conutTime);
+            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime);
         })
 
         //批量删除
@@ -101,9 +109,6 @@ define(function (require, exports, module) {
         } else {
             $(".mtrCtrl_times").children().hide();
         }
-        $("#box_effect").hide();
-        $("#box_datetimeEffect").hide();
-        $("#box_datetime").hide();
         //载入
         if (widget.type != undefined){
             var wtype = widget.type;
@@ -128,6 +133,7 @@ define(function (require, exports, module) {
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "4");
                     $("#box_effect").show();
+                    $("#mtrC_bgFlip").show();
                     $("#mtrC_effect").hide();
                     $("#mtrC_flip").hide();
                     break;
@@ -166,6 +172,10 @@ define(function (require, exports, module) {
         //color picker with addon
         $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
             $("#text_color").css("background-color", $("#text_color").val());
+            textAttrSave();
+        });
+        $("#text_bgcolor").colorpicker().on('changeColor', function (ev) {                    //文本背景颜色
+            $("#text_bgcolor").css("background-color", $("#text_bgcolor").val());
             textAttrSave();
         });
         $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
@@ -212,16 +222,21 @@ define(function (require, exports, module) {
                     } else {
                         $("#mtrC_flip").show();
                     }
+
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").val(wStyle.TextColor);
                     $("#text_color").css("background-color", wStyle.TextColor);
-                    $("#btn_text_color i").css("background-color", wStyle.TextColor);
+                    $("#text_bgcolor").val(wStyle.BackgroundColor);
+                    $("#text_bgcolor").css("background-color", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
+                    $("#text_bgcolor").val("rgba(0,0,0,0)");
+                    $("#text_color").css("background-color", "#000000");
+                    $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
                 }
                 textAttrSave();
                 break;
@@ -325,7 +340,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time">' + duration + '</td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -424,7 +439,7 @@ define(function (require, exports, module) {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                             '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                             '</tr>';
@@ -553,12 +568,14 @@ define(function (require, exports, module) {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
                 ScrollDriection: $("#mtrC_scrollDirection").val(),
-                ScrollSpeed: $("#mtrC_scrollSpeed").val()
+                ScrollSpeed: $("#mtrC_scrollSpeed").val(),
+                BackgroundColor: $("#text_bgcolor").val()
             }
         } else {
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
+                BackgroundColor: $("#text_bgcolor").val()
             }
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
@@ -656,26 +673,30 @@ define(function (require, exports, module) {
             })
         }
         if (widgetData.type_id == 3){
-            if ($("#mtrC_textType").val() == "Normal"){
+            if ($("#mtrC_textType").val() == "Normal") {
                 if($("#mtrC_pageDownPeriod").val() == null) {
                     errorMsg += "请填写翻页间隔时间！\n";
                     obj = $("#mtrC_textType");
                 }
             }else {
                 if($("#text_color").val() == "") {
-                    errorMsg += "请选择字体颜色！\n";
-                    obj = $("#text_color");
+                    $("#text_color").val("#000000");
+                    $("#text_color").css("background-color", "#000000");
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
                     obj = $("#mtrC_scrollSpeed");
                 }
             }
+            if ($("#text_bgcolor").val() == "") {
+                $("#text_bgcolor").val("rgba(0,0,0,0)");
+                $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+            }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
-                errorMsg += "请输入时间字体颜色！\n";
-                obj = $("#clockText_color")
+                $("#clockText_color").val("#000000");
+                $("#clockText_color").css("background-color", "#000000");
             }
         }
         if (widgetData.type_id == 6) {
@@ -795,7 +816,7 @@ define(function (require, exports, module) {
     }
 
     function formatSecond(longTime) {
-        //转化为 秒
+        //转化为秒
         var arr = longTime.split(":");
         var h = Number(arr[0]);
         var m = Number(arr[1]);
