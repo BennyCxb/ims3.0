@@ -253,10 +253,8 @@ define(function (require, exports, module) {
                     }
 
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
-                    $("#text_color").val(wStyle.TextColor);
-                    $("#text_color").css("background-color", wStyle.TextColor);
-                    $("#text_bgcolor").val(wStyle.BackgroundColor);
-                    $("#text_bgcolor").css("background-color", wStyle.BackgroundColor);
+                    $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
+                    $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
@@ -275,8 +273,7 @@ define(function (require, exports, module) {
                     $("#clockText_color").val("#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
-                    $("#clockText_color").val(wStyle.TextColor);
-                    $("#clockText_color").css("background-color", wStyle.TextColor);
+                    $("#clockText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_datetime").css("color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
@@ -311,8 +308,7 @@ define(function (require, exports, module) {
                     $("#weatherFlip_time").val(10);
                     $("#mtrC_weatherNormal").next().trigger("click");
                 } else {
-                    $("#weatherText_color").val(wStyle.TextColor);
-                    $("#weatherText_color").css("background-color", wStyle.TextColor);
+                    $("#weatherText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_weather").css("color", wStyle.TextColor);
                     $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
@@ -713,8 +709,7 @@ define(function (require, exports, module) {
                 }
             }else {
                 if($("#text_color").val() == "") {
-                    $("#text_color").val("#000000");
-                    $("#text_color").css("background-color", "#000000");
+                    $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -722,20 +717,17 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#text_bgcolor").val() == "") {
-                $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
-                $("#text_bgcolor").css("background-color", "rgba(0, 0, 0, 0)");
+                $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
-                $("#clockText_color").val("#000000");
-                $("#clockText_color").css("background-color", "#000000");
+                $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
             }
         }
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
-                errorMsg += "请输入天气字体颜色！\n";
-                obj = $("#weatherText_color")
+                $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
             }
             if ($("#weatherFlip_time").val() == "") {
                 errorMsg += "请输入天气切换间隔时间！\n";
