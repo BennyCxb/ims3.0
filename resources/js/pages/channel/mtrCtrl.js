@@ -500,7 +500,6 @@ define(function (require, exports, module) {
             //复选框点击事件
             $(".icheckbox_flat-blue").parent().parent().click(function () {
                 $(".table-responsive input[type='checkbox']").iCheck("uncheck");
-                var obj = $(this).find("input");
                 if ($(this).find("input").prop("checked") == true) {
                     $(this).find("input").prop("checked", false);
                     $(this).find("div").prop("class", "icheckbox_flat-blue");
