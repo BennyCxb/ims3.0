@@ -449,7 +449,7 @@ a {
 }
 
 /*频道列表页面*/
-.chn_check, .chn_create, .chn_createTime {
+.chn_check, .chn_create, .chn_createTime, .chn_detail {
     text-align: center;
 }
 
