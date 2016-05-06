@@ -47,13 +47,13 @@ define(function (require, exports, module) {
                 conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
             }
             //conutTime = formatTime(conutTime);
-            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime);
+            $("#channel-editor-wrapper .program-duration-hidden").val(conutTime).change();
         })
 
         //批量删除
         $("#mtr_delete").click(function () {
             $("input:checkbox[class='mtr_cb']:checked").each(function () {
-                DB.collection("material").delete({resource_id: Number($(this).attr("mtrid"))});
+                DB.collection("material").delete({resource_id: Number($(this).attr("mtrid")), widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
                 $(this).parents("tr").remove();
             });
             mtrCb();
@@ -96,11 +96,12 @@ define(function (require, exports, module) {
     }
 
     exports.loadPage = function (widget) {
+        $(".cp-popover-container").remove();
         $("#mtrCtrl_Table tbody").empty();	//初始化
         $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
             '<th class="mtrCtrl_checkbox"></th>' +
-            '<th class="mtr_choise_name">文件名</th>' +
+            '<th class="mtrCtrl_name">文件名</th>' +
             '<th class="mtr_time">时长</th>' +
             '<th class="mtrCtrl_times"><label>次数</label></th>' +
             '<th class="mtrCtrl_delete"></th>' +
@@ -171,23 +172,55 @@ define(function (require, exports, module) {
     //加载控件属性
     function widgetLoad(widgetData) {
         //color picker with addon
-        $("#text_color").colorpicker().on('changeColor', function (ev) {                    //文本字体颜色
-            $("#text_color").css("background-color", $("#text_color").val());
-            textAttrSave();
+        $("#text_color").ColorPickerSliders({               //文本字体颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            title: '注：最右侧为透明度',
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#text_bgcolor").colorpicker().on('changeColor', function (ev) {                    //文本背景颜色
-            $("#text_bgcolor").css("background-color", $("#text_bgcolor").val());
-            textAttrSave();
+        $("#text_bgcolor").ColorPickerSliders({             //文本背景颜色
+            color: 'rgba(0, 0, 0, 0)',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            title: '注：最右侧为透明度',
+            onchange: function (ev) {
+                textAttrSave();
+            }
         });
-        $("#clockText_color").colorpicker().on('changeColor', function (ev) {               //时钟文本字体颜色
-            $("#clockText_color").css("background-color", $("#clockText_color").val());
-            $(".mtrC_datetime").css("color", $("#clockText_color").val());
-            clockTextColor();
+        $("#clockText_color").ColorPickerSliders({          //时钟文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            title: '注：最右侧为透明度',
+            onchange: function (ev, color) {
+                $(".mtrC_datetime").css("color", color.tiny.toRgbString());
+                clockTextColor();
+            }
         });
-        $("#weatherText_color").colorpicker().on('changeColor', function (ev) {             //天气文本字体颜色
-            $("#weatherText_color").css("background-color", $("#weatherText_color").val());
-            $("#mtrC_weatherNormal_box").css("color", $("#weatherText_color").val());
-            weatherSave();
+        $("#weatherText_color").ColorPickerSliders({        //天气文本颜色
+            color: '#000000',
+            size: 'large',
+            placement: 'auto',
+            swatches: false,
+            sliders: false,
+            hsvpanel: true,
+            title: '注：最右侧为透明度',
+            onchange: function (ev, color) {
+                $(".mtrC_weather").css("color", color.tiny.toRgbString());
+                weatherSave();
+            }
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
@@ -225,19 +258,17 @@ define(function (require, exports, module) {
                     }
 
                     $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
-                    $("#text_color").val(wStyle.TextColor);
-                    $("#text_color").css("background-color", wStyle.TextColor);
-                    $("#text_bgcolor").val(wStyle.BackgroundColor);
-                    $("#text_bgcolor").css("background-color", wStyle.BackgroundColor);
+                    $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
+                    $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 }else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
-                    $("#text_bgcolor").val("rgba(0,0,0,0)");
+                    $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
                     $("#text_color").css("background-color", "#000000");
-                    $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                    $("#text_bgcolor").css("background-color", "rgba(0, 0, 0, 0)");
                 }
                 textAttrSave();
                 break;
@@ -247,8 +278,7 @@ define(function (require, exports, module) {
                     $("#clockText_color").val("#000000");
                     $("#mtrC_dtTime").next().trigger("click");
                 }else {
-                    $("#clockText_color").val(wStyle.TextColor);
-                    $("#clockText_color").css("background-color", wStyle.TextColor);
+                    $("#clockText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_datetime").css("color", wStyle.TextColor);
                     var wctype = wStyle.Type;
                     switch (wctype) {
@@ -283,8 +313,7 @@ define(function (require, exports, module) {
                     $("#weatherFlip_time").val(10);
                     $("#mtrC_weatherNormal").next().trigger("click");
                 } else {
-                    $("#weatherText_color").val(wStyle.TextColor);
-                    $("#weatherText_color").css("background-color", wStyle.TextColor);
+                    $("#weatherText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_weather").css("color", wStyle.TextColor);
                     $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
@@ -341,7 +370,7 @@ define(function (require, exports, module) {
                     if (mtrData[x].type_id == 1 || mtrData[x].type_id == 3) {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -350,7 +379,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].type_id == "2" || mtrData[x].type_id == "4") {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value=' + duration + '></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value="'+ dbcount +'"></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -359,7 +388,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].type_name == "直播") {
                         var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -440,7 +469,7 @@ define(function (require, exports, module) {
                     if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0)|| mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '" disabled></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -449,7 +478,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本" || mtrData[x].Type_Name === 'WebText') {
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -458,7 +487,7 @@ define(function (require, exports, module) {
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
                         var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '"  mtrsequence="'+ maxsequence +'">' +
                             '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
                             '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
                             '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
                             '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -488,7 +517,7 @@ define(function (require, exports, module) {
             })
             //单个删除
             $(".btn_ctrlDel").click(function () {
-                DB.collection("material").delete({resource_id: Number($(this).parent().parent().attr("mtrid"))});
+                DB.collection("material").delete({resource_id: Number($(this).parent().parent().attr("mtrid")), widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
                 $(this).parent().parent().remove();
             })
 
@@ -500,7 +529,6 @@ define(function (require, exports, module) {
             //复选框点击事件
             $(".icheckbox_flat-blue").parent().parent().click(function () {
                 $(".table-responsive input[type='checkbox']").iCheck("uncheck");
-                var obj = $(this).find("input");
                 if ($(this).find("input").prop("checked") == true) {
                     $(this).find("input").prop("checked", false);
                     $(this).find("div").prop("class", "icheckbox_flat-blue");
@@ -538,6 +566,10 @@ define(function (require, exports, module) {
         })
         //文本字体颜色
         $("#text_color").bind("input propertychange", function () {
+            textAttrSave();
+        })
+        //文本背景颜色
+        $("#text_bgcolor").bind("input propertychange", function () {
             textAttrSave();
         })
         //滚动方向
@@ -682,8 +714,10 @@ define(function (require, exports, module) {
                 }
             }else {
                 if($("#text_color").val() == "") {
-                    $("#text_color").val("#000000");
-                    $("#text_color").css("background-color", "#000000");
+                    $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
+                    if($(".cp-popover-container").length != 0) {
+                        $("#text_color").trigger("colorpickersliders.hide");
+                    }
                 }
                 if($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
@@ -691,20 +725,26 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#text_bgcolor").val() == "") {
-                $("#text_bgcolor").val("rgba(0,0,0,0)");
-                $("#text_bgcolor").css("background-color", "rgba(0,0,0,0)");
+                $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
+                if($(".cp-popover-container").length != 0) {
+                    $("#text_bgcolor").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
-                $("#clockText_color").val("#000000");
-                $("#clockText_color").css("background-color", "#000000");
+                $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
+                if($(".cp-popover-container").length != 0) {
+                    $("#clockText_color").trigger("colorpickersliders.hide");
+                }
             }
         }
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
-                errorMsg += "请输入天气字体颜色！\n";
-                obj = $("#weatherText_color")
+                $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
+                if($(".cp-popover-container").length != 0) {
+                    $("#weatherText_color").trigger("colorpickersliders.hide");
+                }
             }
             if ($("#weatherFlip_time").val() == "") {
                 errorMsg += "请输入天气切换间隔时间！\n";
@@ -826,26 +866,4 @@ define(function (require, exports, module) {
         var time = h * 3600 + m * 60 + s;
         return time;
     }
-
-    function rgbaChange(rgba){
-        var arr = rgba.split(/[(,)]/);
-        var r = Number(arr[1]).toString(16);
-        if (r.length <= 1) {
-            r = "0" + r;
-        }
-        var g = Number(arr[2]).toString(16);
-        if (g.length <= 1) {
-            g = "0" + g;
-        }
-        var b = Number(arr[3]).toString(16);
-        if (b.length <= 1) {
-            b = "0" + b;
-        }
-        var a = parseInt(Number(arr[4])*255).toString(16);
-        if (a.length <= 1) {
-            a = "0" + a;
-        }
-        return "#"+ r + g + b + a;
-    }
-
 })

@@ -347,6 +347,7 @@ a {
 .mtrCtrl_name {
 	width: 250px;
 	max-width: 250px;
+    min-width: 250px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -782,3 +783,51 @@ a {
     overflow: hidden;
 }
 /*////// /marquee /////*/
+
+
+/*/////// duration-input ///////*/
+
+.duration-input-container {
+    position: relative;
+    cursor: default;
+}
+
+.duration-input-container .active {
+    background: #84CBF5;
+}
+
+.duration-display-item {
+    display: inline-block;
+    vertical-align: top;
+    height: 100%;
+    overflow: hidden;
+    line-height: 23px;
+    position: relative;
+}
+
+.duration-input-hour {
+    width: 36px;
+    text-align: right;
+}
+
+.duration-input-minute {
+    width: 16px;
+}
+
+.duration-input-second {
+    width: 16px;
+}
+
+.duration-input-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    color: transparent;
+}
+
+.duration-input-hidden {
+    display: none;
+}

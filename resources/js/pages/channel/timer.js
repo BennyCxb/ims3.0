@@ -63,6 +63,84 @@ define(function (require, exports, module) {
         $('#channel-editor-timer .granularity-selector button').click(function () {
             self.updateGranularity(this.getAttribute('data-selector'));
         });
+        $('#channel-editor-timer .check-all-month').on('ifToggled', function () {
+            var bool = this.checked;
+            $('#channel-editor-timer .month-selector input[type="checkbox"]')
+                .iCheck(bool ? 'check' : 'uncheck');
+        });
+        $('#channel-editor-timer .check-all-date').on('ifToggled', function () {
+            var bool = this.checked;
+            $('#channel-editor-timer .date-selector input[type="checkbox"]')
+                .iCheck(bool ? 'check' : 'uncheck');
+        });
+        $('#channel-editor-timer .check-all-day').on('ifToggled', function () {
+            var bool = this.checked;
+            $('#channel-editor-timer .day-selector input[type="checkbox"]')
+                .iCheck(bool ? 'check' : 'uncheck');
+        });
+        var checkAllHours = this.tHours.length === 24,
+            checkAllMinutes = this.tMinutes.length === 60,
+            checkAllSeconds = this.tSeconds.length === 60;
+        $('#channel-editor-timer .hour-selector select').change(function () {
+            var $this = $(this), val = $this.val();
+            if (val.includes('*') && val.length > 1) {
+                if (!checkAllHours) {
+                    checkAllHours = true;
+                    $this.select2('val', ['*']);
+                } else {
+                    var newVal = [];
+                    checkAllHours = false;
+                    val.forEach(function (el) {
+                        if (el !== '*') {
+                            newVal.push(el);
+                        }
+                    });
+                    $this.select2('val', newVal);
+                }
+            } else {
+                checkAllHours = val.includes('*');
+            }
+        });
+        $('#channel-editor-timer .minute-selector select').change(function () {
+            var $this = $(this), val = $this.val();
+            if (val.includes('*') && val.length > 1) {
+                if (!checkAllMinutes) {
+                    checkAllMinutes = true;
+                    $this.select2('val', ['*']);
+                } else {
+                    var newVal = [];
+                    checkAllMinutes = false;
+                    val.forEach(function (el) {
+                        if (el !== '*') {
+                            newVal.push(el);
+                        }
+                    });
+                    $this.select2('val', newVal);
+                }
+            } else {
+                checkAllMinutes = val.includes('*');
+            }
+        });
+        $('#channel-editor-timer .second-selector select').change(function () {
+            var $this = $(this), val = $this.val();
+            if (val.includes('*') && val.length > 1) {
+                if (!checkAllSeconds) {
+                    checkAllSeconds = true;
+                    $this.select2('val', ['*']);
+                } else {
+                    var newVal = [];
+                    checkAllSeconds = false;
+                    val.forEach(function (el) {
+                        if (el !== '*') {
+                            newVal.push(el);
+                        }
+                    });
+                    $this.select2('val', newVal);
+                }
+            } else {
+                checkAllSeconds = val.includes('*');
+            }
+        });
     };
 
     Timer.prototype.updateGranularity = function (selector) {
@@ -76,25 +154,49 @@ define(function (require, exports, module) {
         var self = this;
         this.tMonths = [];
         $('#channel-editor-timer .month-selector input').each(function (idx, el) {
+            if ($(el).hasClass('check-all-month')) {
+                return;
+            }
             el.checked && self.tMonths.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDates = [];
         $('#channel-editor-timer .date-selector input').each(function (idx, el) {
+            if ($(el).hasClass('check-all-date')) {
+                return;
+            }
             el.checked && self.tDates.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDays = [];
         $('#channel-editor-timer .day-selector input').each(function (idx, el) {
+            if ($(el).hasClass('check-all-day')) {
+                return;
+            }
             el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
-        this.tHours = $('#channel-editor-timer .hour-selector select').val().map(function (el) {
-            return parseInt(el);
-        }).sort();
-        this.tMinutes = $('#channel-editor-timer .minute-selector select').val().map(function (el) {
-            return parseInt(el);
-        }).sort();
-        this.tSeconds = $('#channel-editor-timer .second-selector select').val().map(function (el) {
-            return parseInt(el);
-        }).sort();
+        var th = $('#channel-editor-timer .hour-selector select').val();
+        if (th.includes('*')) {
+            this.tHours = range(24);
+        } else {
+            this.tHours = th.map(function (el) {
+                return parseInt(el);
+            }).sort();
+        }
+        var tm = $('#channel-editor-timer .minute-selector select').val();
+        if (tm.includes('*')) {
+            this.tMinutes = range(60);
+        } else {
+            this.tMinutes = tm.map(function (el) {
+                return parseInt(el);
+            }).sort();
+        }
+        var ts = $('#channel-editor-timer .second-selector select').val();
+        if (ts.includes('*')) {
+            this.tSeconds = range(60);
+        } else {
+            this.tSeconds = ts.map(function (el) {
+                return parseInt(el);
+            }).sort();
+        }
         this.saveCallback && this.saveCallback(Timer.encode(this));
     };
 
@@ -127,28 +229,28 @@ define(function (require, exports, module) {
         this.unregisterEventListeners();
     };
 
+    function range(n, start) {
+        if (typeof start !== 'number') {
+            start = 0;
+        }
+        var arr = [];
+        for (var i = 0; i < n; i++) {
+            arr.push(i + start);
+        }
+        return arr;
+    }
+
+    function asArray(str) {
+        var numbers = str.split(','),
+            arr = [];
+        numbers.forEach(function (el) {
+            arr.push(parseInt(el));
+        });
+        arr.sort();
+        return arr;
+    }
+
     Timer.decode = function (str) {
-
-        function range(n, start) {
-            if (typeof start !== 'number') {
-                start = 0;
-            }
-            var arr = [];
-            for (var i = 0; i < n; i++) {
-                arr.push(i + start);
-            }
-            return arr;
-        }
-
-        function asArray(str) {
-            var numbers = str.split(','),
-                arr = [];
-            numbers.forEach(function (el) {
-                arr.push(parseInt(el));
-            });
-            arr.sort();
-            return arr;
-        }
 
         var segments = str.split(' '), obj = {};
 
@@ -178,19 +280,19 @@ define(function (require, exports, module) {
         var segments = [], bool;
         if (timer.tGranularity === 'date' || timer.tGranularity === 'month') {
             segments[6] = '*';
-            bool = checkRange(timer.tMonths, 12, 1);
+            bool = checkRange(timer.tMonths, 12, 1) || timer.tMonths.length === 0;
             if (!bool && timer.tGranularity === 'month') {
                 segments[4] = timer.tMonths.join(',');
             } else {
                 segments[4] = '*';
             }
-            bool = checkRange(timer.tDates, 31, 1);
+            bool = checkRange(timer.tDates, 31, 1) || timer.tDates.length === 0;
             segments[3] = bool ? '*' : timer.tDates.join(',');
         } else {
             segments[4] = '*';
             segments[3] = '*';
-            bool = checkRange(timer.tDays, 7, 1);
-            if (!bool && timer.tGranularity === 'day') {
+            bool = checkRange(timer.tDays, 7, 1) || timer.tDays.length === 0;
+            if (!bool && timer.tGranularity === 'day' ) {
                 segments[6] = timer.tDays.join(',');
             } else {
                 segments[6] = '*';
@@ -198,8 +300,8 @@ define(function (require, exports, module) {
         }
         segments[5] = '*';
         segments[0] = checkRange(timer.tSeconds, 60, 0) ? '*' : timer.tSeconds.join(',');
-        segments[1] = checkRange(timer.tSeconds, 60, 0) ? '*' : timer.tMinutes.join(',');
-        segments[2] = checkRange(timer.tSeconds, 24, 0) ? '*' : timer.tHours.join(',');
+        segments[1] = checkRange(timer.tMinutes, 60, 0) ? '*' : timer.tMinutes.join(',');
+        segments[2] = checkRange(timer.tHours, 24, 0) ? '*' : timer.tHours.join(',');
         return segments.join(' ');
     };
 
