@@ -1366,16 +1366,20 @@ define(function (require, exports, module) {
 
         var scale = this.mContext.mZoomFactor;
         this.mElement.style.backgroundColor = 'transparent';
-        if (data.style.type === 'Marquee') {
+        if (data.style.Type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.innerHTML = data.material;
             marquee.setAttribute('class', 'marquee layout-preview-text');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.8) + 'px';
-            marquee.style.color = data.style.color;
+            marquee.style.color = data.style.TextColor;
+            marquee.style.backgroundColor = data.style.BackgroundColor;
             this.mElement.appendChild(marquee);
-            $(marquee).marquee({
-                direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
-            });
+            if (data.style.ScrollSpeed > 0) {
+                $(marquee).marquee({
+                    direction: data.style.ScrollDirection === 'Right_2_Left' ? 'left' : 'right',
+                    duration: 15000 / data.style.ScrollSpeed
+                });
+            }
         } else {
             var iFrame = document.createElement('iframe');
             iFrame.setAttribute('frameborder', '0');
