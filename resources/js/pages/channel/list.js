@@ -356,9 +356,11 @@ define(function (require, exports, module) {
                 check_th = '<th class="chn_check">审核状态</th>';
             }
 
+
             $("#channel-table tbody").append('<tr>' +
                 '<th class="chn_checkbox" style="width:32px;"></th>' +
                 '<th class="chn_name">频道名</th>' +
+                 '<th class="publish"></th>'+
                 check_th +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
@@ -393,6 +395,7 @@ define(function (require, exports, module) {
                         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
+                            '<td class="detail" title="' + chnData[x].CreateUserName + '"><b><a>发布详情</a></b></td>' +
                             check_td +
                             '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
                             '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
@@ -408,6 +411,7 @@ define(function (require, exports, module) {
                             var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                                 '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                                 '<td class="chn_name" title="' + chnData[x].Name + '"><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></td>' +
+                                '<td class="detail" title="' + chnData[x].CreateUserName + '"><b><a>发布详情</a></b></td>' +
                                 check_td +
                                 '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
                                 '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
@@ -443,6 +447,7 @@ define(function (require, exports, module) {
         $(".icheckbox_flat-blue ins").click(function () {
             checkCheckBtns();
         })
+
         //校验批量操作的审核功能
         function checkCheckBtns() {
             if (util.getLocalParameter('config_checkSwitch') == '0') {
@@ -602,4 +607,6 @@ define(function (require, exports, module) {
             $('#chn_unpass').css('display', 'none');
         }
     }
+
+
 });
