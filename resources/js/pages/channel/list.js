@@ -567,6 +567,15 @@ define(function (require, exports, module) {
 
         }
 
+        //发布详情
+        $('.detail').click(function(e){
+            var self = $(this);
+            e.preventDefault();
+            e.stopPropagation();
+            var chnID = self.parent().attr('chnID');
+            exports.chnID = chnID;
+            util.cover.load('resources/pages/channel/published_detail.html');
+        })
         //mark
         //$('#channel-table>tbody').html('');
 //        json.Channels.forEach(function (el, idx, arr) {
