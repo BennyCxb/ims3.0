@@ -140,6 +140,27 @@ a {
     top: 0px;
 }
 
+/*终端日志列表页面*/
+.termID, .termIP, .eventType, .date {
+    text-align: center;
+}
+
+.termName {
+    width: 25%;
+}
+
+.termID, .termIP {
+    min-width: 145px;
+}
+
+.eventType {
+    min-width: 80px;
+}
+
+.event {
+    width: 30%;
+}
+
 /*资源列表页面*/
 #dpUpl {
 	color: #FFF;
