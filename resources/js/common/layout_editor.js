@@ -1255,7 +1255,9 @@ define(function (require, exports, module) {
         while (this.mElement.firstChild) {
             this.mElement.removeChild(this.mElement.firstChild);
         }
-
+        if (data.material == undefined){
+            data.material = "";
+        }
         if (data.material.length === 0) {
             this.mElement.textContent = this.mTypeName;
             return;
@@ -1294,6 +1296,9 @@ define(function (require, exports, module) {
             this.mElement.removeChild(this.mElement.firstChild);
         }
 
+        if (data.material == undefined){
+            data.material = "";
+        }
         if (data.material.length === 0) {
             this.mElement.textContent = this.mTypeName;
             return;
@@ -1320,6 +1325,7 @@ define(function (require, exports, module) {
             video.setAttribute('loop', '');
             video.setAttribute('width', '100%');
             video.setAttribute('height', '100%');
+            video.style.objectFit = 'fill';
             source.setAttribute('src', data.material);
             source.setAttribute('type', 'video/mp4');
             source.textContent = '您的浏览器不支持video标签.';
@@ -1354,30 +1360,34 @@ define(function (require, exports, module) {
     HTMLWidget.prototype.constructor = HTMLWidget;
     HTMLWidget.prototype.showPreview = function (data) {
 
-         this.mElement.dataset.background = this.mElement.style.backgroundColor;
-         while (this.mElement.firstChild) {
-             this.mElement.removeChild(this.mElement.firstChild);
-         }
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
 
-         if (data.material.length === 0) {
-         this.mElement.textContent = this.mTypeName;
-             return;
-         }
+        if (data.material == undefined){
+            data.material = "";
+        }
+        if (data.material.length === 0) {
+            this.mElement.textContent = this.mTypeName;
+            return;
+        }
 
         var scale = this.mContext.mZoomFactor;
         this.mElement.style.backgroundColor = 'transparent';
-        if (data.style.Type === 'Marquee') {
+        this.mElement.style.overflow = 'hidden';
+        if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.innerHTML = data.material;
             marquee.setAttribute('class', 'marquee layout-preview-text');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.8) + 'px';
-            marquee.style.color = data.style.TextColor;
-            marquee.style.backgroundColor = data.style.BackgroundColor;
+            marquee.style.color = data.style.color;
+            marquee.style.backgroundColor = data.style.backgroundColor;
             this.mElement.appendChild(marquee);
-            if (data.style.ScrollSpeed > 0) {
+            if (data.style.speed > 0) {
                 $(marquee).marquee({
-                    direction: data.style.ScrollDirection === 'Right_2_Left' ? 'left' : 'right',
-                    duration: 15000 / data.style.ScrollSpeed
+                    direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right',
+                    duration: 15000 / Math.sqrt(data.style.speed)*1.2
                 });
             }
         } else {
@@ -1469,7 +1479,7 @@ define(function (require, exports, module) {
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = 'transparent';
-        this.mElement.style.backgroundImage = 'url(resources/img/weather1.png)';
+        this.mElement.style.backgroundImage = 'url(resources/img/weather2.png)';
         this.mElement.style.backgroundSize = 'contain';
         this.mElement.style.backgroundPosition = 'center';
         this.mElement.style.backgroundRepeat = 'no-repeat';

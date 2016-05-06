@@ -173,14 +173,21 @@ define(function (require, exports, module) {
     function showPreview(editor) {
         var data = {}, style;
         db.collection('widget').select({program_id: programId}).forEach(function (w) {
-            //var materials = db.collection('material').select({widget_id: w.id});
-            //if (materials.length === 0) {}
+            var materials = db.collection('material').select({widget_id: w.id}),
+                material;
+            if (materials.length === 0) {
+                material = {
+                    url: ''
+                };
+            } else {
+                material = materials[0];
+            }
             switch (w.type) {
                 case 'AudioBox':
-                    data[w.id] = {};
+                    data[w.id] = {material: material.url};
                     break;
                 case 'VideoBox':
-                    data[w.id] = {material: w.material};
+                    data[w.id] = {material: material.url};
                     break;
                 case 'WebBox':
                     style = w.style === '' ? {} : JSON.parse(w.style);
@@ -189,11 +196,14 @@ define(function (require, exports, module) {
                             type: style.Type,
                             color: style.TextColor,
                             direction: style.ScrollDriection,
-                            speed: Number(style.ScrollSpeed)
+                            speed: Number(style.ScrollSpeed),
+                            backgroundColor: style.BackgroundColor
                         };
                     } else {
                         style = {
-                            type: style.Type
+                            type: style.Type,
+                            pageDownPeriod: Number(style.PageDownPeriod),
+                            backgroundColor: style.BackgroundColor
                         };
                     }
                     data[w.id] = {material: w.material, style: style};
@@ -207,7 +217,7 @@ define(function (require, exports, module) {
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ImageBox':
-                    data[w.id] = {material: w.material};
+                    data[w.id] = {material: material.url};
                     break;
             }
         });
