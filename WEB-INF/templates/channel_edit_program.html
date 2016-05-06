@@ -14,6 +14,20 @@
 
     <div class="channel-program-timer">
 
+        <div class="input-group">
+            <span class="input-group-addon" title="开始时间">
+                <i class="fa fa fa-calendar-check-o"></i>
+            </span>
+            <input type="date" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start.match(/([^T]+)T/)[1]%>">
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon" title="失效时间">
+                <i class="fa fa-calendar-times-o"></i>
+            </span>
+            <input type="date" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_start.match(/([^T]+)T/)[1]%>">
+        </div>
+
         <div class="channel-editor-program-trigger input-group input-group-sm">
             <div class="input-group-btn"  style="float: left;">
               <button type="button" class="btn btn-danger btn-channel-setup-timer">
@@ -24,7 +38,7 @@
 
 
             <!-- /btn-group -->
-            <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline;">
+            <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline;">
                 <label class="timer-field timer-field-date">
                     <span></span>
                 </label>
@@ -46,13 +60,6 @@
             </label>
 
         </div>
-       
-
-        <!-- <label class="channel-editor-program-count">
-            播放次数
-            <input type="number" data-field="count" value="<%=count%>">
-        </label> -->
-
 
         <div class="input-group">
             <span class="input-group-addon" title="生效时间">
@@ -73,11 +80,14 @@
             </span>
             <div class="program-duration-container"></div>
         </div>
-
+        <div class="input-group" style="width: 100px;   ">
+            <span class="input-group-addon" title="播放次数">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
+            <input type="number" class="form-control" data-field="count" value="<%=count%>">
+        </div>
 
     </div>
-
-
 
 <div class="channel-program-body">
     <div class="channel-program-layout">

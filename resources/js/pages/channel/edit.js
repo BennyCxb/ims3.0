@@ -531,7 +531,9 @@ define(function(require, exports, module) {
         $('#edit-page-container')
 			.empty()
 			.addClass('none');
-		programHandle.send('program.reset', null);
+		if (programHandle) {
+			programHandle.send('program.reset', null);
+		}
 		window.onpopstate = undefined;
         location.hash = '#channel/list';
     }
