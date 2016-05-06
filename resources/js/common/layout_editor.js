@@ -1306,6 +1306,10 @@ define(function (require, exports, module) {
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = '#000';
+        this.mElement.style.backgroundImage = 'url(resources/img/videoTip.png)';
+        this.mElement.style.backgroundSize = 'contain';
+        this.mElement.style.backgroundRepeat = 'no-repeat';
+        this.mElement.style.backgroundPosition = 'center'
         if (
             suffix.call(data.material, '.jpg') ||
             suffix.call(data.material, '.png') ||
@@ -1335,6 +1339,7 @@ define(function (require, exports, module) {
     };
     VideoWidget.prototype.hidePreview = function (data) {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        this.mElement.style.backgroundImage = 'none';
         Widget.prototype.hidePreview.call(this);
     };
 
