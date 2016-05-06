@@ -1,135 +1,135 @@
 'use strict';
 
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     // depend on these components
     var templates = require('common/templates'),
-        config    = require('common/config'),
-        util      = require('common/util'),
-        toast     = require('common/toast'),
-		getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
+        config = require('common/config'),
+        util = require('common/util'),
+        toast = require('common/toast'),
+        getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
 
     // global variables
-    var requestUrl    = config.serverRoot,
-        projectName   = config.projectName,
+    var requestUrl = config.serverRoot,
+        projectName = config.projectName,
         nDisplayItems = 15,
-        keyword       = '',
+        keyword = '',
         last;
 
     // 初始化页面
-	exports.init = function() {
-		checkCheck();
+    exports.init = function () {
+        checkCheck();
         loadPage(1);
 
         //获取已选频道ids
-        function getChannelIds(){
+        function getChannelIds() {
             var ids = new Array();
-            $("#channel-table input[type='checkBox']:checked").each(function(i,e){
+            $("#channel-table input[type='checkBox']:checked").each(function (i, e) {
                 ids.push(Number($(e).parent().parent().parent().attr('chnID')));
             })
             return ids;
         }
-		
-        registerEventListeners();
-		//筛选审核状态
-				if(util.getLocalParameter('config_checkSwitch') == '1'){
-					$('#chn_toBeCheckedDiv button').each(function(i,e){
-					  $(this).click(function(){
-						$(this).siblings().removeClass('btn-primary');
-						$(this).siblings().addClass('btn-defalut');
-		
-						var isFocus = $(this).hasClass('btn-primary');
-						$(this).removeClass(isFocus?'btn-primary':'btn-defalut');
-						$(this).addClass(isFocus?'btn-defalut':'btn-primary');
-						loadPage(1);
-					  })
-					})
 
-					//提交审核
-					$('#chn_submit').click(function(){
-						
-						if(!$('#chn_submit').attr('disabled')){
-							
-							var data = {
-							  "project_name": config.projectName,
-							  "action": "submitToCheck",
-							  "ChannelIDs": getChannelIds()
-							}
-							util.ajax(
-								'POST', 
-								config.serverRoot + '/backend_mgt/v2/channels',
-								JSON.stringify(data),
-								function(data){
-									if(data.rescode === '200'){
-										alert('已提交');
-										loadPage(1);
-									}else{
-										alert('提交失败');
-									}
-								}
-							)
-						}
-					})
-		
-					//审核通过
-					$('#chn_pass').click(function(){
-						
-						if(!$('#chn_pass').attr('disabled')){	
-							var data = {
-							  "project_name": config.projectName,
-							  "action": "checkPass",
-							  "ChannelIDs": getChannelIds()
-							}
-							util.ajax(
-								'POST', 
-								config.serverRoot + '/backend_mgt/v2/channels',
-								JSON.stringify(data),
-								function(data){
-									if(data.rescode === '200'){
-										alert('已审核');
-										loadPage(1);
-									}else{
-										alert('审核失败');
-									}
-								}		
-							)
-							alert('处理中...');
-						}
-					})
-		
-					//审核不通过
-					$('#chn_unpass').click(function(){
-						
-						if(!$('#chn_unpass').attr('disabled')){
-							var ids = getChannelIds();
-							var unpassChn = [];
-							for(var i=0;i<ids.length;i++){
-								//ids[i].failInfo="这里是审核不通过的反馈信息"
-								var a = {"channelID":ids[i],"failInfo":"这里是审核不通过的反馈信息"}
-								unpassChn[i] = a;
-								
-								}
-							var data = {
-							  "project_name": config.projectName,
-							  "action": "checkFailed",
-							  "CheckFeedBack": unpassChn
-							}
-							util.ajax(
-								'POST', 
-								config.serverRoot + '/backend_mgt/v2/channels',
-								JSON.stringify(data),
-								function(data){
-									if(data.rescode === '200'){
-										alert('已审核');
-										loadPage(1);
-									}else{
-										alert('审核失败');
-									}
-								}
-							)
-						}
-					})
-				}
+        registerEventListeners();
+        //筛选审核状态
+        if (util.getLocalParameter('config_checkSwitch') == '1') {
+            $('#chn_toBeCheckedDiv button').each(function (i, e) {
+                $(this).click(function () {
+                    $(this).siblings().removeClass('btn-primary');
+                    $(this).siblings().addClass('btn-defalut');
+
+                    var isFocus = $(this).hasClass('btn-primary');
+                    $(this).removeClass(isFocus ? 'btn-primary' : 'btn-defalut');
+                    $(this).addClass(isFocus ? 'btn-defalut' : 'btn-primary');
+                    loadPage(1);
+                })
+            })
+
+            //提交审核
+            $('#chn_submit').click(function () {
+
+                if (!$('#chn_submit').attr('disabled')) {
+
+                    var data = {
+                        "project_name": config.projectName,
+                        "action": "submitToCheck",
+                        "ChannelIDs": getChannelIds()
+                    }
+                    util.ajax(
+                        'POST',
+                        config.serverRoot + '/backend_mgt/v2/channels',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已提交');
+                                loadPage(1);
+                            } else {
+                                alert('提交失败');
+                            }
+                        }
+                    )
+                }
+            })
+
+            //审核通过
+            $('#chn_pass').click(function () {
+
+                if (!$('#chn_pass').attr('disabled')) {
+                    var data = {
+                        "project_name": config.projectName,
+                        "action": "checkPass",
+                        "ChannelIDs": getChannelIds()
+                    }
+                    util.ajax(
+                        'POST',
+                        config.serverRoot + '/backend_mgt/v2/channels',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已审核');
+                                loadPage(1);
+                            } else {
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                    alert('处理中...');
+                }
+            })
+
+            //审核不通过
+            $('#chn_unpass').click(function () {
+
+                if (!$('#chn_unpass').attr('disabled')) {
+                    var ids = getChannelIds();
+                    var unpassChn = [];
+                    for (var i = 0; i < ids.length; i++) {
+                        //ids[i].failInfo="这里是审核不通过的反馈信息"
+                        var a = {"channelID": ids[i], "failInfo": "这里是审核不通过的反馈信息"}
+                        unpassChn[i] = a;
+
+                    }
+                    var data = {
+                        "project_name": config.projectName,
+                        "action": "checkFailed",
+                        "CheckFeedBack": unpassChn
+                    }
+                    util.ajax(
+                        'POST',
+                        config.serverRoot + '/backend_mgt/v2/channels',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已审核');
+                                loadPage(1);
+                            } else {
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                }
+            })
+        }
 
     };
 
@@ -172,79 +172,79 @@ define(function(require, exports, module) {
         //});
         //搜索事件
 
-        $("#channelSearch").keyup(function(){
-            if(event.keyCode == 13) {
+        $("#channelSearch").keyup(function () {
+            if (event.keyCode == 13) {
                 onSearch(event);
             }
         });
         $("#channelSearch").next().click(onSearch);
         function onSearch(event) {
             last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
-            setTimeout(function(){          //设时延迟0.5s执行
-                if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            setTimeout(function () {          //设时延迟0.5s执行
+                if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
                     keyword = typeof($('#channelSearch').val()) === 'string' ? $('#channelSearch').val() : '';
                     loadPage(1);
                 }
-            },500);
+            }, 500);
         }
 
     }
-    
+
     function publishChannel() {
-		var channelID = $(".checked").parent().parent().attr("chnID");
-        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');		  
-			  getClassAndTerm.channelID = channelID;
-			  getClassAndTerm.title = '发布到...';
-			  getClassAndTerm.save = function(data){
-				//var cList = JSON.stringify(data.categoryList);
-				//var tList = JSON.stringify(data.termList);
-				var post_data = JSON.stringify({
-					project_name:config.projectName,
-					action:'publishChannel',
-					channelID:channelID,
-					categoryList:data.categoryList,
-					termList:data.termList
-					});
-				var url = config.serverRoot + '/backend_mgt/v2/termcategory';
-				util.ajax('post',url,post_data,function(msg){
-					if(msg.rescode==200){
-						alert("频道发布成功！")
-						util.cover.close();
-						parent.location.reload();
-						}
-					else{
-						alert("频道发布失败！")
-						util.cover.close();
-						}
-					});
-				
-				
-		}
+        var channelID = $(".checked").parent().parent().attr("chnID");
+        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
+        getClassAndTerm.channelID = channelID;
+        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.save = function (data) {
+            //var cList = JSON.stringify(data.categoryList);
+            //var tList = JSON.stringify(data.termList);
+            var post_data = JSON.stringify({
+                project_name: config.projectName,
+                action: 'publishChannel',
+                channelID: channelID,
+                categoryList: data.categoryList,
+                termList: data.termList
+            });
+            var url = config.serverRoot + '/backend_mgt/v2/termcategory';
+            util.ajax('post', url, post_data, function (msg) {
+                if (msg.rescode == 200) {
+                    alert("频道发布成功！")
+                    util.cover.close();
+                    parent.location.reload();
+                }
+                else {
+                    alert("频道发布失败！")
+                    util.cover.close();
+                }
+            });
+
+
+        }
     }
-    
+
     function publishChannelLater() {
         var channelID = $(".checked").parent().parent().attr("chnID");
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
         getClassAndTerm.channelID = channelID;
         getClassAndTerm.title = '发布到...';
-        getClassAndTerm.save = function(data){
+        getClassAndTerm.save = function (data) {
             //var cList = JSON.stringify(data.categoryList);
             //var tList = JSON.stringify(data.termList);
             var post_data = JSON.stringify({
-                project_name:config.projectName,
-                action:'publishPreDownloadChannel',
-                channelID:channelID,
-                categoryList:data.categoryList,
-                termList:data.termList
+                project_name: config.projectName,
+                action: 'publishPreDownloadChannel',
+                channelID: channelID,
+                categoryList: data.categoryList,
+                termList: data.termList
             });
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
-            util.ajax('post',url,post_data,function(msg){
-                if(msg.rescode==200){
+            util.ajax('post', url, post_data, function (msg) {
+                if (msg.rescode == 200) {
                     alert("频道预发布成功！")
-					
+
                 }
-                else{
+                else {
                     alert("频道预发布失败！")
                 }
             });
@@ -252,7 +252,7 @@ define(function(require, exports, module) {
             parent.location.reload();
         }
     }
-    
+
     function copyChannel() {
         var data = JSON.stringify({
             Action: 'Copy',
@@ -263,7 +263,7 @@ define(function(require, exports, module) {
             alert(Number(res.rescode) === 200 ? '复制成功' : '复制失败');
         });
     }
-    
+
     function deleteChannel() {
         var data = JSON.stringify({
             action: 'Delete',
@@ -276,18 +276,18 @@ define(function(require, exports, module) {
     }
 
     function onSelectedItemChanged(adjustCount) {
-        var selectedCount = typeof(adjustCount) === 'number' ? adjustCount: 0;
+        var selectedCount = typeof(adjustCount) === 'number' ? adjustCount : 0;
         $('#channel-table div').each(function (idx, el) {
             if ($(el).hasClass('checked')) {
                 selectedCount++;
             }
         });
-        var hasUncheckedItems = selectedCount !== ($('#channel-table tr').size()-1);
+        var hasUncheckedItems = selectedCount !== ($('#channel-table tr').size() - 1);
         $('#channel-list-controls .select-all>i')
             .toggleClass('fa-square-o', hasUncheckedItems)
             .toggleClass('fa-check-square-o', !hasUncheckedItems);
         $('#channel-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
-		
+
     }
 
     function getChannelId(el) {
@@ -297,16 +297,16 @@ define(function(require, exports, module) {
         }
         return Number(idAttr);
     }
-    
+
     function getCurrentChannelId() {
         return Number($('#channel-table div.checked')[0].parentNode.parentNode.getAttribute('chnid'));
     }
 
     // 加载页面数据
     function loadPage(pageNum) {
-		var CheckLevel = -1;
-        if($('#chn_toBeCheckedDiv button.btn-primary').length > 0){
-          CheckLevel = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
+        var CheckLevel = -1;
+        if ($('#chn_toBeCheckedDiv button.btn-primary').length > 0) {
+            CheckLevel = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
         }
         var pager = {
             page: String(pageNum),
@@ -315,16 +315,17 @@ define(function(require, exports, module) {
             orderby: 'ID',
             sortby: '',
             keyword: keyword,
-			status: ''
+            status: ''
         };
         var data = JSON.stringify({
             action: 'GetPage',
             project_name: projectName,
-			CheckLevel:CheckLevel,
+            CheckLevel: CheckLevel,
             Pager: pager
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, render);
     }
+
     // 渲染界面
     function render(json) {
         //翻页
@@ -347,21 +348,21 @@ define(function(require, exports, module) {
         });
 
         $("#channel-table tbody").empty();
-		//拼接
+        //拼接
         if (json.Channels != undefined) {
             var chnData = json.Channels;
             var check_th = '';
-            if(util.getLocalParameter('config_checkSwitch') == '1'){
+            if (util.getLocalParameter('config_checkSwitch') == '1') {
                 check_th = '<th class="chn_check">审核状态</th>';
             }
 
-            $("#channel-table tbody").append('<tr>'+
-                                    '<th class="chn_checkbox" style="width:32px;"></th>'+
-                                    '<th class="chn_name">频道名</th>'+
-                                    check_th+
-                                    '<th class="chn_create">创建人</th>'+
-									'<th class="chn_createTime">创建时间</th>'+
-                                '</tr>');
+            $("#channel-table tbody").append('<tr>' +
+                '<th class="chn_checkbox" style="width:32px;"></th>' +
+                '<th class="chn_name">频道名</th>' +
+                check_th +
+                '<th class="chn_create">创建人</th>' +
+                '<th class="chn_createTime">创建时间</th>' +
+                '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
                     // 审核状态
@@ -416,8 +417,8 @@ define(function(require, exports, module) {
                     }
                 }
             }
-		checkCheckBtns();
-            
+            checkCheckBtns();
+
         }
 
         //复选框样式
@@ -425,11 +426,9 @@ define(function(require, exports, module) {
             checkboxClass: 'icheckbox_flat-blue',
             radioClass: 'iradio_flat-blue'
         });
-		
-		 //
+        //
         $(".icheckbox_flat-blue").parent().parent().click(function () {
-        	$(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-            var obj = $(this).find("input");
+            $(".table-responsive input[type='checkbox']").iCheck("uncheck");
             if ($(this).find("input").prop("checked") == true) {
                 $(this).find("input").prop("checked", false);
                 $(this).find("div").prop("class", "icheckbox_flat-blue");
@@ -444,127 +443,126 @@ define(function(require, exports, module) {
         $(".icheckbox_flat-blue ins").click(function () {
             checkCheckBtns();
         })
-		//校验批量操作的审核功能
-		function checkCheckBtns(){
-			if(util.getLocalParameter('config_checkSwitch') == '0'){
-				}else{
-				  if(util.getLocalParameter('config_canCheck') == '0'){
-						var checked = $("#channel-table input[type='checkBox']:checked");
-						
-							//判断选中个数						
-						if(checked.length!='1'){
-							$('#chn_submit').attr('disabled',true);
-							$('#chn_pass').attr('disabled',true);
-							$('#chn_unpass').attr('disabled',true);
-							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-							$('#channel-list-controls .btn-publish').attr('disabled',true);
-							$('#channel-list-controls .btn-delete').prop('disabled', true);
-							}else{	
-							//已通过
-							if($(checked).parent().parent().parent().attr('check_status') == '2'){
-								
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
-								$('#channel-list-controls .btn-publish').attr('disabled',false);
-								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
-								$('#channel-list-controls .btn-delete').prop('disabled', false);
-								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
-							}
-							//未通过
-							else if($(checked).parent().parent().parent().attr('check_status') == '3'){
-								
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
-								$('#channel-list-controls .btn-delete').prop('disabled', false);
-								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
-							}
-							//待审核
-							else if($(checked).parent().parent().parent().attr('check_status') == '1'){
-								
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
-								$('#channel-list-controls .btn-delete').prop('disabled', false);
-								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
-							}
-							//待提交
-							else {
-								
-								$('#chn_submit').attr('disabled',false);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-								if(config.userName==$(checked).parent().parent().parent().attr('chnCU')){
-								$('#channel-list-controls .btn-delete').prop('disabled', false);
-								}else{$('#channel-list-controls .btn-delete').prop('disabled', true);}
-							}
-			
-						}
-					  
-				  }
-				  else{
-					
-						var checked = $("#channel-table input[type='checkBox']:checked");
-					
-						if(checked.length!='1'){
-							
-							$('#chn_submit').attr('disabled',true);
-							$('#chn_pass').attr('disabled',true);
-							$('#chn_unpass').attr('disabled',true);
-							$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-							$('#channel-list-controls .btn-publish').attr('disabled',true);
-							$('#channel-list-controls .btn-delete').prop('disabled', true);
-							}else{		
-							//已通过和未通过
-							if($(checked).parent().parent().parent().attr('check_status') == '2'){
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',false);
-								$('#channel-list-controls .btn-publish').attr('disabled',false);
-							}
-							else if($(checked).parent().parent().parent().attr('check_status') == '3'){
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-							}
-							//待审核
-							else if($(checked).parent().parent().parent().attr('check_status') == '1'){
-								$('#chn_submit').attr('disabled',true);
-								$('#chn_pass').attr('disabled',false);
-								$('#chn_unpass').attr('disabled',false);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-							}
-							//待提交
-							else {
-								$('#chn_submit').attr('disabled',false);
-								$('#chn_pass').attr('disabled',true);
-								$('#chn_unpass').attr('disabled',true);
-								$('#channel-list-controls .btn-publish-later').attr('disabled',true);
-								$('#channel-list-controls .btn-publish').attr('disabled',true);
-							}
-						}
-			
-						
-					}
-				}
-	
-		}
-		
-		//mark
+        //校验批量操作的审核功能
+        function checkCheckBtns() {
+            if (util.getLocalParameter('config_checkSwitch') == '0') {
+            } else {
+                if (util.getLocalParameter('config_canCheck') == '0') {
+                    var checked = $("#channel-table input[type='checkBox']:checked");
+                    //判断选中个数
+                    if (checked.length != '1') {
+                        $('#chn_submit').attr('disabled', true);
+                        $('#chn_pass').attr('disabled', true);
+                        $('#chn_unpass').attr('disabled', true);
+                        $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                        $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        $('#channel-list-controls .btn-delete').prop('disabled', true);
+                    } else {
+                        //已通过
+                        if ($(checked).parent().parent().parent().attr('check_status') == '2') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', false);
+                            $('#channel-list-controls .btn-publish').attr('disabled', false);
+                            if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
+                                $('#channel-list-controls .btn-delete').prop('disabled', false);
+                            } else {
+                                $('#channel-list-controls .btn-delete').prop('disabled', true);
+                            }
+                        }
+                        //未通过
+                        else if ($(checked).parent().parent().parent().attr('check_status') == '3') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
+                                $('#channel-list-controls .btn-delete').prop('disabled', false);
+                            } else {
+                                $('#channel-list-controls .btn-delete').prop('disabled', true);
+                            }
+                        }
+                        //待审核
+                        else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
+                                $('#channel-list-controls .btn-delete').prop('disabled', false);
+                            } else {
+                                $('#channel-list-controls .btn-delete').prop('disabled', true);
+                            }
+                        }
+                        //待提交
+                        else {
+                            $('#chn_submit').attr('disabled', false);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
+                                $('#channel-list-controls .btn-delete').prop('disabled', false);
+                            } else {
+                                $('#channel-list-controls .btn-delete').prop('disabled', true);
+                            }
+                        }
+
+                    }
+
+                }else {
+                    var checked = $("#channel-table input[type='checkBox']:checked");
+                    if (checked.length != '1') {
+                        $('#chn_submit').attr('disabled', true);
+                        $('#chn_pass').attr('disabled', true);
+                        $('#chn_unpass').attr('disabled', true);
+                        $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                        $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        $('#channel-list-controls .btn-delete').prop('disabled', true);
+                    } else {
+                        //已通过和未通过
+                        if ($(checked).parent().parent().parent().attr('check_status') == '2') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', false);
+                            $('#channel-list-controls .btn-publish').attr('disabled', false);
+                        }
+                        else if ($(checked).parent().parent().parent().attr('check_status') == '3') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        }
+                        //待审核
+                        else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
+                            $('#chn_submit').attr('disabled', true);
+                            $('#chn_pass').attr('disabled', false);
+                            $('#chn_unpass').attr('disabled', false);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        }
+                        //待提交
+                        else {
+                            $('#chn_submit').attr('disabled', false);
+                            $('#chn_pass').attr('disabled', true);
+                            $('#chn_unpass').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                            $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        }
+                    }
+
+
+                }
+            }
+
+        }
+
+        //mark
         //$('#channel-table>tbody').html('');
 //        json.Channels.forEach(function (el, idx, arr) {
 //            /*var schedule_type = el.Overall_Schedule_Type === 'Regular' ? '常规' : '定时';
@@ -591,16 +589,17 @@ define(function(require, exports, module) {
 //        });
 
     }
-	function checkCheck(){
-        if(util.getLocalParameter('config_checkSwitch') == '0'){
-            $('#chn_submit').css('display','none');
-            $('#chn_pass').css('display','none');
-            $('#chn_unpass').css('display','none');
-            $('#chn_toBeCheckedDiv').css('display','none');
+
+    function checkCheck() {
+        if (util.getLocalParameter('config_checkSwitch') == '0') {
+            $('#chn_submit').css('display', 'none');
+            $('#chn_pass').css('display', 'none');
+            $('#chn_unpass').css('display', 'none');
+            $('#chn_toBeCheckedDiv').css('display', 'none');
         }
-        else if(util.getLocalParameter('config_canCheck') == '0'){
-            $('#chn_pass').css('display','none');
-            $('#chn_unpass').css('display','none');
+        else if (util.getLocalParameter('config_canCheck') == '0') {
+            $('#chn_pass').css('display', 'none');
+            $('#chn_unpass').css('display', 'none');
         }
     }
 });
