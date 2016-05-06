@@ -181,7 +181,8 @@ a {
 }
 
 .mtr_name {
-	max-width: 431px;
+    width: 30%;
+	max-width: 430px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -454,6 +455,11 @@ a {
 
 /*用户列表页面*/
 .role_name, .users_email, .user_resetPwd {
+    text-align: center;
+}
+
+/*用户日志页面*/
+.Datetime, .Operation {
     text-align: center;
 }
 
