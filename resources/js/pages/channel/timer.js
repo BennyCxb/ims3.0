@@ -83,7 +83,8 @@ define(function (require, exports, module) {
             checkAllSeconds = this.tSeconds.length === 60;
         $('#channel-editor-timer .hour-selector select').change(function () {
             var $this = $(this), val = $this.val();
-            if (val.includes('*') && val.length > 1) {
+            if (val === null) {
+            } else if (val.includes('*') && val.length > 1) {
                 if (!checkAllHours) {
                     checkAllHours = true;
                     $this.select2('val', ['*']);
@@ -103,7 +104,8 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-timer .minute-selector select').change(function () {
             var $this = $(this), val = $this.val();
-            if (val.includes('*') && val.length > 1) {
+            if (val === null) {
+            } else if (val.includes('*') && val.length > 1) {
                 if (!checkAllMinutes) {
                     checkAllMinutes = true;
                     $this.select2('val', ['*']);
@@ -123,7 +125,8 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-timer .second-selector select').change(function () {
             var $this = $(this), val = $this.val();
-            if (val.includes('*') && val.length > 1) {
+            if (val === null) {
+            } else if (val.includes('*') && val.length > 1) {
                 if (!checkAllSeconds) {
                     checkAllSeconds = true;
                     $this.select2('val', ['*']);
@@ -174,7 +177,7 @@ define(function (require, exports, module) {
             el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         var th = $('#channel-editor-timer .hour-selector select').val();
-        if (th.includes('*')) {
+        if (th === null || th.includes('*')) {
             this.tHours = range(24);
         } else {
             this.tHours = th.map(function (el) {
@@ -182,7 +185,7 @@ define(function (require, exports, module) {
             }).sort();
         }
         var tm = $('#channel-editor-timer .minute-selector select').val();
-        if (tm.includes('*')) {
+        if (tm === null || tm.includes('*')) {
             this.tMinutes = range(60);
         } else {
             this.tMinutes = tm.map(function (el) {
@@ -190,7 +193,7 @@ define(function (require, exports, module) {
             }).sort();
         }
         var ts = $('#channel-editor-timer .second-selector select').val();
-        if (ts.includes('*')) {
+        if (tm === null || ts.includes('*')) {
             this.tSeconds = range(60);
         } else {
             this.tSeconds = ts.map(function (el) {

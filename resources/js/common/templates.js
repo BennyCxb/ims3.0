@@ -130,7 +130,7 @@ __p+=' '+
 ((__t=('周' + numbers[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px"> ';
  if (hours.length === 24) { 
 __p+=' <option value="*" selected="selected">每小时</option> ';
  } else { 
@@ -150,7 +150,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
+__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px"> ';
  if (minutes.length === 60) { 
 __p+=' <option value="*" selected="selected"> ';
  } else { 
@@ -170,7 +170,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
+__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px"> ';
  if (seconds.length === 60) { 
 __p+=' <option value="*" selected="selected">每秒</option> ';
  } else { 
