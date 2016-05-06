@@ -173,6 +173,8 @@ define(function (require, exports, module) {
     function showPreview(editor) {
         var data = {}, style;
         db.collection('widget').select({program_id: programId}).forEach(function (w) {
+            //var materials = db.collection('material').select({widget_id: w.id});
+            //if (materials.length === 0) {}
             switch (w.type) {
                 case 'AudioBox':
                     data[w.id] = {};
@@ -335,12 +337,12 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .channel-editor-program-trigger')
             .toggleClass('day-timer', dayTimer)
             .toggleClass('date-timer', !dayTimer);
-        fields[0].textContent = segments[4] === '*' ? '每月' : segments[4] + '月';
-        fields[1].textContent = segments[3] === '*' ? '每日' : segments[3] + '日';
-        fields[2].textContent = segments[6] === '*' ? '每日' : segments[6] + '日';
-        fields[3].textContent = segments[2] === '*' ? '每点' : segments[2] + '点';
-        fields[4].textContent = segments[1] === '*' ? '每分' : segments[1] + '分';
-        fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
+        fields[0].textContent = segments[4] === '*' ? '每' : segments[4];
+        fields[1].textContent = segments[3] === '*' ? '每' : segments[3];
+        fields[2].textContent = segments[6] === '*' ? '每' : segments[6];
+        fields[3].textContent = segments[2] === '*' ? '每' : segments[2];
+        fields[4].textContent = segments[1] === '*' ? '每' : segments[1];
+        fields[5].textContent = segments[0] === '*' ? '每' : segments[0];
     }
 
     function onSelectWidget (widget) {
