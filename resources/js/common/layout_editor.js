@@ -1375,9 +1375,10 @@ define(function (require, exports, module) {
             marquee.style.backgroundColor = data.style.BackgroundColor;
             this.mElement.appendChild(marquee);
             if (data.style.ScrollSpeed > 0) {
+                var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
                 $(marquee).marquee({
                     direction: data.style.ScrollDirection === 'Right_2_Left' ? 'left' : 'right',
-                    duration: 15000 / data.style.ScrollSpeed
+                    duration: Math.floor(textLength * 1000 / (25 * this.mContext.mZoomFactor * data.style.ScrollSpeed))
                 });
             }
         } else {
