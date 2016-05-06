@@ -93,8 +93,12 @@
             <div class="hour-selector"  style="margin-bottom: 15px;">
                     <label>每天第...小时</label>
                     <select  class="form-control select2" multiple="multiple" data-selector="hour">
+                        <% if (hours.length === 24) { %>
+                        <option value="*" selected="selected">每小时</option>
+                        <% } else { %>
                         <option value="*">每小时</option>
-                        <% for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1) { %>
+                        <% } %>
+                        <% for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1 && hours.length !== 24) { %>
                         <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
                         <% } else { %>
                         <option value="<%=i%>"><%=(i < 10) ? '0' + i : i%></option>
@@ -104,8 +108,12 @@
             <div class="minute-selector" style="margin-bottom: 15px;">
                     <label>每小时第...分钟</label>
                     <select class="form-control select2" multiple="multiple" data-selector="minute">
+                        <% if (minutes.length === 60) { %>
+                        <option value="*" selected="selected">
+                        <% } else { %>
                         <option value="*">每分钟</option>
-                        <% for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1) { %>
+                        <% } %>
+                        <% for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1 && minutes.length !== 60) { %>
                         <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
                         <% } else { %>
                         <option value="<%=i%>"><%=(i < 10) ? '0' + i : i%></option>
@@ -115,8 +123,12 @@
             <div class="second-selector" style="margin-bottom: 15px;">
                 <label>每分钟第...秒</label>
                 <select class="form-control select2" multiple="multiple" data-selector="second">
+                    <% if (seconds.length === 60) { %>
+                    <option value="*" selected="selected">每秒</option>
+                    <% } else { %>
                     <option value="*">每秒</option>
-                    <% for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1) { %>
+                    <% } %>
+                    <% for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1 && seconds.length !== 60) { %>
                     <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
                     <% } else { %>
                     <option value="<%=i%>"><%=(i < 10) ? '0' + i : i%></option>

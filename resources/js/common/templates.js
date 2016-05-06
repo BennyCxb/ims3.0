@@ -32,7 +32,7 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header box-header with-border"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline"> <label class="timer-field timer-field-date"> <span></span> 月 </label> <label class="timer-field timer-field-date"> <span></span> 日 </label> <label class="timer-field timer-field-day"> <span></span> 日 </label> <label class="timer-field"> <span></span> 点 </label> <label class="timer-field"> <span></span> 分 </label> <label class="timer-field"> <span></span> 秒 </label> </label> </div><!-- <label class="channel-editor-program-count">\r\n            播放次数\r\n            <input type="number" data-field="count" value="'+
+'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div><!-- <label class="channel-editor-program-count">\r\n            播放次数\r\n            <input type="number" data-field="count" value="'+
 ((__t=(count))==null?'':__t)+
 '">\r\n        </label> --> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
@@ -126,8 +126,14 @@ __p+=' '+
 ((__t=('周' + numbers[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> <option value="*">每小时</option> ';
- for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1) { 
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
+ if (hours.length === 24) { 
+__p+=' <option value="*" selected="selected">每小时</option> ';
+ } else { 
+__p+=' <option value="*">每小时</option> ';
+ } 
+__p+=' ';
+ for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1 && hours.length !== 24) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
 '" selected="selected">'+
@@ -140,8 +146,14 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> <option value="*">每分钟</option> ';
- for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1) { 
+__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
+ if (minutes.length === 60) { 
+__p+=' <option value="*" selected="selected"> ';
+ } else { 
+__p+=' <option value="*">每分钟</option> ';
+ } 
+__p+=' ';
+ for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1 && minutes.length !== 60) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
 '" selected="selected">'+
@@ -154,8 +166,14 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> <option value="*">每秒</option> ';
- for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1) { 
+__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
+ if (seconds.length === 60) { 
+__p+=' <option value="*" selected="selected">每秒</option> ';
+ } else { 
+__p+=' <option value="*">每秒</option> ';
+ } 
+__p+=' ';
+ for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1 && seconds.length !== 60) { 
 __p+=' <option value="'+
 ((__t=(i))==null?'':__t)+
 '" selected="selected">'+

@@ -78,7 +78,9 @@ define(function (require, exports, module) {
             $('#channel-editor-timer .day-selector input[type="checkbox"]')
                 .iCheck(bool ? 'check' : 'uncheck');
         });
-        var checkAllHours = false, checkAllMinutes = false, checkAllSeconds = false;
+        var checkAllHours = this.tHours.length === 24,
+            checkAllMinutes = this.tMinutes.length === 60,
+            checkAllSeconds = this.tSeconds.length === 60;
         $('#channel-editor-timer .hour-selector select').change(function () {
             var $this = $(this), val = $this.val();
             if (val.includes('*') && val.length > 1) {
@@ -152,21 +154,21 @@ define(function (require, exports, module) {
         var self = this;
         this.tMonths = [];
         $('#channel-editor-timer .month-selector input').each(function (idx, el) {
-            if ($(el).hasClass('check-all')) {
+            if ($(el).hasClass('check-all-month')) {
                 return;
             }
             el.checked && self.tMonths.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDates = [];
         $('#channel-editor-timer .date-selector input').each(function (idx, el) {
-            if ($(el).hasClass('check-all')) {
+            if ($(el).hasClass('check-all-date')) {
                 return;
             }
             el.checked && self.tDates.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
         });
         this.tDays = [];
         $('#channel-editor-timer .day-selector input').each(function (idx, el) {
-            if ($(el).hasClass('check-all')) {
+            if ($(el).hasClass('check-all-day')) {
                 return;
             }
             el.checked && self.tDays.push(parseInt(el.parentNode.parentNode.parentNode.getAttribute('data-id')));
