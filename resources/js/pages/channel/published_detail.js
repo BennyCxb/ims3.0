@@ -22,12 +22,14 @@ define(function (require, exports, module) {
         $('#chnpub').click(function () {
             chnChoise($(this));
             //显示已发布的相关信息
+            $("#termList").html('发布信息');
+            $("#term").html('发布信息');
         })
         $('#chnpre').click(function () {
             chnChoise($(this));
             //显示已预发布的相关信息
-            $("#termList").html('123');
-            $("#term").html('456');
+            $("#termList").html('预发布信息');
+            $("#term").html('预发布信息');
         })
 
 
