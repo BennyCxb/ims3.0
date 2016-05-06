@@ -282,16 +282,26 @@ define(function (require, exports, module) {
     
     function onProgramEdit() {
         var field = this.getAttribute('data-field'),
-            updates = null;
+            updates = null, value;
         switch (field) {
             case 'name':
                 updates = {name: this.value};
                 break;
             case 'lifetime_start':
-                updates = {lifetime_start: this.value.replace('T', ' ')};
+                if (this.type === 'date') {
+                    value = this.value + 'T00:00:00';
+                } else  {
+                    value = this.value;
+                }
+                updates = {lifetime_start: value.replace('T', ' ')};
                 break;
             case 'lifetime_end':
-                updates = {lifetime_start: this.value.replace('T', ' ')};
+                if (this.type === 'date') {
+                    value = this.value + 'T00:00:00';
+                } else  {
+                    value = this.value;
+                }
+                updates = {lifetime_start: value.replace('T', ' ')};
                 break;
             case 'count':
                 var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
