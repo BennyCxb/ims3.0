@@ -232,7 +232,7 @@ define(function (require, exports, module) {
                 .toggleClass('percent-channel', data === 'Percent');
         });
         messageDispatcher.on('program.reset', function () {
-            editor.destroy();
+            editor && editor.destroy();
         });
 
         editor.onFocusChanged(function () {
