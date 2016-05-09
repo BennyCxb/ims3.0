@@ -126,6 +126,7 @@ define(function(require, exports, module) {
 	}
 
 	// 加载页面数据
+    $('#layout-table>tbody').html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
 	function loadPage(pageNum) {
 		var pager = {
 			page: String(pageNum),
@@ -172,18 +173,24 @@ define(function(require, exports, module) {
         '<th class="mod_user_center">创建人</th>' +
         '<th class="mod_create_time_center">创建时间</th>'+
         '</tr>');
-		json.LayoutList.forEach(function (el, idx, arr) {
-			var data = {
-				id: el.ID,
-				name: el.Name,
-				width: el.Width,
-				height: el.Height,
-				background_color: el.BackgroundColor,
-				operator: el.UserName,
-				create_time: el.CreateTime
-			};
-			$('#layout-table>tbody').append(templates.layout_table_row(data));
-		});
+        if(json.LayoutList!=0) {
+            json.LayoutList.forEach(function (el, idx, arr) {
+                var data = {
+                    id: el.ID,
+                    name: el.Name,
+                    width: el.Width,
+                    height: el.Height,
+                    background_color: el.BackgroundColor,
+                    operator: el.UserName,
+                    create_time: el.CreateTime
+                };
+                $('#layout-table>tbody').append(templates.layout_table_row(data));
+            });
+        }else{
+            $("#layout-table>tbody").empty();
+            $('#layout-table-pager').empty();
+            $("#layout-table>tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+        }
 		onSelectedItemChanged();
 
 		$('#layout-table input[type="checkbox"]').iCheck({

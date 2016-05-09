@@ -304,6 +304,8 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     function loadPage(pageNum) {
+        // loading
+        $("#channel-table tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         var CheckLevel = -1;
         if ($('#chn_toBeCheckedDiv button.btn-primary').length > 0) {
             CheckLevel = $('#chn_toBeCheckedDiv button.btn-primary').attr('value');
@@ -417,6 +419,10 @@ define(function (require, exports, module) {
                         }
                     }
                 }
+            }else{
+                $("#channel-table tbody").empty();
+                $('#channel-table-pager').empty();
+                $("#channel-table tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
             checkCheckBtns();
 
