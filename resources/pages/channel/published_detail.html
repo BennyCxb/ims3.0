@@ -1,17 +1,11 @@
 <div class="modal-content" style=" position: relative; left: 50%; margin: auto; margin-left: -300px; width: 600px;">
-    <div class="modal-header">
-        <button type="button" class="close CA_close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">发布详情</h4>
-    </div>
-
-
-
-    <div id="list_box" class="col-md-12">
-        <div class="nav-tabs-custom">
+    <div id="list_box" class="col-md-12" style="padding:20px 0 0 0">
+        <div class="nav-tabs-custom" style="border-bottom: none;margin-bottom: 0;">
             <ul id="chnChoise" class="nav nav-tabs">
-                <li class="active"><a id="chnpub"><i class="fa fa-video-camera"></i> 发布</a></li>
+                <li class="active" style="margin-left: 15px"><a id="chnpub"><i class="fa fa-video-camera"></i> 发布</a></li>
                 <li><a id="chnpre"><i class="fa fa-image"></i> 预发布</a></li>
+                <button type="button" class="close CA_close" data-dismiss="modal" aria-label="Close" style="margin-right: 15px">
+                    <span aria-hidden="true">&times;</span></button>
             </ul>
 
             <div class="modal-body" style="overflow:auto; max-height: 430px;">
@@ -25,7 +19,7 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="border: none">
                 <!--<button type="button" class="btn btn-default pull-left CA_close" data-dismiss="modal">返回</button>-->
                 <button id="chnSubmit" type="button" class="btn btn-primary pull-right">确定</button>
             </div>

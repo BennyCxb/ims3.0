@@ -1,3 +1,3 @@
 var CONFIG = {
-	"requestURL" : "http://imsoperate.cleartv.cn"
+	"requestURL" : "http://192.168.18.202"
 }

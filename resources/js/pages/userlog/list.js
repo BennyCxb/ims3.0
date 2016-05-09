@@ -36,7 +36,7 @@ define(function (require, exports, module) {
     // 加载页面数据
     exports.loadUserlogPage = function (pageNum) {
         $("#userlogLisTitle").html("");
-        $("#userlogTable tbody").html("");
+        $("#userlogTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#userlogLisTitle").html("日志列表");
 
@@ -76,16 +76,18 @@ define(function (require, exports, module) {
                 }
             }
         });
+        $("#userlogTable tbody").html('');
         //拼接
         if (json.logList != undefined) {
             var rolData = json.logList;
             $("#userlogTable tbody").append('<tr>' +
-                '<th class="User">用户名</th>' +
-                '<th class="OperationObject">操作对象</th>' +
-                '<th class="Datetime">时间</th>' +
-                '<th class="Operation">操作</th>' +
-                    //'<th class="Detail">详情</th>'+
-                '</tr>');
+            '<th class="User">用户名</th>' +
+            '<th class="OperationObject">操作对象</th>' +
+            '<th class="Datetime">时间</th>' +
+            '<th class="Operation">操作</th>' +
+                //'<th class="Detail">详情</th>'+
+            '</tr>');
+            if (rolData.length != 0) {
             for (var x = 0; x < rolData.length; x++) {
                 var roltr = '<tr>' +
                     '<td class="User">' + rolData[x].User + '</td>' +
@@ -95,6 +97,11 @@ define(function (require, exports, module) {
                         //'<td class="Detail">' + rolData[x].Detail + '</td>' +
                     '</tr>';
                 $("#userlogTable tbody").append(roltr);
+            }
+        }else{
+                $("#userlogTable tbody").empty();
+                $('#userlog-table-pager').empty();
+                $("#userlogTable tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
         }
     }

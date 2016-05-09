@@ -350,6 +350,10 @@ define(function (require, exports, module) {
                         $("#mtrTable tbody").append(mtrtr);
 	                }
             	}
+            }else{
+                $("#mtrTable tbody").empty();
+                $('#materials-table-pager').empty();
+                $("#mtrTable tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
         }
 
@@ -479,14 +483,14 @@ define(function (require, exports, module) {
                     	var data = JSON.stringify({
                             Action: 'DeleteMulti',
                             Project: CONFIG.projectName,
-                            MaterialIDs: MaterialIDs,
+                            MaterialIDs: MaterialIDs
                         });
                     	var url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
                     }else {
                     	var data = JSON.stringify({
                             action: 'DeleteMulti',
                             project_name: CONFIG.projectName,
-                            MaterialIDs: MaterialIDs,
+                            MaterialIDs: MaterialIDs
                         });
                     	var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
                     }

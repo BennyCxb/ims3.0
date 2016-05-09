@@ -21,8 +21,9 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadRolesPage = function (pageNum) {
+        // loading
+        $("#rolesTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#rolesLisTitle").html("");
-        $("#rolesTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#rolesLisTitle").html("全部角色");
         var data = JSON.stringify({
@@ -44,6 +45,7 @@ define(function (require, exports, module) {
     }
 
     function render(json) {
+        $("#rolesTable tbody").html('');
         //翻页
         var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);
