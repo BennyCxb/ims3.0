@@ -808,7 +808,11 @@ define(function (require, exports, module) {
         if (time != null && time != "") {
             if (time < 60) {
                 var s = time;
-                time = "00:00:" + s;
+                if (time < 10) {
+                    time = "00:00:0" + s;
+                } else {
+                    time = "00:00:" + s;
+                }
             } else if (time > 60 && time < 3600) {
                 var m = parseInt(time / 60);
                 var s = parseInt(time % 60);
