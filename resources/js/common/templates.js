@@ -336,15 +336,15 @@ __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></b></td> <td>'+
-((__t=(width))==null?'':__t)+
-'</td> <td>'+
-((__t=(height))==null?'':__t)+
-'</td> <td>'+
-((__t=(background_color))==null?'':__t)+
-'</td> <td>'+
+'</a></b></td> <td class="mod_size_center">'+
+((__t=(width+'×'+height))==null?'':__t)+
+'</td> <td class="mod_user_center">'+
+//((__t=(height))==null?'':__t)+
+//'</td> <td>'+
+//((__t=(background_color))==null?'':__t)+
+//'</td> <td>'+
 ((__t=(operator))==null?'':__t)+
-'</td> <td>'+
+'</td> <td class="mod_create_time_center">'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
 }
