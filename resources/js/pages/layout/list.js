@@ -165,6 +165,15 @@ define(function(require, exports, module) {
 		});
 
 		$('#layout-table>tbody').html('');
+        $("#layout-table>tbody").append('<tr>' +
+        '<th class="mod_checkbox" style="width:32px;"></th>' +
+        '<th class="mod_name">模板名</th>' +
+        '<th class="">宽</th>' +
+        '<th class="">高</th>' +
+        '<th class="">背景色</th>' +
+        '<th class="">创建人</th>' +
+        '<th class="">创建时间</th>'+
+        '</tr>');
 		json.LayoutList.forEach(function (el, idx, arr) {
 			var data = {
 				id: el.ID,
