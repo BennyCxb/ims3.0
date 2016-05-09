@@ -28,7 +28,7 @@ define(function (require, exports, module) {
 
 
         //搜索
-        $("#termlogSearch").keyup(function () {
+        $("#termlogSearch").keyup(function (event) {
             if (event.keyCode == 13) {
                 onSearch(event);
             }

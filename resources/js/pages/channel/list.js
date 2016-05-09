@@ -172,7 +172,7 @@ define(function (require, exports, module) {
         //});
         //搜索事件
 
-        $("#channelSearch").keyup(function () {
+        $("#channelSearch").keyup(function (event) {
             if (event.keyCode == 13) {
                 onSearch(event);
             }

@@ -13,11 +13,19 @@ define(function (require, exports, module) {
             UTIL.cover.close();
         });
 
+        ////搜索
+        //$('#mtrChoiseSearch').bind('input propertychange', function () {
+        //    var typeId = $("#mtrChoiseSearch").attr("typeid");
+        //    onSearch($('#mtrChoiseSearch').val(), typeId);
+        //});
         //搜索
-        $('#mtrChoiseSearch').bind('input propertychange', function () {
-            var typeId = $("#mtrChoiseSearch").attr("typeid");
-            onSearch($('#mtrChoiseSearch').val(), typeId);
+        $("#mtrChoiseSearch").keyup(function(event){
+            if(event.keyCode == 13) {
+                var typeId = $("#mtrChoiseSearch").attr("typeId");
+                onSearch(event);
+            }
         });
+        $("#mtrSearch").next().click(onSearch);
 
         //下拉框点击事件
         $("#mtr_typeChiose").change(function () {
@@ -256,6 +264,17 @@ define(function (require, exports, module) {
     }
 
     //搜索事件
+    function onSearch(event) {
+        var typeId = $("#mtrSearch").attr("typeId");
+        last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+        setTimeout(function(){          //设时延迟0.5s执行
+            if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            {
+                keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
+                exports.loadPage(1, Number(typeId));
+            }
+        },500);
+    }
     function onSearch(_keyword, typeId) {
         keyword = typeof(_keyword) === 'string' ? _keyword : '';
         loadPage(1, Number(typeId));

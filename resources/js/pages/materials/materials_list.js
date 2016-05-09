@@ -433,7 +433,7 @@ define(function (require, exports, module) {
         })
         
         //搜索
-        $("#mtrSearch").keyup(function(){
+        $("#mtrSearch").keyup(function(event){
             if(event.keyCode == 13) {
                 var typeId = $("#mtrSearch").attr("typeId");
                 onSearch(event);

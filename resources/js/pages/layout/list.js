@@ -60,7 +60,7 @@ define(function(require, exports, module) {
 
 		//搜索事件
 
-        $("#channel-list-search").keyup(function(){
+        $("#channel-list-search").keyup(function(event){
             if(event.keyCode == 13) {
                 onSearch(event);
             }

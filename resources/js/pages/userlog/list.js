@@ -10,7 +10,7 @@ define(function (require, exports, module) {
         exports.loadUserlogPage(1); //加载默认页面
 
         //搜索
-        $("#userlogSearch").keyup(function () {
+        $("#userlogSearch").keyup(function event() {
             if (event.keyCode == 13) {
                 onSearch(event);
             }
