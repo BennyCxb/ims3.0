@@ -172,7 +172,7 @@ define(function (require, exports, module) {
         //});
         //搜索事件
 
-        $("#channelSearch").keyup(function () {
+        $("#channelSearch").keyup(function (event) {
             if (event.keyCode == 13) {
                 onSearch(event);
             }
@@ -356,14 +356,13 @@ define(function (require, exports, module) {
                 check_th = '<th class="chn_check">审核状态</th>';
             }
 
-
             $("#channel-table tbody").append('<tr>' +
                 '<th class="chn_checkbox" style="width:32px;"></th>' +
                 '<th class="chn_name">频道名</th>' +
-                 '<th class="publish"></th>'+
                 check_th +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
+                '<th class="chn_detail">发布详情</th>'+
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
@@ -389,19 +388,17 @@ define(function (require, exports, module) {
                             default:
                                 break;
                         }
-                        check_td = '<th class="chn_check">' + status + '</th>';
-
+                        check_td = '<td class="chn_check">' + status + '</td>';
 
                         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
-                            '<td class="detail" title="' + chnData[x].CreateUserName + '"><b><a>发布详情</a></b></td>' +
                             check_td +
-                            '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
-                            '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
+                            '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
+                            '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
+                            '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
-
                     } else {
                         for (var x = 0; x < chnData.length; x++) {
 
@@ -411,10 +408,10 @@ define(function (require, exports, module) {
                             var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                                 '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                                 '<td class="chn_name" title="' + chnData[x].Name + '"><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></td>' +
-                                '<td class="detail" title="' + chnData[x].CreateUserName + '"><b><a>发布详情</a></b></td>' +
                                 check_td +
-                                '<td class="chn_create" title="' + chnData[x].CreateUserName + '"><b>' + chnData[x].CreateUserName + '</b></td>' +
-                                '<td class="chn_createTime" title="' + chnData[x].CreateTime + '"><b>' + chnData[x].CreateTime + '</b></td>' +
+                                '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
+                                '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
+                                '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                                 '</tr>';
                             $("#channel-table tbody").append(chntr);
                         }
@@ -568,7 +565,7 @@ define(function (require, exports, module) {
         }
 
         //发布详情
-        $('.detail').click(function(e){
+        $('.chn_detail').click(function(e){
             var self = $(this);
             e.preventDefault();
             e.stopPropagation();

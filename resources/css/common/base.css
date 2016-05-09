@@ -140,6 +140,27 @@ a {
     top: 0px;
 }
 
+/*终端日志列表页面*/
+.termID, .termIP, .eventType, .date {
+    text-align: center;
+}
+
+.termName {
+    width: 25%;
+}
+
+.termID, .termIP {
+    min-width: 145px;
+}
+
+.eventType {
+    min-width: 80px;
+}
+
+.event {
+    width: 30%;
+}
+
 /*资源列表页面*/
 #dpUpl {
 	color: #FFF;
@@ -160,7 +181,8 @@ a {
 }
 
 .mtr_name {
-	max-width: 431px;
+    width: 30%;
+	max-width: 50px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -427,12 +449,17 @@ a {
 }
 
 /*频道列表页面*/
-.chn_check, .chn_create, .chn_createTime {
+.chn_check, .chn_create, .chn_createTime, .chn_detail {
     text-align: center;
 }
 
 /*用户列表页面*/
 .role_name, .users_email, .user_resetPwd {
+    text-align: center;
+}
+
+/*用户日志页面*/
+.Datetime, .Operation {
     text-align: center;
 }
 

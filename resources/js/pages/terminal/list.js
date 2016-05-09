@@ -75,7 +75,7 @@ define(function(require, exports, module) {
     })
 
     // serach
-    $("#term_search").keyup(function(){
+    $("#term_search").keyup(function(event){
       if(event.keyCode == 13) {
         onSearch(event);
       }

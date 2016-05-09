@@ -7,6 +7,7 @@ define(function (require, exports, module) {
     var nDisplayItems = 15,
         keyword = "",
         last;
+    var curPage = 1;
 
     exports.init = function () {
         checkCheck();
@@ -241,6 +242,7 @@ define(function (require, exports, module) {
             currentPage: Number(json.Pager.page),
             onPageChange: function (num, type) {
                 if (type == 'change') {
+                    curPage = num;
                 	$('#materials-table-pager').jqPaginator('destroy');
                     var typeId = $("#mtrChoise li.active").attr("typeid");
                     exports.loadPage(num, Number(typeId));
@@ -431,7 +433,7 @@ define(function (require, exports, module) {
         })
         
         //搜索
-        $("#mtrSearch").keyup(function(){
+        $("#mtrSearch").keyup(function(event){
             if(event.keyCode == 13) {
                 var typeId = $("#mtrSearch").attr("typeId");
                 onSearch(event);
@@ -470,7 +472,9 @@ define(function (require, exports, module) {
                             MaterialIDs.push(Number(mtrId));
                         }
                     }
-                    var pageNum = $("#materials-table-pager li.active").find("a").text();
+                    if ($(".mtr_cb:checked").length == $(".mtr_cb").length || curPage != 1) {
+                        curPage --;
+                    }
                     if (typeId == "4"){
                     	var data = JSON.stringify({
                             Action: 'DeleteMulti',
@@ -487,7 +491,7 @@ define(function (require, exports, module) {
                     	var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
                     }
                     UTIL.ajax('post', url, data, function () {
-                        exports.loadPage(pageNum, Number(typeId)); //刷新页面
+                        exports.loadPage(curPage, Number(typeId)); //刷新页面
                     });
                 }
             }
