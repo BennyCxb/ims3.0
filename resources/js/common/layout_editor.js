@@ -1408,10 +1408,19 @@ define(function (require, exports, module) {
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
             iFrame.srcdoc = '<html><head><style>body {font-size:' +
                 (0.5 * DEFAULT_FONT_SIZE * scale) +
-                'px}</style></head><body>' +
+                'px;background-color: ' +
+                    data.style.backgroundColor
+                + ';}</style></head><body>' +
                 data.material +
                 '</body></html>';
             this.mElement.appendChild(iFrame);
+            var overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            this.mElement.appendChild(overlay);
         }
 
 
