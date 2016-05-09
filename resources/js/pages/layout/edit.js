@@ -205,6 +205,10 @@ define(function(require, exports, module) {
 
         var json = editor.getLayout().toJSON(),
             isNewLayout = json.id === -1;
+        html2canvas(editor.mLayout.mContent, function (canvas) {
+            console.log(canvas);
+            console.log(canvas.toDataURL());
+        });
 
         httpCheckLayoutExists(json, function (err) {
             if (err) { console.error(err); return; }

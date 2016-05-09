@@ -188,8 +188,8 @@
 <script src="resources/plugins/colorpicker/dist/bootstrap.colorpickersliders.min.js"></script>
 <!-- date.format -->
 <script src="resources/js/common/date.format.js"></script>
-
-
+<!-- html2canvas -->
+<script src="resources/js/bower_components/html2canvas/build/html2canvas.min.js"></script>
 
 <script>
 	seajs.config({
