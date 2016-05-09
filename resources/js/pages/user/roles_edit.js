@@ -251,7 +251,7 @@ define(function (require, exports, module) {
                 })
                 var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
                 UTIL.ajax('post',url1,data1,function(msg){
-                    if(msg.RoleCount!==0){
+                    if(msg.RoleCount!==0 && newName!=rName){
                         alert("角色名已存在！")
                         return false;
                     }else{
