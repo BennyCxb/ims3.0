@@ -27,23 +27,23 @@ define(function (require, exports, module) {
 			$(".modal-title").html("新建角色");
 			}
 		//判断角色名是否已存在
-		$("#role_name").blur(function(){
-			var newName = $("#role_name").val();
-			var data1 = JSON.stringify({
-				project_name:CONFIG.projectName,
-				action:'GetByRoleNameCount',
-				RoleName:newName,
-				RoleID:-1
-				})
-			var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
-			UTIL.ajax('post',url1,data1,function(msg){
-				if(msg.RoleCount!==0){
-					alert("角色名已存在！")
-					return false;
-					}else{
-						return}
-			})
-			});
+		//$("#role_name").blur(function(){
+		//	var newName = $("#role_name").val();
+		//	var data1 = JSON.stringify({
+		//		project_name:CONFIG.projectName,
+		//		action:'GetByRoleNameCount',
+		//		RoleName:newName,
+		//		RoleID:-1
+		//		})
+		//	var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
+		//	UTIL.ajax('post',url1,data1,function(msg){
+		//		if(msg.RoleCount!==0){
+		//			alert("角色名已存在！")
+		//			return false;
+		//			}else{
+		//				return}
+		//	})
+		//	});
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
 			 	project_name:CONFIG.projectName,
