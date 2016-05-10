@@ -72,7 +72,7 @@ define(function(require, exports, module) {
 
       // 向上检查
       tree.checkParent = function(dom){
-        var parent = dom.parent().parent();
+        /*var parent = dom.parent().parent();
         if( parent.children('ul').attr('id') == tree.domId ){
           return;
         }
@@ -114,7 +114,7 @@ define(function(require, exports, module) {
             }
           }
         
-        }
+        }*/
       }
 
       tree.getSelectedNodeID = function(){
