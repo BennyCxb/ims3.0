@@ -198,33 +198,18 @@ define(function (require, exports, module) {
                 var material_type = mtrData[0].Type_Name;
                 for (var x = 0; x < mtrData.length; x++) {
                     if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
-                        var mtr_choise_tr = '<td class="mtr_choise_name">' + mtrData[x].Name + '</td>';
+                        var mtr_choise_tr = '<td class="mtr_choise_name"><b>' + mtrData[x].Name + '</b></td>';
                     }else {
                         if (mtrData[x].Download_Auth_Type == "None") {
                             var mtrUrl = mtrData[x].URL;
                             var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                             mosaic(mtr_choise_tr);
                         } else {
-                            var data = JSON.stringify({
-                                action: "getRealURL",
-                                project_name: CONFIG.projectName,
-                                URL: mtrData[x].URL
-                            })
-                            var _url = CONFIG.serverRoot + '/backend_mgt/v1/qiniu/';
-                            jQuery.ajax({
-                                type: 'post',
-                                url: _url,
-                                data: data,
-                                async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
-                                success: function (msg) {
-                                    var realUrl = JSON.parse(msg).URL;
-                                    var mtrUrl = realUrl;
-                                    var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                                    mosaic(mtr_choise_tr);
-                                }
+                            UTIL.getRealURL(mtrData[x].URL,function (mtrUrl) {
+                                var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                                mosaic(mtr_choise_tr);
                             });
                         }
-                        //var mtr_choise_tr = '<td class="mtr_choise_name"><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></td>';
                     }
                     function mosaic(mtr_choise_tr) {
                         var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +

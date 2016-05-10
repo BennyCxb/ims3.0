@@ -160,23 +160,9 @@ define(function (require, exports, module) {
                             var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                             mosaic(mtrName_tr, check_td);
                         } else {
-                            var data = JSON.stringify({
-                                action: "getRealURL",
-                                project_name: CONFIG.projectName,
-                                URL: mtrData[x].URL
-                            })
-                            var _url = CONFIG.serverRoot + '/backend_mgt/v1/qiniu/';
-                            jQuery.ajax({
-                                type: 'post',
-                                url: _url,
-                                data: data,
-                                async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
-                                success: function (msg) {
-                                    var realUrl = JSON.parse(msg).URL;
-                                    var mtrUrl = realUrl;
-                                    var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                                    mosaic(mtrName_tr, check_td);
-                                }
+                            UTIL.getRealURL(mtrData[x].URL,function (mtrUrl) {
+                                var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                                mosaic(mtrName_tr, check_td);
                             });
                         }
                     }
