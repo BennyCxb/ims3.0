@@ -16,7 +16,7 @@
 	   </beans:bean>
 	   
 	   <beans:bean id="userDetailsService" class="com.clearcrane.imps.util.UserDetailService">
-	   		<beans:property name="getUserBaseUrl" value="http://192.168.18.166" />
+	   		<beans:property name="getUserBaseUrl" value="http://192.168.18.202" />
 	   		<beans:property name="getUserAuthUrl" value="/backend_mgt/v1/userauths" />
 	   		<beans:property name="getUserDetailUrl" value="/backend_mgt/v1/userdetails" />
 	   </beans:bean>
