@@ -2,12 +2,14 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
-
     var _upl_list = new Array(); //记录上传xhr, status(success, uploading);
+    var uploadQiniu = "0",
+        Qiniu_UploadUrl = "",
+        qiniu_url = "",
+        domain = "";
+    ;
 
     exports.init = function () {
-
-
         var DispClose = false;
         $(window).bind('beforeunload', function () {
             $("#Tbe_filesList tr").each(function () {
@@ -19,13 +21,11 @@ define(function (require, exports, module) {
                 return "当前正在上传文件，是否离开当前页面?";
             }
         })
-
         loadPage();
     }
 
     function loadPage() {
         exports.beginUpload();
-
         //显示上传页面
         $("#dpUpl").click(function () {
             $("#page_upload").css("display", "flex");
@@ -56,7 +56,6 @@ define(function (require, exports, module) {
                         }
                     }
                     closeUpl_list();	//关闭上传窗口
-
                 }
             } else {
                 closeUpl_list();	//关闭上传窗口
@@ -90,12 +89,16 @@ define(function (require, exports, module) {
 
             $("#box_fileList").attr("status", "uploading");
 
-            for (var a = 1, b = 0, c = 0; a < $("#Tbe_filesList tr").length; a++, b++) {
-                if ($("#upl_tr_" + b).attr("status") == "") {
-                    upload(b, c);
-                    c++;
-                }
-            }
+            var data = JSON.stringify({
+                project_name: CONFIG.projectName,
+                action: "GetKey",
+                key: "QiNiuUpload"
+            })
+            var url = CONFIG.serverRoot + '/backend_mgt/v2/userconfigs';
+            UTIL.ajax('post', url, data, function (json) {
+                uploadQiniu = json.UserConfigs[0].ConfigValue;
+                upload();
+            });
         }
     }
 
@@ -116,125 +119,174 @@ define(function (require, exports, module) {
     }
 
     //上传模块
-    function upload(num1, num2) {
-        $("#dpUpl").css("display", "block");
-        // 上传
-        var Qiniu_upload = function (f) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', CONFIG.Resource_UploadURL, true);
-            var formData, startDate;
-            formData = new FormData();
-            formData.append('file', f);
-            var taking;
-
-            var xh = new upl_file(xhr);
-            _upl_list.push(xh);
-
-
-            //上传FTP
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var nowDate = new Date().getTime();
-                    taking = nowDate - startDate;
-                    var x = (evt.loaded) / 1024;
-                    var y = taking / 1000;
-                    var uploadSpeed = (x / y);
-                    var formatSpeed;
-                    if (uploadSpeed > 1024) {
-                        formatSpeed = (uploadSpeed / 1024).toFixed(2)
-                            + "Mb\/s";
-                    } else {
-                        formatSpeed = uploadSpeed.toFixed(2) + "Kb\/s";
-                    }
-                    var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-                    $("#upl_tr_" + num1).attr("status", "uploading");
-                    $("#progressbar_" + num1).css("width", percentComplete + "%");
-                    $("#upl_speed_" + num1).html(formatSpeed);
-                    if (num1 <= _upl_list.length) {
-                        _upl_list[num1].status = 'uploading';
-                    }
+    function upload() {
+        $("#dpUpl").show();
+        if (uploadQiniu == "1") {
+            //TODO, FIXME, 这里有个执行的先后顺序问题，一定要先拿到上传一些参数后，才能允许用户上传！！！
+            var data = JSON.stringify({
+                project_name: CONFIG.projectName,
+                action: "getUploadParas"
+            })
+            var url = CONFIG.serverRoot + '/backend_mgt/v1/qiniu';
+            UTIL.ajax('post', url, data, function (data) {
+                var blkRet = data;
+                Qiniu_UploadUrl = blkRet.uploadURL;
+                domain = blkRet.domain;
+                uploadToken = blkRet.uploadToken;
+                if (Qiniu_UploadUrl == "") {
+                    alert("Can not get Qiniu Upload Paras");
+                    return;
                 }
-            }, false);
-
-
-            //入库
-            xhr.onreadystatechange = function (response) {
-                try {
-                    var fileName = $("#file")[0].files[num2].name;
-                } catch (e) {
-                }
-
-                if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
-                    var blkRet = JSON.parse(xhr.responseText);
-                    var material = {
-                        name: fileName,
-                        name_eng: "",
-                        url_name: blkRet.upload_path,
-                        description: "",
-                        is_live: "0",
-                        Download_Auth_Type: "None",
-                        Download_Auth_Paras: "",
-                        size: blkRet.size,
-                        md5: blkRet.md5,
-                        duration: blkRet.duration,
-                        create_time: getNowFormatDate(),
-                        CreateUser: CONFIG.userName
-                    };
-                    var data = JSON.stringify({
-                        action: 'Post',
-                        project_name: CONFIG.projectName,
-                        material: material
-                    });
-                    var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
-                    UTIL.ajax('post', url, data, function (data) {
-                        if (parseInt(data.rescode) == 200) {
-                            $("#upl_tr_" + num1).attr("status", "end");
-                            $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-success");
-                            $("#upl_speed_" + num1).html("");
-                            $("#upl_status_" + num1).html("上传成功");
-                            _upl_list[num1].status = "end";
-                            var status = "uploading";
-                            //判断是否全部上传完毕
-                            for (var b = 0, c = 0; b < _upl_list.length; b++) {
-                                if (_upl_list[b].status == "end") {
-                                    c++;
-                                    if (c == _upl_list.length) {
-                                        status = "end";
-                                    }
-                                }
-                            }
-                            if (status == "end") {
-                                $("#box_fileList").attr("status", "end");
-                                var typeId = $("#mtrChoise li.active").attr("typeid");
-                                if (typeId == "1" || typeId == "2" || typeId == "3") {
-                                    MTR.loadPage(1, Number(typeId));
-                                }
-
-                            }
-                        } else {
-                            $("#upl_tr_" + num1).prop("status", "end");
-                            $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-danger");
-                            $("#upl_status_" + num1).html("上传失败");
-                            _upl_list[num1].status = 'end';
-                        }
-                    });
-                } else if (xhr.status != 200 && xhr.responseText) {
-                    $("#upl_tr_" + num1).prop("status", "end");
-                    $("#progressbar_" + num1).prop("class", "progress-bar progress-bar-danger");
-                    $("#upl_status_" + num1).html("上传失败");
-                }
-            };
-            startDate = new Date().getTime();
-            xhr.send(formData);
-        };
-        if ($("#file")[0].files.length > 0) {
-            Qiniu_upload($("#file")[0].files[num2]);
+                up();
+            })
         } else {
-            // console && console.log("form input error");
+            up();
         }
-
-
+        function up() {
+            if ($("#file")[0].files.length > 0) {
+                for (var a = 1, b = 0, c = 0; a < $("#Tbe_filesList tr").length; a++, b++) {
+                    if ($("#upl_tr_" + b).attr("status") == "") {
+                        Qiniu_upload($("#file")[0].files[c], b);
+                        c++;
+                    }
+                }
+            }
+        }
     }
+
+    // 上传
+    function Qiniu_upload(f, num) {
+        var xhr = new XMLHttpRequest();
+        var formData, startDate;
+        formData = new FormData();
+        if (uploadQiniu == "0") {                 //普通上传
+            xhr.open('POST', CONFIG.Resource_UploadURL, true);
+        } else if (uploadQiniu == "1") {          //七牛上传
+            var strS = f.name.split(".");
+            var subS = strS[strS.length - 1];
+            xhr.open('POST', Qiniu_UploadUrl, true);
+            //时间戳和随机数做文件标记（key）
+            var key = (new Date()).valueOf() + "_" + Math.floor((Math.random() * 1000000)) + "." + subS;
+            formData.append('key', key);
+            formData.append('token', uploadToken);
+            qiniu_url = "http://" + domain + "/" + key;
+        }
+        formData.append('file', f);
+        var taking;
+        var xh = new upl_file(xhr);
+        _upl_list.push(xh);
+
+        //上传FTP
+        xhr.upload.addEventListener("progress", function (evt) {
+            if (evt.lengthComputable) {
+                var nowDate = new Date().getTime();
+                taking = nowDate - startDate;
+                var x = (evt.loaded) / 1024;
+                var y = taking / 1000;
+                var uploadSpeed = (x / y);
+                var formatSpeed;
+                if (uploadSpeed > 1024) {
+                    formatSpeed = (uploadSpeed / 1024).toFixed(2)
+                        + "Mb\/s";
+                } else {
+                    formatSpeed = uploadSpeed.toFixed(2) + "Kb\/s";
+                }
+                var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                $("#upl_tr_" + num).attr("status", "uploading");
+                $("#progressbar_" + num).css("width", percentComplete + "%");
+                $("#upl_speed_" + num).html(formatSpeed);
+                if (num <= _upl_list.length) {
+                    _upl_list[num].status = 'uploading';
+                }
+            }
+        }, false);
+
+        //入库
+        xhr.onreadystatechange = function (response) {
+            try {
+                var fileName = f.name;
+            } catch (e) {
+            }
+            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
+                var blkRet = JSON.parse(xhr.responseText);
+                var duration,
+                    downloadAuthType,
+                    md5,
+                    url_name,
+                    size;
+                if (uploadQiniu == "0") {         //普通上传
+                    duration = blkRet.duration;
+                    downloadAuthType = "None";
+                    md5 = blkRet.md5;
+                    url_name = blkRet.upload_path;
+                    size = blkRet.size;
+                } else if (uploadQiniu == "1") {  //七牛上传
+                    duration = "0";
+                    downloadAuthType = "Qiniu";
+                    md5 = "";
+                    url_name = qiniu_url;
+                    size = f.size;
+                }
+                var material = {
+                    name: fileName,
+                    name_eng: "",
+                    url_name: url_name,
+                    description: "",
+                    is_live: "0",
+                    Download_Auth_Type: downloadAuthType,
+                    Download_Auth_Paras: "",
+                    size: size,
+                    md5: md5,
+                    duration: duration,
+                    create_time: getNowFormatDate(),
+                    CreateUser: CONFIG.userName
+                };
+                var data = JSON.stringify({
+                    action: 'Post',
+                    project_name: CONFIG.projectName,
+                    material: material
+                });
+                var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+                UTIL.ajax('post', url, data, function (data) {
+                    if (parseInt(data.rescode) == 200) {
+                        $("#upl_tr_" + num).attr("status", "end");
+                        $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
+                        $("#upl_speed_" + num).html("");
+                        $("#upl_status_" + num).html("上传成功");
+                        _upl_list[num].status = "end";
+                        var status = "uploading";
+                        //判断是否全部上传完毕
+                        for (var b = 0, c = 0; b < _upl_list.length; b++) {
+                            if (_upl_list[b].status == "end") {
+                                c++;
+                                if (c == _upl_list.length) {
+                                    status = "end";
+                                }
+                            }
+                        }
+                        if (status == "end") {
+                            $("#box_fileList").attr("status", "end");
+                            var typeId = $("#mtrChoise li.active").attr("typeid");
+                            if (typeId == "1" || typeId == "2" || typeId == "3") {
+                                MTR.loadPage(1, Number(typeId));
+                            }
+                        }
+                    } else {
+                        $("#upl_tr_" + num).prop("status", "end");
+                        $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
+                        $("#upl_status_" + num).html("上传失败");
+                        _upl_list[num].status = 'end';
+                    }
+                });
+            } else if (xhr.status != 200 && xhr.responseText) {
+                $("#upl_tr_" + num).prop("status", "end");
+                $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
+                $("#upl_status_" + num).html("上传失败");
+            }
+        };
+        startDate = new Date().getTime();
+        xhr.send(formData);
+    };
 
     //获取当前时间
     function getNowFormatDate() {
