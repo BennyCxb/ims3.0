@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 		var isNew = true;
 		//var loadType = ROLES.loadType;
 		var type = ROLES.type;
-		if(rID){
+		if(type=="edit"){
 			$("#role_name").val(rName);
 			isNew = false;
 			}
@@ -44,6 +44,8 @@ define(function (require, exports, module) {
 		//				return}
 		//	})
 		//	});
+
+
 		//获取角色的终端树	
 		var term_data = JSON.stringify({
 			 	project_name:CONFIG.projectName,
@@ -135,10 +137,12 @@ define(function (require, exports, module) {
                         if(flag5){
                             if(!isNew){
                                 alert("修改成功！")
-                                parent.location.reload();
+                                //parent.location.reload();
+                                ROLES.loadRolesPage(1);
                                 UTIL.cover.close();
                             }else{alert("创建成功！")
-                                parent.location.reload();
+                                //parent.location.reload();
+                                ROLES.loadRolesPage(1);
                                 UTIL.cover.close();}
                         }else{
                             if(!isNew){
@@ -204,10 +208,13 @@ define(function (require, exports, module) {
                             if(flag5){
                                 if(!isNew){
                                     alert("修改成功！")
-                                    parent.location.reload();
+                                    //parent.location.reload();
+                                    ROLES.loadRolesPage(1);
+                                    alert("123")
                                     UTIL.cover.close();
                                 }else{alert("创建成功！")
-                                    parent.location.reload();
+                                    //parent.location.reload();
+                                    ROLES.loadRolesPage(1);
                                     UTIL.cover.close();}
                             }else{
                                 if(!isNew){
@@ -335,8 +342,28 @@ define(function (require, exports, module) {
 			})
 		 //关闭窗口
         $(".CA_close").click(function () {
-            UTIL.cover.close();
-			parent.location.reload(); 
+            if(ROLEEDIT.roleID){
+                rID=Number(ROLEEDIT.roleID);
+                var data = JSON.stringify({
+                    project_name:CONFIG.projectName,
+                    action: 'Delete'
+                });
+                var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
+                UTIL.ajax('post', url, data, function (msg) {
+                    if (msg.rescode == 200) {
+
+                    } else {
+
+                    }
+                    ;
+                });
+                UTIL.cover.close();
+                ROLES.loadRolesPage(1); //刷新页面
+            }else{
+                UTIL.cover.close();
+                ROLES.loadRolesPage(1); //刷新页面
+            }
+
         });
     }
 	exports.loadModulePage = function () {
