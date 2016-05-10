@@ -345,6 +345,7 @@ define(function(require, exports, module) {
       $('.to-Channel').click(function(e){
           UTIL.cover.close();
       });
+
     loadCityInfo();
 
     function loadCityInfo(){
@@ -416,6 +417,17 @@ define(function(require, exports, module) {
               var chn_id = config.Channel_ID;
               var chn_href = "#channel/edit?id="+chn_id;
               $('.to-Channel').attr("href",chn_href);
+            //预发布频道链接
+              var prechn_id = config.PreDownload_Channel_ID;
+              var prechn_href = "#channel/edit?id=" + prechn_id;
+              $('.to-preChannel').attr("href", prechn_href);
+              $('.to-preChannel').click(function(e){
+                  if(prechn_id=== -1){
+                      e.preventDefault();
+                  }else {
+                      UTIL.cover.close();
+                  }
+              });
             // 心跳
             _heartBeatPeriod = config.HeartBeat_Period;
 
