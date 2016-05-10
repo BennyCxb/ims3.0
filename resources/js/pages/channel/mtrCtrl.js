@@ -663,28 +663,26 @@ define(function (require, exports, module) {
         var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
         var errorMsg = "";
         var obj;
-        if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4) {
-            $(".mtrCtrl_time").each(function () {
-                if ($(this).val() == "") {
-                    errorMsg += "请输入资源时长！\n";
+        $(".mtrCtrl_time").each(function () {
+            if ($(this).val() == "") {
+                errorMsg += "请输入资源时长！\n";
+                obj = $(this);
+            } else {
+                var attr = $(this).val().split(":");
+                if (isNaN(attr[0]) || isNaN(attr[1]) || isNaN(attr[2])) {
+                    errorMsg += "请输入正确的资源时长！\n";
                     obj = $(this);
-                } else {
-                    var attr = $(this).val().split(":");
-                    if (isNaN(attr[0]) || isNaN(attr[1]) || isNaN(attr[2])) {
-                        errorMsg += "请输入正确的资源时长！\n";
-                        obj = $(this);
-                        $(this).val($(this).attr("value"));
-                    }
+                    $(this).val($(this).attr("value"));
                 }
-            })
-            $(".mtrC_times").each(function () {
-                if ($(this).val() == null) {
-                    errorMsg += "请输入资源次数！\n";
-                    obj = $(this);
-                }
+            }
+        })
+        $(".mtrC_times").each(function () {
+            if ($(this).val() == null) {
+                errorMsg += "请输入资源次数！\n";
+                obj = $(this);
+            }
 
-            })
-        }
+        })
         if (widgetData.type_id == 3) {
             if ($("#mtrC_textType").val() == "Normal") {
                 if ($("#mtrC_pageDownPeriod").val() == null) {

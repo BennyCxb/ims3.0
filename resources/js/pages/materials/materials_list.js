@@ -11,160 +11,17 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         checkCheck();
-    	//checkJurisdiction();
+        //checkJurisdiction();  //添加资源权限
         bind();
-
         exports.loadPage(1, 1); //加载默认页面
-        //审核状态筛选
-        // 筛选终端
-        if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
-            $('#mtr_toBeCheckedDiv button').each(function(i,e){
-              $(this).click(function(){
-                $(this).siblings().removeClass('btn-primary');
-                $(this).siblings().addClass('btn-defalut');
-
-                var isFocus = $(this).hasClass('btn-primary');
-                $(this).removeClass(isFocus?'btn-primary':'btn-defalut');
-                $(this).addClass(isFocus?'btn-defalut':'btn-primary');
-                var typeId = $("#mtrChoise li.active").attr("typeid");
-                exports.loadPage(1, Number(typeId));
-              })
-            })
-
-            //获取已选资源ids
-            function getSourceIds(){
-                var ids = new Array();
-                $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
-                    ids.push(Number($(e).parent().parent().parent().attr('mtrid')));
-                })
-                return ids;
-            }
-
-            function loadPage(){
-                var pageNum = $("#materials-table-pager li.active").find("a").text();
-                var typeId = $("#mtrChoise li.active").attr("typeid");
-                exports.loadPage(pageNum, Number(typeId));
-            }
-
-            function getType(typeId){
-                var type = '';
-                switch(typeId){
-                    case '1':
-                        type = 'Video';
-                        break;
-                    case '2':
-                        type = 'Image';
-                        break;  
-                    case '3':
-                        type = 'Audio';
-                        break; 
-                    case '4':
-                        type = 'WebText';
-                        break; 
-                    case '5':
-                        type = 'Live';
-                        break;               
-                    default:
-                        break;
-                }
-                return type;
-            }
-
-            //提交审核
-            $('#mtr_submit').click(function(){
-                
-                if(!$('#mtr_submit').attr('disabled')){
-                    var typeId = $("#mtrChoise li.active").attr("typeid");
-                    var type = getType(typeId);
-                    var data = {
-                      "project_name": CONFIG.projectName,
-                      "action": "submitToCheck",
-                      "material_type": type,
-                      "MaterialIDs": getSourceIds()
-                    }
-                    UTIL.ajax(
-                        'POST', 
-                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
-                        JSON.stringify(data),
-                        function(data){
-                            if(data.rescode === '200'){
-                                alert('已提交');
-                                loadPage();
-                            }else{
-                                alert('提交失败');
-                            }
-                        }
-                    )
-                }
-            })
-
-            //审核通过
-            $('#mtr_approve').click(function(){
-                
-                if(!$('#mtr_approve').attr('disabled')){
-                    var typeId = $("#mtrChoise li.active").attr("typeid");
-                    var type = getType(typeId);
-                    var data = {
-                      "project_name": CONFIG.projectName,
-                      "action": "checkPass",
-                      "material_type": type,
-                      "MaterialIDs": getSourceIds()
-                    }
-                    UTIL.ajax(
-                        'POST', 
-                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
-                        JSON.stringify(data),
-                        function(data){
-                            if(data.rescode === '200'){
-                                alert('已审核');
-                                loadPage();
-                            }else{
-                                alert('审核失败');
-                            }
-                        }
-                    )
-                }
-            })
-
-            //审核不通过
-            $('#mtr_reject').click(function(){
-                
-                if(!$('#mtr_reject').attr('disabled')){
-                    var typeId = $("#mtrChoise li.active").attr("typeid");
-                    var type = getType(typeId);
-                    var data = {
-                      "project_name": CONFIG.projectName,
-                      "action": "checkFailed",
-                      "material_type": type,
-                      "MaterialIDs": getSourceIds()
-                    }
-                    UTIL.ajax(
-                        'POST', 
-                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
-                        JSON.stringify(data),
-                        function(data){
-                            if(data.rescode === '200'){
-                                alert('已审核');
-                                loadPage();
-                            }else{
-                                alert('审核失败');
-                            }
-                        }
-                    )
-                }
-            })
-        }
-
-
     }
 
     // 加载页面数据
     exports.loadPage = function (pageNum, type) {
         // loading
         $("#mtrTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
-
         $("#addtext_box").empty();
-        $("#list_box").css("display","block");
+        $("#list_box").css("display", "block");
         $("#mtrLisTitle").empty();
         $(".checkbox-toggle").data("clicks", false)
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
@@ -203,8 +60,8 @@ define(function (require, exports, module) {
                 break;
         }
         var status = "";
-        if($('#mtr_toBeCheckedDiv button.btn-primary').length > 0){
-          status = $('#mtr_toBeCheckedDiv button.btn-primary').attr('value');
+        if ($('#mtr_toBeCheckedDiv button.btn-primary').length > 0) {
+            status = $('#mtr_toBeCheckedDiv button.btn-primary').attr('value');
         }
 
         var pager = {
@@ -243,7 +100,7 @@ define(function (require, exports, module) {
             onPageChange: function (num, type) {
                 if (type == 'change') {
                     curPage = num;
-                	$('#materials-table-pager').jqPaginator('destroy');
+                    $('#materials-table-pager').jqPaginator('destroy');
                     var typeId = $("#mtrChoise li.active").attr("typeid");
                     exports.loadPage(num, Number(typeId));
                 }
@@ -254,53 +111,51 @@ define(function (require, exports, module) {
             var mtrData = json.Materials;
 
             var check_th = '';
-            if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
+            if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                 check_th = '<th class="mtr_check">审核状态</th>';
             }
 
-            $("#mtrTable tbody").append('<tr>'+
-                                    '<th class="mtr_checkbox"></th>'+
-                                    '<th class="mtr_name">文件名</th>'+
-                                    check_th+
-                                    '<th class="mtr_size">大小</th>'+
-                                    '<th class="mtr_time">时长</th>'+
-                                    '<th class="mtr_uploadUser">上传人</th>'+
-                                    '<th class="mtr_uploadDate">上传时间</th>'+
-                                '</tr>');
-            if (mtrData.length != 0){
-            	var material_type = mtrData[0].Type_Name;
-                if (material_type == "文本" || material_type == "Live"){		//文本和直播无预览效果
-                	for (var x = 0; x < mtrData.length; x++) {
-
+            $("#mtrTable tbody").append('<tr>' +
+                '<th class="mtr_checkbox"></th>' +
+                '<th class="mtr_name">文件名</th>' +
+                check_th +
+                '<th class="mtr_size">大小</th>' +
+                '<th class="mtr_time">时长</th>' +
+                '<th class="mtr_uploadUser">创建人</th>' +
+                '<th class="mtr_uploadDate">创建时间</th>' +
+                '</tr>');
+            if (mtrData.length != 0) {
+                var material_type = mtrData[0].Type_Name;
+                if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
+                    for (var x = 0; x < mtrData.length; x++) {
                         // 审核状态
                         var check_td = '';
                         var check_status = '';
-                        if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
-
+                        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                             var status;
                             check_status = "check_status=" + mtrData[x].CheckLevel;
-                            switch(mtrData[x].CheckLevel){
+                            switch (mtrData[x].CheckLevel) {
                                 case 0:
                                     status = '待提交';
                                     break;
                                 case 1:
                                     status = '待审核';
-                                    break; 
+                                    break;
                                 case 2:
                                     status = '已通过';
-                                    break; 
+                                    break;
                                 case 3:
                                     status = '未通过';
-                                    break;       
+                                    break;
                                 default:
                                     break;
-                            } 
-                           check_td = '<th class="mtr_check">'+status+'</th>';
+                            }
+                            check_td = '<th class="mtr_check">' + status + '</th>';
                         }
 
-                        var mtrtr = '<tr '+ check_status +' mtrID="' + mtrData[x].ID + '">' +
+                        var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_name" title="' +mtrData[x].Name+ '">' + mtrData[x].Name + '</td>' +
+                            '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>' +
                             check_td +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">00:00:00</td>' +
@@ -309,38 +164,36 @@ define(function (require, exports, module) {
                             '</tr>';
                         $("#mtrTable tbody").append(mtrtr);
                     }
-                }else {
-                	for (var x = 0; x < mtrData.length; x++) {
-                        
+                } else {
+                    for (var x = 0; x < mtrData.length; x++) {
                         // 审核状态
                         var check_td = '';
                         var check_status = '';
-                        if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
-
+                        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                             var status;
                             check_status = "check_status=" + mtrData[x].CheckLevel;
-                            switch(mtrData[x].CheckLevel){
+                            switch (mtrData[x].CheckLevel) {
                                 case 0:
                                     status = '待提交';
                                     break;
                                 case 1:
                                     status = '待审核';
-                                    break; 
+                                    break;
                                 case 2:
                                     status = '已通过';
-                                    break; 
+                                    break;
                                 case 3:
                                     status = '未通过';
-                                    break;       
+                                    break;
                                 default:
                                     break;
-                            } 
-                           check_td = '<th class="mtr_check">'+status+'</th>';
+                            }
+                            check_td = '<th class="mtr_check">' + status + '</th>';
                         }
 
-                        var mtrtr = '<tr '+check_status+' mtrID="' + mtrData[x].ID + '">' +
+                        var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
                             '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_name" title="' +mtrData[x].Name+ '"><b><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></b></td>' +
+                            '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></b></td>' +
                             check_td +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
@@ -348,12 +201,12 @@ define(function (require, exports, module) {
                             '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
                             '</tr>';
                         $("#mtrTable tbody").append(mtrtr);
-	                }
-            	}
-            }else{
+                    }
+                }
+            } else {
                 $("#mtrTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtrTable tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#mtrTable tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
         }
 
@@ -367,7 +220,7 @@ define(function (require, exports, module) {
         });
         //
         $(".icheckbox_flat-blue").parent().parent().click(function () {
-        	$(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+            $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
             var obj = $(this).find("input");
             if ($(this).find("input").prop("checked") == true) {
                 $(this).find("input").prop("checked", false);
@@ -385,14 +238,14 @@ define(function (require, exports, module) {
         })
     }
 
-    
+
     //绑定事件
-    function bind(){
+    function bind() {
         // 上传文件按钮点击
         $('#mtr_upload').click(function () {
             $('#file').trigger("click");
         })
-        $("#file").unbind( "change" ).change(function () {
+        $("#file").unbind("change").change(function () {
             if ($("#page_upload").children().length == 0) {
                 INDEX.upl();
             } else {
@@ -435,10 +288,10 @@ define(function (require, exports, module) {
             mtrChoise($(this));
             exports.loadPage(1, 5);
         })
-        
+
         //搜索
-        $("#mtrSearch").keyup(function(event){
-            if(event.keyCode == 13) {
+        $("#mtrSearch").keyup(function (event) {
+            if (event.keyCode == 13) {
                 var typeId = $("#mtrSearch").attr("typeId");
                 onSearch(event);
             }
@@ -447,13 +300,13 @@ define(function (require, exports, module) {
         function onSearch(event) {
             var typeId = $("#mtrSearch").attr("typeId");
             last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
-            setTimeout(function(){          //设时延迟0.5s执行
-                if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            setTimeout(function () {          //设时延迟0.5s执行
+                if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
                     keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
                     exports.loadPage(1, Number(typeId));
                 }
-            },500);
+            }, 500);
         }
 
         //删除和批量删除
@@ -468,31 +321,31 @@ define(function (require, exports, module) {
             }
             if (w) {
                 if (confirm("删除资源会删除频道对应的资源,确定删除资源？")) {
-                	var mtrId;
-                	var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var mtrId;
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
                     for (var x = 0; x < $(".mtr_cb").length; x++) {
                         if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                        	mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID")
+                            mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID")
                             MaterialIDs.push(Number(mtrId));
                         }
                     }
                     if ($(".mtr_cb:checked").length == $(".mtr_cb").length || curPage != 1) {
-                        curPage --;
+                        curPage--;
                     }
-                    if (typeId == "4"){
-                    	var data = JSON.stringify({
+                    if (typeId == "4") {
+                        var data = JSON.stringify({
                             Action: 'DeleteMulti',
                             Project: CONFIG.projectName,
                             MaterialIDs: MaterialIDs
                         });
-                    	var url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
-                    }else {
-                    	var data = JSON.stringify({
+                        var url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
+                    } else {
+                        var data = JSON.stringify({
                             action: 'DeleteMulti',
                             project_name: CONFIG.projectName,
                             MaterialIDs: MaterialIDs
                         });
-                    	var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+                        var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
                     }
                     UTIL.ajax('post', url, data, function () {
                         exports.loadPage(curPage, Number(typeId)); //刷新页面
@@ -503,29 +356,29 @@ define(function (require, exports, module) {
 
         //刷新按钮
         $("#mtr_refresh").click(function () {
-        	var typeId = $("#mtrChoise li.active").attr("typeid");
+            var typeId = $("#mtrChoise li.active").attr("typeid");
             exports.loadPage(1, Number(typeId));
         })
 
         //编辑
         $("#mtr_edit").click(function () {
-        	var typeId = $("#mtrChoise li.active").attr("typeid");
-        	if (typeId == "4"){			//编辑文本
-        		$("#mtr_edit").attr("edit_type", "文本");
-        		openEditor();
-        	}else if (typeId == "5"){	//编辑直播
-        		$("#mtr_edit").attr("edit_type", "直播");
-        		openLive();
-        	}else {
-        		var page = "resources/pages/materials/materials_edit.html";
-        		UTIL.cover.load(page);
-        	}
+            var typeId = $("#mtrChoise li.active").attr("typeid");
+            if (typeId == "4") {			//编辑文本
+                $("#mtr_edit").attr("edit_type", "文本");
+                openEditor();
+            } else if (typeId == "5") {	//编辑直播
+                $("#mtr_edit").attr("edit_type", "直播");
+                openLive();
+            } else {
+                var page = "resources/pages/materials/materials_edit.html";
+                UTIL.cover.load(page);
+            }
         })
 
         //全选和全不选
         $(".checkbox-toggle").click(function () {
             var clicks = $(this).data('clicks');
-            
+
             if (clicks) {
                 //Uncheck all checkboxes
                 $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
@@ -538,58 +391,195 @@ define(function (require, exports, module) {
             $(this).data("clicks", !clicks);
             mtrCb();
         });
+
+        //审核状态筛选
+        // 筛选终端
+        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
+            $('#mtr_toBeCheckedDiv button').each(function (i, e) {
+                $(this).click(function () {
+                    $(this).siblings().removeClass('btn-primary');
+                    $(this).siblings().addClass('btn-defalut');
+
+                    var isFocus = $(this).hasClass('btn-primary');
+                    $(this).removeClass(isFocus ? 'btn-primary' : 'btn-defalut');
+                    $(this).addClass(isFocus ? 'btn-defalut' : 'btn-primary');
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    exports.loadPage(1, Number(typeId));
+                })
+            })
+
+            //获取已选资源ids
+            function getSourceIds() {
+                var ids = new Array();
+                $("#mtrTable input[type='checkBox']:checked").each(function (i, e) {
+                    ids.push(Number($(e).parent().parent().parent().attr('mtrid')));
+                })
+                return ids;
+            }
+
+            function loadPage() {
+                var pageNum = $("#materials-table-pager li.active").find("a").text();
+                var typeId = $("#mtrChoise li.active").attr("typeid");
+                exports.loadPage(pageNum, Number(typeId));
+            }
+
+            function getType(typeId) {
+                var type = '';
+                switch (typeId) {
+                    case '1':
+                        type = 'Video';
+                        break;
+                    case '2':
+                        type = 'Image';
+                        break;
+                    case '3':
+                        type = 'Audio';
+                        break;
+                    case '4':
+                        type = 'WebText';
+                        break;
+                    case '5':
+                        type = 'Live';
+                        break;
+                    default:
+                        break;
+                }
+                return type;
+            }
+
+            //提交审核
+            $('#mtr_submit').click(function () {
+                if (!$('#mtr_submit').attr('disabled')) {
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                        "project_name": CONFIG.projectName,
+                        "action": "submitToCheck",
+                        "material_type": type,
+                        "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST',
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已提交');
+                                loadPage();
+                            } else {
+                                alert('提交失败');
+                            }
+                        }
+                    )
+                }
+            })
+
+            //审核通过
+            $('#mtr_approve').click(function () {
+                if (!$('#mtr_approve').attr('disabled')) {
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                        "project_name": CONFIG.projectName,
+                        "action": "checkPass",
+                        "material_type": type,
+                        "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST',
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已审核');
+                                loadPage();
+                            } else {
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                }
+            })
+
+            //审核不通过
+            $('#mtr_reject').click(function () {
+                if (!$('#mtr_reject').attr('disabled')) {
+                    var typeId = $("#mtrChoise li.active").attr("typeid");
+                    var type = getType(typeId);
+                    var data = {
+                        "project_name": CONFIG.projectName,
+                        "action": "checkFailed",
+                        "material_type": type,
+                        "MaterialIDs": getSourceIds()
+                    }
+                    UTIL.ajax(
+                        'POST',
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        JSON.stringify(data),
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert('已审核');
+                                loadPage();
+                            } else {
+                                alert('审核失败');
+                            }
+                        }
+                    )
+                }
+            })
+        }
     }
-    
+
     //列表分类点击事件
     function mtrChoise(obj) {
         $("#mtrChoise li").removeClass('active');
         obj.parent().attr("class", "active");
     }
-    
+
     //校验删除按钮
-    function checkDelBtns(){
-        $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
-            if($(e).parent().parent().parent().find('td.mtr_uploadUser').html() != CONFIG.userName){
-                $('#mtr_delete').attr('disabled',true);
+    function checkDelBtns() {
+        $("#mtrTable input[type='checkBox']:checked").each(function (i, e) {
+            if ($(e).parent().parent().parent().find('td.mtr_uploadUser').html() != CONFIG.userName) {
+                $('#mtr_delete').attr('disabled', true);
                 return false;
             }
         })
     }
 
     //校验批量操作的审核功能
-    function checkCheckBtns(){
-        if($("#mtrTable input[type='checkBox']:checked").length === 0){
-            $('#mtr_submit').attr('disabled',true);
-            $('#mtr_approve').attr('disabled',true);
-            $('#mtr_reject').attr('disabled',true);
-        }else{
+    function checkCheckBtns() {
+        if ($("#mtrTable input[type='checkBox']:checked").length === 0) {
+            $('#mtr_submit').attr('disabled', true);
+            $('#mtr_approve').attr('disabled', true);
+            $('#mtr_reject').attr('disabled', true);
+        } else {
 
-            $("#mtrTable input[type='checkBox']:checked").each(function(i,e){
+            $("#mtrTable input[type='checkBox']:checked").each(function (i, e) {
 
-                if($('#mtr_submit').attr('disabled')&&$('#mtr_approve').attr('disabled')&&$('#mtr_reject').attr('disabled')){
+                if ($('#mtr_submit').attr('disabled') && $('#mtr_approve').attr('disabled') && $('#mtr_reject').attr('disabled')) {
                     return false;
                 }
 
                 //待提交
-                if($(e).parent().parent().parent().attr('check_status') == '0'){
-                    $('#mtr_approve').attr('disabled',true);
-                    $('#mtr_reject').attr('disabled',true);
+                if ($(e).parent().parent().parent().attr('check_status') == '0') {
+                    $('#mtr_approve').attr('disabled', true);
+                    $('#mtr_reject').attr('disabled', true);
                 }
                 //待审核
-                else if($(e).parent().parent().parent().attr('check_status') == '1'){
-                    $('#mtr_submit').attr('disabled',true);
+                else if ($(e).parent().parent().parent().attr('check_status') == '1') {
+                    $('#mtr_submit').attr('disabled', true);
                 }
                 //已通过和未通过
                 else {
-                    $('#mtr_submit').attr('disabled',true);
-                    $('#mtr_approve').attr('disabled',true);
-                    $('#mtr_reject').attr('disabled',true);
+                    $('#mtr_submit').attr('disabled', true);
+                    $('#mtr_approve').attr('disabled', true);
+                    $('#mtr_reject').attr('disabled', true);
                 }
 
             })
         }
 
-    }    
+    }
 
     //校验复选框勾选的个数
     function mtrCb() {
@@ -599,15 +589,15 @@ define(function (require, exports, module) {
         if (Ck == 1) {
             var dlurl = $(".icheckbox_flat-blue.checked").find("input").attr("url");
             var typeId = $("#mtrChoise li.active").attr("typeid");
-        	if (typeId != "4" && typeId != "5"){
-        		$("#mtr_download").removeAttr("disabled");
-        	}
-            
+            if (typeId != "4" && typeId != "5") {
+                $("#mtr_download").removeAttr("disabled");
+            }
+
             $("#mtr_edit").removeAttr("disabled");
             $("#mtr_download").find("a").attr("href", dlurl);
             $("#mtr_download").find("a").attr("download", dlurl);
         } else {
-        	if (Ck == 0) {
+            if (Ck == 0) {
                 $("#mtr_delete").attr("disabled", true);
             }
             $("#mtr_download").attr("disabled", true);
@@ -616,61 +606,62 @@ define(function (require, exports, module) {
             $("#mtr_download").parent().removeAttr("download");
         }
 
-        if(UTIL.getLocalParameter('config_checkSwitch') == '1'){
-            $('#mtr_submit').attr('disabled',false);
-            $('#mtr_approve').attr('disabled',false);
-            $('#mtr_reject').attr('disabled',false);
+        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
+            $('#mtr_submit').attr('disabled', false);
+            $('#mtr_approve').attr('disabled', false);
+            $('#mtr_reject').attr('disabled', false);
             checkCheckBtns();
-            if(UTIL.getLocalParameter('config_canCheck') == '0'){
-              checkDelBtns();
-            }    
+            if (UTIL.getLocalParameter('config_canCheck') == '0') {
+                checkDelBtns();
+            }
         }
 
         //控制全选按钮全选或者不全选状态
-        if (Uck != 0){
-        	if (Ck == Uck) {
+        if (Uck != 0) {
+            if (Ck == Uck) {
                 $(".fa.fa-square-o").attr("class", "fa fa-check-square-o");
             } else {
                 $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
             }
         }
     }
-    
+
     //打开直播编辑窗口
     function openLive() {
-    	var page = "resources/pages/materials/materials_addLive.html";
+        var page = "resources/pages/materials/materials_addLive.html";
         UTIL.cover.load(page);
     }
+
     //打开文本编辑器窗口
     function openEditor() {
-    	var page = "resources/pages/materials/materials_addText.html";
+        var page = "resources/pages/materials/materials_addText.html";
         $("#addtext_box").load(page);
-        $("#list_box").css("display","none");
+        $("#list_box").css("display", "none");
     }
-    
+
     //检索添加资源权限
-    function checkJurisdiction(){
-    	var data = JSON.stringify({
+    function checkJurisdiction() {
+        var data = JSON.stringify({
             action: 'GetFunctionModules',
             project_name: CONFIG.projectName,
             UserName: $('#USER-NAME').html(),
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
-        UTIL.ajax('post', url, data, function(json){
-        	var jdtData = json.FunctionModules;
-        	for(var a = 0; a < jdtData.length; a++){
-        		var moduleId = jdtData[a].ModuleID;
-        		if (moduleId == 4){
-        			if (jdtData[a].ReadWriteAuth == 1){
-	        			$("#ad-material-list").append('<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>'+
-                            '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>'+
+        UTIL.ajax('post', url, data, function (json) {
+            var jdtData = json.FunctionModules;
+            for (var a = 0; a < jdtData.length; a++) {
+                var moduleId = jdtData[a].ModuleID;
+                if (moduleId == 4) {
+                    if (jdtData[a].ReadWriteAuth == 1) {
+                        $("#ad-material-list").append('<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>' +
+                            '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>' +
                             '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'
-	                    );
-        			}
-        		}
-        	}
-        	
-        	// 上传文件按钮点击
+                        );
+                    }
+                }
+            }
+
+            // 上传文件按钮点击
             $('#mtr_upload').click(function () {
                 $('#file').trigger("click");
             })
@@ -686,25 +677,25 @@ define(function (require, exports, module) {
             });
             // 添加文本按钮点击
             $('#mtr_addText').click(function () {
-            	openEditor();
+                openEditor();
             })
             // 添加直播按钮点击
             $('#mtr_addLive').click(function () {
-            	openLive();
+                openLive();
             })
         });
     }
 
-    function checkCheck(){
-        if(UTIL.getLocalParameter('config_checkSwitch') == '0'){
-            $('#mtr_submit').css('display','none');
-            $('#mtr_approve').css('display','none');
-            $('#mtr_reject').css('display','none');
-            $('#mtr_toBeCheckedDiv').css('display','none');
+    function checkCheck() {
+        if (UTIL.getLocalParameter('config_checkSwitch') == '0') {
+            $('#mtr_submit').css('display', 'none');
+            $('#mtr_approve').css('display', 'none');
+            $('#mtr_reject').css('display', 'none');
+            $('#mtr_toBeCheckedDiv').css('display', 'none');
         }
-        else if(UTIL.getLocalParameter('config_canCheck') == 0){
-            $('#mtr_approve').css('display','none');
-            $('#mtr_reject').css('display','none');
+        else if (UTIL.getLocalParameter('config_canCheck') == 0) {
+            $('#mtr_approve').css('display', 'none');
+            $('#mtr_reject').css('display', 'none');
         }
     }
 })
