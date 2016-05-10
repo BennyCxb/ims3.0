@@ -79,8 +79,8 @@ define(function (require, exports, module) {
             material_type: mtrType,
             Pager: pager
         });
-        var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
-        UTIL.ajax('post', url, data, render);
+        var _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+        UTIL.ajax('post', _url, data, render);
     }
 
     function render(json) {
@@ -126,74 +126,64 @@ define(function (require, exports, module) {
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
-                if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
-                    for (var x = 0; x < mtrData.length; x++) {
-                        // 审核状态
-                        var check_td = '';
-                        var check_status = '';
-                        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
-                            var status;
-                            check_status = "check_status=" + mtrData[x].CheckLevel;
-                            switch (mtrData[x].CheckLevel) {
-                                case 0:
-                                    status = '待提交';
-                                    break;
-                                case 1:
-                                    status = '待审核';
-                                    break;
-                                case 2:
-                                    status = '已通过';
-                                    break;
-                                case 3:
-                                    status = '未通过';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            check_td = '<th class="mtr_check">' + status + '</th>';
+                for (var x = 0; x < mtrData.length; x++) {
+                    // 审核状态
+                    var check_td = '';
+                    var check_status = '';
+                    if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
+                        var status;
+                        check_status = "check_status=" + mtrData[x].CheckLevel;
+                        switch (mtrData[x].CheckLevel) {
+                            case 0:
+                                status = '待提交';
+                                break;
+                            case 1:
+                                status = '待审核';
+                                break;
+                            case 2:
+                                status = '已通过';
+                                break;
+                            case 3:
+                                status = '未通过';
+                                break;
+                            default:
+                                break;
                         }
-
-                        var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>' +
-                            check_td +
-                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">00:00:00</td>' +
-                            '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
-                            '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
-                            '</tr>';
-                        $("#mtrTable tbody").append(mtrtr);
+                        check_td = '<td class="mtr_check">' + status + '</td>';
                     }
-                } else {
-                    for (var x = 0; x < mtrData.length; x++) {
-                        // 审核状态
-                        var check_td = '';
-                        var check_status = '';
-                        if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
-                            var status;
-                            check_status = "check_status=" + mtrData[x].CheckLevel;
-                            switch (mtrData[x].CheckLevel) {
-                                case 0:
-                                    status = '待提交';
-                                    break;
-                                case 1:
-                                    status = '待审核';
-                                    break;
-                                case 2:
-                                    status = '已通过';
-                                    break;
-                                case 3:
-                                    status = '未通过';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            check_td = '<th class="mtr_check">' + status + '</th>';
+                    var material_type = mtrData[x].Type_Name;
+                    if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
+                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
+                    } else {
+                        if (mtrData[x].Download_Auth_Type == "None") {
+                            var mtrUrl = mtrData[x].URL;
+                            var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                            mosaic(mtrName_tr, check_td);
+                        } else {
+                            var data = JSON.stringify({
+                                action: "getRealURL",
+                                project_name: CONFIG.projectName,
+                                URL: mtrData[x].URL
+                            })
+                            var _url = CONFIG.serverRoot + '/backend_mgt/v1/qiniu/';
+                            jQuery.ajax({
+                                type: 'post',
+                                url: _url,
+                                data: data,
+                                async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
+                                success: function (msg) {
+                                    var realUrl = JSON.parse(msg).URL;
+                                    var mtrUrl = realUrl;
+                                    var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                                    mosaic(mtrName_tr, check_td);
+                                }
+                            });
                         }
-
+                    }
+                    function mosaic(mtrName_tr, check_td) {
                         var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '" url="' + mtrData[x].URL + '"></td>' +
-                            '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></b></td>' +
+                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '"></td>' +
+                            mtrName_tr +
                             check_td +
                             '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                             '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
@@ -202,6 +192,7 @@ define(function (require, exports, module) {
                             '</tr>';
                         $("#mtrTable tbody").append(mtrtr);
                     }
+
                 }
             } else {
                 $("#mtrTable tbody").empty();
@@ -210,7 +201,7 @@ define(function (require, exports, module) {
             }
         }
 
-        if (material_type == "文本" || material_type == "Live" || material_type == "Image") {		//文本和直播无预览效果
+        if (material_type == "文本" || material_type == "Live" || material_type == "Image") {		//文本和直播图片无时长
             $(".mtr_time").empty();
         }
         //复选框样式
@@ -299,9 +290,9 @@ define(function (require, exports, module) {
         $("#mtrSearch").next().click(onSearch);
         function onSearch(event) {
             var typeId = $("#mtrSearch").attr("typeId");
-            last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
-            setTimeout(function () {          //设时延迟0.5s执行
-                if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            last = event.timeStamp;                     //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
+            setTimeout(function () {                    //设时延迟0.5s执行
+                if (last - event.timeStamp == 0)        //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
                     keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
                     exports.loadPage(1, Number(typeId));
@@ -338,16 +329,16 @@ define(function (require, exports, module) {
                             Project: CONFIG.projectName,
                             MaterialIDs: MaterialIDs
                         });
-                        var url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
+                        var _url = CONFIG.serverRoot + '/backend_mgt/v1/webmaterials';
                     } else {
                         var data = JSON.stringify({
                             action: 'DeleteMulti',
                             project_name: CONFIG.projectName,
                             MaterialIDs: MaterialIDs
                         });
-                        var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+                        var _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
                     }
-                    UTIL.ajax('post', url, data, function () {
+                    UTIL.ajax('post', _url, data, function () {
                         exports.loadPage(curPage, Number(typeId)); //刷新页面
                     });
                 }
@@ -587,7 +578,7 @@ define(function (require, exports, module) {
         var Ck = $(".icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $(".icheckbox_flat-blue").length;			//复选框总个数
         if (Ck == 1) {
-            var dlurl = $(".icheckbox_flat-blue.checked").find("input").attr("url");
+            var dlurl = $(".icheckbox_flat-blue.checked").parent().next().find("a").attr("href");
             var typeId = $("#mtrChoise li.active").attr("typeid");
             if (typeId != "4" && typeId != "5") {
                 $("#mtr_download").removeAttr("disabled");
@@ -646,8 +637,8 @@ define(function (require, exports, module) {
             project_name: CONFIG.projectName,
             UserName: $('#USER-NAME').html(),
         });
-        var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
-        UTIL.ajax('post', url, data, function (json) {
+        var _url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
+        UTIL.ajax('post', _url, data, function (json) {
             var jdtData = json.FunctionModules;
             for (var a = 0; a < jdtData.length; a++) {
                 var moduleId = jdtData[a].ModuleID;
