@@ -585,7 +585,7 @@ define(function (require, exports, module) {
             }
 
             $("#mtr_edit").removeAttr("disabled");
-            $("#mtr_download").find("a").attr("href", dlurl);
+            $("#mtr_download").find("a").attr("href", dlurl);           //下载
             $("#mtr_download").find("a").attr("download", dlurl);
         } else {
             if (Ck == 0) {
