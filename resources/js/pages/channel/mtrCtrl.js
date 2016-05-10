@@ -14,7 +14,7 @@ define(function (require, exports, module) {
         $("#mtrC_textType").change(function () {
             if ($("#mtrC_textType").val() == "Normal") {
                 $("#mtrC_effect").hide();
-                $("#mtrC_flip").css('display','inline');
+                $("#mtrC_flip").css('display', 'inline');
             } else {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
@@ -43,7 +43,7 @@ define(function (require, exports, module) {
         // 统计时长
         $('#mtr_countTime').click(function () {
             var conutTime = 0;
-            for(var a = 0; a<$(".mtr_time input").length; a++){
+            for (var a = 0; a < $(".mtr_time input").length; a++) {
                 conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
             }
             //conutTime = formatTime(conutTime);
@@ -53,7 +53,10 @@ define(function (require, exports, module) {
         //批量删除
         $("#mtr_delete").click(function () {
             $("input:checkbox[class='mtr_cb']:checked").each(function () {
-                DB.collection("material").delete({resource_id: Number($(this).attr("mtrid")), widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+                DB.collection("material").delete({
+                    resource_id: Number($(this).attr("mtrid")),
+                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+                });
                 $(this).parents("tr").remove();
             });
             mtrCb();
@@ -86,7 +89,7 @@ define(function (require, exports, module) {
 
         $("#box_tableHeader").hide();
         var widget = JSON.parse(localStorage.getItem('currentWidget'));
-        if (widget == null){
+        if (widget == null) {
             $("#mtrCtrl_Title").html("当前无控件");
             $("#box_datetimeEffect").hide();
             $("#box_tableHeader").hide();
@@ -112,7 +115,7 @@ define(function (require, exports, module) {
             $(".mtrCtrl_times").children().hide();
         }
         //载入
-        if (widget.type != undefined){
+        if (widget.type != undefined) {
             var wtype = widget.type;
             switch (wtype) {
                 case 'VideoBox':
@@ -154,16 +157,16 @@ define(function (require, exports, module) {
             }
             //控件颜色
             var widgetColor;
-            $(".channel-program-layout-footer ul li").each(function(){
-                if ($(this).attr("data-id") == widget.id.toString()){
+            $(".channel-program-layout-footer ul li").each(function () {
+                if ($(this).attr("data-id") == widget.id.toString()) {
                     widgetColor = $(this).find("i").css("background-color");
                 }
             })
-            $("#mtrCtrl_Title").prev().css("background-color",widgetColor);
+            $("#mtrCtrl_Title").prev().css("background-color", widgetColor);
             $("#mtrCtrl_Title").attr("widget_id", widget.id);
 
             widgetLoad(widget);
-        }else {
+        } else {
             $("#mtrCtrl_Title").html("当前无控件");
         }
 
@@ -224,9 +227,9 @@ define(function (require, exports, module) {
         });
         var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
-        if (wOsp.Type == undefined){
+        if (wOsp.Type == undefined) {
             var wOspType = "Sequence";
-        }else {
+        } else {
             var wOspType = wOsp.Type;
         }
         $("#mtrCtrl_playType").val(wOspType);
@@ -234,21 +237,21 @@ define(function (require, exports, module) {
             case 'VideoBox':
                 if (wOsp.Type != undefined) {
 
-                    playTypeSave ();
+                    playTypeSave();
                 }
                 break;
             case 'ImageBox':
                 if (wOsp.Type != undefined) {
-                    playTypeSave ();
+                    playTypeSave();
                 }
                 break;
             case 'AudioBox':
                 if (wOsp.Type != undefined) {
-                    playTypeSave ();
+                    playTypeSave();
                 }
                 break;
             case 'WebBox':
-                if (widgetData.style != ""){
+                if (widgetData.style != "") {
                     var wStyle = JSON.parse(widgetData.style);
                     $("#mtrC_textType").val(wStyle.Type);
                     if (wStyle.Type == "Marquee") {
@@ -263,7 +266,7 @@ define(function (require, exports, module) {
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
-                }else {
+                } else {
                     $("#mtrC_flip").show();
                     $("#mtrC_pageDownPeriod").val(0);
                     $("#text_bgcolor").val("rgba(0, 0, 0, 0)");
@@ -273,11 +276,11 @@ define(function (require, exports, module) {
                 textAttrSave();
                 break;
             case 'ClockBox':
-                var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
-                if (wStyle.Type == undefined){
+                var wStyle = widgetData.style === '' ? {} : JSON.parse(widgetData.style);
+                if (wStyle.Type == undefined) {
                     $("#clockText_color").val("#000000");
                     $("#mtrC_dtTime").next().trigger("click");
-                }else {
+                } else {
                     $("#clockText_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $(".mtrC_datetime").css("color", wStyle.TextColor);
                     var wctype = wStyle.Type;
@@ -305,9 +308,9 @@ define(function (require, exports, module) {
                 clockTextColor();
                 break;
             case 'WeatherBox':
-                var wStyle = widgetData.style === '' ? {} :JSON.parse(widgetData.style);
+                var wStyle = widgetData.style === '' ? {} : JSON.parse(widgetData.style);
                 $("#box_weatherEffect").show();
-                if (wStyle.Type == undefined){
+                if (wStyle.Type == undefined) {
                     $("#weatherText_color").val("#000000");
                     $("#weatherText_color").css("background-color", "#000000");
                     $("#weatherFlip_time").val(10);
@@ -354,59 +357,36 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
-                    if (JSON.parse(mtrData[x].schedule_params).count != undefined){
+                    if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
-                    }else {
+                    } else {
                         var dbcount = 1;
                     }
                     var schedule_params = JSON.parse(mtrData[x].schedule_params) === '' ? {} : JSON.parse(mtrData[x].schedule_params);
-                    if (schedule_params != {})
-                    {
+                    if (schedule_params != {}) {
                         var duration = formatTime(schedule_params.duration);
-                    }else {
+                    } else {
                         var duration = "00:00:15";
                     }
-
-                    if (mtrData[x].type_id == 1 || mtrData[x].type_id == 3) {
-                        var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '" disabled></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
-                    } else if (mtrData[x].type_id == "2" || mtrData[x].type_id == "4") {
-                        var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value=' + duration + '></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value="'+ dbcount +'"></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
-                    } else if (mtrData[x].type_name == "直播") {
-                        var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="'+ mtrData[x].sequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + duration + '"></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value='+ dbcount +'></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
-                    }
-
+                    var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="' + mtrData[x].sequence + '">' +
+                        '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
+                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
+                        '<td class="mtr_time"><input type="text" class="mtrCtrl_time" value="' + duration + '"></td>' +
+                        '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=' + dbcount + '></td>' +
+                        '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
+                        '</tr>';
+                    $("#mtrCtrl_Table tbody").append(mtrtr);
                 }
             } else {       //添加
-                if($("#mtrCtrl_playType").val() == "Sequence"){     //顺序播放查询最大sequence
+                if ($("#mtrCtrl_playType").val() == "Sequence") {     //顺序播放查询最大sequence
                     var maxsequence = 0;
-                    $("#mtrCtrl_Table tbody tr").each(function(){
+                    $("#mtrCtrl_Table tbody tr").each(function () {
                         var mtrsequence = Number($(this).attr("mtrsequence"));
-                        if (mtrsequence > maxsequence){
+                        if (mtrsequence > maxsequence) {
                             maxsequence = mtrsequence;
                         }
                     })
-                }else {
+                } else {
                     var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
@@ -428,17 +408,17 @@ define(function (require, exports, module) {
                             var dbtype_name = "文本";
                             break;
                     }
-                    if (mtrData[x].Duration == undefined){
+                    if (mtrData[x].Duration == undefined) {
                         var mtrDuration = "15";
-                    }else {
+                    } else {
                         var mtrDuration = formatSecond(mtrData[x].Duration).toString();
                         if (mtrDuration == 0) mtrDuration = 15;
                     }
                     var dbduration = {
                         duration: mtrDuration     //将时间转为秒
                     }
-                    if($("#mtrCtrl_playType").val() == "Sequence"){
-                        maxsequence ++;
+                    if ($("#mtrCtrl_playType").val() == "Sequence") {
+                        maxsequence++;
                     }
                     var dbtype_id = typeof mtrData[x].Type_ID === 'number' ? mtrData[x].Type_ID : {
                         '文本': 4,
@@ -466,35 +446,21 @@ define(function (require, exports, module) {
                     DB.collection("material").insert(intDate);                      //存入缓存
                     var data_id = DB.collection("material").lastInsertId();         //查询刚添加的ID
                     //拼接
-                    if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0)|| mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
-                        var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '" disabled></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=1></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
+                    if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
+                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '"></td>';
                     } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本" || mtrData[x].Type_Name === 'WebText') {
-                        var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="'+ maxsequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
+                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>';
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '"  mtrsequence="'+ maxsequence +'">' +
-                            '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
-                            '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>' +
-                            '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" format="HH:mm:SS" value=1></td>' +
-                            '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
-                            '</tr>';
-                        $("#mtrCtrl_Table tbody").append(mtrtr);
+                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>';
                     }
-
+                    var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
+                        '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
+                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
+                        trDuration +
+                        '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" value=1></td>' +
+                        '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
+                        '</tr>';
+                    $("#mtrCtrl_Table tbody").append(mtrtr);
                 }
             }
 
@@ -517,7 +483,10 @@ define(function (require, exports, module) {
             })
             //单个删除
             $(".btn_ctrlDel").click(function () {
-                DB.collection("material").delete({resource_id: Number($(this).parent().parent().attr("mtrid")), widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+                DB.collection("material").delete({
+                    resource_id: Number($(this).parent().parent().attr("mtrid")),
+                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+                });
                 $(this).parent().parent().remove();
             })
 
@@ -587,13 +556,14 @@ define(function (require, exports, module) {
     }
 
     //播放顺序保存
-    function playTypeSave () {
+    function playTypeSave() {
         if (!inputCheck()) return;
         var overall_schedule_params = {
             Type: $("#mtrCtrl_playType").val()
         };
         DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
+
     //文本效果保存
     function textAttrSave() {
         if (!inputCheck()) return;
@@ -617,21 +587,21 @@ define(function (require, exports, module) {
 
     //资源修改
     function mtrAttrSave() {
-        $(".mtrCtrl_time").change(function(){
+        $(".mtrCtrl_time").change(function () {
             if (!inputCheck()) return;
             var time = {
                 duration: formatSecond($(this).val())
             };
             DB.collection("material").update({schedule_params: JSON.stringify(time)}, {resource_id: Number($(this).parent().parent().attr("mtrid"))});
         })
-        $(".mtrC_times").change(function(){
+        $(".mtrC_times").change(function () {
             if (!inputCheck()) return;
             if ($("#mtrCtrl_playType").val() == "Percent") {
                 var schedule_params = {
                     duration: formatSecond($(this).parent().prev().find("input").val()),
                     count: Number($(this).val())
                 };
-            }else {
+            } else {
                 var schedule_params = {
                     duration: formatSecond($(this).parent().prev().find("input").val())
                 };
@@ -639,6 +609,7 @@ define(function (require, exports, module) {
             DB.collection("material").update({schedule_params: JSON.stringify(schedule_params)}, {resource_id: Number($(this).parent().parent().attr("mtrid"))});
         })
     }
+
     //时钟修改
     function clockAttrSave() {
         //时钟字体颜色事件
@@ -652,7 +623,7 @@ define(function (require, exports, module) {
     }
 
     //时钟字体颜色
-    function clockTextColor(){
+    function clockTextColor() {
         if (!inputCheck()) return;
         var wstyle = {
             TextColor: $("#clockText_color").val(),
@@ -662,7 +633,7 @@ define(function (require, exports, module) {
     }
 
     //天气控件
-    function weatherChange(){
+    function weatherChange() {
         //字体颜色
         $("#weatherText_color").bind("input propertychange", function () {
             weatherSave();
@@ -675,8 +646,9 @@ define(function (require, exports, module) {
             weatherSave();
         })
     }
+
     //天气保存
-    function weatherSave(){
+    function weatherSave() {
         if (!inputCheck()) return;
         var wstyle = {
             Type: $("input:radio:checked").attr("weathertype"),
@@ -687,46 +659,53 @@ define(function (require, exports, module) {
     }
 
     //校验
-    function inputCheck(){
+    function inputCheck() {
         var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
         var errorMsg = "";
         var obj;
-        if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4){
-            $(".mtrCtrl_time").each(function(){
-                if($(this).val() == "") {
+        if (widgetData.type_id == 1 || widgetData.type_id == 2 || widgetData.type_id == 4) {
+            $(".mtrCtrl_time").each(function () {
+                if ($(this).val() == "") {
                     errorMsg += "请输入资源时长！\n";
                     obj = $(this);
+                } else {
+                    var attr = $(this).val().split(":");
+                    if (isNaN(attr[0]) || isNaN(attr[1]) || isNaN(attr[2])) {
+                        errorMsg += "请输入正确的资源时长！\n";
+                        obj = $(this);
+                        $(this).val($(this).attr("value"));
+                    }
                 }
             })
-            $(".mtrC_times").each(function(){
-                if($(this).val() == null) {
+            $(".mtrC_times").each(function () {
+                if ($(this).val() == null) {
                     errorMsg += "请输入资源次数！\n";
                     obj = $(this);
                 }
 
             })
         }
-        if (widgetData.type_id == 3){
+        if (widgetData.type_id == 3) {
             if ($("#mtrC_textType").val() == "Normal") {
-                if($("#mtrC_pageDownPeriod").val() == null) {
+                if ($("#mtrC_pageDownPeriod").val() == null) {
                     errorMsg += "请填写翻页间隔时间！\n";
                     obj = $("#mtrC_textType");
                 }
-            }else {
-                if($("#text_color").val() == "") {
+            } else {
+                if ($("#text_color").val() == "") {
                     $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
-                    if($(".cp-popover-container").length != 0) {
+                    if ($(".cp-popover-container").length != 0) {
                         $("#text_color").trigger("colorpickersliders.hide");
                     }
                 }
-                if($("#mtrC_scrollSpeed").val() == "") {
+                if ($("#mtrC_scrollSpeed").val() == "") {
                     errorMsg += "请选择滚动速度！\n";
                     obj = $("#mtrC_scrollSpeed");
                 }
             }
             if ($("#text_bgcolor").val() == "") {
                 $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
-                if($(".cp-popover-container").length != 0) {
+                if ($(".cp-popover-container").length != 0) {
                     $("#text_bgcolor").trigger("colorpickersliders.hide");
                 }
             }
@@ -734,7 +713,7 @@ define(function (require, exports, module) {
         if (widgetData.type_id == 5) {
             if ($("#clockText_color").val() == "") {
                 $("#clockText_color").trigger("colorpickersliders.updateColor", "#000000");
-                if($(".cp-popover-container").length != 0) {
+                if ($(".cp-popover-container").length != 0) {
                     $("#clockText_color").trigger("colorpickersliders.hide");
                 }
             }
@@ -742,7 +721,7 @@ define(function (require, exports, module) {
         if (widgetData.type_id == 6) {
             if ($("#weatherText_color").val() == "") {
                 $("#weatherText_color").trigger("colorpickersliders.updateColor", "#000000");
-                if($(".cp-popover-container").length != 0) {
+                if ($(".cp-popover-container").length != 0) {
                     $("#weatherText_color").trigger("colorpickersliders.hide");
                 }
             }
@@ -751,9 +730,9 @@ define(function (require, exports, module) {
                 obj = $("#weatherFlip_time")
             }
         }
-        if (errorMsg == ""){
+        if (errorMsg == "") {
             return true;
-        }else {
+        } else {
             alert(errorMsg);
             obj.focus();
             return false;
@@ -818,9 +797,9 @@ define(function (require, exports, module) {
                 var s = parseInt(time % 60);
                 if (m < 10 && s < 10) {
                     time = "00:0" + m + ":0" + s;
-                }else if (m < 10 && s >= 10){
+                } else if (m < 10 && s >= 10) {
                     time = "00:0" + m + ":" + s;
-                }else {
+                } else {
                     time = "00:" + m + ":" + s;
                 }
             } else if (time >= 3600 && time < 86400) {
@@ -828,30 +807,30 @@ define(function (require, exports, module) {
                 var m = parseInt(time % 3600 / 60);
                 var s = parseInt(time % 3600 % 60 % 60);
                 if (h < 10) {
-                    if(m < 10) {
+                    if (m < 10) {
                         if (s < 10) {
                             time = "0" + h + ":0" + m + ":0" + s;
-                        }else {
+                        } else {
                             time = "0" + h + ":0" + m + ":" + s;
                         }
-                    }else {
+                    } else {
                         if (s < 10) {
                             time = "0" + h + ":" + m + ":0" + s;
-                        }else {
+                        } else {
                             time = "0" + h + ":" + m + ":" + s;
                         }
                     }
-                }else {
-                    if(m < 10) {
+                } else {
+                    if (m < 10) {
                         if (s < 10) {
                             time = h + ":0" + m + ":0" + s;
-                        }else {
+                        } else {
                             time = h + ":0" + m + ":" + s;
                         }
-                    }else {
+                    } else {
                         if (s < 10) {
                             time = h + ":" + m + ":0" + s;
-                        }else {
+                        } else {
                             time = h + ":" + m + ":" + s;
                         }
                     }
