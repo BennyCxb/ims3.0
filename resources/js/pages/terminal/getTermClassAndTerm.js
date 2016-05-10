@@ -45,7 +45,7 @@ define(function(require, exports, module) {
       "action": "getTree"
     };
     if(exports.channelID){
-      // dataParameter.channelID = Number(exports.channelID);
+      dataParameter.channelID = Number(exports.channelID);
     }
 
     UTIL.ajax(
@@ -106,7 +106,7 @@ define(function(require, exports, module) {
   }
 
   _checkList.add = function(id, status){
-    _checkList.push({'termID': id, 'status': status});
+    _checkList.push({'termID': ''+id, 'status': status});
   }
 
   _checkList.delete = function(id){
@@ -185,15 +185,20 @@ define(function(require, exports, module) {
         // term_sel_list
         var tl = data.termList.terms;
         $('#term_sel_list').empty();
+
+        // 清空已选list
+        _checkList.length = 0;
+
         for(var i = 0; i < tl.length; i++){
 
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
 
           var checked = '';
-          /*if(Number(exports.channelID) === tl[i].Channel_ID){
+          if(Number(exports.channelID) === tl[i].Channel_ID){
             checked = 'checked="checked"';
-          }*/
+            _checkList.add(tl[i].ID, tl[i].Status);
+          }
           $('#term_sel_list').append('' + 
             '<tr tid="'+ tl[i].ID +'" status="' + status + '">' +
               '<td>' +
@@ -214,8 +219,6 @@ define(function(require, exports, module) {
           $('#term－sel-list-select-all>i').toggleClass('fa-check-square-o', false);
         }
 
-        // 清空已选list
-        _checkList.length = 0;
 
         // 列表选择按钮添加icheck
         $('#term_sel_list tr input[type="checkbox"]').iCheck({
@@ -244,6 +247,9 @@ define(function(require, exports, module) {
           })
 
         })
+        if(_checkList.length > 0){
+          onCheckBoxChange();
+        }
 
       }
     )
