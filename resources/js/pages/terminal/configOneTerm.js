@@ -332,7 +332,6 @@ define(function(require, exports, module) {
   }
 
   function loadInfo(){
-
     $('#CO-title').html(exports.termName);
     $('#CO-term-name').val(exports.termName);
     $('#CO-DiskInfo').val(exports.diskInfo);
@@ -342,7 +341,10 @@ define(function(require, exports, module) {
     $('#CO-preChannel').html(exports.preChannel);
     $('#CO-CPU').html(exports.CPU + '%');
     $('#CO-Mem').html(exports.Mem);
-
+    //频道点击跳转
+      $('.to-Channel').click(function(e){
+          UTIL.cover.close();
+      });
     loadCityInfo();
 
     function loadCityInfo(){
@@ -410,7 +412,10 @@ define(function(require, exports, module) {
               "ProgramSync":"{\"on\": 0, \"SyncSetID\": \"1-1\", \"SyncMulticastIP\": \"225.2.3.4\", \"SyncMulticastPort\": 9000, \"SyncSwitchTimeout\": 300}",
               "LogURL":null
             }*/
-
+            //频道链接
+              var chn_id = config.Channel_ID;
+              var chn_href = "#channel/edit?id="+chn_id;
+              $('.to-Channel').attr("href",chn_href);
             // 心跳
             _heartBeatPeriod = config.HeartBeat_Period;
 

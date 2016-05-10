@@ -211,7 +211,7 @@ define(function (require, exports, module) {
                 if (msg.rescode == 200) {
                     alert("频道发布成功！")
                     util.cover.close();
-                    parent.location.reload();
+                    loadPage(1);
                 }
                 else {
                     alert("频道发布失败！")
@@ -249,7 +249,7 @@ define(function (require, exports, module) {
                 }
             });
             util.cover.close();
-            parent.location.reload();
+            loadPage(1);
         }
     }
 
@@ -364,7 +364,7 @@ define(function (require, exports, module) {
                 check_th +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
-                '<th class="chn_detail">发布详情</th>'+
+              //  '<th class="chn_detail">发布详情</th>'+
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
@@ -398,7 +398,7 @@ define(function (require, exports, module) {
                             check_td +
                             '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
                             '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                            '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                           // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
                     } else {
@@ -413,7 +413,7 @@ define(function (require, exports, module) {
                                 check_td +
                                 '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
                                 '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                                '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                               // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                                 '</tr>';
                             $("#channel-table tbody").append(chntr);
                         }
@@ -454,6 +454,18 @@ define(function (require, exports, module) {
         //校验批量操作的审核功能
         function checkCheckBtns() {
             if (util.getLocalParameter('config_checkSwitch') == '0') {
+                var checked = $("#channel-table input[type='checkBox']:checked");
+                //判断选中个数
+                if (checked.length != '1') {
+                    $('#channel-list-controls .btn-publish-later').attr('disabled', true);
+                    $('#channel-list-controls .btn-publish').attr('disabled', true);
+                    $('#channel-list-controls .btn-delete').prop('disabled', true);
+                } else {
+                        $('#channel-list-controls .btn-publish-later').attr('disabled', false);
+                        $('#channel-list-controls .btn-publish').attr('disabled', false);
+                        $('#channel-list-controls .btn-delete').prop('disabled', false);
+
+                }
             } else {
                 if (util.getLocalParameter('config_canCheck') == '0') {
                     var checked = $("#channel-table input[type='checkBox']:checked");
