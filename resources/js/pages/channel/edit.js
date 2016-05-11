@@ -348,6 +348,7 @@ define(function(require, exports, module) {
             time_segment_start: data.TimeSegment_Start,
             type_id: data.Type_ID,
             type_name: data.Type_Name,
+			download_auth_type: data.Download_Auth_Type,
             url: data.URL
         };
     }
