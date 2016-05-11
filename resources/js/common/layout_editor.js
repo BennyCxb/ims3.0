@@ -1,7 +1,7 @@
 'use strict';
 
 define(function (require, exports, module) {
-
+    var UTIL = require("common/util.js");
     /**
      *
      * @type {{NONE: number, CONTENT: number, TOP: number, BOTTOM: number, LEFT_TOP: number, LEFT: number, LEFT_BOTTOM: number, RIGHT_TOP: number, RIGHT: number, RIGHT_BOTTOM: number}}
@@ -275,7 +275,8 @@ define(function (require, exports, module) {
      *   backgroundColor: <string>,
      *   backgroundImage: {
      *      url: <string>,
-     *      id: <number>
+     *      id: <number>,
+     *      download_auth_type: <string>
      *   },
      *   widgets: [
      *      {
@@ -602,6 +603,7 @@ define(function (require, exports, module) {
                 url: this.mBackgroundImage.url,
                 id: this.mBackgroundImage.id,
                 type: this.mBackgroundImage.type,
+                download_auth_type: this.mBackgroundImage.download_auth_type
             } : {
                 id: 0,
                 type: 'Unknown'
@@ -676,7 +678,8 @@ define(function (require, exports, module) {
     Layout.prototype.setBackgroundImage = function (backgroundImage) {
         this.mBackgroundImage = backgroundImage;
         if (this.mBackgroundImage && this.mBackgroundImage.type === 'Image') {
-            this.mContent.style.backgroundImage = 'url(' + this.mBackgroundImage.url + ')';
+            var realUrl = UTIL.getRealURL(this.mBackgroundImage.download_auth_type, this.mBackgroundImage.url);
+            this.mContent.style.backgroundImage = 'url(' + realUrl + ')';
         } else {
             this.mContent.style.backgroundImage = 'none';
         }
@@ -1268,7 +1271,7 @@ define(function (require, exports, module) {
         var img = document.createElement('img');
         img.setAttribute('width', '100%');
         img.setAttribute('height', '100%');
-        img.setAttribute('src', data.material);
+        img.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
         this.mElement.appendChild(img);
 
     };
@@ -1320,7 +1323,7 @@ define(function (require, exports, module) {
             var img = document.createElement('img');
             img.setAttribute('width', '100%');
             img.setAttribute('height', '100%');
-            img.setAttribute('src', data.material);
+            img.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             this.mElement.appendChild(img);
         } else {
             var video = document.createElement('video'),
@@ -1330,7 +1333,7 @@ define(function (require, exports, module) {
             video.setAttribute('width', '100%');
             video.setAttribute('height', '100%');
             video.style.objectFit = 'fill';
-            source.setAttribute('src', data.material);
+            source.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             source.setAttribute('type', 'video/mp4');
             source.textContent = '您的浏览器不支持video标签.';
             video.appendChild(source);

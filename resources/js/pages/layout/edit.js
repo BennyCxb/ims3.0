@@ -585,11 +585,11 @@ define(function(require, exports, module) {
         }
     }
 
-    function updateBackground(id, url) {
+    function updateBackground(id, url, download_auth_type) {
         if (typeof url !== 'string') {
             return;
         }
-        editor.getLayout().setBackgroundImage({id: parseInt(id), url: url, type: 'Image'});
+        editor.getLayout().setBackgroundImage({id: parseInt(id), url: url, type: 'Image', download_auth_type: download_auth_type});
     }
 
     function onAddMaterial() {

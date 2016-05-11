@@ -131,11 +131,11 @@ define(function (require, exports, module) {
                     if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
                         var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
                     } else {
-                        if (mtrData[x].Download_Auth_Type == "None") {
-                            var mtrUrl = mtrData[x].URL;
-                        } else {
-                            var mtrUrl = UTIL.getRealURL(mtrData[x].URL)
-                        }
+                        //if (mtrData[x].Download_Auth_Type == "None") {
+                        //    var mtrUrl = mtrData[x].URL;
+                        //} else {
+                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
+                        //}
                         var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                     }
                     // 审核状态

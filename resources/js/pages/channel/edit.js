@@ -111,6 +111,7 @@ define(function(require, exports, module) {
 			{name: 'time_segment_start',		type: 'string'},
 			{name: 'type_id',					type: 'number'},
 			{name: 'type_name',					type: 'string'},
+			{name: 'download_auth_type',		type: 'string'},
 			{name: 'url',						type: 'string'}
 		]);
 		db.beginTransaction();

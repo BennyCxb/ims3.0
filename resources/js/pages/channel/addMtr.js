@@ -65,8 +65,9 @@ define(function (require, exports, module) {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1") { //添加背景图
 
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
-                var url = $("input:checkbox[class='amtr_cb']:checked").parent().parent().next().find("a").attr("href");
-                LAYOUTEDIT.updateBackground(mtrId, url);
+                var url = $("input:checkbox[class='amtr_cb']:checked").parent().parent().next().find("a").attr("url");
+                var datype = $("input:checkbox[class='amtr_cb']:checked").parent().parent().next().find("a").attr("datype");
+                LAYOUTEDIT.updateBackground(mtrId, url, datype);
             } else {
                 var datalist = [];
                 for (var x = 0; x < $(".amtr_cb").length; x++) {
@@ -198,18 +199,14 @@ define(function (require, exports, module) {
                 var material_type = mtrData[0].Type_Name;
                 for (var x = 0; x < mtrData.length; x++) {
                     if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
-                        var mtr_choise_tr = '<td class="mtr_choise_name"><b>' + mtrData[x].Name + '</b></td>';
+                        var mtr_choise_tr = mtrData[x].Name;
                     } else {
-                        if (mtrData[x].Download_Auth_Type == "None") {
-                            var mtrUrl = mtrData[x].URL;
-                        } else {
-                            var mtrUrl = UTIL.getRealURL(mtrData[x].URL)
-                        }
-                        var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)
+                        var mtr_choise_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
                     }
                     var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
                         '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                        mtr_choise_tr +
+                        '<td class="mtr_choise_name"><b>' + mtr_choise_tr + '</b></td>' +
                         '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                         '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
                         '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +

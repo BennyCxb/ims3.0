@@ -65,13 +65,18 @@ define(function (require, exports, module) {
         }
     };
 
-    exports.getRealURL = function (_url, successFn) {
+    exports.getRealURL = function (type,_url, successFn) {
+        var realUrl;
+        if (type == "None") {
+            realUrl = _url;
+            return realUrl;
+        }
         var data = JSON.stringify({
             action: "getRealURL",
             project_name: CONFIG.projectName,
             URL: _url
         })
-        var realUrl;
+
         var ajax = $.ajax({
             type: 'post',
             url: CONFIG.serverRoot + '/backend_mgt/v1/qiniu/',
