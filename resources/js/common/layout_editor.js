@@ -1309,10 +1309,11 @@ define(function (require, exports, module) {
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = '#000';
-        this.mElement.style.backgroundImage = 'url(resources/img/videoTip.png)';
-        this.mElement.style.backgroundSize = 'contain';
-        this.mElement.style.backgroundRepeat = 'no-repeat';
-        this.mElement.style.backgroundPosition = 'center'
+        //this.mElement.style.backgroundImage = 'url(resources/img/videoTip.png)';
+        //this.mElement.style.backgroundSize = 'contain';
+        //this.mElement.style.backgroundRepeat = 'no-repeat';
+        //this.mElement.style.backgroundPosition = 'center',
+        this.mElement.textContent = '该视频格式不支持预览';
         if (
             suffix.call(data.material, '.jpg') ||
             suffix.call(data.material, '.png') ||
@@ -1335,14 +1336,13 @@ define(function (require, exports, module) {
             video.style.objectFit = 'fill';
             source.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             source.setAttribute('type', 'video/mp4');
-            source.textContent = '您的浏览器不支持video标签.';
             video.appendChild(source);
             this.mElement.appendChild(video);
         }
     };
     VideoWidget.prototype.hidePreview = function (data) {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
-        this.mElement.style.backgroundImage = 'none';
+        //this.mElement.style.backgroundImage = 'none';
         Widget.prototype.hidePreview.call(this);
     };
 
