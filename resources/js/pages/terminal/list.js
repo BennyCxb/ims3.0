@@ -461,12 +461,17 @@ define(function(require, exports, module) {
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
           var snap = (tl[i].Online === 0)?'':'<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
-
+          console.log(tl[i].DiskInfo);
+            var diskArr = tl[i].DiskInfo.split("MB");
+            var diskinfo1 = diskArr[0];
+            var diskinfo2 = diskArr[1].substring(1);
+            var restdisk = diskinfo2 - diskinfo1;
+            var diskinfo = restdisk+"MB/"+diskinfo2+"MB";
           $('#term_list').append('' +
             '<tr channel="'+ tl[i].Channel_Name +'" preChannel="'+ tl[i].PreDownload_Channel_Name +'" tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
-              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
+              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ diskinfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
               '<td style="line-height:26px; padding-top:10px;">当前频道：'+
               ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ChannelName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName)) +
               '<br />当前节目：'+
