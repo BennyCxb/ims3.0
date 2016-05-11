@@ -46,7 +46,7 @@ define(function (require, exports, module) {
 		//	});
 
 
-		//获取角色的终端树	
+		//获取角色的终端树
 		var term_data = JSON.stringify({
 			 	project_name:CONFIG.projectName,
                 action:'GetRoleTgCategory'
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
 					var termString = termArr + "";
 				   $("#term").val(termString);
 				   }else{
-					   $("#term").val("获取终端节点失败"); 
+					   $("#term").val("获取终端节点失败");
 					   }
 			})
 		//获取角色的功能模块及读写权限
@@ -138,16 +138,19 @@ define(function (require, exports, module) {
                             if(!isNew){
                                 alert("修改成功！")
                                 //parent.location.reload();
+                                ROLES.roleID = NaN;
                                 ROLES.loadRolesPage(1);
                                 UTIL.cover.close();
                             }else{alert("创建成功！")
                                 //parent.location.reload();
+                                ROLEEDIT.roleID = NaN;
                                 ROLES.loadRolesPage(1);
                                 UTIL.cover.close();}
                         }else{
                             if(!isNew){
-                                alert("修改失败！")
-                            }else{alert("创建失败！")}
+                                alert("修改失败！");
+                                ROLES.roleID = NaN;
+                            }else{alert("创建失败！");ROLEEDIT.roleID = NaN;}
                         }
 
 
@@ -209,17 +212,19 @@ define(function (require, exports, module) {
                                 if(!isNew){
                                     alert("修改成功！")
                                     //parent.location.reload();
+                                    ROLES.roleID = NaN;
                                     ROLES.loadRolesPage(1);
-                                    alert("123")
                                     UTIL.cover.close();
                                 }else{alert("创建成功！")
                                     //parent.location.reload();
+                                    ROLEEDIT.roleID = NaN;
                                     ROLES.loadRolesPage(1);
                                     UTIL.cover.close();}
                             }else{
                                 if(!isNew){
-                                    alert("修改失败！")
-                                }else{alert("创建失败！")}
+                                    alert("修改失败！");
+                                    ROLES.roleID = NaN;
+                                }else{alert("创建失败！");ROLEEDIT.roleID = NaN;}
                             }
                         }else{
                             alert("创建失败！")
@@ -351,15 +356,16 @@ define(function (require, exports, module) {
                 var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
                 UTIL.ajax('post', url, data, function (msg) {
                     if (msg.rescode == 200) {
-
+                        ROLEEDIT.roleID = NaN;
+                        UTIL.cover.close();
+                        ROLES.loadRolesPage(1); //刷新页面
                     } else {
-
+                        
                     }
-                    ;
                 });
-                UTIL.cover.close();
-                ROLES.loadRolesPage(1); //刷新页面
+
             }else{
+                ROLES.roleID = NaN;
                 UTIL.cover.close();
                 ROLES.loadRolesPage(1); //刷新页面
             }

@@ -13,13 +13,14 @@ define(function (require, exports, module) {
     var requestUrl = config.serverRoot,
         projectName = config.projectName,
         nDisplayItems = 15,
+        _pageNO = 1,
         keyword = '',
         last;
 
     // 初始化页面
     exports.init = function () {
         checkCheck();
-        loadPage(1);
+        loadPage(_pageNO);
 
         //获取已选频道ids
         function getChannelIds() {
@@ -62,7 +63,7 @@ define(function (require, exports, module) {
                         function (data) {
                             if (data.rescode === '200') {
                                 alert('已提交');
-                                loadPage(1);
+                                loadPage(_pageNO);
                             } else {
                                 alert('提交失败');
                             }
@@ -87,7 +88,7 @@ define(function (require, exports, module) {
                         function (data) {
                             if (data.rescode === '200') {
                                 alert('已审核');
-                                loadPage(1);
+                                loadPage(_pageNO);
                             } else {
                                 alert('审核失败');
                             }
@@ -121,7 +122,7 @@ define(function (require, exports, module) {
                         function (data) {
                             if (data.rescode === '200') {
                                 alert('已审核');
-                                loadPage(1);
+                                loadPage(_pageNO);
                             } else {
                                 alert('审核失败');
                             }
@@ -132,6 +133,10 @@ define(function (require, exports, module) {
         }
 
     };
+
+    exports.loadPage = function(){
+        loadPage(_pageNO);
+    }
 
     function registerEventListeners() {
         $('#channel-table').delegate('input[type="checkbox"]', 'ifClicked', function (ev) {
@@ -184,7 +189,7 @@ define(function (require, exports, module) {
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
                     keyword = typeof($('#channelSearch').val()) === 'string' ? $('#channelSearch').val() : '';
-                    loadPage(1);
+                    loadPage(_pageNO);
                 }
             }, 500);
         }
@@ -211,7 +216,7 @@ define(function (require, exports, module) {
                 if (msg.rescode == 200) {
                     alert("频道发布成功！")
                     util.cover.close();
-                    loadPage(1);
+                    loadPage(_pageNO);
                 }
                 else {
                     alert("频道发布失败！")
@@ -249,7 +254,7 @@ define(function (require, exports, module) {
                 }
             });
             util.cover.close();
-            loadPage(1);
+            loadPage(_pageNO);
         }
     }
 
@@ -271,7 +276,7 @@ define(function (require, exports, module) {
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
             alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
-            loadPage(1);
+            loadPage(_pageNO);
         });
     }
 
@@ -341,10 +346,11 @@ define(function (require, exports, module) {
             next: config.pager.next,
             last: config.pager.last,
             page: config.pager.page,
-            currentPage: Number(json.Pager.page),
+            currentPage: _pageNO,
             onPageChange: function (num, type) {
+                _pageNO = num;
                 if (type === 'change') {
-                    loadPage(num);
+                    loadPage(_pageNO);
                 }
             }
         });
@@ -585,7 +591,7 @@ define(function (require, exports, module) {
         //发布详情
         $('.chn_detail').click(function(e){
             var self = $(this);
-            e.preventDefault();
+                        e.preventDefault();
             e.stopPropagation();
             var chnID = self.parent().attr('chnID');
             exports.chnID = chnID;

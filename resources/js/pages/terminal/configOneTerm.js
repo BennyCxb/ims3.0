@@ -337,8 +337,7 @@ define(function(require, exports, module) {
     $('#CO-DiskInfo').val(exports.diskInfo);
     $('#CO-IP').html(exports.IP);
     $('#CO-MAC').html(exports.MAC);
-    $('#CO-channel').html(exports.channel);
-    $('#CO-preChannel').html(exports.preChannel);
+    $('#CO-channel').html('<a class="to-Channel">'+exports.channel+'</a>');
     $('#CO-CPU').html(exports.CPU + '%');
     $('#CO-Mem').html(exports.Mem);
     //频道点击跳转
@@ -419,14 +418,15 @@ define(function(require, exports, module) {
               $('.to-Channel').attr("href",chn_href);
             //预发布频道链接
               var prechn_id = config.PreDownload_Channel_ID;
+              if(prechn_id=== -1){
+                  $('#CO-preChannel').html("无");
+              }else{
+                  $('#CO-preChannel').html('<a class="to-preChannel">'+exports.preChannel+'</a>');
+              }
               var prechn_href = "#channel/edit?id=" + prechn_id;
               $('.to-preChannel').attr("href", prechn_href);
-              $('.to-preChannel').click(function(e){
-                  if(prechn_id=== -1){
-                      e.preventDefault();
-                  }else {
-                      UTIL.cover.close();
-                  }
+              $('.to-preChannel').click(function(){
+                  UTIL.cover.close();
               });
             // 心跳
             _heartBeatPeriod = config.HeartBeat_Period;
