@@ -375,10 +375,11 @@ a {
     white-space: nowrap;
 }
 
-.mtr_time {
+.mtrCtrl_duration {
 	width: 112px;
+    text-align: center;
 }
-.mtr_time input {
+.mtrCtrl_duration input {
     width: 70px;
 }
 

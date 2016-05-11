@@ -19,8 +19,8 @@ define(function (require, exports, module) {
         //    onSearch($('#mtrChoiseSearch').val(), typeId);
         //});
         //搜索
-        $("#mtrChoiseSearch").keyup(function(event){
-            if(event.keyCode == 13) {
+        $("#mtrChoiseSearch").keyup(function (event) {
+            if (event.keyCode == 13) {
                 var typeId = $("#mtrChoiseSearch").attr("typeId");
                 onSearch(event);
             }
@@ -199,37 +199,31 @@ define(function (require, exports, module) {
                 for (var x = 0; x < mtrData.length; x++) {
                     if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
                         var mtr_choise_tr = '<td class="mtr_choise_name"><b>' + mtrData[x].Name + '</b></td>';
-                    }else {
+                    } else {
                         if (mtrData[x].Download_Auth_Type == "None") {
                             var mtrUrl = mtrData[x].URL;
-                            var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                            mosaic(mtr_choise_tr);
                         } else {
-                            UTIL.getRealURL(mtrData[x].URL,function (mtrUrl) {
-                                var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                                mosaic(mtr_choise_tr);
-                            });
+                            var mtrUrl = UTIL.getRealURL(mtrData[x].URL)
                         }
+                        var mtr_choise_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                     }
-                    function mosaic(mtr_choise_tr) {
-                        var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                            mtr_choise_tr +
-                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-                            '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
-                            '</tr>';
-                        $("#mtr_choiseTable tbody").append(mtrtr);
-                    }
+                    var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
+                        '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
+                        mtr_choise_tr +
+                        '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
+                        '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                        '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
+                        '</tr>';
+                    $("#mtr_choiseTable tbody").append(mtrtr);
                 }
                 if (material_type == "文本" || material_type == "Live" || material_type == "Image") {		//文本和直播图片无时长
                     $(".mtr_time").empty();
                 }
             }
-            else{
+            else {
                 $("#mtr_choiseTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtr_choiseTable tbody").append( '<h3 style="text-align:center;">当前格式无可用资源</h3>');
+                $("#mtr_choiseTable tbody").append('<h3 style="text-align:center;">当前格式无可用资源</h3>');
             }
         }
         //清空状态列
@@ -278,14 +272,15 @@ define(function (require, exports, module) {
     function onSearch(event) {
         var typeId = $("#mtrSearch").attr("typeId");
         last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
-        setTimeout(function(){          //设时延迟0.5s执行
-            if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+        setTimeout(function () {          //设时延迟0.5s执行
+            if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
                 keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
                 exports.loadPage(1, Number(typeId));
             }
-        },500);
+        }, 500);
     }
+
     function onSearch(_keyword, typeId) {
         keyword = typeof(_keyword) === 'string' ? _keyword : '';
         loadPage(1, Number(typeId));

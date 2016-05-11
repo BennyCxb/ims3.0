@@ -71,6 +71,7 @@ define(function (require, exports, module) {
             project_name: CONFIG.projectName,
             URL: _url
         })
+        var realUrl;
         var ajax = $.ajax({
             type: 'post',
             url: CONFIG.serverRoot + '/backend_mgt/v1/qiniu/',
@@ -78,8 +79,8 @@ define(function (require, exports, module) {
             timeout: 60000,
             async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
             success: function (data) {
-                var realUrl = JSON.parse(data).URL;
-                successFn(realUrl);
+                realUrl = JSON.parse(data).URL;
+                //successFn(realUrl);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 // XMLHttpRequest.status
@@ -87,6 +88,7 @@ define(function (require, exports, module) {
                 ajax.abort();
             }
         });
+        return realUrl;
     }
 
     function ajax(type, url, data, successFn, dataType) {

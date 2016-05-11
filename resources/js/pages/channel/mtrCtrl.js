@@ -105,7 +105,7 @@ define(function (require, exports, module) {
         $("#mtrCtrl_Table thead").append('<tr>' +
             '<th class="mtrCtrl_checkbox"></th>' +
             '<th class="mtrCtrl_name">文件名</th>' +
-            '<th class="mtr_time">时长</th>' +
+            '<th class="mtrCtrl_duration">时长</th>' +
             '<th class="mtrCtrl_times"><label>次数</label></th>' +
             '<th class="mtrCtrl_delete"></th>' +
             '</tr>');
@@ -357,6 +357,16 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
+                    if (mtrData[x].type_name == "文本" || mtrData[x].material_type == "Live") {		//文本和直播无预览效果
+                        var mtrCtrl_name_tr = '<td class="mtrCtrl_name" title="' + mtrData[x].name + '"><b>' + mtrData[x].name + '</b></td>';
+                    } else {
+                        if (mtrData[x].Download_Auth_Type == "None") {
+                            var mtrUrl = mtrData[x].url;
+                        } else {
+                            var mtrUrl = UTIL.getRealURL(mtrData[x].url);
+                        }
+                        var mtrCtrl_name_tr = '<td class="mtrCtrl_name" title="' + mtrData[x].name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].name + '</a></b></td>';
+                    }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
                     } else {
@@ -370,8 +380,8 @@ define(function (require, exports, module) {
                     }
                     var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="' + mtrData[x].sequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].name + '</td>' +
-                        '<td class="mtr_time"><input type="text" class="mtrCtrl_time" value="' + duration + '"></td>' +
+                        mtrCtrl_name_tr +
+                        '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value="' + duration + '"></td>' +
                         '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=' + dbcount + '></td>' +
                         '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                         '</tr>';
@@ -446,16 +456,28 @@ define(function (require, exports, module) {
                     DB.collection("material").insert(intDate);                      //存入缓存
                     var data_id = DB.collection("material").lastInsertId();         //查询刚添加的ID
                     //拼接
-                    if ((mtrData[x].Type_Name == "VideoLive" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name === 'Video') {
-                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '"></td>';
-                    } else if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "文本" || mtrData[x].Type_Name === 'WebText') {
-                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>';
+                    if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
+                        if (mtrData[x].Download_Auth_Type == "None") {
+                            var mtrUrl = mtrData[x].url;
+                        } else {
+                            var mtrUrl = UTIL.getRealURL(mtrData[x].URL)
+                        }
+                        var mtrCtrl_name_tr = '<td class="mtrCtrl_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                        if (mtrData[x].Type_Name == "Image") {                     //图片
+                            var trDuration = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>';
+                        } else {
+                            var trDuration = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value="' + mtrData[x].Duration + '"></td>';
+                        }
+                    } else if (mtrData[x].Type_Name == "文本") {                  //文本
+                        var mtrCtrl_name_tr = '<td class="mtrCtrl_name" title="' + mtrData[x].Name + '"><b>' + mtrData[x].Name + '</b></td>';
+                        var trDuration = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value="00:00:15"></td>';
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        var trDuration = '<td class="mtr_time"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>';
+                        var mtrCtrl_name_tr = '<td class="mtrCtrl_name" title="' + mtrData[x].Name + '"><b>' + mtrData[x].Name + '</b></td>';
+                        var trDuration = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value="01:00:00"></td>';
                     }
                     var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
-                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '">' + mtrData[x].Name + '</td>' +
+                        mtrCtrl_name_tr +
                         trDuration +
                         '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" value=1></td>' +
                         '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -476,10 +498,10 @@ define(function (require, exports, module) {
             //显示或隐藏删除按钮
             $(".btn_ctrlDel").hide();
             $("#mtrCtrl_Table tbody tr").mouseover(function () {
-                $(this).find("a").show();
+                $(this).find("#btn_ctrlDel").show();
             })
             $("#mtrCtrl_Table tbody tr").mouseout(function () {
-                $(this).find("a").hide();
+                $(this).find("#btn_ctrlDel").hide();
             })
             //单个删除
             $(".btn_ctrlDel").click(function () {

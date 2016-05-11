@@ -127,6 +127,17 @@ define(function (require, exports, module) {
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
                 for (var x = 0; x < mtrData.length; x++) {
+                    var material_type = mtrData[x].Type_Name;
+                    if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
+                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
+                    } else {
+                        if (mtrData[x].Download_Auth_Type == "None") {
+                            var mtrUrl = mtrData[x].URL;
+                        } else {
+                            var mtrUrl = UTIL.getRealURL(mtrData[x].URL)
+                        }
+                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                    }
                     // 审核状态
                     var check_td = '';
                     var check_status = '';
@@ -151,34 +162,16 @@ define(function (require, exports, module) {
                         }
                         check_td = '<td class="mtr_check">' + status + '</td>';
                     }
-                    var material_type = mtrData[x].Type_Name;
-                    if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
-                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
-                    } else {
-                        if (mtrData[x].Download_Auth_Type == "None") {
-                            var mtrUrl = mtrData[x].URL;
-                            var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                            mosaic(mtrName_tr, check_td);
-                        } else {
-                            UTIL.getRealURL(mtrData[x].URL,function (mtrUrl) {
-                                var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
-                                mosaic(mtrName_tr, check_td);
-                            });
-                        }
-                    }
-                    function mosaic(mtrName_tr, check_td) {
-                        var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
-                            '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '"></td>' +
-                            mtrName_tr +
-                            check_td +
-                            '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
-                            '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-                            '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
-                            '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
-                            '</tr>';
-                        $("#mtrTable tbody").append(mtrtr);
-                    }
-
+                    var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
+                        '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '"></td>' +
+                        mtrName_tr +
+                        check_td +
+                        '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
+                        '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                        '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
+                        '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
+                        '</tr>';
+                    $("#mtrTable tbody").append(mtrtr);
                 }
             } else {
                 $("#mtrTable tbody").empty();
