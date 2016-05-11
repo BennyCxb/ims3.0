@@ -13,7 +13,11 @@ define(function (require, exports, module) {
 		//var loadType = ROLES.loadType;
 		var type = ROLES.type;
 		if(type=="edit"){
-			$("#role_name").val(rName);
+            if(ROLEEDIT.editName){
+                $("#role_name").val(ROLEEDIT.editName);
+            }else if(rName){
+                $("#role_name").val(rName);
+            }
 			isNew = false;
 			}
 		else if(ROLEEDIT.roleID){
@@ -249,6 +253,7 @@ define(function (require, exports, module) {
 		//终端分类选择
 		$("#term_list").click(function(){
 			var roleName = $("#role_name").val();
+            exports.editName = roleName;
 			if(roleName===""){
 				alert("用户名不能为空！");
 				 $("#role_name")[0].focus();
