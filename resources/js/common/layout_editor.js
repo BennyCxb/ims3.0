@@ -1414,7 +1414,7 @@ define(function (require, exports, module) {
                 var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
                 $(marquee).marquee({
                     direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right',
-                    duration: Math.floor(textLength * 1000 / (250 * scale * data.style.speed))
+                    duration: Math.floor(textLength * 1000 / (500 * scale * data.style.speed))
                 });
             }
         } else {
