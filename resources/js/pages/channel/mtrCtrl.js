@@ -43,8 +43,8 @@ define(function (require, exports, module) {
         // 统计时长
         $('#mtr_countTime').click(function () {
             var conutTime = 0;
-            for (var a = 0; a < $(".mtr_time input").length; a++) {
-                conutTime += formatSecond($(".mtr_time input:eq(" + a + ")").val());
+            for (var a = 0; a < $(".mtrCtrl_time").length; a++) {
+                conutTime += formatSecond($(".mtrCtrl_time:eq(" + a + ")").val());
             }
             //conutTime = formatTime(conutTime);
             $("#channel-editor-wrapper .program-duration-hidden").val(conutTime).change();
