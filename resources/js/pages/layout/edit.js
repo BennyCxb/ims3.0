@@ -516,7 +516,7 @@ define(function(require, exports, module) {
                 break;
             case 'html':
                 json.type = 'WebBox';
-                json.typeName = 'Web文本控件';
+                json.typeName = '文本控件';
                 break;
             case 'clock':
                 json.type = 'ClockBox';
