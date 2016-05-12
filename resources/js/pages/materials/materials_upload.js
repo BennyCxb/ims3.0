@@ -120,7 +120,7 @@ define(function (require, exports, module) {
 
     //上传模块
     function upload() {
-        $("#dpUpl").show();
+        $("#dpUpl").css("display", "block");
         if (uploadQiniu == "1") {
             //TODO, FIXME, 这里有个执行的先后顺序问题，一定要先拿到上传一些参数后，才能允许用户上传！！！
             var data = JSON.stringify({
