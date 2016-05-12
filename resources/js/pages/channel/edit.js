@@ -1022,27 +1022,27 @@ define(function(require, exports, module) {
                 var type, type_id, type_name;
                 if (el.Type === 'VideoBox') {
                     type = 'VideoBox';
-                    type_name = '视频';
+                    type_name = '视频控件';
                     type_id = 1;
                 } else if (el.Type === 'AudioBox') {
                     type = 'AudioBox';
-                    type_name = '音频';
+                    type_name = '音频控件';
                     type_id = 4;
                 } else if (el.Type === 'WebBox') {
                     type = 'WebBox';
-                    type_name = 'Web文本';
+                    type_name = '文本控件';
 					type_id = 3;
                 } else if (el.Type === 'ImageBox') {
                     type = 'ImageBox';
-                    type_name = '图片';
+                    type_name = '图片控件';
                     type_id = 2;
                 } else if (el.Type === 'ClockBox') {
                     type = 'ClockBox';
-                    type_name = '时钟';
+                    type_name = '时钟控件';
                     type_id = 5;
                 } else if (el.Type === 'WeatherBox') {
 					type = 'WeatherBox';
-					type_name = '天气';
+					type_name = '天气控件';
 					type_id = 6;
 				}
 				return {
