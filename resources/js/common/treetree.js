@@ -147,6 +147,9 @@ define(function(require, exports, module) {
 	    tree.addParentCss = function(dom){
 	    	dom.addClass('treeview');
         var a = dom.children('a');
+            var ul = dom.children('ul');
+            var childa = ul.children('a');
+            console.log(childa.length);
         var angle = $('<i class="glyphicon glyphicon glyphicon-chevron-right"></i>');
         a.prepend(angle);
         angle.click(function(e){
@@ -253,6 +256,8 @@ define(function(require, exports, module) {
           if(data[i].children.length > 0){
             treeview = 'treeview';
             angle = '<i class="glyphicon glyphicon-chevron-right"></i>';
+          }else{
+              angle = '<i class="glyphicon" style="width:22px"></i>';
           }
 
           var li = $('' +
