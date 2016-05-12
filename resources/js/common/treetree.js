@@ -28,7 +28,6 @@ define(function(require, exports, module) {
 
             var dom = $(this).parent().parent();
             e.stopPropagation();
-
             if(tree.checkMode === 'multiple'){
               tree.checkChildren(dom);
               tree.checkParent(dom);
@@ -147,9 +146,6 @@ define(function(require, exports, module) {
 	    tree.addParentCss = function(dom){
 	    	dom.addClass('treeview');
         var a = dom.children('a');
-            var ul = dom.children('ul');
-            var childa = ul.children('a');
-            console.log(childa.length);
         var angle = $('<i class="glyphicon glyphicon glyphicon-chevron-right"></i>');
         a.prepend(angle);
         angle.click(function(e){
@@ -262,7 +258,7 @@ define(function(require, exports, module) {
 
           var li = $('' +
             '<li node-id="' + data[i].id + '" class="' + treeview + '">' +
-              '<a>' + checkbox + angle +
+              '<a>' + angle + checkbox +
               '<i class="fa fa-folder-o"></i><span> ' + data[i].name + '</span>' +
               '</a>' +
             '</li>');
