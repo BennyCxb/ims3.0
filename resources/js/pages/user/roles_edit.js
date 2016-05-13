@@ -8,7 +8,6 @@ define(function (require, exports, module) {
 
     exports.init = function () {
 		var rName = ROLES.roleName;
-        ROLES.roleName
 		var rID = Number(ROLES.roleID);
 		var isNew = true;
 		//var loadType = ROLES.loadType;
@@ -71,11 +70,15 @@ define(function (require, exports, module) {
             })
             var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
             UTIL.ajax('post', url1, data1, function (msg) {
-                if (msg.RoleCount !== 0 && newName != rName) {
+                if (msg.RoleCount !== 0 && newName != rName && type=="edit") {
                     alert("角色名已存在！")
                     $("#role_name")[0].focus();
                     return false;
-                } else {
+                }else if(type=="add" && msg.RoleCount!==0 && !ROLEEDIT.isCreate){
+                    alert("角色名已存在！");
+                    $("#role_name")[0].focus();
+                    return false;
+                }else {
                     var name = {
                         RoleName: newName
                     }
@@ -139,7 +142,6 @@ define(function (require, exports, module) {
                             } else {
                                 flag5 = false;
                             }
-                            ;
                         });
                         if (flag5) {
                             if (!isNew) {
@@ -151,6 +153,7 @@ define(function (require, exports, module) {
                             } else {
                                 alert("创建成功！")
                                 //parent.location.reload();
+                                exports.isCreate = false;
                                 UTIL.cover.close();
                                 ROLES.loadRolesPage(1);
                             }
@@ -285,7 +288,7 @@ define(function (require, exports, module) {
                 })
                 var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
                 UTIL.ajax('post',url1,data1,function(msg){
-                    if(msg.RoleCount!==0 && newName!=rName && !isNew){
+                    if(msg.RoleCount!==0 && newName!=rName){
                         alert("角色名已存在！")
                         return false;
                     }else{
@@ -322,7 +325,8 @@ define(function (require, exports, module) {
                                 if(msg.rescode == 200){
                                     rID=msg.RoleID;
                                     exports.roleID = rID;
-                                    //exports.roleName = roleName;
+                                    exports.roleName = roleName;
+                                    exports.isCreate = true;
                                     getClass.title = '请选取';
                                     getClass.roleID = rID;
                                     getClass.save = function(data){
@@ -360,17 +364,22 @@ define(function (require, exports, module) {
                     project_name:CONFIG.projectName,
                     action: 'Delete'
                 });
-                var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
-                UTIL.ajax('post', url, data, function (msg) {
-                    if (msg.rescode == 200) {
-                        ROLEEDIT.roleID = NaN;
-                        UTIL.cover.close();
-                        ROLES.loadRolesPage(1); //刷新页面
-                    } else {
-                        
-                    }
-                });
+                if(ROLEEDIT.isCreate) {
+                    var url = CONFIG.serverRoot + '/backend_mgt/v2/roles/' + rID;
+                    UTIL.ajax('post', url, data, function (msg) {
+                        if (msg.rescode == 200) {
+                            ROLEEDIT.roleID = NaN;
+                            UTIL.cover.close();
+                            ROLES.loadRolesPage(1); //刷新页面
+                        } else {
 
+                        }
+                    });
+                }else{
+                    ROLES.roleID = NaN;
+                    UTIL.cover.close();
+                    ROLES.loadRolesPage(1); //刷新页面
+                }
             }else{
                 ROLES.roleID = NaN;
                 UTIL.cover.close();
