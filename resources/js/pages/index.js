@@ -28,8 +28,10 @@ define(function (require, exports, module) {
     }
 
     function loadPage() {
+
         var page = window.location.hash.match(/^#([^?]*)/);
-//        page = page === null ? 'terminal/list' : page[1];
+        
+        //page = page === null ? 'terminal/list' : page[1];
         if (page == null){
     		if ($(".sidebar-menu li:eq(0) ul").length == 0){
         		page = $(".sidebar-menu li:eq(0)").find("a").attr("href").substring(1);
@@ -56,6 +58,11 @@ define(function (require, exports, module) {
                 }
             }
         })
+
+        //检查关闭弹窗
+        UTIL.cover.close();
+        UTIL.cover.close(2);
+
         // load页面
         $('#page_box').load('resources/pages/' + page + '.html');
     }

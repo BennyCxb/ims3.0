@@ -21,8 +21,9 @@ define(function (require, exports, module) {
         if (exports.mac !== '' && exports.mac !== undefined) {
             $('#termlogSearch').val(exports.mac);
             exports.mac = '';
-            onSearch($('#termlogSearch').val());
+            onSearchPage($('#termlogSearch').val());
         } else {
+            termMac = typeof($('#termlogSearch').val()) === 'string' ? $('#termlogSearch').val() : '';
             exports.loadTermlogPage(1); //加载默认页面
         }
 
@@ -75,6 +76,12 @@ define(function (require, exports, module) {
         var url = CONFIG.serverRoot + '/backend_mgt/v2/termlog';
         UTIL.ajax('post', url, data, render);
     }
+    
+    function onSearchPage() {
+        termMac = typeof($('#termlogSearch').val()) === 'string' ? $('#termlogSearch').val() : '';
+        exports.loadTermlogPage(1);      
+    }
+
 
     function render(json) {
         //翻页

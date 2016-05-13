@@ -108,7 +108,7 @@
 
   <!-- 全屏弹层区域 -->
   <section id="cover_area"></section>
-
+  <section id="cover_area2"></section>
   <!-- =============================================== -->
 
   <!-- Left side column. contains the sidebar -->
