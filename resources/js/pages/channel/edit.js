@@ -491,7 +491,7 @@ define(function(require, exports, module) {
                 alert('没有选中节目');
                 return;
             }
-            onDeleteProgram(selectedProgram.id);
+                onDeleteProgram(selectedProgram.id);
         });
 		$('#channel-editor-wrapper .channel-program-list ul').delegate('li', 'click', function () {
 			var programId = Number(this.getAttribute('data-id')),
@@ -544,6 +544,8 @@ define(function(require, exports, module) {
 	 * 保存频道的回调函数
 	 */
     function onSaveChannel() {
+        $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled","disabled");
+        setTimeout(removeDisabled,config.letTimeout);
         remoteCreateOrUpdateChannel()
 			.then(remoteAddPrograms)
 			.then(remoteUpdatePrograms)
@@ -556,7 +558,10 @@ define(function(require, exports, module) {
 			.done(onSaveChannelSuccess)
 			.fail(onSaveChannelFail);
     }
-	
+
+    function removeDisabled(){
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
+    }
 	/**************** start of saveChannel *****************/
 	function remoteCreateOrUpdateChannel() {
 		var deferred = $.Deferred(),
@@ -989,6 +994,7 @@ define(function(require, exports, module) {
 	function onSaveChannelSuccess() {
 		db.commit();
 		db.beginTransaction();
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
 		alert('保存成功!');
 		if (location.hash.indexOf('?id=') === -1) {
 			location.hash = '#layout/edit?id=' + channelId;
@@ -998,6 +1004,7 @@ define(function(require, exports, module) {
 
 	function onSaveChannelFail() {
 		//db.rollback();
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
 		alert('保存失败');
 	}
 

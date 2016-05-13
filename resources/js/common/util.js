@@ -81,7 +81,7 @@ define(function (require, exports, module) {
             type: 'post',
             url: CONFIG.serverRoot + '/backend_mgt/v1/qiniu/',
             data: data,
-            timeout: 60000,
+            timeout: CONFIG.letTimeout,
             async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
             success: function (data) {
                 realUrl = JSON.parse(data).URL;
@@ -107,7 +107,7 @@ define(function (require, exports, module) {
             url: url,
             dataType: dataType,
             data: data,
-            timeout: 60000,
+            timeout: CONFIG.letTimeout,
             success: function (data) {
                 successFn(data);
             },
