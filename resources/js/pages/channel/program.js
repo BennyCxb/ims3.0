@@ -212,6 +212,20 @@ define(function (require, exports, module) {
                             backgroundColor: style.BackgroundColor
                         };
                     }
+                    //var mtrData;
+                    //var data = JSON.stringify({
+                    //    "Project": config.projectName,
+                    //    "Action": "GetCheckText"
+                    //})
+                    //util.ajax(
+                    //    'POST',
+                    //    config.serverRoot + '/backend_mgt/v1/webmaterials/'+material.resource_id,
+                    //    data,
+                    //    function(data){
+                    //        mtrData = data;
+                    //        data[w.id] = {material: mtrData, style: style};
+                    //    },'text'
+                    //)
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ClockBox':
@@ -296,7 +310,7 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .channel-program-timer input').change(onProgramEdit);
     }
 
-    function onProgramEdit() {
+    function onProgramEdit() {          //频道保存到缓存
         var field = this.getAttribute('data-field'),
             updates = null, value;
         switch (field) {
