@@ -96,21 +96,23 @@ define(function(require, exports, module) {
 	}
 
 	function onDeleteLayout(ev) {
-		var data = JSON.stringify({
-			project_name: projectName,
-			action: 'delete',
-			data: {
-				layout_id: getCurrentLayoutId()
-			}
-		});
-		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
-            if (Number(res.rescode) === 200) {
-                alert('删除成功!');
-            } else {
-                alert('删除失败，有频道正在使用它!');
-            }
-			loadPage(1);
-		});
+        if (confirm("确定删除该模板？")) {
+            var data = JSON.stringify({
+                project_name: projectName,
+                action: 'delete',
+                data: {
+                    layout_id: getCurrentLayoutId()
+                }
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+                if (Number(res.rescode) === 200) {
+                    alert('删除成功!');
+                } else {
+                    alert('删除失败，有频道正在使用它!');
+                }
+                loadPage(1);
+            });
+        }
 	}
 
 	function getLayoutId(el) {

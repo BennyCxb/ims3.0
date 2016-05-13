@@ -202,7 +202,8 @@ define(function(require, exports, module) {
      * 保存模版数据
      */
     function onSaveLayout() {
-
+        $('#layout-editor-wrapper .btn-layout-editor-save').attr("disabled","disabled");
+        setTimeout(removeDisabled,config.letTimeout);
         var json = editor.getLayout().toJSON(),
             isNewLayout = json.id === -1;
 
@@ -221,6 +222,7 @@ define(function(require, exports, module) {
                         httpUpdateWidgets(json, function (err) {
                             if (err) { console.error(err); return; }
                             console.log('控件更新成功!');
+                            $('#layout-editor-wrapper .btn-layout-editor-save').removeAttr("disabled");
                             alert('保存成功!');
                             if (isNewLayout) {
                                 location.hash = '#layout/edit?id=' + json.id
@@ -234,6 +236,9 @@ define(function(require, exports, module) {
 
     }
 
+    function removeDisabled(){
+        $('#layout-editor-wrapper .btn-layout-editor-save').removeAttr("disabled");
+    }
     /**
      * 检查layout是否存在，不存在则添加
      * @param json
@@ -263,6 +268,7 @@ define(function(require, exports, module) {
         });
         util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
             if (Number(res.rescode) !== 200) {
+
                 cb(res);
                 return;
             }

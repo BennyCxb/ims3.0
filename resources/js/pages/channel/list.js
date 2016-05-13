@@ -270,14 +270,16 @@ define(function (require, exports, module) {
     }
 
     function deleteChannel() {
-        var data = JSON.stringify({
-            action: 'Delete',
-            project_name: projectName
-        });
-        util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
-            alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
-            loadPage(_pageNO);
-        });
+        if (confirm("确定删除该频道？")) {
+            var data = JSON.stringify({
+                action: 'Delete',
+                project_name: projectName
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
+                alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
+                loadPage(_pageNO);
+            });
+        }
     }
 
     function onSelectedItemChanged(adjustCount) {
