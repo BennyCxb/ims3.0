@@ -66,7 +66,8 @@ define(function (require, exports, module) {
     };
 
     exports.getRealURL = function (type,_url, successFn) {
-        var realUrl;
+        var realUrl = "";
+        if (_url == "") return realUrl;
         if (type == "None") {
             realUrl = _url;
             return realUrl;

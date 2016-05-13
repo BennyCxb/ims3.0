@@ -13,11 +13,6 @@ define(function (require, exports, module) {
             UTIL.cover.close();
         });
 
-        ////搜索
-        //$('#mtrChoiseSearch').bind('input propertychange', function () {
-        //    var typeId = $("#mtrChoiseSearch").attr("typeid");
-        //    onSearch($('#mtrChoiseSearch').val(), typeId);
-        //});
         //搜索
         $("#mtrChoiseSearch").keyup(function (event) {
             if (event.keyCode == 13) {

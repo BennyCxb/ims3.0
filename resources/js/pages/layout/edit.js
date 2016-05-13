@@ -1,7 +1,7 @@
 'use strict';
 
 define(function(require, exports, module) {
-
+    var LAYOUTEDIT = require("pages/layout/edit");
     /**
      * 依赖的所有模块
      */
@@ -100,7 +100,8 @@ define(function(require, exports, module) {
             backgroundImage: res.BackgroundPic.Type === 'Image' ? {
                 id: res.BackgroundPic.ID,
                 url: res.BackgroundPic.URL,
-                type: res.BackgroundPic.Type
+                type: res.BackgroundPic.Type,
+                download_auth_type: res.BackgroundPic.Download_Auth_Type
             } : {
                 type: 'Unknown',
                 ID: 0
@@ -163,11 +164,17 @@ define(function(require, exports, module) {
     function registerEventListeners() {
         $('#layout-editor-wrapper input').change(onInputChanged);
         $('#layout-editor-wrapper .btn-add-widget').click(onAddWidget);
-        $('#layout-editor-wrapper .btn-layout-editor-background').click(function () {
+        $('#layout-editor-wrapper .btn-layout-editor-background').click(function () {           //添加背景图
             //alert('资源列表还未实现');
             var page = "resources/pages/channel/addMtr.html";
             util.cover.load(page);
             onAddMaterial();
+        });
+        $('#layout-editor-wrapper .btn-layout-editor-cancelbackground').click(function () {
+            var mtrId = null,
+                url = "",
+                datype = "";
+            LAYOUTEDIT.updateBackground(mtrId, url, datype);
         });
         $('#layout-editor-wrapper .btn-layout-editor-delete-widget').click(function () {
             editor.getLayout().deleteWidget(editor.getLayout().getFocusedWidget());
