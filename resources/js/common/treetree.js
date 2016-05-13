@@ -120,7 +120,8 @@ define(function(require, exports, module) {
         var data = [];
         if(tree.checkMode === 'single'){
           $('#'+tree.domId + ' li.focus').each(function(i,e){
-            data.push({nodeId : Number($(e).attr('node-id'))})
+            var content = $.trim($(e).find('span').html());
+            data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
           })
         }else if(tree.checkMode === 'multiple'){
           getMultipleSelectedNodeID($('#'+tree.domId));
@@ -130,7 +131,8 @@ define(function(require, exports, module) {
         function getMultipleSelectedNodeID(ul){
           ul.children('li').each(function(i,e){
             if($(e).children('a').find('input[type$="checkbox"]').get(0).checked){
-              data.push({nodeId : Number($(e).attr('node-id'))})
+              var content = $.trim($(e).find('span').html());
+              data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
             }
             else if($(e).hasClass('treeview')){
               getMultipleSelectedNodeID($(e).children('ul'))
