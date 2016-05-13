@@ -544,6 +544,7 @@ define(function(require, exports, module) {
 	 * 保存频道的回调函数
 	 */
     function onSaveChannel() {
+		if (!inputCheck()) return;
         $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled","disabled");
         setTimeout(removeDisabled,config.letTimeout);
         remoteCreateOrUpdateChannel()
@@ -1173,5 +1174,27 @@ define(function(require, exports, module) {
 		}
 		return db.collection('program').select({id: programId})[0]
 	}
-    
+
+	/**
+	 *校验事件
+	 */
+	function inputCheck() {
+		var program = db.collection('program').select({})[0];
+		var errorMsg = "";
+		if (program.lifetime_start.length != 16){
+			if (program.lifetime_start.length != 19){
+				errorMsg += "请输入正确的节目生效时间!\n";
+			}
+		}
+		if (program.lifetime_end.length != 16) {
+			if (program.lifetime_end.length != 19) {
+				errorMsg += "请输入正确的节目失效时间!";
+			}
+		}
+		if (errorMsg != ""){
+			alert(errorMsg);
+			return false;
+		}
+		return true;
+	}
 });

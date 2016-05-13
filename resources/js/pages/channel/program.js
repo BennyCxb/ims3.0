@@ -317,7 +317,7 @@ define(function (require, exports, module) {
                 } else {
                     value = this.value;
                 }
-                updates = {lifetime_start: value.replace('T', ' ')};
+                updates = {lifetime_end: value.replace('T', ' ')};
                 break;
             case 'count':
                 var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
