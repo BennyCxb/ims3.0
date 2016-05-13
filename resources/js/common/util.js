@@ -6,13 +6,23 @@ define(function (require, exports, module) {
     };
 
     exports.cover = {
-        'load': function (url) {
-            $('#cover_area').css('display', 'flex');
-            $('#cover_area').load(url);
+        'load': function (url,layer) {
+            if(!layer) {
+                $('#cover_area').css('display', 'flex');
+                $('#cover_area').load(url);
+            }else{
+                $('#cover_area2').css('display', 'flex');
+                $('#cover_area2').load(url);
+            }
         },
-        'close': function () {
-            $('#cover_area').css('display', 'none');
-            $('#cover_area').empty();
+        'close': function (layer) {
+            if(!layer) {
+                $('#cover_area').css('display', 'none');
+                $('#cover_area').empty();
+            }else{
+                $('#cover_area2').css('display', 'none');
+                $('#cover_area2').empty();
+            }
         }
     };
 

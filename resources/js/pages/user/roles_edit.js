@@ -8,6 +8,7 @@ define(function (require, exports, module) {
 
     exports.init = function () {
 		var rName = ROLES.roleName;
+        ROLES.roleName
 		var rID = Number(ROLES.roleID);
 		var isNew = true;
 		//var loadType = ROLES.loadType;
@@ -304,6 +305,7 @@ define(function (require, exports, module) {
                                                 exports.roleID = rID;
                                                 exports.roleName = roleName;
                                                 //alert(ROLEEDIT.roleID);
+                                                UTIL.cover.close(2);
                                                 UTIL.cover.load('resources/pages/user/roles_edit.html');
                                             }
                                             else{
@@ -312,7 +314,7 @@ define(function (require, exports, module) {
                                         })
                                     }
                                     getClass.close = function(){
-                                        UTIL.cover.close();
+                                        UTIL.cover.close(2);
                                         UTIL.cover.load('resources/pages/user/roles_edit.html');
                                     }
                                 }else{
@@ -342,10 +344,10 @@ define(function (require, exports, module) {
                             })
                         }
                         getClass.close = function(){
-                            UTIL.cover.close();
+                            UTIL.cover.close(2);
                             UTIL.cover.load('resources/pages/user/roles_edit.html');
                         }
-                        UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html');
+                        UTIL.cover.load('resources/pages/terminal/getMultipleTermClass.html',2);
                     }
                 })
             }
