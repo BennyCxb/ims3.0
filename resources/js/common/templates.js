@@ -336,15 +336,13 @@ __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></b></td> <td>宽:'+
+'</a></b></td> <td style="text-align:center;">'+
 ((__t=(width))==null?'':__t)+
-'</td> <td>高:'+
+'×'+
 ((__t=(height))==null?'':__t)+
-'</td> <td>背景色:'+
-((__t=(background_color))==null?'':__t)+
-'</td> <td>创建人:'+
+'</td> <td style="text-align:center;">创建人:'+
 ((__t=(operator))==null?'':__t)+
-'</td> <td>创建时间:'+
+'</td> <td style="text-align:center;">创建时间:'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
 }
