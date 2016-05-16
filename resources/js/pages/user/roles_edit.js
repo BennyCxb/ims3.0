@@ -25,6 +25,7 @@ define(function (require, exports, module) {
 			$("#role_name").val();
 			$("#term").val();
 			$(".modal-title").html("新建角色");
+            rID = NaN;
 			}
 
 		//获取角色的终端树
@@ -57,7 +58,7 @@ define(function (require, exports, module) {
             var roleName = $("#role_name").val();
             if(roleName===""){
                 alert("角色名不能为空！");
-                $("#role_name")[0].focus();
+                $("#role_name").focus();
                 return false
             }else{
             //判断角色名是否存在
@@ -72,11 +73,11 @@ define(function (require, exports, module) {
             UTIL.ajax('post', url1, data1, function (msg) {
                 if (msg.RoleCount !== 0 && newName != rName && type=="edit") {
                     alert("角色名已存在！")
-                    $("#role_name")[0].focus();
+                    $("#role_name").focus();
                     return false;
                 }else if(type=="add" && msg.RoleCount!==0 && !ROLEEDIT.isCreate){
                     alert("角色名已存在！");
-                    $("#role_name")[0].focus();
+                    $("#role_name").focus();
                     return false;
                 }else {
                     var name = {
@@ -148,6 +149,7 @@ define(function (require, exports, module) {
                                 alert("修改成功！")
                                 //parent.location.reload();
                                 //ROLES.roleID = NaN;
+                                exports.isCreate = false;
                                 UTIL.cover.close();
                                 ROLES.loadRolesPage(1);
                             } else {
@@ -244,11 +246,13 @@ define(function (require, exports, module) {
                                         alert("修改成功！")
                                         //parent.location.reload();
                                         //ROLES.roleID = NaN;
+                                        exports.isCreate = false;
                                         UTIL.cover.close();
                                         ROLES.loadRolesPage(1);
                                     } else {
                                         alert("创建成功！")
                                         //parent.location.reload();
+                                        exports.isCreate = false;
                                         UTIL.cover.close();
                                         ROLES.loadRolesPage(1);
                                     }
@@ -275,8 +279,8 @@ define(function (require, exports, module) {
 			var roleName = $("#role_name").val();
             exports.editName = roleName;
 			if(roleName===""){
-				alert("用户名不能为空！");
-				 $("#role_name")[0].focus();
+				alert("角色名不能为空！");
+				 $("#role_name").focus();
 				return false
 				}else{
                 var newName = $("#role_name").val();
@@ -288,8 +292,13 @@ define(function (require, exports, module) {
                 })
                 var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
                 UTIL.ajax('post',url1,data1,function(msg){
-                    if(msg.RoleCount!==0 && newName!=rName && !ROLEEDIT.isCreate){
+                    if (msg.RoleCount !== 0 && newName != rName && type=="edit") {
                         alert("角色名已存在！")
+                        $("#role_name").focus();
+                        return false;
+                    }else if(type=="add" && msg.RoleCount!==0 && !ROLEEDIT.isCreate){
+                        alert("角色名已存在！");
+                        $("#role_name").focus();
                         return false;
                     }else{
                         var name = {
@@ -391,8 +400,9 @@ define(function (require, exports, module) {
 	exports.loadModulePage = function () {
 		var rID = Number(ROLES.roleID);
 		var type = ROLES.type;
-		
-
+        if(type == "add"){
+            rID = NaN;
+        }
         $("#moduleTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
 		var authArr = [];
