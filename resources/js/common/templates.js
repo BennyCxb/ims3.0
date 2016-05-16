@@ -32,13 +32,17 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header box-header with-border"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); float: right; display: inline"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div><!-- <label class="channel-editor-program-count">\r\n            播放次数\r\n            <input type="number" data-field="count" value="'+
-((__t=(count))==null?'':__t)+
-'">\r\n        </label> --> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
+'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon" title="开始时间"> <i class="fa fa fa-calendar-check-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_start" step="1" value="'+
+((__t=(lifetime_start.match(/([^T]+)T/)[1]))==null?'':__t)+
+'"> </div> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_end" step="1" value="'+
+((__t=(lifetime_start.match(/([^T]+)T/)[1]))==null?'':__t)+
+'"> </div> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
 '"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <div class="program-duration-container"></div> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <div class="program-duration-container"></div> </div> <div class="input-group" style="width: 100px"> <span class="input-group-addon" title="播放次数"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="count" value="'+
+((__t=(count))==null?'':__t)+
+'"> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
 ((__t=(layout.name))==null?'':__t)+
 '</span> <span class="channel-program-layout-header-info">宽:'+
 ((__t=(layout.width))==null?'':__t)+
@@ -126,7 +130,7 @@ __p+=' '+
 ((__t=('周' + numbers[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour"> ';
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px"> ';
  if (hours.length === 24) { 
 __p+=' <option value="*" selected="selected">每小时</option> ';
  } else { 
@@ -146,7 +150,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute"> ';
+__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px"> ';
  if (minutes.length === 60) { 
 __p+=' <option value="*" selected="selected"> ';
  } else { 
@@ -166,7 +170,7 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second"> ';
+__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px"> ';
  if (seconds.length === 60) { 
 __p+=' <option value="*" selected="selected">每秒</option> ';
  } else { 
@@ -255,7 +259,7 @@ __p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; wid
 ((__t=(height))==null?'':__t)+
 '" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">背景色</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="col-sm-9"> <button type="button" class="btn-layout-editor-background btn btn-block btn-default" style="width: auto">添加背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
 }
 return __p;
 };
@@ -332,15 +336,13 @@ __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></b></td> <td>宽:'+
+'</a></b></td> <td style="text-align:center;">'+
 ((__t=(width))==null?'':__t)+
-'</td> <td>高:'+
+'×'+
 ((__t=(height))==null?'':__t)+
-'</td> <td>背景色:'+
-((__t=(background_color))==null?'':__t)+
-'</td> <td>创建人:'+
+'</td> <td style="text-align:center;">创建人:'+
 ((__t=(operator))==null?'':__t)+
-'</td> <td>创建时间:'+
+'</td> <td style="text-align:center;">创建时间:'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
 }

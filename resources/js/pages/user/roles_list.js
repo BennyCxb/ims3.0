@@ -3,12 +3,12 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var templates = require('common/templates');
     var nDisplayItems = 10;
-	
+	var _pageNO = 1;
 	//缓存分配用户数组
 	var userListArr = [];
 
     exports.init = function () {
-        exports.loadRolesPage(1); //加载默认页面
+        exports.loadRolesPage(_pageNO); //加载默认页面
         //添加
         $("#roles_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"
@@ -18,11 +18,14 @@ define(function (require, exports, module) {
 			UTIL.cover.load('resources/pages/user/roles_edit.html');
         })
     }
-
+    exports.loadRolesPage = function(){
+        loadRolesPage(_pageNO);
+    };
     // 加载页面数据
     exports.loadRolesPage = function (pageNum) {
+        // loading
+        $("#rolesTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#rolesLisTitle").html("");
-        $("#rolesTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#rolesLisTitle").html("全部角色");
         var data = JSON.stringify({
@@ -44,6 +47,7 @@ define(function (require, exports, module) {
     }
 
     function render(json) {
+        $("#rolesTable tbody").html('');
         //翻页
         var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);
@@ -55,11 +59,12 @@ define(function (require, exports, module) {
 			next: CONFIG.pager.next,
 			last: CONFIG.pager.last,
             page: CONFIG.pager.page,
-            currentPage: Number(json.Pager.page),
+            currentPage: _pageNO,
             onPageChange: function (num, type) {
                 if (type === 'change') {
+                    _pageNO = num;
 					$('#roles-table-pager').jqPaginator('destroy');
-					exports.loadRolesPage(num);
+					loadRolesPage(_pageNO);
                 }
             }
         });
@@ -144,10 +149,11 @@ define(function (require, exports, module) {
 							}else{
 								alert("删除失败")
 								};
-                        exports.loadRolesPage(1); //刷新页面
+                        exports.loadRolesPage(_pageNO); //刷新页面
                     });
 				}
         	});
+            exports.pageNum = _pageNO;
 			//编辑
 			$(".role_name").click(function(){
 				var self = $(this);

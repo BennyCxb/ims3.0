@@ -19,7 +19,7 @@ define(function (require, exports, module) {
         last: '<li><a href="javascript:;">末页</a></li>',
         page: '<li><a href="javascript:;">{{page}}</a></li>'
     }
-
+    exports.letTimeout = 60000;
     // exports.serverRoot = '../../testdata/';
 
 });

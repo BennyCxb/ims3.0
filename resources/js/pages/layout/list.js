@@ -60,7 +60,7 @@ define(function(require, exports, module) {
 
 		//搜索事件
 
-        $("#channel-list-search").keyup(function(){
+        $("#channel-list-search").keyup(function(event){
             if(event.keyCode == 13) {
                 onSearch(event);
             }
@@ -96,21 +96,23 @@ define(function(require, exports, module) {
 	}
 
 	function onDeleteLayout(ev) {
-		var data = JSON.stringify({
-			project_name: projectName,
-			action: 'delete',
-			data: {
-				layout_id: getCurrentLayoutId()
-			}
-		});
-		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
-            if (Number(res.rescode) === 200) {
-                alert('删除成功!');
-            } else {
-                alert('删除失败，有频道正在使用它!');
-            }
-			loadPage(1);
-		});
+        if (confirm("确定删除该模板？")) {
+            var data = JSON.stringify({
+                project_name: projectName,
+                action: 'delete',
+                data: {
+                    layout_id: getCurrentLayoutId()
+                }
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+                if (Number(res.rescode) === 200) {
+                    alert('删除成功!');
+                } else {
+                    alert('删除失败，有频道正在使用它!');
+                }
+                loadPage(1);
+            });
+        }
 	}
 
 	function getLayoutId(el) {
@@ -126,6 +128,7 @@ define(function(require, exports, module) {
 	}
 
 	// 加载页面数据
+    $('#layout-table>tbody').html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
 	function loadPage(pageNum) {
 		var pager = {
 			page: String(pageNum),
@@ -165,18 +168,31 @@ define(function(require, exports, module) {
 		});
 
 		$('#layout-table>tbody').html('');
-		json.LayoutList.forEach(function (el, idx, arr) {
-			var data = {
-				id: el.ID,
-				name: el.Name,
-				width: el.Width,
-				height: el.Height,
-				background_color: el.BackgroundColor,
-				operator: el.UserName,
-				create_time: el.CreateTime
-			};
-			$('#layout-table>tbody').append(templates.layout_table_row(data));
-		});
+        $("#layout-table>tbody").append('<tr>' +
+        '<th class="mod_checkbox" style="width:32px;"></th>' +
+        '<th class="mod_name">模板名</th>' +
+        '<th class="mod_size_center">宽×高</th>' +
+        '<th class="mod_user_center">创建人</th>' +
+        '<th class="mod_create_time_center">创建时间</th>'+
+        '</tr>');
+        if(json.LayoutList!=0) {
+            json.LayoutList.forEach(function (el, idx, arr) {
+                var data = {
+                    id: el.ID,
+                    name: el.Name,
+                    width: el.Width,
+                    height: el.Height,
+                    background_color: el.BackgroundColor,
+                    operator: el.UserName,
+                    create_time: el.CreateTime
+                };
+                $('#layout-table>tbody').append(templates.layout_table_row(data));
+            });
+        }else{
+            $("#layout-table>tbody").empty();
+            $('#layout-table-pager').empty();
+            $("#layout-table>tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+        }
 		onSelectedItemChanged();
 
 		$('#layout-table input[type="checkbox"]').iCheck({

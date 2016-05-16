@@ -1,4 +1,3 @@
-
 define(function (require, exports, module) {
     'use strict';
 
@@ -9,7 +8,7 @@ define(function (require, exports, module) {
         durationInput = require('common/duration_input'),
         layoutEditor = require('common/layout_editor'),
         timer = require('pages/channel/timer'),
-		toast = require('common/toast');
+        toast = require('common/toast');
 
     var db = null,
         programId = null,
@@ -18,7 +17,7 @@ define(function (require, exports, module) {
         editMode = false,
         widgetId = null,
         container = null;
-    
+
     function load(program, _container) {
         container = _container;
         editor = null;
@@ -39,23 +38,23 @@ define(function (require, exports, module) {
             widgets = db.collection('widget').select({program_id: programId});
         renderProgramView(program, layout, widgets);
         registerEventListeners();
-        
+
     }
 
     function renderProgramView(program, layout, widgets) {
         var p = program.schedule_params === '' ? {} : JSON.parse(program.schedule_params),
             duration = typeof p.duration === 'number' ? p.duration : 0,
             data = {
-            name: program.name,
-            lifetime_start: program.lifetime_start.replace(' ', 'T'),
-            lifetime_end: program.lifetime_end.replace(' ', 'T'),
-            count: p.count,
-            layout: {
-                name: layout.name,
-                width: layout.width,
-                height: layout.height
-            }
-        };
+                name: program.name,
+                lifetime_start: program.lifetime_start.replace(' ', 'T'),
+                lifetime_end: program.lifetime_end.replace(' ', 'T'),
+                count: p.count,
+                layout: {
+                    name: layout.name,
+                    width: layout.width,
+                    height: layout.height
+                }
+            };
         $('#channel-editor-wrapper .channel-program-editor')
             .html(templates.channel_edit_program(data));
         new durationInput.DurationInput({
@@ -91,7 +90,7 @@ define(function (require, exports, module) {
         }
         loadWidget(w);
     }
-    
+
     function onDurationChange(duration) {
         var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params),
             params = {};
@@ -113,43 +112,43 @@ define(function (require, exports, module) {
     function loadWidget(widget) {
         //console.log(widget);
         //资源控件页面加载
-		var page = "resources/pages/channel/mtrCtrl.html";
-		$(".channel-program-widget").load(page);
+        var page = "resources/pages/channel/mtrCtrl.html";
+        $(".channel-program-widget").load(page);
         localStorage.setItem('currentWidget', JSON.stringify(widget));
     }
 
-    function renderEditor (layout, widgets) {
+    function renderEditor(layout, widgets) {
 
         widgets.sort(function (a, b) {
             return a.z_index - b.z_index;
         });
         var json = {
-                id: layout.id,
-                name: layout.name,
-                nameEng: layout.name_eng,
-                width: layout.width,
-                height: layout.height,
-                topMargin: layout.top_margin,
-                leftMargin: layout.left_margin,
-                rightMargin: layout.right_margin,
-                bottomMargin: layout.bottom_margin,
-                backgroundColor: layout.background_color,
-                backgroundImage: layout.background_image_url ? {
-                    type: 'Image',
-                    url: layout.background_image_url
-                } : {type: 'Unknown'},
-                widgets: widgets.map(function (el) {
-                    return {
-                        top: el.top,
-                        left: el.left,
-                        width: el.width,
-                        height: el.height,
-                        id: el.id,
-                        type: el.type,
-                        typeName: el.type_name
-                    };
-                })
-            };
+            id: layout.id,
+            name: layout.name,
+            nameEng: layout.name_eng,
+            width: layout.width,
+            height: layout.height,
+            topMargin: layout.top_margin,
+            leftMargin: layout.left_margin,
+            rightMargin: layout.right_margin,
+            bottomMargin: layout.bottom_margin,
+            backgroundColor: layout.background_color,
+            backgroundImage: layout.background_image_url ? {
+                type: 'Image',
+                url: layout.background_image_url
+            } : {type: 'Unknown'},
+            widgets: widgets.map(function (el) {
+                return {
+                    top: el.top,
+                    left: el.left,
+                    width: el.width,
+                    height: el.height,
+                    id: el.id,
+                    type: el.type,
+                    typeName: el.type_name
+                };
+            })
+        };
 
         var canvas = $('#channel-editor-wrapper .channel-program-layout-body'),
             canvasHeight = canvas.height(),
@@ -164,23 +163,37 @@ define(function (require, exports, module) {
                     name: widget.mTypeName,
                     background_color: widget.mBackgroundColor
                 };
-            $('#channel-editor-wrapper .channel-program-layout-footer>ul')
-                .append(templates.channel_edit_widget_item(_data));
+            $('#channel-editor-wrapper .channel-program-layout-footer>ul').append(templates.channel_edit_widget_item(_data));
         }
+        $('#channel-editor-wrapper .channel-program-layout-footer>ul>li:eq(0)').css("border", "1px solid rgb(60, 141, 188)");
 
     }
 
     function showPreview(editor) {
         var data = {}, style;
         db.collection('widget').select({program_id: programId}).forEach(function (w) {
-            //var materials = db.collection('material').select({widget_id: w.id});
-            //if (materials.length === 0) {}
+            var materials = db.collection('material').select({widget_id: w.id}),
+                material;
+            if (materials.length === 0) {
+                material = {
+                    download_auth_type:'',
+                    url: ''
+                };
+            } else {
+                var min = 0
+                for (var a = 0; a < materials.length; a++) {
+                    if (materials[min].sequence > materials[a].sequence) {
+                        min = a;
+                    }
+                }
+                material = materials[min];
+            }
             switch (w.type) {
                 case 'AudioBox':
-                    data[w.id] = {};
+                    data[w.id] = {download_auth_type: material.download_auth_type, material: material.url};
                     break;
                 case 'VideoBox':
-                    data[w.id] = {material: w.material};
+                    data[w.id] = {download_auth_type: material.download_auth_type, material: material.url};
                     break;
                 case 'WebBox':
                     style = w.style === '' ? {} : JSON.parse(w.style);
@@ -189,13 +202,30 @@ define(function (require, exports, module) {
                             type: style.Type,
                             color: style.TextColor,
                             direction: style.ScrollDriection,
-                            speed: Number(style.ScrollSpeed)
+                            speed: Number(style.ScrollSpeed),
+                            backgroundColor: style.BackgroundColor
                         };
                     } else {
                         style = {
-                            type: style.Type
+                            type: style.Type,
+                            pageDownPeriod: Number(style.PageDownPeriod),
+                            backgroundColor: style.BackgroundColor
                         };
                     }
+                    //var mtrData;
+                    //var data = JSON.stringify({
+                    //    "Project": config.projectName,
+                    //    "Action": "GetCheckText"
+                    //})
+                    //util.ajax(
+                    //    'POST',
+                    //    config.serverRoot + '/backend_mgt/v1/webmaterials/'+material.resource_id,
+                    //    data,
+                    //    function(data){
+                    //        mtrData = data;
+                    //        data[w.id] = {material: mtrData, style: style};
+                    //    },'text'
+                    //)
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ClockBox':
@@ -207,14 +237,14 @@ define(function (require, exports, module) {
                     data[w.id] = {material: w.material, style: style};
                     break;
                 case 'ImageBox':
-                    data[w.id] = {material: w.material};
+                    data[w.id] = {download_auth_type: material.download_auth_type, material: material.url};
                     break;
             }
         });
         editor.showPreview(data);
     }
 
-    function registerEventListeners () {
+    function registerEventListeners() {
         messageDispatcher.reset();
         container.subscribeEvent(messageDispatcher);
         messageDispatcher.on('channel_overall_schedule_params.change', function (data) {
@@ -222,7 +252,7 @@ define(function (require, exports, module) {
                 .toggleClass('percent-channel', data === 'Percent');
         });
         messageDispatcher.on('program.reset', function () {
-            editor.destroy();
+            editor && editor.destroy();
         });
 
         editor.onFocusChanged(function () {
@@ -249,7 +279,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-preview').click(function () {
             if (!editMode) {
-				toast.show('温馨提示：当前预览是您最后一次保存的内容');
+                toast.show('温馨提示：当前预览是您最后一次保存的内容');
                 showPreview(editor);
                 editMode = true;
                 $(this).children('i')
@@ -279,19 +309,29 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .channel-program-header input').change(onProgramEdit);
         $('#channel-editor-wrapper .channel-program-timer input').change(onProgramEdit);
     }
-    
-    function onProgramEdit() {
+
+    function onProgramEdit() {          //频道保存到缓存
         var field = this.getAttribute('data-field'),
-            updates = null;
+            updates = null, value;
         switch (field) {
             case 'name':
                 updates = {name: this.value};
                 break;
             case 'lifetime_start':
-                updates = {lifetime_start: this.value.replace('T', ' ')};
+                if (this.type === 'date') {
+                    value = this.value + 'T00:00:00';
+                } else {
+                    value = this.value;
+                }
+                updates = {lifetime_start: value.replace('T', ' ')};
                 break;
             case 'lifetime_end':
-                updates = {lifetime_start: this.value.replace('T', ' ')};
+                if (this.type === 'date') {
+                    value = this.value + 'T00:00:00';
+                } else {
+                    value = this.value;
+                }
+                updates = {lifetime_end: value.replace('T', ' ')};
                 break;
             case 'count':
                 var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
@@ -325,7 +365,7 @@ define(function (require, exports, module) {
             .toggleClass('timed-program', timed)
             .toggleClass('percent-channel', percent);
     }
-    
+
     function updateTimer(str) {
         var fields = $('#channel-editor-wrapper .channel-editor-program-trigger span'),
             segments = str.split(' '),
@@ -337,18 +377,18 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .channel-editor-program-trigger')
             .toggleClass('day-timer', dayTimer)
             .toggleClass('date-timer', !dayTimer);
-        fields[0].textContent = segments[4] === '*' ? '每' : segments[4];
-        fields[1].textContent = segments[3] === '*' ? '每' : segments[3];
-        fields[2].textContent = segments[6] === '*' ? '每' : segments[6];
-        fields[3].textContent = segments[2] === '*' ? '每' : segments[2];
-        fields[4].textContent = segments[1] === '*' ? '每' : segments[1];
-        fields[5].textContent = segments[0] === '*' ? '每' : segments[0];
+        fields[0].textContent = segments[4] === '*' ? '每月' : segments[4] + '月';
+        fields[1].textContent = segments[3] === '*' ? '每日' : segments[3] + '日';
+        fields[2].textContent = segments[6] === '*' ? '每日' : segments[6] + '日';
+        fields[3].textContent = segments[2] === '*' ? '每点' : segments[2] + '点';
+        fields[4].textContent = segments[1] === '*' ? '每分' : segments[1] + '分';
+        fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
     }
 
-    function onSelectWidget (widget) {
+    function onSelectWidget(widget) {
         $('.channel-program-layout-footer li').css("border", "solid 1px #ddd");     //初始化下方边框
-        $('.channel-program-layout-footer li').each(function(){
-            if ($(this).attr("data-id") == widget.id){
+        $('.channel-program-layout-footer li').each(function () {
+            if ($(this).attr("data-id") == widget.id) {
                 $(this).css("border", "solid 1px #3c8dbc");
             }
         });

@@ -92,7 +92,7 @@
         <div class="time-selector" >
             <div class="hour-selector"  style="margin-bottom: 15px;">
                     <label>每天第...小时</label>
-                    <select  class="form-control select2" multiple="multiple" data-selector="hour">
+                    <select  class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px;">
                         <% if (hours.length === 24) { %>
                         <option value="*" selected="selected">每小时</option>
                         <% } else { %>
@@ -107,7 +107,7 @@
             </div>
             <div class="minute-selector" style="margin-bottom: 15px;">
                     <label>每小时第...分钟</label>
-                    <select class="form-control select2" multiple="multiple" data-selector="minute">
+                    <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px;">
                         <% if (minutes.length === 60) { %>
                         <option value="*" selected="selected">
                         <% } else { %>
@@ -122,7 +122,7 @@
             </div>
             <div class="second-selector" style="margin-bottom: 15px;">
                 <label>每分钟第...秒</label>
-                <select class="form-control select2" multiple="multiple" data-selector="second">
+                <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px;">
                     <% if (seconds.length === 60) { %>
                     <option value="*" selected="selected">每秒</option>
                     <% } else { %>

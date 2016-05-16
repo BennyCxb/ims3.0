@@ -20,7 +20,7 @@ define(function(require, exports, module) {
         exports.close();
         exports.close = '';
       }else{
-        UTIL.cover.close();
+        UTIL.cover.close(2);
       }
     })
 

@@ -1,147 +1,150 @@
 'use strict';
 
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
-	/**
-	 * 声明依赖的所有模块
-	 */
-	var templates	= require('common/templates'),
-		config 		= require('common/config'),
-		util		= require('common/util'),
-		crud		= require('common/crud'),
-		layoutDialog= require('pages/layout/list_dialog'),
-		programCtrl = require('pages/channel/program');
-
-	/**
-	 * 全局配置
-	 */
-	var projectName = config.projectName,
-		requestUrl = config.serverRoot,
-		db = null,
-        channelId = null,
-		programHandle = null,
-		/**
-		 * 保存常规节目的序列
-		 */
-		 regularSortable = null;
-
-	/**
-	 * 初始化数据库
-	 */
-	function configDatabase() {
-		try {
-			db.rollback();
-		} catch (err) {}
-		try {
-			db.drop('channel');
-			db.drop('program');
-			db.drop('layout');
-			db.drop('widget');
-			db.drop('material');
-		} catch (err) {}
-		db.create('channel', [
-			{name: 'id',						type: 'number',	autoIncrement: true},
-			{name: 'name',						type: 'string'},
-			{name: 'name_eng',					type: 'string'},
-			{name: 'overall_schedule_params',	type: 'string'},
-			{name: 'overall_schedule_type',		type: 'number'},
-			{name: 'version',					type: 'number'}
-		]);
-		db.create('program', [
-			{name: 'id',						type: 'number', autoIncrement: true},
-            {name: 'template_id',               type: 'number'},
-			{name: 'is_time_segment_limit',		type: 'number'},
-			{name: 'layout_id',					type: 'number'},
-			{name: 'lifetime_start',			type: 'string'},
-			{name: 'lifetime_end',				type: 'string'},
-			{name: 'name',						type: 'string'},
-            {name: 'name_eng',					type: 'string'},
-			{name: 'schedule_params',			type: 'string'},
-			{name: 'schedule_type',				type: 'string'},
-			{name: 'sequence',					type: 'number'},
-			{name: 'time_segment_duration',		type: 'number'},
-			{name: 'time_segment_start',		type: 'string'}
-		]);
-		db.create('layout', [
-			{name: 'id',						type: 'number'},
-			{name: 'background_color',			type: 'string'},
-			{name: 'background_image_mid',		type: 'number'},
-			{name: 'background_image_url',		type: 'string'},
-			{name: 'bottom_margin', 			type: 'number'},
-			{name: 'top_margin',				type: 'number'},
-			{name: 'left_margin',				type: 'number'},
-			{name: 'right_margin',				type: 'number'},
-			{name: 'width',						type: 'number'},
-			{name: 'height',					type: 'number'},
-			{name: 'name',						type: 'string'},
-			{name: 'name_eng',					type: 'string'}
-		]);
-		db.create('widget', [
-			{name: 'id',						type: 'number',	autoIncrement: true},
-			{name: 'program_id',				type: 'number'},
-            {name: 'program_template_id',       type: 'number'},
-            {name: 'layout_widget_id',          type: 'number'},
-			{name: 'layout_id',					type: 'number'},
-			{name: 'type_id',					type: 'number'},
-			{name: 'type',						type: 'string'},
-			{name: 'type_name',					type: 'string'},
-			{name: 'material',					type: 'string'},
-			{name: 'width',						type: 'number'},
-			{name: 'height',					type: 'number'},
-			{name: 'left',						type: 'string'},
-			{name: 'style',						type: 'string'},
-			{name: 'top',						type: 'number'},
-			{name: 'overall_schedule_params',	type: 'string'},
-			{name: 'overall_schedule_type',		type: 'string'},
-			{name: 'z_index',					type: 'number'}
-		]);
-		db.create('material', [
-			{name: 'id',						type: 'number',	autoIncrement: true},
-			{name: 'widget_id',					type: 'number'},
-			{name: 'is_time_segment_limit',		type: 'number'},
-			{name: 'lifetime_start',			type: 'string'},
-			{name: 'lifetime_end',				type: 'string'},
-			{name: 'resource_id',				type: 'number'},
-			{name: 'name',						type: 'string'},
-			{name: 'name_eng',					type: 'string'},
-			{name: 'schedule_params',			type: 'string'},
-			{name: 'schedule_type',				type: 'string'},
-			{name: 'sequence',					type: 'number'},
-			{name: 'time_segment_duration',		type: 'number'},
-			{name: 'time_segment_start',		type: 'string'},
-			{name: 'type_id',					type: 'number'},
-			{name: 'type_name',					type: 'string'},
-			{name: 'url',						type: 'string'}
-		]);
-		db.beginTransaction();
-	}
-
-	/**
-	 * 页面入口
-	 */
-	exports.init = function() {
-		programHandle = null;
-		channelId = null;
-		regularSortable = null;
-		window.onpopstate = function () {
-			onCloseEditor();
-			window.onpopstate = undefined;
-		};
-		db = crud.Database.getInstance();
-		configDatabase();
-		var _channelId = Number(util.getHashParameters().id);
-		loadChannelData(isNaN(_channelId) ? null : _channelId);
-		
-		
-	};
-
-	/**
-	 * 加载频道数据
-	 * @param _channelId
+    /**
+     * 声明依赖的所有模块
      */
-	function loadChannelData(_channelId) {
+    var templates = require('common/templates'),
+        config = require('common/config'),
+        util = require('common/util'),
+        crud = require('common/crud'),
+        layoutDialog = require('pages/layout/list_dialog'),
+        programCtrl = require('pages/channel/program');
 
-		if (_channelId !== null) {
+    /**
+     * 全局配置
+     */
+    var projectName = config.projectName,
+        requestUrl = config.serverRoot,
+        db = null,
+        channelId = null,
+        programHandle = null,
+        /**
+         * 保存常规节目的序列
+         */
+        regularSortable = null;
+
+    /**
+     * 初始化数据库
+     */
+    function configDatabase() {
+        try {
+            db.rollback();
+        } catch (err) {
+        }
+        try {
+            db.drop('channel');
+            db.drop('program');
+            db.drop('layout');
+            db.drop('widget');
+            db.drop('material');
+        } catch (err) {
+        }
+        db.create('channel', [
+            {name: 'id', type: 'number', autoIncrement: true},
+            {name: 'name', type: 'string'},
+            {name: 'name_eng', type: 'string'},
+            {name: 'overall_schedule_params', type: 'string'},
+            {name: 'overall_schedule_type', type: 'number'},
+            {name: 'version', type: 'number'}
+        ]);
+        db.create('program', [
+            {name: 'id', type: 'number', autoIncrement: true},
+            {name: 'template_id', type: 'number'},
+            {name: 'is_time_segment_limit', type: 'number'},
+            {name: 'layout_id', type: 'number'},
+            {name: 'lifetime_start', type: 'string'},
+            {name: 'lifetime_end', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'name_eng', type: 'string'},
+            {name: 'schedule_params', type: 'string'},
+            {name: 'schedule_type', type: 'string'},
+            {name: 'sequence', type: 'number'},
+            {name: 'time_segment_duration', type: 'number'},
+            {name: 'time_segment_start', type: 'string'}
+        ]);
+        db.create('layout', [
+            {name: 'id', type: 'number'},
+            {name: 'background_color', type: 'string'},
+            {name: 'background_image_mid', type: 'number'},
+            {name: 'background_image_url', type: 'string'},
+            {name: 'bottom_margin', type: 'number'},
+            {name: 'top_margin', type: 'number'},
+            {name: 'left_margin', type: 'number'},
+            {name: 'right_margin', type: 'number'},
+            {name: 'width', type: 'number'},
+            {name: 'height', type: 'number'},
+            {name: 'name', type: 'string'},
+            {name: 'name_eng', type: 'string'}
+        ]);
+        db.create('widget', [
+            {name: 'id', type: 'number', autoIncrement: true},
+            {name: 'program_id', type: 'number'},
+            {name: 'program_template_id', type: 'number'},
+            {name: 'layout_widget_id', type: 'number'},
+            {name: 'layout_id', type: 'number'},
+            {name: 'type_id', type: 'number'},
+            {name: 'type', type: 'string'},
+            {name: 'type_name', type: 'string'},
+            {name: 'material', type: 'string'},
+            {name: 'width', type: 'number'},
+            {name: 'height', type: 'number'},
+            {name: 'left', type: 'string'},
+            {name: 'style', type: 'string'},
+            {name: 'top', type: 'number'},
+            {name: 'overall_schedule_params', type: 'string'},
+            {name: 'overall_schedule_type', type: 'string'},
+            {name: 'z_index', type: 'number'}
+        ]);
+        db.create('material', [
+            {name: 'id', type: 'number', autoIncrement: true},
+            {name: 'widget_id', type: 'number'},
+            {name: 'is_time_segment_limit', type: 'number'},
+            {name: 'lifetime_start', type: 'string'},
+            {name: 'lifetime_end', type: 'string'},
+            {name: 'resource_id', type: 'number'},
+            {name: 'name', type: 'string'},
+            {name: 'name_eng', type: 'string'},
+            {name: 'schedule_params', type: 'string'},
+            {name: 'schedule_type', type: 'string'},
+            {name: 'sequence', type: 'number'},
+            {name: 'time_segment_duration', type: 'number'},
+            {name: 'time_segment_start', type: 'string'},
+            {name: 'type_id', type: 'number'},
+            {name: 'type_name', type: 'string'},
+            {name: 'download_auth_type', type: 'string'},
+            {name: 'url', type: 'string'}
+        ]);
+        db.beginTransaction();
+    }
+
+    /**
+     * 页面入口
+     */
+    exports.init = function () {
+        programHandle = null;
+        channelId = null;
+        regularSortable = null;
+        window.onpopstate = function () {
+            onCloseEditor();
+            window.onpopstate = undefined;
+        };
+        db = crud.Database.getInstance();
+        configDatabase();
+        var _channelId = Number(util.getHashParameters().id);
+        loadChannelData(isNaN(_channelId) ? null : _channelId);
+
+
+    };
+
+    /**
+     * 加载频道数据
+     * @param _channelId
+     */
+    function loadChannelData(_channelId) {
+
+        if (_channelId !== null) {
 
             channelId = _channelId;
             var deferredGet = $.Deferred(),
@@ -170,22 +173,23 @@ define(function(require, exports, module) {
                 deferredGet.resolve(res.Channel[0]);
             });
 
-		} else {
+        } else {
 
-			db.collection('channel').insert({
-				name: '新建频道',
-				name_eng: 'new channel',
-				overall_schedule_params: '{"Type":"Sequence"}',
-				overall_schedule_type: 'Regular',
-				version: 0
-			});
-			channelId = db.collection('channel').lastInsertId();
+            db.collection('channel').insert({
+                name: '新建频道',
+                name_eng: 'new channel',
+                overall_schedule_params: '{"Type":"Sequence"}',
+                overall_schedule_type: 'Regular',
+                version: 0
+            });
+            channelId = db.collection('channel').lastInsertId();
 
-			initChannelView(channelId);
+            initChannelView(channelId);
 
-		}
+        }
 
-	}
+    }
+
     /***************** get channel data ****************/
 
     function loadProgramData(channel, programs) {
@@ -294,21 +298,21 @@ define(function(require, exports, module) {
         };
     }
 
-	function parseLayoutData2(data) {
-		return {
-			name: data.Name,
-			name_eng: data.Name_eng,
-			width: data.Width,
-			height: data.Height,
-			top_margin: data.TopMargin,
-			left_margin: data.LeftMargin,
-			right_margin: data.RightMargin,
-			bottom_margin: data.BottomMargin,
-			background_color: data.BackgroundColor,
-			background_image_url: data.BackgroundPic.URL,
-			background_image_mid: 0
-		};
-	}
+    function parseLayoutData2(data) {
+        return {
+            name: data.Name,
+            name_eng: data.Name_eng,
+            width: data.Width,
+            height: data.Height,
+            top_margin: data.TopMargin,
+            left_margin: data.LeftMargin,
+            right_margin: data.RightMargin,
+            bottom_margin: data.BottomMargin,
+            background_color: data.BackgroundColor,
+            background_image_url: data.BackgroundPic.URL,
+            background_image_mid: 0
+        };
+    }
 
     function parseWidgetData(data) {
         return {
@@ -347,6 +351,7 @@ define(function(require, exports, module) {
             time_segment_start: data.TimeSegment_Start,
             type_id: data.Type_ID,
             type_name: data.Type_Name,
+            download_auth_type: data.Download_Auth_Type,
             url: data.URL
         };
     }
@@ -354,133 +359,133 @@ define(function(require, exports, module) {
 
     /******************  end of get channel data ***************/
 
-	/**
-	 * 初始化频道页面
-	 */
-	function initChannelView(channelId) {
-		var channel = db.collection('channel').select({id: channelId})[0],
-			programs = db.collection('program').select({});
-		renderProgramList(channel, programs);
-		registerEventListeners();
-	}
+    /**
+     * 初始化频道页面
+     */
+    function initChannelView(channelId) {
+        var channel = db.collection('channel').select({id: channelId})[0],
+            programs = db.collection('program').select({});
+        renderProgramList(channel, programs);
+        registerEventListeners();
+    }
 
-	/**
-	 * 初始化节目列表
-	 * @param json
-	 */
-	function renderProgramList(channel, programs) {
-		var data = {
-			name: channel.name,
-			overall_schedule_params: channel.overall_schedule_params,
-			overall_schedule_type: channel.overall_schedule_type
-		};
-		$('#edit-page-container')
-			.html(templates.channel_edit_main(data))
-			.removeClass('none');
-		var regularPrograms = [],
-			timedPrograms = [],
-			selectedProgram = null;
-		programs.forEach(function (el) {
-			if (el.schedule_type === 'Regular') {
-				regularPrograms.push(el);
-			} else {
-				timedPrograms.push(el);
-			}
-		});
-		if (regularPrograms.length > 0) {
-			selectedProgram = regularPrograms[0];
-		} else if (timedPrograms.length > 0) {
-			selectedProgram = timedPrograms[0];
-		}
-		renderRegularProgramList(regularPrograms);
-		renderTimedProgramList(timedPrograms);
-		loadProgram(selectedProgram);
-	}
+    /**
+     * 初始化节目列表
+     * @param json
+     */
+    function renderProgramList(channel, programs) {
+        var data = {
+            name: channel.name,
+            overall_schedule_params: channel.overall_schedule_params,
+            overall_schedule_type: channel.overall_schedule_type
+        };
+        $('#edit-page-container')
+            .html(templates.channel_edit_main(data))
+            .removeClass('none');
+        var regularPrograms = [],
+            timedPrograms = [],
+            selectedProgram = null;
+        programs.forEach(function (el) {
+            if (el.schedule_type === 'Regular') {
+                regularPrograms.push(el);
+            } else {
+                timedPrograms.push(el);
+            }
+        });
+        if (regularPrograms.length > 0) {
+            selectedProgram = regularPrograms[0];
+        } else if (timedPrograms.length > 0) {
+            selectedProgram = timedPrograms[0];
+        }
+        renderRegularProgramList(regularPrograms);
+        renderTimedProgramList(timedPrograms);
+        loadProgram(selectedProgram);
+    }
 
-	function renderRegularProgramList(programs) {
-		var ul = $('#channel-editor-wrapper .channel-program-list-regular ul');
-		ul.html('');
+    function renderRegularProgramList(programs) {
+        var ul = $('#channel-editor-wrapper .channel-program-list-regular ul');
+        ul.html('');
         programs.sort(function (a, b) {
             return a.sequence - b.sequence;
         });
-		programs.forEach(function (el, idx, arr) {
-			var layout = db.collection('layout').select({id: el.layout_id})[0];
-			var backgroundStyle = layout.background_image_url ?
-			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
-			'background-color:' + layout.background_color;
-			var data = {
-				id: el.id,
-				name: el.name,
-				backgroundStyle: backgroundStyle
-			};
-			ul.append(templates.channel_edit_program_list_item(data));
-		});
-		regularSortable = Sortable.create(ul[0], {
+        programs.forEach(function (el, idx, arr) {
+            var layout = db.collection('layout').select({id: el.layout_id})[0];
+            var backgroundStyle = layout.background_image_url ?
+            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
+            'background-color:' + layout.background_color;
+            var data = {
+                id: el.id,
+                name: el.name,
+                backgroundStyle: backgroundStyle
+            };
+            ul.append(templates.channel_edit_program_list_item(data));
+        });
+        regularSortable = Sortable.create(ul[0], {
             onSort: onResortProgram
         });
-	}
+    }
 
-	function renderTimedProgramList(programs) {
-		var ul = $('#channel-editor-wrapper .channel-program-list-timed ul');
-		ul.html('');
-		programs.forEach(function (el, idx, arr) {
-			var layout = db.collection('layout').select({id: el.layout_id})[0];
-			var backgroundStyle = layout.background_image_url ?
-			'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
-			'background-color:' + layout.background_color;
-			var data = {
-				id: el.id,
-				name: el.name,
-				backgroundStyle: backgroundStyle
-			};
-			ul.append(templates.channel_edit_program_list_item(data));
-		});
-		//timedSortable = Sortable.create(ul[0], {});
-	}
-	
-	function onProgramNameChange(data) {
-		$('#channel-editor-wrapper .program-list-item[data-id="' + data.id + '"] .program-list-item-title').text(data.name);
-	}
+    function renderTimedProgramList(programs) {
+        var ul = $('#channel-editor-wrapper .channel-program-list-timed ul');
+        ul.html('');
+        programs.forEach(function (el, idx, arr) {
+            var layout = db.collection('layout').select({id: el.layout_id})[0];
+            var backgroundStyle = layout.background_image_url ?
+            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
+            'background-color:' + layout.background_color;
+            var data = {
+                id: el.id,
+                name: el.name,
+                backgroundStyle: backgroundStyle
+            };
+            ul.append(templates.channel_edit_program_list_item(data));
+        });
+        //timedSortable = Sortable.create(ul[0], {});
+    }
+
+    function onProgramNameChange(data) {
+        $('#channel-editor-wrapper .program-list-item[data-id="' + data.id + '"] .program-list-item-title').text(data.name);
+    }
 
 
-	var messageReceiver = (function () {
-		return {
-			subscribeEvent: function (handle) {
-				programHandle = handle;
-				handle.on('program_name.change', onProgramNameChange);
-			}
-		};
-	}());
+    var messageReceiver = (function () {
+        return {
+            subscribeEvent: function (handle) {
+                programHandle = handle;
+                handle.on('program_name.change', onProgramNameChange);
+            }
+        };
+    }());
 
-	/**
-	 * 加载节目
-	 * @param programId
+    /**
+     * 加载节目
+     * @param programId
      */
-	function loadProgram(program) {
-		$('#channel-editor-wrapper ul>li').removeClass('selected');
-		if (program) {
-			$('#channel-editor-wrapper ul>li[data-id=' + program.id + ']').addClass('selected');
-		}
-		if (programHandle) {
-			programHandle.send('program.reset', null);
-		}
-		programCtrl.load(program, messageReceiver);
-	}
+    function loadProgram(program) {
+        $('#channel-editor-wrapper ul>li').removeClass('selected');
+        if (program) {
+            $('#channel-editor-wrapper ul>li[data-id=' + program.id + ']').addClass('selected');
+        }
+        if (programHandle) {
+            programHandle.send('program.reset', null);
+        }
+        programCtrl.load(program, messageReceiver);
+    }
 
-	/**
-	 * 注册事件监听
-	 */
-	function registerEventListeners() {
-		$('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor);
+    /**
+     * 注册事件监听
+     */
+    function registerEventListeners() {
+        $('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor);
         $('#channel-editor-wrapper .btn-channel-editor-save').click(onSaveChannel);
         //$('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
         $('#channel-editor-wrapper .btn-program-new').click(function () {
             var type = this.getAttribute('data-program-type');
-			layoutDialog.open();
-			layoutDialog.onSelect(function (layoutId) {
-				layoutDialog.close();
+            layoutDialog.open();
+            layoutDialog.onSelect(function (layoutId) {
+                layoutDialog.close();
                 onNewLayout(type, layoutId);
-			});
+            });
         });
         $('#channel-editor-wrapper .btn-program-delete').click(function () {
             var deleteType = this.getAttribute('data-program-type'),
@@ -491,11 +496,11 @@ define(function(require, exports, module) {
             }
             onDeleteProgram(selectedProgram.id);
         });
-		$('#channel-editor-wrapper .channel-program-list ul').delegate('li', 'click', function () {
-			var programId = Number(this.getAttribute('data-id')),
-				program = db.collection('program').select({id: programId})[0];
-			loadProgram(program);
-		});
+        $('#channel-editor-wrapper .channel-program-list ul').delegate('li', 'click', function () {
+            var programId = Number(this.getAttribute('data-id')),
+                program = db.collection('program').select({id: programId})[0];
+            loadProgram(program);
+        });
         $('#channel-editor-wrapper .channel-editor-property').change(function () {
             db.collection('channel').update({name: this.value}, {});
         });
@@ -512,560 +517,576 @@ define(function(require, exports, module) {
             db.collection('channel').update({overall_schedule_params: value}, {});
             programHandle.send('channel_overall_schedule_params.change', this.value);
         });
-	}
+    }
 
-	/**
-	 * 关闭页面的回调函数
-	 */
+    /**
+     * 关闭页面的回调函数
+     */
     function onCloseEditor() {
-		try {
-			db.rollback();
-		} catch (err) {}
-		try {
-			db.drop('channel');
-			db.drop('program');
-			db.drop('layout');
-			db.drop('widget');
-			db.drop('material');
-		} catch (err) {}
+        try {
+            db.rollback();
+        } catch (err) {
+        }
+        try {
+            db.drop('channel');
+            db.drop('program');
+            db.drop('layout');
+            db.drop('widget');
+            db.drop('material');
+        } catch (err) {
+        }
         $('#edit-page-container')
-			.empty()
-			.addClass('none');
-		programHandle.send('program.reset', null);
-		window.onpopstate = undefined;
+            .empty()
+            .addClass('none');
+        if (programHandle) {
+            programHandle.send('program.reset', null);
+        }
+        window.onpopstate = undefined;
         location.hash = '#channel/list';
     }
 
-	/**
-	 * 保存频道的回调函数
-	 */
+    /**
+     * 保存频道的回调函数
+     */
     function onSaveChannel() {
+        if (!inputCheck()) return;
+        $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled", "disabled");
+        setTimeout(removeDisabled, config.letTimeout);
         remoteCreateOrUpdateChannel()
-			.then(remoteAddPrograms)
-			.then(remoteUpdatePrograms)
-			.then(remoteUpdateWidgets)
-			.then(remoteAddMaterials)
-			.then(remoteUpdateMaterials)
-			.then(remoteDeleteMaterials)
-			.then(remoteDeletePrograms)
-			.then(remoteSubmitVersion)
-			.done(onSaveChannelSuccess)
-			.fail(onSaveChannelFail);
+            .then(remoteAddPrograms)
+            .then(remoteUpdatePrograms)
+            .then(remoteUpdateWidgets)
+            .then(remoteAddMaterials)
+            .then(remoteUpdateMaterials)
+            .then(remoteDeleteMaterials)
+            .then(remoteDeletePrograms)
+            .then(remoteSubmitVersion)
+            .done(onSaveChannelSuccess)
+            .fail(onSaveChannelFail);
     }
-	
-	/**************** start of saveChannel *****************/
-	function remoteCreateOrUpdateChannel() {
-		var deferred = $.Deferred(),
-			newChannels = db.collection('channel').getLocalInsertedRows(),
-			changedChannels = db.collection('channel').getLocalUpdatedRows(),
-			data, channel, checkSwitch = Number(util.getLocalParameter('config_checkSwitch'));
-		if (newChannels.length > 0) {
-			channel = newChannels[0];
-			data = JSON.stringify({
-				project_name: projectName,
-				action: 'Post',
-				Data: {
-					Name: channel.name,
-					Name_eng: channel.name_eng,
-					Description: '',
-					Overall_Schedule_Type: channel.overall_schedule_type,
-					Overall_Schedule_Paras: channel.overall_schedule_params
-				}
-			});
-			util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
-				if (Number(res.rescode) !== 200) {
-					deferred.reject(res);
-					return;
-				}
+
+    function removeDisabled() {
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
+    }
+
+    /**************** start of saveChannel *****************/
+    function remoteCreateOrUpdateChannel() {
+        var deferred = $.Deferred(),
+            newChannels = db.collection('channel').getLocalInsertedRows(),
+            changedChannels = db.collection('channel').getLocalUpdatedRows(),
+            data, channel, checkSwitch = Number(util.getLocalParameter('config_checkSwitch'));
+        if (newChannels.length > 0) {
+            channel = newChannels[0];
+            data = JSON.stringify({
+                project_name: projectName,
+                action: 'Post',
+                Data: {
+                    Name: channel.name,
+                    Name_eng: channel.name_eng,
+                    Description: '',
+                    Overall_Schedule_Type: channel.overall_schedule_type,
+                    Overall_Schedule_Paras: channel.overall_schedule_params
+                }
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+                if (Number(res.rescode) !== 200) {
+                    deferred.reject(res);
+                    return;
+                }
                 channelId = Number(res.ChannelID);
-				db.collection('channel').update({id: channelId}, {});
-				deferred.resolve();
-			});
-		} else if (changedChannels.length > 0 && checkSwitch === 0) {
-			channel = changedChannels[0];
-			data = JSON.stringify({
-				project_name: projectName,
-				action: 'Put',
-				Data: {
-					Name: channel.name,
-					Name_eng: channel.name_eng,
-					Overall_Schedule_Type: channel.overall_schedule_type,
-					Overall_Schedule_Paras: channel.overall_schedule_params,
-					Version: channel.version,
-					Description: ''
-				}
-			});
-			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
-				if (Number(res.rescode) !== 200) {
-					deferred.reject(res);
-					return;
-				}
-				deferred.resolve();
-			});
-		} else if (checkSwitch === 1) {
+                db.collection('channel').update({id: channelId}, {});
+                deferred.resolve();
+            });
+        } else if (changedChannels.length > 0 && checkSwitch === 0) {
+            channel = changedChannels[0];
+            data = JSON.stringify({
+                project_name: projectName,
+                action: 'Put',
+                Data: {
+                    Name: channel.name,
+                    Name_eng: channel.name_eng,
+                    Overall_Schedule_Type: channel.overall_schedule_type,
+                    Overall_Schedule_Paras: channel.overall_schedule_params,
+                    Version: channel.version,
+                    Description: ''
+                }
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
+                if (Number(res.rescode) !== 200) {
+                    deferred.reject(res);
+                    return;
+                }
+                deferred.resolve();
+            });
+        } else if (checkSwitch === 1) {
 
-			data = JSON.stringify({
-				project_name: projectName,
-				action: 'setCheckLevel2Edit',
-				ChannelIDs: [channelId]
-			});
+            data = JSON.stringify({
+                project_name: projectName,
+                action: 'setCheckLevel2Edit',
+                ChannelIDs: [channelId]
+            });
 
-			channel = changedChannels[0];
-			util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channelId, data, function (res) {
-				if (Number(res.rescode) !== 200) {
-					deferred.reject(res);
-					return;
-				}
-				if (changedChannels.length === 0) {
-					deferred.resolve();
-					return;
-				}
-				var data = JSON.stringify({
-					project_name: projectName,
-					action: 'Put',
-					Data: {
-						Name: channel.name,
-						Name_eng: channel.name_eng,
-						Overall_Schedule_Type: channel.overall_schedule_type,
-						Overall_Schedule_Paras: channel.overall_schedule_params,
-						Version: channel.version,
-						Description: ''
-					}
-				});
+            channel = changedChannels[0];
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channelId, data, function (res) {
+                if (Number(res.rescode) !== 200) {
+                    deferred.reject(res);
+                    return;
+                }
+                if (changedChannels.length === 0) {
+                    deferred.resolve();
+                    return;
+                }
+                var data = JSON.stringify({
+                    project_name: projectName,
+                    action: 'Put',
+                    Data: {
+                        Name: channel.name,
+                        Name_eng: channel.name_eng,
+                        Overall_Schedule_Type: channel.overall_schedule_type,
+                        Overall_Schedule_Paras: channel.overall_schedule_params,
+                        Version: channel.version,
+                        Description: ''
+                    }
+                });
 
-				util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
-					if (Number(res.rescode) !== 200) {
-						deferred.reject(res);
-						return;
-					}
-					deferred.resolve();
-				});
-			});
-		} else {
-			deferred.resolve();
-		}
-		return deferred.promise();
-	}
+                util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + channel.id, data, function (res) {
+                    if (Number(res.rescode) !== 200) {
+                        deferred.reject(res);
+                        return;
+                    }
+                    deferred.resolve();
+                });
+            });
+        } else {
+            deferred.resolve();
+        }
+        return deferred.promise();
+    }
 
-	function remoteAddPrograms() {
-		var deferred = $.Deferred(),
-			newPrograms = db.collection('program').getLocalInsertedRows();
-		if (newPrograms.length === 0) {
-			deferred.resolve([]);
-		} else {
-			var successCount = 0,
+    function remoteAddPrograms() {
+        var deferred = $.Deferred(),
+            newPrograms = db.collection('program').getLocalInsertedRows();
+        if (newPrograms.length === 0) {
+            deferred.resolve([]);
+        } else {
+            var successCount = 0,
                 failed = false,
                 generatedWidgets = [];
-			newPrograms.forEach(function (program) {
-				var data = JSON.stringify({
-						Project: projectName,
-						Action: 'Post',
-						Data: {
-							Name: program.name,
-							LifeStartTime: program.lifetime_start,
-							LifeEndTime: program.lifetime_end,
-							Channel_ID: channelId,
-							Name_eng: program.name_eng,
-							Description: '',
-							Public: 0,
-							Sequence: program.sequence,
-							Is_TimeSegment_Limit: program.is_time_segment_limit,
-							TimeSegment_Start: program.time_segment_start,
-							TimeSegment_Duration: program.time_segment_duration,
-							Schedule_Paras: program.schedule_params,
-							Schedule_Type: program.schedule_type,
-							Layout_ID: program.layout_id
-						}
-					}),
-					oldProgramId = program.id, oldTemplateId = program.template_id;
-				util.ajax('post', requestUrl + '/backend_mgt/v2/programs', data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						deferred.reject(res);
-						failed = true;
-						return;
-					}
-					var programId = Number(res.ProgramID),
+            newPrograms.forEach(function (program) {
+                var data = JSON.stringify({
+                        Project: projectName,
+                        Action: 'Post',
+                        Data: {
+                            Name: program.name,
+                            LifeStartTime: program.lifetime_start,
+                            LifeEndTime: program.lifetime_end,
+                            Channel_ID: channelId,
+                            Name_eng: program.name_eng,
+                            Description: '',
+                            Public: 0,
+                            Sequence: program.sequence,
+                            Is_TimeSegment_Limit: program.is_time_segment_limit,
+                            TimeSegment_Start: program.time_segment_start,
+                            TimeSegment_Duration: program.time_segment_duration,
+                            Schedule_Paras: program.schedule_params,
+                            Schedule_Type: program.schedule_type,
+                            Layout_ID: program.layout_id
+                        }
+                    }),
+                    oldProgramId = program.id, oldTemplateId = program.template_id;
+                util.ajax('post', requestUrl + '/backend_mgt/v2/programs', data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        deferred.reject(res);
+                        failed = true;
+                        return;
+                    }
+                    var programId = Number(res.ProgramID),
                         templateId = Number(res.ProgramTemplateID);
-					db.collection('program').update({id: programId}, {id: oldProgramId});
-					db.collection('widget').update({program_id: programId}, {program_id: oldProgramId});
+                    db.collection('program').update({id: programId}, {id: oldProgramId});
+                    db.collection('widget').update({program_id: programId}, {program_id: oldProgramId});
                     db.collection('widget').update({program_template_id: templateId}, {program_template_id: oldTemplateId});
                     res.ControlBoxTypeIDMap.forEach(function (el) {
-						var oldWidgetId = db.collection('widget').select({program_id: programId, layout_widget_id: el.LayoutControlBoxID})[0].id;
+                        var oldWidgetId = db.collection('widget').select({
+                            program_id: programId,
+                            layout_widget_id: el.LayoutControlBoxID
+                        })[0].id;
                         db.collection('widget').update({id: el.ProgramControlBoxID}, {id: oldWidgetId});
-						db.collection('material').update({widget_id: el.ProgramControlBoxID}, {widget_id: oldWidgetId});
+                        db.collection('material').update({widget_id: el.ProgramControlBoxID}, {widget_id: oldWidgetId});
                         var widget = db.collection('widget').select({id: el.ProgramControlBoxID})[0];
                         generatedWidgets.push(widget);
                     });
-					successCount++;
-					if (successCount === newPrograms.length) {
-						deferred.resolve(generatedWidgets);
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
+                    successCount++;
+                    if (successCount === newPrograms.length) {
+                        deferred.resolve(generatedWidgets);
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-	function remoteUpdatePrograms(generatedWidgets) {
-		var deferred = $.Deferred(),
-			changedPrograms = db.collection('program').getLocalUpdatedRows();
-		if (changedPrograms.length === 0) {
-			deferred.resolve(generatedWidgets);
-		} else {
-			var successCount = 0, failed = false;
-			changedPrograms.forEach(function (program) {
-				var data = JSON.stringify({
-						Project: projectName,
-						Action: 'Put',
-						Data: {
-							Name: program.name,
-							LifeStartTime: program.lifetime_start,
-							LifeEndTime: program.lifetime_end,
-							Channel_ID: channelId,
-							Name_eng: program.name_eng,
-							Description: '',
-							Public: 0,
-							Sequence: program.sequence,
-							Is_TimeSegment_Limit: program.is_time_segment_limit,
-							TimeSegment_Start: program.time_segment_start,
-							TimeSegment_Duration: program.time_segment_duration,
-							Schedule_Paras: program.schedule_params,
-							Schedule_Type: program.schedule_type,
-							Layout_ID: program.layout_id
-						}
-					});
-				util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						deferred.reject(res);
-						failed = true;
-						return;
-					}
-					successCount++;
-					if (successCount === changedPrograms.length) {
-						deferred.resolve(generatedWidgets);
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
+    function remoteUpdatePrograms(generatedWidgets) {
+        var deferred = $.Deferred(),
+            changedPrograms = db.collection('program').getLocalUpdatedRows();
+        if (changedPrograms.length === 0) {
+            deferred.resolve(generatedWidgets);
+        } else {
+            var successCount = 0, failed = false;
+            changedPrograms.forEach(function (program) {
+                var data = JSON.stringify({
+                    Project: projectName,
+                    Action: 'Put',
+                    Data: {
+                        Name: program.name,
+                        LifeStartTime: program.lifetime_start,
+                        LifeEndTime: program.lifetime_end,
+                        Channel_ID: channelId,
+                        Name_eng: program.name_eng,
+                        Description: '',
+                        Public: 0,
+                        Sequence: program.sequence,
+                        Is_TimeSegment_Limit: program.is_time_segment_limit,
+                        TimeSegment_Start: program.time_segment_start,
+                        TimeSegment_Duration: program.time_segment_duration,
+                        Schedule_Paras: program.schedule_params,
+                        Schedule_Type: program.schedule_type,
+                        Layout_ID: program.layout_id
+                    }
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        deferred.reject(res);
+                        failed = true;
+                        return;
+                    }
+                    successCount++;
+                    if (successCount === changedPrograms.length) {
+                        deferred.resolve(generatedWidgets);
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-	function remoteUpdateWidgets(generatedWidgets) {
-		var deferred = $.Deferred(),
-			changedWidgets = db.collection('widget').getLocalUpdatedRows();
+    function remoteUpdateWidgets(generatedWidgets) {
+        var deferred = $.Deferred(),
+            changedWidgets = db.collection('widget').getLocalUpdatedRows();
         changedWidgets = changedWidgets.concat(generatedWidgets);
-		if (changedWidgets.length === 0) {
-			deferred.resolve();
-		} else {
-			var successCount = 0, failed = false;
-			changedWidgets.forEach(function (widget) {
-				var data = JSON.stringify({
-					Project: projectName,
-					Action: 'Update',
-					ControlBoxID: widget.id,
-					Data: {
-						Style: widget.style,
-						Overall_Schedule_Paras: widget.overall_schedule_params,
-						Overall_Schedule_Type: widget.overall_schedule_type,
-						Z: widget.z_index,
-						ID: widget.id,
-						ControlBox_Material: widget.material,
-						Top: widget.top,
-						Left: widget.left,
-						ControlBox_Type_ID: widget.type_id,
-						ControlBox_Type_Name: widget.type_name,
-						ControlBox_Type: widget.type,
-						Program_ID: widget.program_template_id,
-						Height: widget.height,
-						Width: widget.width
-					}
-				});
-				util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes/' + widget.id, data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						failed = true;
-						deferred.reject(res);
-						return;
-					}
-					successCount++;
-					if (successCount === changedWidgets.length) {
-						deferred.resolve();
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
-	
-	function remoteAddMaterials() {
-		var deferred = $.Deferred(),
-			newMaterials = db.collection('material').getLocalInsertedRows();
-		if (newMaterials.length === 0) {
-			deferred.resolve();
-		} else {
-			var successCount = 0, failed = false;
-			newMaterials.forEach(function (material) {
-				var data = JSON.stringify({
-					Project: projectName,
-					Action: 'AddMaterialWithID',
-					ControlBoxID: material.widget_id,
-					Data: {
-						ControlBox_ID: material.widget_id,
-						Material_ID: material.resource_id,
-						LifeStartTime: material.lifetime_start,
-						LifeEndTime: material.lifetime_end,
-						Is_TimeSegment_Limit: material.is_time_segment_limit,
-						TimeSegment_Start: material.time_segment_start,
-						TimeSegment_Duration: material.time_segment_duration,
-						Schedule_Paras: material.schedule_params,
-						Schedule_Type: material.schedule_type,
-						Sequence: material.sequence
-					}
-				}),
-					oldMaterialId = material.id;
-				util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						failed = true;
-						deferred.reject(res);
-						return;
-					}
-					successCount++;
-					var materialId = Number(res.ControlBox_Material_ID);
-					db.collection('material').update({id: materialId}, {id:oldMaterialId});
-					if (successCount === newMaterials.length) {
-						deferred.resolve();
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
-	
-	function remoteUpdateMaterials() {
-		var deferred = $.Deferred(),
-			changedMaterials = db.collection('material').getLocalUpdatedRows();
-		if (changedMaterials.length === 0) {
-			deferred.resolve();
-		} else {
-			var successCount = 0, failed = false;
-			changedMaterials.forEach(function (material) {
-				var data = JSON.stringify({
-						Project: projectName,
-						Action: 'UpdateMaterial',
-						Data: {
-							ID: material.id,
-							LifeEndTime: material.lifetime_end,
-							LifeStartTime: material.lifetime_start,
-							ControlBox_ID: material.widget_id,
-							Name: material.name,
-							Name_eng: material.name_eng,
-							Type_ID: material.type_id,
-							URL: material.url,
-							Type_Name: material.type_name,
-							Material_ID: material.resource_id,
-							Schedule_Type: material.schedule_type,
-							Schedule_Paras: material.schedule_params,
-							Is_TimeSegment_Limit: material.is_time_segment_limit,
-							Sequence: material.sequence,
-							TimeSegment_Start: material.time_segment_start,
-							TimeSegment_Duration: material.time_segment_duration
-						}
-					});
-				util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						failed = true;
-						deferred.reject(res);
-						return;
-					}
-					successCount++;
-					if (successCount === changedMaterials.length) {
-						deferred.resolve();
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
-	
-	function remoteDeleteMaterials() {
-		var deferred = $.Deferred(),
-			deletedMaterials = db.collection('material').getLocalDeletedRows();
-		if (deletedMaterials.length === 0) {
-			deferred.resolve();
-		} else {
-			var successCount = 0, failed = false;
-			deletedMaterials.forEach(function (material) {
-				var data = JSON.stringify({
-					Project: projectName,
-					Action: 'DeleteMaterial',
-					ControlBox_Material_ID: material.id
-				});
-				util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						failed = true;
-						deferred.reject(res);
-						return;
-					}
-					successCount++;
-					if (successCount === deletedMaterials.length) {
-						deferred.resolve();
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
-	
-	function remoteDeletePrograms() {
-		var deferred = $.Deferred(),
-			deletedPrograms = db.collection('program').getLocalDeletedRows();
-		if (deletedPrograms.length === 0) {
-			deferred.resolve();
-		} else {
-			var successCount = 0, failed = false;
-			deletedPrograms.forEach(function (program) {
-				var data = JSON.stringify({
-					Project: projectName,
-					Action: 'Delete'
-				});
-				util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
-					if (!failed && Number(res.rescode) !== 200) {
-						failed = true;
-						deferred.reject(res);
-						return;
-					}
-					successCount++;
-					if (successCount === deletedPrograms.length) {
-						deferred.resolve();
-					}
-				});
-			});
-		}
-		return deferred.promise();
-	}
-	
-	function remoteSubmitVersion() {
-		var deferred = $.Deferred(),
-			checkSwitch = Number(util.getLocalParameter('config_checkSwitch')),
-			data;
+        if (changedWidgets.length === 0) {
+            deferred.resolve();
+        } else {
+            var successCount = 0, failed = false;
+            changedWidgets.forEach(function (widget) {
+                var data = JSON.stringify({
+                    Project: projectName,
+                    Action: 'Update',
+                    ControlBoxID: widget.id,
+                    Data: {
+                        Style: widget.style,
+                        Overall_Schedule_Paras: widget.overall_schedule_params,
+                        Overall_Schedule_Type: widget.overall_schedule_type,
+                        Z: widget.z_index,
+                        ID: widget.id,
+                        ControlBox_Material: widget.material,
+                        Top: widget.top,
+                        Left: widget.left,
+                        ControlBox_Type_ID: widget.type_id,
+                        ControlBox_Type_Name: widget.type_name,
+                        ControlBox_Type: widget.type,
+                        Program_ID: widget.program_template_id,
+                        Height: widget.height,
+                        Width: widget.width
+                    }
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes/' + widget.id, data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        failed = true;
+                        deferred.reject(res);
+                        return;
+                    }
+                    successCount++;
+                    if (successCount === changedWidgets.length) {
+                        deferred.resolve();
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-		data = JSON.stringify({
-			action: 'SubmitVersion',
-			Project: projectName,
-			ChannelID: channelId
-		});
+    function remoteAddMaterials() {
+        var deferred = $.Deferred(),
+            newMaterials = db.collection('material').getLocalInsertedRows();
+        if (newMaterials.length === 0) {
+            deferred.resolve();
+        } else {
+            var successCount = 0, failed = false;
+            newMaterials.forEach(function (material) {
+                var data = JSON.stringify({
+                        Project: projectName,
+                        Action: 'AddMaterialWithID',
+                        ControlBoxID: material.widget_id,
+                        Data: {
+                            ControlBox_ID: material.widget_id,
+                            Material_ID: material.resource_id,
+                            LifeStartTime: material.lifetime_start,
+                            LifeEndTime: material.lifetime_end,
+                            Is_TimeSegment_Limit: material.is_time_segment_limit,
+                            TimeSegment_Start: material.time_segment_start,
+                            TimeSegment_Duration: material.time_segment_duration,
+                            Schedule_Paras: material.schedule_params,
+                            Schedule_Type: material.schedule_type,
+                            Sequence: material.sequence
+                        }
+                    }),
+                    oldMaterialId = material.id;
+                util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        failed = true;
+                        deferred.reject(res);
+                        return;
+                    }
+                    successCount++;
+                    var materialId = Number(res.ControlBox_Material_ID);
+                    db.collection('material').update({id: materialId}, {id: oldMaterialId});
+                    if (successCount === newMaterials.length) {
+                        deferred.resolve();
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-		util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
-			if (Number(res.rescode) !== 200) {
-				deferred.reject(res);
-				return;
-			}
-			if (checkSwitch === 0) {
-				data = JSON.stringify({
-					project_name: projectName,
-					action: 'checkPass',
-					ChannelIDs: [
-						channelId
-					]
-				});
-				util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
-					if (Number(res.rescode) !== 200) {
-						deferred.reject(res);
-						return;
-					}
-					deferred.resolve()
-				});
-			} else {
-				deferred.resolve();
-			}
-		});
+    function remoteUpdateMaterials() {
+        var deferred = $.Deferred(),
+            changedMaterials = db.collection('material').getLocalUpdatedRows();
+        if (changedMaterials.length === 0) {
+            deferred.resolve();
+        } else {
+            var successCount = 0, failed = false;
+            changedMaterials.forEach(function (material) {
+                var data = JSON.stringify({
+                    Project: projectName,
+                    Action: 'UpdateMaterial',
+                    Data: {
+                        ID: material.id,
+                        LifeEndTime: material.lifetime_end,
+                        LifeStartTime: material.lifetime_start,
+                        ControlBox_ID: material.widget_id,
+                        Name: material.name,
+                        Name_eng: material.name_eng,
+                        Type_ID: material.type_id,
+                        URL: material.url,
+                        Type_Name: material.type_name,
+                        Material_ID: material.resource_id,
+                        Schedule_Type: material.schedule_type,
+                        Schedule_Paras: material.schedule_params,
+                        Is_TimeSegment_Limit: material.is_time_segment_limit,
+                        Sequence: material.sequence,
+                        TimeSegment_Start: material.time_segment_start,
+                        TimeSegment_Duration: material.time_segment_duration
+                    }
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        failed = true;
+                        deferred.reject(res);
+                        return;
+                    }
+                    successCount++;
+                    if (successCount === changedMaterials.length) {
+                        deferred.resolve();
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-		return deferred.promise();
-	}
+    function remoteDeleteMaterials() {
+        var deferred = $.Deferred(),
+            deletedMaterials = db.collection('material').getLocalDeletedRows();
+        if (deletedMaterials.length === 0) {
+            deferred.resolve();
+        } else {
+            var successCount = 0, failed = false;
+            deletedMaterials.forEach(function (material) {
+                var data = JSON.stringify({
+                    Project: projectName,
+                    Action: 'DeleteMaterial',
+                    ControlBox_Material_ID: material.id
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v1/controlboxes', data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        failed = true;
+                        deferred.reject(res);
+                        return;
+                    }
+                    successCount++;
+                    if (successCount === deletedMaterials.length) {
+                        deferred.resolve();
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
 
-	function onSaveChannelSuccess() {
-		db.commit();
-		db.beginTransaction();
-		alert('保存成功!');
-		if (location.hash.indexOf('?id=') === -1) {
-			location.hash = '#layout/edit?id=' + channelId;
-		}
+    function remoteDeletePrograms() {
+        var deferred = $.Deferred(),
+            deletedPrograms = db.collection('program').getLocalDeletedRows();
+        if (deletedPrograms.length === 0) {
+            deferred.resolve();
+        } else {
+            var successCount = 0, failed = false;
+            deletedPrograms.forEach(function (program) {
+                var data = JSON.stringify({
+                    Project: projectName,
+                    Action: 'Delete'
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v2/programs/' + program.id, data, function (res) {
+                    if (!failed && Number(res.rescode) !== 200) {
+                        failed = true;
+                        deferred.reject(res);
+                        return;
+                    }
+                    successCount++;
+                    if (successCount === deletedPrograms.length) {
+                        deferred.resolve();
+                    }
+                });
+            });
+        }
+        return deferred.promise();
+    }
+
+    function remoteSubmitVersion() {
+        var deferred = $.Deferred(),
+            checkSwitch = Number(util.getLocalParameter('config_checkSwitch')),
+            data;
+
+        data = JSON.stringify({
+            action: 'SubmitVersion',
+            Project: projectName,
+            ChannelID: channelId
+        });
+
+        util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+            if (Number(res.rescode) !== 200) {
+                deferred.reject(res);
+                return;
+            }
+            if (checkSwitch === 0) {
+                data = JSON.stringify({
+                    project_name: projectName,
+                    action: 'checkPass',
+                    ChannelIDs: [
+                        channelId
+                    ]
+                });
+                util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+                    if (Number(res.rescode) !== 200) {
+                        deferred.reject(res);
+                        return;
+                    }
+                    deferred.resolve()
+                });
+            } else {
+                deferred.resolve();
+            }
+        });
+
+        return deferred.promise();
+    }
+
+    function onSaveChannelSuccess() {
+        db.commit();
+        db.beginTransaction();
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
+        alert('保存成功!');
+        if (location.hash.indexOf('?id=') === -1) {
+            location.hash = '#layout/edit?id=' + channelId;
+        }
         location.reload();
-	}
+    }
 
-	function onSaveChannelFail() {
-		//db.rollback();
-		alert('保存失败');
-	}
+    function onSaveChannelFail() {
+        //db.rollback();
+        $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
+        alert('保存失败');
+    }
 
-	/**************** end of saveChannel  *****************/
-	
-	function onNewLayout(type, layoutId) {
-		var data = JSON.stringify({
-			project_name: projectName,
-			action: 'getCBLList',
-			data: {
-				layout_id: layoutId
-			}
-		});
-		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
-			var layout = db.collection('layout').select({id: layoutId})[0];
-			if (!layout) {
+    /**************** end of saveChannel  *****************/
+
+    function onNewLayout(type, layoutId) {
+        var data = JSON.stringify({
+            project_name: projectName,
+            action: 'getCBLList',
+            data: {
+                layout_id: layoutId
+            }
+        });
+        util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+            var layout = db.collection('layout').select({id: layoutId})[0];
+            if (!layout) {
                 layout = parseLayoutData2(res);
                 layout.id = layoutId;
-				db.collection('layout').insert(layout);
-			}
-			var widgets = res.Layout_ControlBoxs.map(function (el) {
+                db.collection('layout').insert(layout);
+            }
+            var widgets = res.Layout_ControlBoxs.map(function (el) {
                 var type, type_id, type_name;
                 if (el.Type === 'VideoBox') {
                     type = 'VideoBox';
-                    type_name = '视频';
+                    type_name = '视频控件';
                     type_id = 1;
                 } else if (el.Type === 'AudioBox') {
                     type = 'AudioBox';
-                    type_name = '音频';
+                    type_name = '音频控件';
                     type_id = 4;
                 } else if (el.Type === 'WebBox') {
                     type = 'WebBox';
-                    type_name = 'Web文本';
-					type_id = 3;
+                    type_name = '文本控件';
+                    type_id = 3;
                 } else if (el.Type === 'ImageBox') {
                     type = 'ImageBox';
-                    type_name = '图片';
+                    type_name = '图片控件';
                     type_id = 2;
                 } else if (el.Type === 'ClockBox') {
                     type = 'ClockBox';
-                    type_name = '时钟';
+                    type_name = '时钟控件';
                     type_id = 5;
                 } else if (el.Type === 'WeatherBox') {
-					type = 'WeatherBox';
-					type_name = '天气';
-					type_id = 6;
-				}
-				return {
-					layout_id: layoutId,
-					type_id: type_id,
-					type: type,
-					type_name: type_name,
+                    type = 'WeatherBox';
+                    type_name = '天气控件';
+                    type_id = 6;
+                }
+                return {
+                    layout_id: layoutId,
+                    type_id: type_id,
+                    type: type,
+                    type_name: type_name,
                     layout_widget_id: el.ID,
-					material: '',
-					width: el.Width,
-					height: el.Height,
-					left: el.Left,
-					style: '',
-					top: el.Top,
-					overall_schedule_params: '{\"Type\": \"Sequence\"}',
-					overall_schedule_type: 'Regular',
-					z_index: el.Zorder
-				};
-			});
-			onNewProgram(type, layout, widgets);
-		});
-	}
+                    material: '',
+                    width: el.Width,
+                    height: el.Height,
+                    left: el.Left,
+                    style: '',
+                    top: el.Top,
+                    overall_schedule_params: '{\"Type\": \"Sequence\"}',
+                    overall_schedule_type: 'Regular',
+                    z_index: el.Zorder
+                };
+            });
+            onNewProgram(type, layout, widgets);
+        });
+    }
 
-	/**
-	 * 创建新节目
-	 * @param type
-	 * @param layoutId
+    /**
+     * 创建新节目
+     * @param type
+     * @param layoutId
      */
     function onNewProgram(type, layout, widgets) {
         // find max sequence
@@ -1081,53 +1102,53 @@ define(function(require, exports, module) {
                 }
             });
         }
-		db.collection('program').insert({
-			is_time_segment_limit: 0,
-			layout_id: layout.id,
+        db.collection('program').insert({
+            is_time_segment_limit: 0,
+            layout_id: layout.id,
             template_id: 0,
-			lifetime_start: '1970-01-01 00:00:00',
-			lifetime_end: '2030-01-01 00:00:00',
-			name: '新建节目',
+            lifetime_start: '1970-01-01 00:00:00',
+            lifetime_end: '2030-01-01 00:00:00',
+            name: '新建节目',
             name_eng: 'new program',
-			schedule_params: '{\"duration\":3600,\"count\":1}',
-			schedule_type: type,
-			sequence: maxSequence + 1,
-			time_segment_duration: 0,
-			time_segment_start: ''
-		});
-		var programId = db.collection('program').lastInsertId(),
-			program = db.collection('program').select({id: programId})[0],
-			ul = $(type === 'Regular' ?
-				'#channel-editor-wrapper .channel-program-list-regular ul' :
-				'#channel-editor-wrapper .channel-program-list-timed ul'
-			),
-			backgroundStyle = layout.background_image_url ?
-				'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
-				'background-color:' + layout.background_color,
-			data = {
-				id: program.id,
-				name: program.name,
-				backgroundStyle: backgroundStyle
-			};
+            schedule_params: '{\"duration\":3600,\"count\":1}',
+            schedule_type: type,
+            sequence: maxSequence + 1,
+            time_segment_duration: 0,
+            time_segment_start: ''
+        });
+        var programId = db.collection('program').lastInsertId(),
+            program = db.collection('program').select({id: programId})[0],
+            ul = $(type === 'Regular' ?
+                    '#channel-editor-wrapper .channel-program-list-regular ul' :
+                    '#channel-editor-wrapper .channel-program-list-timed ul'
+            ),
+            backgroundStyle = layout.background_image_url ?
+            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
+            'background-color:' + layout.background_color,
+            data = {
+                id: program.id,
+                name: program.name,
+                backgroundStyle: backgroundStyle
+            };
         db.collection('program').update({template_id: programId}, {id: programId});
-		widgets.forEach(function (widget) {
-			widget.program_id = programId;
+        widgets.forEach(function (widget) {
+            widget.program_id = programId;
             widget.program_template_id = programId;
-			db.collection('widget').insert(widget);
-		});
-		ul.append(templates.channel_edit_program_list_item(data));
-		loadProgram(program);
+            db.collection('widget').insert(widget);
+        });
+        ul.append(templates.channel_edit_program_list_item(data));
+        loadProgram(program);
     }
 
-	/**
-	 * 删除节目
-	 * @param programId
+    /**
+     * 删除节目
+     * @param programId
      */
     function onDeleteProgram(programId) {
-		$('#channel-editor-wrapper .channel-program-list ul>li[data-id='+ programId +']').remove();
-		db.collection('program').delete({id: programId});
-		var program = db.collection('program').select({})[0];
-		loadProgram(program);
+        $('#channel-editor-wrapper .channel-program-list ul>li[data-id=' + programId + ']').remove();
+        db.collection('program').delete({id: programId});
+        var program = db.collection('program').select({})[0];
+        loadProgram(program);
     }
 
     /**
@@ -1148,19 +1169,51 @@ define(function(require, exports, module) {
     }
 
     /**
-	 *
-	 */
-	function findSelectedProgram() {
-		var programId = null;
-		$('#channel-editor-wrapper .channel-program-list li').each(function (idx, el) {
-			if ($(el).hasClass('selected')) {
-				programId = parseInt(el.getAttribute('data-id'));
-			}
-		});
-		if (programId === null) {
-			return null;
-		}
-		return db.collection('program').select({id: programId})[0]
-	}
-    
+     *
+     */
+    function findSelectedProgram() {
+        var programId = null;
+        $('#channel-editor-wrapper .channel-program-list li').each(function (idx, el) {
+            if ($(el).hasClass('selected')) {
+                programId = parseInt(el.getAttribute('data-id'));
+            }
+        });
+        if (programId === null) {
+            return null;
+        }
+        return db.collection('program').select({id: programId})[0]
+    }
+
+    /**
+     *校验事件
+     */
+    function inputCheck() {
+        var programList = db.collection('program').select({});
+        for (var a = 0; a < programList.length; a++) {
+            var program = programList[a];
+            var errorMsg = "";
+            if (program.lifetime_start.length != 16) {
+                if (program.lifetime_start.length != 19) {
+                    errorMsg = "请输入正确的节目生效时间!\n";
+                    alert(errorMsg);
+                    return false;
+                }
+            }
+            if (program.lifetime_end.length != 16) {
+                if (program.lifetime_end.length != 19) {
+                    errorMsg = "请输入正确的节目失效时间!";
+                    alert(errorMsg);
+                    return false;
+                }
+            }
+            var start_time = new Date(program.lifetime_start);
+            var end_time = new Date(program.lifetime_end);
+            if (start_time > end_time) {
+                errorMsg = "节目生效时间晚于失效时间，请重新输入!"
+                alert(errorMsg);
+                return false;
+            }
+        }
+        return true;
+    }
 });

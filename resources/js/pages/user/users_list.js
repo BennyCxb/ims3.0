@@ -17,8 +17,10 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadUsersPage = function (pageNum) {
+        // loading
+        $("#usersTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#usersLisTitle").html("");
-        $("#usersTable tbody").html("");
+
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
 		exports.pNum = pageNum;
         var data = JSON.stringify({
@@ -40,6 +42,7 @@ define(function (require, exports, module) {
     }
 
     function render(json) {
+        $("#usersTable tbody").html("");
         //翻页
         var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);

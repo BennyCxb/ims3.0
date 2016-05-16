@@ -23,8 +23,9 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadFuncModulePage = function (pageNum) {
+        // loading
+        $("#funcModuleTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#funcModuleLisTitle").html("");
-        $("#funcModuleTable tbody").html("");
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
         $("#funcModuleLisTitle").html("功能模块列表");
         
@@ -65,6 +66,7 @@ define(function (require, exports, module) {
                 }
             }
         });
+        $("#funcModuleTable tbody").html("");
         //拼接
         if (json.FunctionModules != undefined) {
             var rolData = json.FunctionModules;

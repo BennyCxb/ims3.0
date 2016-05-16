@@ -22,13 +22,12 @@ define(function(require, exports, module) {
 
         // 整行点击
         $('#'+ tree.domId +' li').each(function(i, e){
-          
+
           // check click事件
           $(this).children('a').find('input[type$="checkbox"]').click(function(e){
 
             var dom = $(this).parent().parent();
             e.stopPropagation();
-
             if(tree.checkMode === 'multiple'){
               tree.checkChildren(dom);
               tree.checkParent(dom);
@@ -37,7 +36,7 @@ define(function(require, exports, module) {
 
           // 整行点击
           $(this).children('a').click(function(e){
-            
+
             var dom = $(this).parent();
             tree.setFocus(dom);
 
@@ -72,28 +71,28 @@ define(function(require, exports, module) {
 
       // 向上检查
       tree.checkParent = function(dom){
-        var parent = dom.parent().parent();
+        /*var parent = dom.parent().parent();
         if( parent.children('ul').attr('id') == tree.domId ){
           return;
         }
-    
+
         //取消选择
         if (!dom.children('a').find('input[type$="checkbox"]').get(0).checked){
-          
+
           if( parent.children('a').find('input[type$="checkbox"]').get(0).checked ){
-            
+
             parent.children('a').find('input[type$="checkbox"]').get(0).checked = false;
-            
+
             if( parent.parent().attr('id') != tree.domId ){
-            
+
               tree.checkParent(parent);
-            
+
             }
           }
-          
-        //选择  
+
+        //选择
         }else{
-          
+
           var checked = true;
 
           parent.children('ul').find('li').each(function(i,e){
@@ -104,24 +103,25 @@ define(function(require, exports, module) {
           })
 
           if( checked ){
-            
+
             parent.children('a').find('input[type$="checkbox"]').get(0).checked = true;
-            
+
             if( parent.parent().attr('id') != tree.domId ){
-            
+
               tree.checkParent(parent);
-            
+
             }
           }
-        
-        }
+
+        }*/
       }
 
       tree.getSelectedNodeID = function(){
         var data = [];
         if(tree.checkMode === 'single'){
           $('#'+tree.domId + ' li.focus').each(function(i,e){
-            data.push({nodeId : Number($(e).attr('node-id'))})
+            var content = $.trim($(e).find('span').html());
+            data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
           })
         }else if(tree.checkMode === 'multiple'){
           getMultipleSelectedNodeID($('#'+tree.domId));
@@ -131,7 +131,8 @@ define(function(require, exports, module) {
         function getMultipleSelectedNodeID(ul){
           ul.children('li').each(function(i,e){
             if($(e).children('a').find('input[type$="checkbox"]').get(0).checked){
-              data.push({nodeId : Number($(e).attr('node-id'))})
+              var content = $.trim($(e).find('span').html());
+              data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
             }
             else if($(e).hasClass('treeview')){
               getMultipleSelectedNodeID($(e).children('ul'))
@@ -170,7 +171,7 @@ define(function(require, exports, module) {
         }
         t.css('display', 'none');
 
-        var input_div = $('' + 
+        var input_div = $('' +
         '<div class="input-group tree-input-group">' +
           '<input type="text" class="form-control">' +
           '<span class="input-group-addon"><i class="fa fa-check"></i></span>' +
@@ -253,11 +254,13 @@ define(function(require, exports, module) {
           if(data[i].children.length > 0){
             treeview = 'treeview';
             angle = '<i class="glyphicon glyphicon-chevron-right"></i>';
+          }else{
+              angle = '<i class="glyphicon" style="width:22px"></i>';
           }
 
           var li = $('' +
             '<li node-id="' + data[i].id + '" class="' + treeview + '">' +
-              '<a>' + checkbox + angle +
+              '<a>' + angle + checkbox +
               '<i class="fa fa-folder-o"></i><span> ' + data[i].name + '</span>' +
               '</a>' +
             '</li>');

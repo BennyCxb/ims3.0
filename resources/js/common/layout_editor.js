@@ -1,7 +1,7 @@
 'use strict';
 
 define(function (require, exports, module) {
-
+    var UTIL = require("common/util.js");
     /**
      *
      * @type {{NONE: number, CONTENT: number, TOP: number, BOTTOM: number, LEFT_TOP: number, LEFT: number, LEFT_BOTTOM: number, RIGHT_TOP: number, RIGHT: number, RIGHT_BOTTOM: number}}
@@ -69,12 +69,24 @@ define(function (require, exports, module) {
             q = v * (1 - f * s);
             t = v * (1 - (1 - f) * s);
             switch (i % 6) {
-                case 0: r = v, g = t, b = p; break;
-                case 1: r = q, g = v, b = p; break;
-                case 2: r = p, g = v, b = t; break;
-                case 3: r = p, g = q, b = v; break;
-                case 4: r = t, g = p, b = v; break;
-                case 5: r = v, g = p, b = q; break;
+                case 0:
+                    r = v, g = t, b = p;
+                    break;
+                case 1:
+                    r = q, g = v, b = p;
+                    break;
+                case 2:
+                    r = p, g = v, b = t;
+                    break;
+                case 3:
+                    r = p, g = q, b = v;
+                    break;
+                case 4:
+                    r = t, g = p, b = v;
+                    break;
+                case 5:
+                    r = v, g = p, b = q;
+                    break;
             }
             return {
                 r: Math.round(r * 255),
@@ -102,15 +114,15 @@ define(function (require, exports, module) {
      * @param current，当前点的坐标
      */
     function onDragWidget(widget, area, reference, current) {
-        var cx  = current.x,
-            cy  = current.y,
-            rx  = reference.x,
-            ry  = reference.y,
-            zf  = widget.mContext.mZoomFactor,
-            t   = widget.mTop * widget.mContext.mZoomFactor,
-            l   = widget.mLeft * widget.mContext.mZoomFactor,
-            w   = widget.mWidth * widget.mContext.mZoomFactor,
-            h   = widget.mHeight * widget.mContext.mZoomFactor,
+        var cx = current.x,
+            cy = current.y,
+            rx = reference.x,
+            ry = reference.y,
+            zf = widget.mContext.mZoomFactor,
+            t = widget.mTop * widget.mContext.mZoomFactor,
+            l = widget.mLeft * widget.mContext.mZoomFactor,
+            w = widget.mWidth * widget.mContext.mZoomFactor,
+            h = widget.mHeight * widget.mContext.mZoomFactor,
             offsetX, offsetY;
         switch (area) {
             case WIDGET_AREA.CONTENT:
@@ -167,9 +179,9 @@ define(function (require, exports, module) {
                 return;
         }
         widget.resize({
-            top:    Math.round(t / zf),
-            left:   Math.round(l / zf),
-            width:  Math.round(w / zf),
+            top: Math.round(t / zf),
+            left: Math.round(l / zf),
+            width: Math.round(w / zf),
             height: Math.round(h / zf)
         });
         widget.notifyDragEvent();
@@ -275,7 +287,8 @@ define(function (require, exports, module) {
      *   backgroundColor: <string>,
      *   backgroundImage: {
      *      url: <string>,
-     *      id: <number>
+     *      id: <number>,
+     *      download_auth_type: <string>
      *   },
      *   widgets: [
      *      {
@@ -287,45 +300,45 @@ define(function (require, exports, module) {
      */
     function LayoutEditor(obj, viewWidth, viewHeight, editable) {
 
-        this.mTopRuler          = document.createElement('div');
-        this.mLeftRuler         = document.createElement('div');
-        this.mCanvas            = document.createElement('div');
-        this.mCanvasContainer   = document.createElement('div');
+        this.mTopRuler = document.createElement('div');
+        this.mLeftRuler = document.createElement('div');
+        this.mCanvas = document.createElement('div');
+        this.mCanvasContainer = document.createElement('div');
         this.mCanvasContainer.appendChild(this.mCanvas);
-        this.mElement           = document.createElement('div');
+        this.mElement = document.createElement('div');
         this.mElement.appendChild(this.mTopRuler);
         this.mElement.appendChild(this.mLeftRuler);
         this.mElement.appendChild(this.mCanvasContainer);
 
-        var zx          = (viewWidth - RULER_WIDTH) / obj.width;
-        var zy          = (viewHeight - RULER_WIDTH) / obj.height;
-        var zoomFactor  = Math.min(zx, zy) * MIN_CANVAS_SCALE;
-        var wWidth      = viewWidth - RULER_WIDTH;
-        var wHeight     = viewHeight - RULER_WIDTH;
-        
+        var zx = (viewWidth - RULER_WIDTH) / obj.width;
+        var zy = (viewHeight - RULER_WIDTH) / obj.height;
+        var zoomFactor = Math.min(zx, zy) * MIN_CANVAS_SCALE;
+        var wWidth = viewWidth - RULER_WIDTH;
+        var wHeight = viewHeight - RULER_WIDTH;
+
         var layout = new Layout({
-            width:              obj.width,
-            height:             obj.height,
-            backgroundColor:    obj.backgroundColor,
-            backgroundImage:    obj.backgroundImage,
-            topMargin:          obj.topMargin,
-            bottomMargin:       obj.bottomMargin,
-            leftMargin:         obj.leftMargin,
-            rightMargin:        obj.rightMargin,
-            id:                 obj.id,
-            name:               obj.name,
-            nameEng:            obj.nameEng,
-            widgets:            obj.widgets,
-            element:            this.mCanvas,
-            context:            this
+            width: obj.width,
+            height: obj.height,
+            backgroundColor: obj.backgroundColor,
+            backgroundImage: obj.backgroundImage,
+            topMargin: obj.topMargin,
+            bottomMargin: obj.bottomMargin,
+            leftMargin: obj.leftMargin,
+            rightMargin: obj.rightMargin,
+            id: obj.id,
+            name: obj.name,
+            nameEng: obj.nameEng,
+            widgets: obj.widgets,
+            element: this.mCanvas,
+            context: this
         });
 
-        this.mWindowWidth   = wWidth;
-        this.mWindowHeight  = wHeight;
-        this.mViewWidth     = viewWidth;
-        this.mViewHeight    = viewHeight;
-        this.mLayout        = layout;
-        this.mZoomFactor    = zoomFactor;
+        this.mWindowWidth = wWidth;
+        this.mWindowHeight = wHeight;
+        this.mViewWidth = viewWidth;
+        this.mViewHeight = viewHeight;
+        this.mLayout = layout;
+        this.mZoomFactor = zoomFactor;
         this.mWidgetsChangedListener = null;
         this.mFocusChangedListener = null;
 
@@ -424,11 +437,11 @@ define(function (require, exports, module) {
      * @param viewHeight
      */
     LayoutEditor.prototype.resize = function (viewWidth, viewHeight) {
-        var zx          = (viewWidth - RULER_WIDTH) / this.mLayout.mWidth;
-        var zy          = (viewHeight - RULER_WIDTH) / this.mLayout.mHeight;
+        var zx = (viewWidth - RULER_WIDTH) / this.mLayout.mWidth;
+        var zy = (viewHeight - RULER_WIDTH) / this.mLayout.mHeight;
         this.mZoomFactor = Math.min(zx, zy) * MIN_CANVAS_SCALE;
-        this.mWindowWidth      = viewWidth - RULER_WIDTH;
-        this.mWindowHeight     = viewHeight - RULER_WIDTH;
+        this.mWindowWidth = viewWidth - RULER_WIDTH;
+        this.mWindowHeight = viewHeight - RULER_WIDTH;
         this.onResize();
     };
 
@@ -455,7 +468,7 @@ define(function (require, exports, module) {
      * 将LayoutEditor附着在DOM元素上
      * @param el
      */
-    LayoutEditor.prototype.attachToDOM  = function (el) {
+    LayoutEditor.prototype.attachToDOM = function (el) {
         this.onDraw();
         el.appendChild(this.mElement);
         var self = this, $el = $(el);
@@ -477,7 +490,7 @@ define(function (require, exports, module) {
      * @returns {number|*}
      */
     LayoutEditor.prototype.getZoomFactor = function () {
-        return this.mZoomFactor;  
+        return this.mZoomFactor;
     };
 
     /**
@@ -534,44 +547,44 @@ define(function (require, exports, module) {
      */
     function Layout(obj) {
 
-        this.mWidth             = obj.width;
-        this.mHeight            = obj.height;
-        this.mBackgroundColor   = obj.backgroundColor;
-        this.mBackgroundImage   = obj.backgroundImage;
-        this.mTopMargin         = obj.topMargin;
-        this.mBottomMargin      = obj.bottomMargin;
-        this.mLeftMargin        = obj.leftMargin;
-        this.mRightMargin       = obj.rightMargin;
-        this.mId                = obj.id;
-        this.mName              = obj.name;
-        this.mNameEng           = obj.nameEng;
-        this.mElement           = obj.element;
-        this.mContext           = obj.context;
+        this.mWidth = obj.width;
+        this.mHeight = obj.height;
+        this.mBackgroundColor = obj.backgroundColor;
+        this.mBackgroundImage = obj.backgroundImage;
+        this.mTopMargin = obj.topMargin;
+        this.mBottomMargin = obj.bottomMargin;
+        this.mLeftMargin = obj.leftMargin;
+        this.mRightMargin = obj.rightMargin;
+        this.mId = obj.id;
+        this.mName = obj.name;
+        this.mNameEng = obj.nameEng;
+        this.mElement = obj.element;
+        this.mContext = obj.context;
 
-        this.mWidgets           = [];
-        this.mColorIterator     = createColorIterator();
-        
-        this.mFocusMask                     = document.createElement('div');
-        this.mFocusMask.style.position      = 'absolute';
-        this.mContent                       = document.createElement('div');
+        this.mWidgets = [];
+        this.mColorIterator = createColorIterator();
+
+        this.mFocusMask = document.createElement('div');
+        this.mFocusMask.style.position = 'absolute';
+        this.mContent = document.createElement('div');
         this.mContent.appendChild(this.mFocusMask);
-        this.mContent.style.position        = 'absolute';
-        this.mContent.style.top             = this.mTopMargin + 'px';
-        this.mContent.style.left            = this.mLeftMargin + 'px';
-        this.mContent.style.backgroundSize  = '100% 100%';
+        this.mContent.style.position = 'absolute';
+        this.mContent.style.top = this.mTopMargin + 'px';
+        this.mContent.style.left = this.mLeftMargin + 'px';
+        this.mContent.style.backgroundSize = '100% 100%';
         this.mElement.appendChild(this.mContent);
         this.mElement.style.boxShadow = '0 5px 10px 0 rgba(0, 0, 0, 0.26)';
 
         /************* focus on last widget ***************/
-        var lastWidget  = null, self = this;
+        var lastWidget = null, self = this;
         obj.widgets.forEach(function (el) {
-            var widget  = Widget.create(el, self);
+            var widget = Widget.create(el, self);
             self.addWidget(widget);
-            lastWidget  = widget;
+            lastWidget = widget;
         });
         this.mFocusedWidget = lastWidget;
         /**************** end of this section **************/
-        
+
     }
 
     Layout.prototype.toJSON = function () {
@@ -602,6 +615,7 @@ define(function (require, exports, module) {
                 url: this.mBackgroundImage.url,
                 id: this.mBackgroundImage.id,
                 type: this.mBackgroundImage.type,
+                download_auth_type: this.mBackgroundImage.download_auth_type
             } : {
                 id: 0,
                 type: 'Unknown'
@@ -676,7 +690,8 @@ define(function (require, exports, module) {
     Layout.prototype.setBackgroundImage = function (backgroundImage) {
         this.mBackgroundImage = backgroundImage;
         if (this.mBackgroundImage && this.mBackgroundImage.type === 'Image') {
-            this.mContent.style.backgroundImage = 'url(' + this.mBackgroundImage.url + ')';
+            var realUrl = UTIL.getRealURL(this.mBackgroundImage.download_auth_type, this.mBackgroundImage.url);
+            this.mContent.style.backgroundImage = 'url(' + realUrl + ')';
         } else {
             this.mContent.style.backgroundImage = 'none';
         }
@@ -760,10 +775,10 @@ define(function (require, exports, module) {
             l2 = widget.mLeft * zoomFactor + WIDGET_BORDER_TOLERATE;
             t1 = widget.mTop * zoomFactor - WIDGET_BORDER_TOLERATE;
             t2 = widget.mTop * zoomFactor + WIDGET_BORDER_TOLERATE;
-            r1 = (widget.mLeft  + widget.mWidth)    * zoomFactor - WIDGET_BORDER_TOLERATE;
-            r2 = (widget.mLeft  + widget.mWidth)    * zoomFactor + WIDGET_BORDER_TOLERATE;
-            b1 = (widget.mTop   + widget.mHeight)   * zoomFactor - WIDGET_BORDER_TOLERATE;
-            b2 = (widget.mTop   + widget.mHeight)   * zoomFactor + WIDGET_BORDER_TOLERATE;
+            r1 = (widget.mLeft + widget.mWidth) * zoomFactor - WIDGET_BORDER_TOLERATE;
+            r2 = (widget.mLeft + widget.mWidth) * zoomFactor + WIDGET_BORDER_TOLERATE;
+            b1 = (widget.mTop + widget.mHeight) * zoomFactor - WIDGET_BORDER_TOLERATE;
+            b2 = (widget.mTop + widget.mHeight) * zoomFactor + WIDGET_BORDER_TOLERATE;
             if (ry < b2 && ry > t1) {
                 if (rx < r1 && rx > l2) {
                     if (ry > t2) {
@@ -836,11 +851,11 @@ define(function (require, exports, module) {
     Layout.prototype.focus = function (widget) {
         this.mFocusedWidget = widget;
         var zoomFactor = this.mContext.mZoomFactor;
-        this.mFocusMask.style.top         = widget ? this.mFocusedWidget.mTop   * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.left        = widget ? this.mFocusedWidget.mLeft  * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.width       = widget ? this.mFocusedWidget.mWidth * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.height      = widget ? this.mFocusedWidget.mHeight    * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.border      = widget ? 'solid 1px rgb(0,255,255)' : 'none';
+        this.mFocusMask.style.top = widget ? this.mFocusedWidget.mTop * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.left = widget ? this.mFocusedWidget.mLeft * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.width = widget ? this.mFocusedWidget.mWidth * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.height = widget ? this.mFocusedWidget.mHeight * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.border = widget ? 'solid 1px rgb(0,255,255)' : 'none';
         this.mContext.notifyFocusChanged();
     };
 
@@ -864,9 +879,9 @@ define(function (require, exports, module) {
      */
     Layout.prototype.onDraw = function () {
         var zoomFactor = this.mContext.mZoomFactor;
-        this.mElement.style.width  = this.mWidth  * zoomFactor + 'px';
+        this.mElement.style.width = this.mWidth * zoomFactor + 'px';
         this.mElement.style.height = this.mHeight * zoomFactor + 'px';
-        this.mContent.style.width  = (this.mWidth - this.mLeftMargin - this.mRightMargin) * zoomFactor + 'px';
+        this.mContent.style.width = (this.mWidth - this.mLeftMargin - this.mRightMargin) * zoomFactor + 'px';
         this.mContent.style.height = (this.mHeight - this.mTopMargin - this.mBottomMargin) * zoomFactor + 'px';
         this.setBackgroundColor(this.mBackgroundColor);
         this.setBackgroundImage(this.mBackgroundImage);
@@ -907,7 +922,7 @@ define(function (require, exports, module) {
         if (typeof width !== 'number' || width < 0) {
             return false;
         }
-        for ( var i = 0; i < this.mWidgets.length; i++) {
+        for (var i = 0; i < this.mWidgets.length; i++) {
             if (this.mWidgets[i].getLeft() + this.mWidgets[i].getWidth() > width) {
                 return false;
             }
@@ -946,7 +961,7 @@ define(function (require, exports, module) {
         if (typeof height !== 'number' || height < 0) {
             return false;
         }
-        for ( var i = 0; i < this.mWidgets.length; i++) {
+        for (var i = 0; i < this.mWidgets.length; i++) {
             if (this.mWidgets[i].getTop() + this.mWidgets[i].getHeight() > height) {
                 return false;
             }
@@ -978,22 +993,22 @@ define(function (require, exports, module) {
      * @constructor
      */
     function Widget(obj, layout) {
-        this.mLeft      = obj.left;
-        this.mTop       = obj.top;
-        this.mWidth     = obj.width;
-        this.mHeight    = obj.height;
-        this.mId        = obj.id;
-        this.mType      = obj.type;
-        this.mTypeName  = obj.typeName;
-        this.mLayout    = layout;
-        this.mContext   = layout.mContext;
-        this.mElement   = document.createElement('div');
+        this.mLeft = obj.left;
+        this.mTop = obj.top;
+        this.mWidth = obj.width;
+        this.mHeight = obj.height;
+        this.mId = obj.id;
+        this.mType = obj.type;
+        this.mTypeName = obj.typeName;
+        this.mLayout = layout;
+        this.mContext = layout.mContext;
+        this.mElement = document.createElement('div');
         this.mBackgroundColor = layout.nextColor();
-        this.mElement.style.textAlign       = 'center';
-        this.mElement.style.position        = 'absolute';
-        this.mElement.style.verticalAlign   = 'middle';
-        this.mElement.style.color           = '#ffffff';
-        this.mElement.innerText             = obj.typeName;
+        this.mElement.style.textAlign = 'center';
+        this.mElement.style.position = 'absolute';
+        this.mElement.style.verticalAlign = 'middle';
+        this.mElement.style.color = '#ffffff';
+        this.mElement.innerText = obj.typeName;
     }
 
     /**
@@ -1025,7 +1040,7 @@ define(function (require, exports, module) {
      * @param y
      * @return {boolean}
      */
-    Widget.prototype.translateTo = function(x, y) {
+    Widget.prototype.translateTo = function (x, y) {
         if (x < 0 ||
             y < 0 ||
             x + this.mWidth > this.mLayout.mWidth - this.mLayout.mLeftMargin - this.mLayout.mRightMargin ||
@@ -1033,8 +1048,8 @@ define(function (require, exports, module) {
         ) {
             return false;
         }
-        this.mLeft  = x;
-        this.mTop   = y;
+        this.mLeft = x;
+        this.mTop = y;
         this.onResize();
         return true;
     };
@@ -1052,8 +1067,8 @@ define(function (require, exports, module) {
      * @param obj
      */
     Widget.prototype.resize = function (obj) {
-        this.mLeft  = obj.left;
-        this.mTop   = obj.top;
+        this.mLeft = obj.left;
+        this.mTop = obj.top;
         this.mWidth = obj.width;
         this.mHeight = obj.height;
         this.onResize();
@@ -1074,9 +1089,9 @@ define(function (require, exports, module) {
      */
     Widget.prototype.onDraw = function () {
         this.mElement.style.backgroundColor = this.mBackgroundColor;
-        this.mElement.style.top             = this.mTop    * this.mContext.getZoomFactor() + 'px';
-        this.mElement.style.left            = this.mLeft   * this.mContext.getZoomFactor() + 'px';
-        this.mElement.style.width           = this.mWidth  * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.top = this.mTop * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.left = this.mLeft * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.width = this.mWidth * this.mContext.getZoomFactor() + 'px';
         this.mElement.style.lineHeight =
             this.mElement.style.height =
                 this.mHeight * this.mContext.getZoomFactor() + 'px';
@@ -1232,7 +1247,8 @@ define(function (require, exports, module) {
         //}
     };
 
-    Widget.prototype.showPreview = function () {};
+    Widget.prototype.showPreview = function () {
+    };
 
     Widget.prototype.hidePreview = function () {
         while (this.mElement.firstChild) {
@@ -1248,6 +1264,7 @@ define(function (require, exports, module) {
     function ImageWidget() {
         Widget.apply(this, arguments);
     }
+
     ImageWidget.prototype = Object.create(Widget.prototype);
     ImageWidget.prototype.constructor = ImageWidget;
     ImageWidget.prototype.showPreview = function (data) {
@@ -1255,7 +1272,9 @@ define(function (require, exports, module) {
         while (this.mElement.firstChild) {
             this.mElement.removeChild(this.mElement.firstChild);
         }
-
+        if (data.material == undefined) {
+            data.material = "";
+        }
         if (data.material.length === 0) {
             this.mElement.textContent = this.mTypeName;
             return;
@@ -1266,7 +1285,7 @@ define(function (require, exports, module) {
         var img = document.createElement('img');
         img.setAttribute('width', '100%');
         img.setAttribute('height', '100%');
-        img.setAttribute('src', data.material);
+        img.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
         this.mElement.appendChild(img);
 
     };
@@ -1282,10 +1301,11 @@ define(function (require, exports, module) {
     function VideoWidget() {
         Widget.apply(this, arguments);
     }
+
     VideoWidget.prototype = Object.create(Widget.prototype);
     VideoWidget.prototype.constructor = VideoWidget;
     VideoWidget.prototype.showPreview = function (data) {
-        
+
         function suffix(suffix) {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         }
@@ -1294,6 +1314,9 @@ define(function (require, exports, module) {
             this.mElement.removeChild(this.mElement.firstChild);
         }
 
+        if (data.material == undefined) {
+            data.material = "";
+        }
         if (data.material.length === 0) {
             this.mElement.textContent = this.mTypeName;
             return;
@@ -1311,7 +1334,7 @@ define(function (require, exports, module) {
             var img = document.createElement('img');
             img.setAttribute('width', '100%');
             img.setAttribute('height', '100%');
-            img.setAttribute('src', data.material);
+            img.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             this.mElement.appendChild(img);
         } else {
             var video = document.createElement('video'),
@@ -1320,15 +1343,21 @@ define(function (require, exports, module) {
             video.setAttribute('loop', '');
             video.setAttribute('width', '100%');
             video.setAttribute('height', '100%');
-            source.setAttribute('src', data.material);
+            video.style.objectFit = 'fill';
+            source.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             source.setAttribute('type', 'video/mp4');
-            source.textContent = '您的浏览器不支持video标签.';
+            source.textContent = '该视频格式不支持预览';
             video.appendChild(source);
             this.mElement.appendChild(video);
         }
+        this.mElement.style.backgroundImage = 'url(resources/img/videoTip.png)';
+        this.mElement.style.backgroundSize = 'contain';
+        this.mElement.style.backgroundRepeat = 'no-repeat';
+        this.mElement.style.backgroundPosition = 'center';
     };
     VideoWidget.prototype.hidePreview = function (data) {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
+        this.mElement.style.backgroundImage = 'none';
         Widget.prototype.hidePreview.call(this);
     };
 
@@ -1339,9 +1368,11 @@ define(function (require, exports, module) {
     function AudioWidget() {
         Widget.apply(this, arguments);
     }
+
     AudioWidget.prototype = Object.create(Widget.prototype);
     AudioWidget.prototype.constructor = AudioWidget;
-    AudioWidget.prototype.showPreview = function (data) {};
+    AudioWidget.prototype.showPreview = function (data) {
+    };
 
     /**
      * Web文本控件
@@ -1350,32 +1381,42 @@ define(function (require, exports, module) {
     function HTMLWidget() {
         Widget.apply(this, arguments);
     }
+
     HTMLWidget.prototype = Object.create(Widget.prototype);
     HTMLWidget.prototype.constructor = HTMLWidget;
     HTMLWidget.prototype.showPreview = function (data) {
 
-         this.mElement.dataset.background = this.mElement.style.backgroundColor;
-         while (this.mElement.firstChild) {
-             this.mElement.removeChild(this.mElement.firstChild);
-         }
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
 
-         if (data.material.length === 0) {
-         this.mElement.textContent = this.mTypeName;
-             return;
-         }
+        if (data.material == undefined) {
+            data.material = "";
+        }
+        if (data.material.length === 0) {
+            this.mElement.textContent = this.mTypeName;
+            return;
+        }
 
         var scale = this.mContext.mZoomFactor;
         this.mElement.style.backgroundColor = 'transparent';
+        this.mElement.style.overflow = 'hidden';
         if (data.style.type === 'Marquee') {
             var marquee = document.createElement('div');
             marquee.innerHTML = data.material;
             marquee.setAttribute('class', 'marquee layout-preview-text');
             marquee.style.fontSize = (this.mElement.offsetHeight * 0.8) + 'px';
             marquee.style.color = data.style.color;
+            marquee.style.backgroundColor = data.style.backgroundColor;
             this.mElement.appendChild(marquee);
-            $(marquee).marquee({
-                direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right'
-            });
+            if (data.style.speed > 0) {
+                var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
+                $(marquee).marquee({
+                    direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right',
+                    duration: Math.floor(textLength * 1000 / (500 * scale * data.style.speed))
+                });
+            }
         } else {
             var iFrame = document.createElement('iframe');
             iFrame.setAttribute('frameborder', '0');
@@ -1384,14 +1425,23 @@ define(function (require, exports, module) {
             iFrame.setAttribute('allowtransparency', 'true');
             iFrame.style.width =
                 iFrame.style.height = '100%';
-            iFrame.style.overflowY = 'hidden';  
+            iFrame.style.overflowY = 'hidden';
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
             iFrame.srcdoc = '<html><head><style>body {font-size:' +
-                (0.5 * DEFAULT_FONT_SIZE * this.mContext.mZoomFactor) +
-                'px}</style></head><body>' +
+                (0.5 * DEFAULT_FONT_SIZE * scale) +
+                'px;background-color: ' +
+                data.style.backgroundColor
+                + ';}</style></head><body>' +
                 data.material +
                 '</body></html>';
             this.mElement.appendChild(iFrame);
+            var overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            this.mElement.appendChild(overlay);
         }
 
 
@@ -1408,6 +1458,7 @@ define(function (require, exports, module) {
     function ClockWidget() {
         Widget.apply(this, arguments);
     }
+
     ClockWidget.prototype = Object.create(Widget.prototype);
     ClockWidget.prototype.constructor = ClockWidget;
     ClockWidget.prototype.showPreview = function (resource) {
@@ -1418,13 +1469,13 @@ define(function (require, exports, module) {
         }
 
         var format = {
-            Time: 'hh:MM:ss',
-            Date: 'yyyy-mm-dd',
-            Week: 'dddd',
-            DateTime: 'yyyy-mm-dd hh:MM:ss',
-            DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
-            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
-        }[resource.style.Type],
+                Time: 'hh:MM:ss',
+                Date: 'yyyy-mm-dd',
+                Week: 'dddd',
+                DateTime: 'yyyy-mm-dd hh:MM:ss',
+                DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
+                DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
+            }[resource.style.Type],
             now = new Date();
         if (!format) {
             format = 'hh:MM:ss';
@@ -1456,6 +1507,7 @@ define(function (require, exports, module) {
     function WeatherWidget() {
         Widget.apply(this, arguments);
     }
+
     WeatherWidget.prototype = Object.create(Widget.prototype);
     WeatherWidget.prototype.constructor = WeatherWidget;
     WeatherWidget.prototype.showPreview = function (resource) {
@@ -1465,7 +1517,7 @@ define(function (require, exports, module) {
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = 'transparent';
-        this.mElement.style.backgroundImage = 'url(resources/img/weather1.png)';
+        this.mElement.style.backgroundImage = 'url(resources/img/weather2.png)';
         this.mElement.style.backgroundSize = 'contain';
         this.mElement.style.backgroundPosition = 'center';
         this.mElement.style.backgroundRepeat = 'no-repeat';

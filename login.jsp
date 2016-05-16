@@ -36,7 +36,7 @@
     <!-- /.login-logo -->
     <div class="login-box-body" style="background-color: rgba(255,255,255,.85)">
         <!--<p class="login-box-msg">Sign in to start your session</p>-->
-        <h3 style="margin-bottom: 30px;">登录 Clear Cloud 账户</h3>
+        <h3 style="margin-bottom: 30px; text-align: center;">登录 Clear Cloud 账户</h3>
         <form method='POST' action='<c:url value='/j_spring_security_check' />' onsubmit="return inputCheck()">
             <div class="form-group has-feedback">
                 <input id="l_username" type="text" class="form-control" placeholder="账号" onchange="usernameChenge(value)">

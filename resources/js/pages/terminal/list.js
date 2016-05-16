@@ -75,7 +75,7 @@ define(function(require, exports, module) {
     })
 
     // serach
-    $("#term_search").keyup(function(){
+    $("#term_search").keyup(function(event){
       if(event.keyCode == 13) {
         onSearch(event);
       }
@@ -130,7 +130,7 @@ define(function(require, exports, module) {
 
         UTIL.ajax(
           'POST',
-          CONFIG.serverRoot + '/backend_mgt/v2/term', 
+          CONFIG.serverRoot + '/backend_mgt/v2/term',
           JSON.stringify(data),
           function(data){
             if(data.rescode === '200'){
@@ -151,7 +151,7 @@ define(function(require, exports, module) {
 
     // 批量唤醒
     $('#term_batch_start').click(function(){
-      
+
       if($(this).hasClass('disabled')){
         return;
       }
@@ -165,7 +165,7 @@ define(function(require, exports, module) {
 
         UTIL.ajax(
           'POST',
-          CONFIG.serverRoot + '/backend_mgt/v2/term', 
+          CONFIG.serverRoot + '/backend_mgt/v2/term',
           JSON.stringify(data),
           function(data){
             if(data.rescode === '200'){
@@ -196,7 +196,7 @@ define(function(require, exports, module) {
 
         UTIL.ajax(
           'POST',
-          CONFIG.serverRoot + '/backend_mgt/v2/term', 
+          CONFIG.serverRoot + '/backend_mgt/v2/term',
           JSON.stringify(data),
           function(data){
             if(data.rescode === '200'){
@@ -227,9 +227,9 @@ define(function(require, exports, module) {
           "termList" : _checkList
         }
 
-        UTIL.ajax('POST', 
+        UTIL.ajax('POST',
           CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
-          JSON.stringify(data), 
+          JSON.stringify(data),
           function(data){
             if(data.rescode !== '200'){
               alert('移动终端失败')
@@ -275,7 +275,7 @@ define(function(require, exports, module) {
     }
     return boolean;
   }
-  
+
   // hasRunning
   _checkList.hasRunning = function(){
     var boolean = false;
@@ -301,7 +301,7 @@ define(function(require, exports, module) {
   }
 
   function onCheckBoxChange(){
-    
+
     // 设置是否全选
     var ifSelAll = ($('#term_list tr').length === _checkList.length);
     $('#term-list-select-all>i').toggleClass('fa-square-o', !ifSelAll);
@@ -317,16 +317,16 @@ define(function(require, exports, module) {
       return;
     }
     $('#termlist-title').html(_tree.getFocusName(dom));
-    
+
     // loading
     $('#term_list').html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
-    
+
     if(pageNum !== undefined){
       _pageNO = pageNum;
     }else{
       _pageNO = 1;
     }
-    
+
     /*if(_timerLoadTermList){
       clearInterval(_timerLoadTermList);
     }
@@ -337,10 +337,10 @@ define(function(require, exports, module) {
     else{
       return;
     }*/
-    
+
     // loadlist start
     //var searchKeyword = $.trim($('#term_search').val());
- 
+
     var termClassId = $('#termclass-tree').find('.focus').attr('node-id');
 
     if(termClassId === ''){
@@ -371,9 +371,9 @@ define(function(require, exports, module) {
     }
 
     UTIL.ajax(
-      'POST', 
+      'POST',
       CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
-      JSON.stringify(data), 
+      JSON.stringify(data),
       function(data){
         if(data.rescode != 200){
           alert('获取终端列表出错：'+rescode.errInfo);
@@ -418,12 +418,12 @@ define(function(require, exports, module) {
         });
 
         // term_status
-        $('#term_status').html('' + 
+        $('#term_status').html('' +
           ' 在线（' + _termStatusCount.online + '/' + _termStatusCount.total + '） ' +
           ' 下载（' + _termStatusCount.downloadFileNum + '/' + _termStatusCount.downloadAllFileNum + '） ' +
           '预下载（' + _termStatusCount.preDownloadFileNum + '/' + _termStatusCount.preDownloadAllFileNum + '）'
         );
-      
+
         // term_online_status
         $('#term_running').html(_termStatusCount.running + '/' + _termStatusCount.total);
         $('#term_shutdown').html(_termStatusCount.shutdown + '/' + _termStatusCount.total);
@@ -461,17 +461,22 @@ define(function(require, exports, module) {
           var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
           var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
           var snap = (tl[i].Online === 0)?'':'<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
-
+            var diskArr = tl[i].DiskInfo.split("MB");
+            var diskinfo1 = diskArr[0];
+            var diskinfo2 = diskArr[1].substring(1);
+            var restdisk = Number(diskinfo2) - Number(diskinfo1);
+            //console.log(restdisk)
+            var diskinfo = restdisk+"MB/"+diskinfo2+"MB";
           $('#term_list').append('' +
             '<tr channel="'+ tl[i].Channel_Name +'" preChannel="'+ tl[i].PreDownload_Channel_Name +'" tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
               '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
               '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
-              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ tl[i].DiskInfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
-              '<td style="line-height:26px; padding-top:10px;">当前频道：'+ 
+              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ diskinfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
+              '<td style="line-height:26px; padding-top:10px;">当前频道：'+
               ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ChannelName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName)) +
-              '<br />当前节目：'+ 
+              '<br />当前节目：'+
               ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName)) +
-              '<br />当前视频：'+ 
+              '<br />当前视频：'+
               ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
               '</td>' +
               '<td  style=" padding-top:11px;">' +
@@ -495,7 +500,7 @@ define(function(require, exports, module) {
               '<td  style="padding-top:30px; float:right; position:relative">' +
               snap + '<button style=" position:relative; margin-top:-16px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
               '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
-              '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' + 
+              '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' +
               '</td>' +
             '</tr>'
           )
@@ -581,9 +586,9 @@ define(function(require, exports, module) {
               "uploadURL": CONFIG.Resource_UploadURL
             }
             UTIL.ajax(
-              'POST', 
-              CONFIG.serverRoot + '/backend_mgt/v2/term', 
-              JSON.stringify(data), 
+              'POST',
+              CONFIG.serverRoot + '/backend_mgt/v2/term',
+              JSON.stringify(data),
               function(data){
                 if(data.rescode !== '200'){
                   alert('截屏失败，请重试');
@@ -610,7 +615,7 @@ define(function(require, exports, module) {
       }catch(error){
         // console.error("$('#term-table-pager').jqPaginator 未创建");
       }
-      
+
       var totalCounts = 1;
 
       $('#term-table-pager').jqPaginator({
@@ -644,12 +649,12 @@ define(function(require, exports, module) {
       };
 
       // term_status
-      $('#term_status').html('' + 
+      $('#term_status').html('' +
         ' 在线（0/0） ' +
         ' 下载（0/0） ' +
         '预下载（0/0）'
       );
-    
+
       // term_online_status
       $('#term_running').html('0/0');
       $('#term_shutdown').html('0/0');
@@ -678,8 +683,8 @@ define(function(require, exports, module) {
     };
 
     UTIL.ajax(
-      'POST', 
-      CONFIG.serverRoot+'/backend_mgt/v2/termcategory', 
+      'POST',
+      CONFIG.serverRoot+'/backend_mgt/v2/termcategory',
       JSON.stringify(dataParameter),
       function(data){
         if(data.rescode === '200'){
@@ -720,8 +725,8 @@ define(function(require, exports, module) {
 
             var newNode = [
               {
-                "children": [], 
-                "id": "", 
+                "children": [],
+                "id": "",
                 "name": "未命名终端分类"
               }
             ]
@@ -752,12 +757,12 @@ define(function(require, exports, module) {
                 addTermClassName(input);
               })
             });
-            
+
             function addTermClassName(input){
               var change = $.trim(input.val());
               var a = input.parent().parent();
               var t = a.children('span');
-              
+
               // 终端组分类名称为空时设置名称为：未命名终端分类
               if(change === ''){
                 change = '未命名终端分类';
@@ -773,9 +778,9 @@ define(function(require, exports, module) {
               }
 
               UTIL.ajax(
-                'POST', 
+                'POST',
                 CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
-                JSON.stringify(data), 
+                JSON.stringify(data),
                 function(data){
                   var a = $('#termclass-tree').find('.focus').children('a');
                   var input = a.children('div').children('input');
@@ -826,9 +831,9 @@ define(function(require, exports, module) {
                   }
 
                   UTIL.ajax(
-                    'POST', 
+                    'POST',
                     CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
-                    JSON.stringify(data), 
+                    JSON.stringify(data),
                     function(data){
                       if(data.rescode == '200'){
                         var focus = $('#termclass-tree').find('.focus');
@@ -867,7 +872,7 @@ define(function(require, exports, module) {
               var change = $.trim(input.val());
               var a = input.parent().parent();
               var t = a.children('span');
-              
+
               // 终端组分类名称为空时恢复原名称，不提交修改
               if(change === ''){
                 t.css('display','inline-block');
@@ -890,11 +895,11 @@ define(function(require, exports, module) {
                   "newName": change
                 }
                 _editTreeClassInput = input;
-                
+
                 UTIL.ajax(
-                  'POST', 
+                  'POST',
                   CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
-                  JSON.stringify(data), 
+                  JSON.stringify(data),
                   function(data){
                     var a = _editTreeClassInput.parent().parent();
                     var input = a.children('div').children('input');

@@ -74,7 +74,7 @@
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <li><a id="dpUpl" title="点击打开上传页面"><i class="glyphicon glyphicon-cloud"></i></a></li>
+          <li><a id="dpUpl" title="点击打开上传页面"><i class="glyphicon glyphicon-cloud-upload"></i></a></li>
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a class="dropdown-toggle" data-toggle="dropdown">
@@ -108,7 +108,7 @@
 
   <!-- 全屏弹层区域 -->
   <section id="cover_area"></section>
-
+  <section id="cover_area2"></section>
   <!-- =============================================== -->
 
   <!-- Left side column. contains the sidebar -->
