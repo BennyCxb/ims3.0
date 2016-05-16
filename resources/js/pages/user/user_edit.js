@@ -26,6 +26,7 @@ define(function (require, exports, module) {
         	var uName = $("#user_name1").val();
 			var uPassword = $("#password1").val();
 			var uEmail = $("#email1").val();
+            var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/; //验证邮箱的正则表达式
 			var uDescription = $("#description1").val();
 			if(uPassword==="" || uName===""){
 				alert("用户名或密码不能为空！");
@@ -44,7 +45,11 @@ define(function (require, exports, module) {
 					alert("用户名已存在！")
 					$("#user_name1")[0].focus();
 					return false;
-					}else{
+					}else if(!reg.test(uEmail) && uEmail!=""){
+                        alert("邮箱格式不正确");
+                        $("#email1")[0].focus();
+                        return false;
+                } else{
 						var name = {
 							USERNAME: uName,
 							PASSWORD: uPassword,
@@ -81,6 +86,7 @@ define(function (require, exports, module) {
 			$("#email1").val("");
 			$("#description1").val("");
 			$(".modal-title").html("<i class='fa fa-user'></i>新建用户");
+            var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/; //验证邮箱的正则表达式
 			//确定
 			$("#user_create1").click(function () {
 				var uName = $("#user_name1").val();
@@ -92,8 +98,12 @@ define(function (require, exports, module) {
 					 $("#user_name1")[0].focus();
 					 type = "";
 					return false
-					}
-				var name = {
+					}else if(!reg.test(uEmail) && uEmail!=""){
+                    alert("邮箱格式不正确");
+                    $("#email1")[0].focus();
+                    return false;
+                }
+                var name = {
 					USERNAME: uName,
 					PASSWORD: uPassword,
 					EMAIL:uEmail,
