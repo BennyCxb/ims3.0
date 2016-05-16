@@ -13,7 +13,6 @@ define(function (require, exports, module) {
 		var uPass = USERS.userPass;
 		var rID = Number(USERS.roleID);
 		var type = USERS.type;
-        var _pageNO = Number(USERS.pageNum);
 		if(type==="edit"){
 		$("#user_name1").val(uName1);
 		$("#email1").val(uEmail);
@@ -67,7 +66,7 @@ define(function (require, exports, module) {
 							else{
 								alert("修改用户失败")
 								}	
-							USERS.loadUsersPage(_pageNO);
+							USERS.loadUsersPage(1);			
 						});
 						}
 				})
@@ -120,7 +119,7 @@ define(function (require, exports, module) {
 						type = ""; 
 						alert("添加用户失败")
 						}	
-					USERS.loadUsersPage(_pageNO);
+					USERS.loadUsersPage(1);			
 				});
         });
 			}

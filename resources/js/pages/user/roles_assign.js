@@ -9,17 +9,19 @@ define(function (require, exports, module) {
 	var uncheckedArr = [];
 
     exports.init = function () {
-        var _pageNO = Number(ROLES.pageNum);
+				
 		exports.loadUserPage(1); //加载默认页面
 		 //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
+			exports.loadUserPage(1);
+            parent.location.reload();
         });
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
 		//确定
 		$("#users_updata").click(function(){
-			var suc = true;
+			var suc=true;
 			var checked = $('.assign');
 			for(var i=0;i<checked.length;i++){	
 				var cheDiv = checked.eq(i).parent();
@@ -88,7 +90,7 @@ define(function (require, exports, module) {
 			if(suc){alert("分配成功")}else{alert("分配失败")}
 			checkedArr=[];
 			uncheckedArr=[];
-			ROLES.loadRolesPage(_pageNO);
+			ROLES.loadRolesPage(1);
 			UTIL.cover.close();
 			})
     }
