@@ -64,7 +64,7 @@ define(function (require, exports, module) {
                 if (type === 'change') {
                     _pageNO = num;
 					$('#roles-table-pager').jqPaginator('destroy');
-					loadRolesPage(_pageNO);
+                    exports.loadRolesPage(_pageNO);
                 }
             }
         });
