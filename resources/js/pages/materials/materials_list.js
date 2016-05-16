@@ -11,7 +11,6 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         checkCheck();
-        //checkJurisdiction();  //添加资源权限
         bind();
         exports.loadPage(1, 1); //加载默认页面
     }
@@ -607,53 +606,6 @@ define(function (require, exports, module) {
         var page = "resources/pages/materials/materials_addText.html";
         $("#addtext_box").load(page);
         $("#list_box").css("display", "none");
-    }
-
-    //检索添加资源权限
-    function checkJurisdiction() {
-        var data = JSON.stringify({
-            action: 'GetFunctionModules',
-            project_name: CONFIG.projectName,
-            UserName: $('#USER-NAME').html(),
-        });
-        var _url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
-        UTIL.ajax('post', _url, data, function (json) {
-            var jdtData = json.FunctionModules;
-            for (var a = 0; a < jdtData.length; a++) {
-                var moduleId = jdtData[a].ModuleID;
-                if (moduleId == 4) {
-                    if (jdtData[a].ReadWriteAuth == 1) {
-                        $("#ad-material-list").append('<li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>' +
-                            '<li><a id="mtr_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>' +
-                            '<li><a id="mtr_addLive"><i class="fa fa-circle-o text-light-blue"></i> 添加直播</a></li>'
-                        );
-                    }
-                }
-            }
-
-            // 上传文件按钮点击
-            $('#mtr_upload').click(function () {
-                $('#file').trigger("click");
-            })
-            $("#file").change(function () {
-                if ($("#page_upload").children().length == 0) {
-                    INDEX.upl();
-                } else {
-                    $("#page_upload").css("display", "flex");
-                    $("#upload_box").css("display", "block");
-                    MTRU.beginUpload();
-                }
-
-            });
-            // 添加文本按钮点击
-            $('#mtr_addText').click(function () {
-                openEditor();
-            })
-            // 添加直播按钮点击
-            $('#mtr_addLive').click(function () {
-                openLive();
-            })
-        });
     }
 
     function checkCheck() {

@@ -82,7 +82,6 @@ define(function (require, exports, module) {
         exports.loadTermlogPage(1);      
     }
 
-
     function render(json) {
         //翻页
         var totalPages = Math.ceil(json.total / nDisplayItems);
