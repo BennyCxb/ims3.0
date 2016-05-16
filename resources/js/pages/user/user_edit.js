@@ -114,7 +114,7 @@ define(function (require, exports, module) {
 					}else if(msg.rescode==500){
 						type = ""; 
 						alert("用户名已存在!");
-						$("#user_name1")[0].focus();
+						$("#user_name1").focus();
 					}else{
 						type = ""; 
 						alert("添加用户失败")

@@ -6,13 +6,6 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         exports.loadUsersPage(1); //加载默认页面
-        //添加
-        $("#user_add").click(function () {
-            //var page = "resources/pages/materials/materials_edit.html"
-            //INDEX.coverArea(page);
-			exports.type = "add";
-			UTIL.cover.load('resources/pages/user/user_edit.html');
-        })
     }
 
     // 加载页面数据
@@ -120,6 +113,13 @@ define(function (require, exports, module) {
                		$("#usersTable tbody").append(roltr);
 				}
             }
+            //添加
+            $("#user_add").click(function () {
+                //var page = "resources/pages/materials/materials_edit.html"
+                //INDEX.coverArea(page);
+                exports.type = "add";
+                UTIL.cover.load('resources/pages/user/user_edit.html');
+            })
 			//删除
 			$(".users_delete").click(function () {
 				var self = $(this);
