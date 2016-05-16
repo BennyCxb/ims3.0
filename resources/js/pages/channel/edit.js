@@ -493,8 +493,10 @@ define(function (require, exports, module) {
             if (!selectedProgram || selectedProgram.schedule_type !== deleteType) {
                 alert('没有选中节目');
                 return;
+            };
+            if (confirm("确定删除该节目？")) {
+                onDeleteProgram(selectedProgram.id);
             }
-            onDeleteProgram(selectedProgram.id);
         });
         $('#channel-editor-wrapper .channel-program-list ul').delegate('li', 'click', function () {
             var programId = Number(this.getAttribute('data-id')),

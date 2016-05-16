@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     exports.init = function () {
 		var rName = ROLES.roleName;
 		var rID = Number(ROLES.roleID);
+        var _pageNO = Number(ROLES.pageNum);
 		var isNew = true;
 		//var loadType = ROLES.loadType;
 		var type = ROLES.type;
@@ -96,7 +97,7 @@ define(function (require, exports, module) {
                             } else {
                                 flag5 = false;
                             }
-                            //ROLES.loadRolesPage(1);
+                            //ROLES.loadRolesPage(_pageNO);
                         });
                         var ajax_data = JSON.stringify({
                             project_name: CONFIG.projectName,
@@ -151,13 +152,13 @@ define(function (require, exports, module) {
                                 //ROLES.roleID = NaN;
                                 exports.isCreate = false;
                                 UTIL.cover.close();
-                                ROLES.loadRolesPage(1);
+                                ROLES.loadRolesPage(_pageNO);
                             } else {
                                 alert("创建成功！")
                                 //parent.location.reload();
                                 exports.isCreate = false;
                                 UTIL.cover.close();
-                                ROLES.loadRolesPage(1);
+                                ROLES.loadRolesPage(_pageNO);
                             }
                         } else {
                             if (!isNew) {
@@ -191,7 +192,7 @@ define(function (require, exports, module) {
                                     } else {
                                         flag5 = false;
                                     }
-                                    //ROLES.loadRolesPage(1);
+                                    //ROLES.loadRolesPage(_pageNO);
                                 });
                                 var ajax_data = JSON.stringify({
                                     project_name: CONFIG.projectName,
@@ -248,13 +249,13 @@ define(function (require, exports, module) {
                                         //ROLES.roleID = NaN;
                                         exports.isCreate = false;
                                         UTIL.cover.close();
-                                        ROLES.loadRolesPage(1);
+                                        ROLES.loadRolesPage(_pageNO);
                                     } else {
                                         alert("创建成功！")
                                         //parent.location.reload();
                                         exports.isCreate = false;
                                         UTIL.cover.close();
-                                        ROLES.loadRolesPage(1);
+                                        ROLES.loadRolesPage(_pageNO);
                                     }
                                 } else {
                                     if (!isNew) {
@@ -379,7 +380,7 @@ define(function (require, exports, module) {
                         if (msg.rescode == 200) {
                             ROLEEDIT.roleID = NaN;
                             UTIL.cover.close();
-                            ROLES.loadRolesPage(1); //刷新页面
+                            ROLES.loadRolesPage(_pageNO); //刷新页面
                         } else {
 
                         }
@@ -387,12 +388,12 @@ define(function (require, exports, module) {
                 }else{
                     ROLES.roleID = NaN;
                     UTIL.cover.close();
-                    ROLES.loadRolesPage(1); //刷新页面
+                    ROLES.loadRolesPage(_pageNO); //刷新页面
                 }
             }else{
                 ROLES.roleID = NaN;
                 UTIL.cover.close();
-                ROLES.loadRolesPage(1); //刷新页面
+                ROLES.loadRolesPage(_pageNO); //刷新页面
             }
 
         });
