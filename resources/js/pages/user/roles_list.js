@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 	var userListArr = [];
 
     exports.init = function () {
-        exports.loadRolesPage(_pageNO); //加载默认页面
+        exports.loadRolesPage(1); //加载默认页面
         //添加
         $("#roles_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"

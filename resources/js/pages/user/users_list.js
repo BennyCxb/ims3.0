@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     var nDisplayItems = 10;
     var _pageNO = 1;
     exports.init = function () {
-        exports.loadUsersPage(_pageNO); //加载默认页面
+        exports.loadUsersPage(1); //加载默认页面
     }
 
     // 加载页面数据
