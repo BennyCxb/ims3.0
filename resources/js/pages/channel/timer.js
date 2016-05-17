@@ -78,6 +78,57 @@ define(function (require, exports, module) {
             $('#channel-editor-timer .day-selector input[type="checkbox"]')
                 .iCheck(bool ? 'check' : 'uncheck');
         });
+        //判断全选按钮
+        //周
+        $('.day-selector ul input').on('ifToggled',function(){
+            var days =  $('.day-selector ul input');
+            var allCheck = true;
+            //console.log(days.length);
+            for(var i = 0;i <days.length;i++){
+                if(!days[i].checked){
+                    allCheck = false;
+                }
+            }
+            if(allCheck==true){
+                $('.day-selector .check-all-day').parent().addClass('checked');
+            }else{
+                $('.day-selector .check-all-day').parent().removeClass('checked');
+            }
+        });
+        //月
+        $('.month-selector ul input').on('ifToggled',function(){
+            var months =  $('.month-selector ul input');
+            var allCheck = true;
+            //console.log(days.length);
+            for(var i = 0;i <months.length;i++){
+                if(!months[i].checked){
+                    allCheck = false;
+                }
+            }
+            if(allCheck==true){
+                $('.month-selector .check-all-month').parent().addClass('checked');
+            }else{
+                $('.month-selector .check-all-month').parent().removeClass('checked');
+            }
+        });
+        //日
+        $('.date-selector ul input').on('ifToggled',function(){
+            var dates =  $('.date-selector ul input');
+            var allCheck = true;
+            //console.log(days.length);
+            for(var i = 0;i <dates.length;i++){
+                if(!dates[i].checked){
+                    allCheck = false;
+                }
+            }
+            if(allCheck==true){
+                $('.date-selector .check-all-date').parent().addClass('checked');
+            }else{
+                $('.date-selector .check-all-date').parent().removeClass('checked');
+            }
+        });
+
+
         var checkAllHours = this.tHours.length === 24,
             checkAllMinutes = this.tMinutes.length === 60,
             checkAllSeconds = this.tSeconds.length === 60;
