@@ -259,7 +259,7 @@ __p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; wid
 ((__t=(height))==null?'':__t)+
 '" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">背景色</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
 }
 return __p;
 };
@@ -332,17 +332,21 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<tr data-layout-id="'+
 ((__t=(id))==null?'':__t)+
-'"> <td style="width: 32px"><input type="checkbox"></td> <td><b><a href="#layout/edit?id='+
+'"> <td class="mod_checkbox" style="width: 32px"><input type="checkbox"></td> <td class="mod_name"><b><a href="#layout/edit?id='+
 ((__t=(id))==null?'':__t)+
 '" class="btn-table-detail">'+
 ((__t=(name))==null?'':__t)+
-'</a></b></td> <td style="text-align:center;">'+
+'</a></b></td> <td class="mod_size_center">'+
 ((__t=(width))==null?'':__t)+
 '×'+
 ((__t=(height))==null?'':__t)+
-'</td> <td style="text-align:center;">创建人:'+
+'</td><!--<td>'+
+((__t=(height))==null?'':__t)+
+'</td>--><!--<td>背景色:'+
+((__t=(background_color))==null?'':__t)+
+'</td>--> <td class="mod_user_center">'+
 ((__t=(operator))==null?'':__t)+
-'</td> <td style="text-align:center;">创建时间:'+
+'</td> <td class="mod_create_time_center">'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
 }

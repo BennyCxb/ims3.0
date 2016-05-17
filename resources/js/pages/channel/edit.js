@@ -565,6 +565,13 @@ define(function (require, exports, module) {
      */
     function onSaveChannel() {
         if (!inputCheck()) return;
+        //alert('保存频道可能需要几分钟时间，请耐心等待!');
+        //$("#channel-editor-wrapper").append('<div id="dialog" title="提示">'+
+        //    '<p>保存频道可能需要几分钟时间，请耐心等待!</p>'+
+        //'</div>');
+        //$(function(){
+        //    $("#dialog").dialog();
+        //});
         $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled", "disabled");
         setTimeout(removeDisabled, config.letTimeout);
         remoteCreateOrUpdateChannel()
