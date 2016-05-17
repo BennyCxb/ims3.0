@@ -310,7 +310,7 @@ define(function (require, exports, module) {
 		UTIL.ajax('post',url1,data1,function(data){
 			if(data.FunctionModules != undefined){
 				var rolData = data.FunctionModules;
-					for (var i = 0; i < rolData.length; i++) {	
+					for (var i = 0; i < rolData.length; i++) {
 						var auth = rolData[i].ReadWriteAuth;
 						var ModuleID = rolData[i].ModuleID;	
 						var ModuleName = rolData[i].ModuleName;
@@ -342,9 +342,19 @@ define(function (require, exports, module) {
 					checkboxClass: 'icheckbox_flat-blue',
 					radioClass: 'iradio_flat-blue'
 				});
+                //根据审核开关状态隐藏/显示审核权限列
+                hasCheckList();
 			})
 				 
 			});
     }
 
+    function hasCheckList(){
+        var checkTr = $('#moduleTable tr:first-child');
+        if (UTIL.getLocalParameter('config_checkSwitch') == '0'){
+            checkTr.hide();
+        }else{
+            return;
+        }
+    }
 })
