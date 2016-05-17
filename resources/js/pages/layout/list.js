@@ -37,18 +37,18 @@ define(function(require, exports, module) {
 			console.log(layoutId);
 			ev.stopPropagation();
 		});
-		$('#layout-list-controls .select-all').click(function (ev) {
-			var hasUncheckedItems = false;
-			$('#layout-table div').each(function (idx, el) {
-				if (!(hasUncheckedItems || $(el).hasClass('checked'))) {
-					hasUncheckedItems = true;
-				}
-			});
-			$('#layout-table tr').each(function (idx, el) {
-				$(el).iCheck(hasUncheckedItems ? 'check' : 'uncheck');
-			});
-			onSelectedItemChanged();
-		});
+        $('#layout-list-controls .select-all').click(function (ev) {
+            var hasUncheckedItems = false;
+            $('#layout-table div').each(function (idx, el) {
+                if (!(hasUncheckedItems || $(el).hasClass('checked'))) {
+                    hasUncheckedItems = true;
+                }
+            });
+            $('#layout-table tr').each(function (idx, el) {
+                $(el).iCheck(hasUncheckedItems ? 'check' : 'uncheck');
+            });
+            onSelectedItemChanged();
+        });
 		$('#layout-list-controls .btn-delete').click(onDeleteLayout);
 
 		//$('#channel-list-search').keyup(function (ev) {
@@ -79,7 +79,7 @@ define(function(require, exports, module) {
     }
 
     function onSelectedItemChanged(adjustCount) {
-		var selectedCount = typeof(adjustCount) === 'number' ? adjustCount: 0;
+		var selectedCount = typeof(adjustCount) === 'number' ? adjustCount+1: 1;
 		$('#layout-table div').each(function (idx, el) {
 			if ($(el).hasClass('checked')) {
 				selectedCount++;
@@ -89,10 +89,10 @@ define(function(require, exports, module) {
 		$('#layout-list-controls .select-all>i')
 			.toggleClass('fa-square-o', hasUncheckedItems)
 			.toggleClass('fa-check-square-o', !hasUncheckedItems);
-		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
+		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 2);
 	}
 
 	function onDeleteLayout(ev) {
