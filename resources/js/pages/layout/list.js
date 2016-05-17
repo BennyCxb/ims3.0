@@ -89,10 +89,10 @@ define(function(require, exports, module) {
 		$('#layout-list-controls .select-all>i')
 			.toggleClass('fa-square-o', hasUncheckedItems)
 			.toggleClass('fa-check-square-o', !hasUncheckedItems);
-		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
+		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 2);
 	}
 
 	function onDeleteLayout(ev) {
