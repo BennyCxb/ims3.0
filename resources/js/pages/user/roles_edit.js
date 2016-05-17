@@ -223,7 +223,7 @@ define(function (require, exports, module) {
                                 if (flag5) {
                                     alert("创建成功！");
                                         UTIL.cover.close();
-                                        ROLES.loadRolesPage(_pageNO);
+                                        ROLES.loadRolesPage(1);
                                 } else {
                                         alert("创建失败！");
                                 }
