@@ -10,6 +10,7 @@ define(function (require, exports, module) {
 
     // 加载页面数据
     exports.loadUsersPage = function (pageNum) {
+        _pageNO = pageNum;
         // loading
         $("#usersTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#usersLisTitle").html("");
