@@ -165,7 +165,7 @@ define(function (require, exports, module) {
                 };
             $('#channel-editor-wrapper .channel-program-layout-footer>ul').append(templates.channel_edit_widget_item(_data));
         }
-        $('#channel-editor-wrapper .channel-program-layout-footer>ul>li:eq(0)').css("border", "3px solid rgb(60, 141, 188)");
+        $('#channel-editor-wrapper .channel-program-layout-footer>ul>li:eq(0)').css("border", "1px solid rgb(60, 141, 188)");
 
     }
 
