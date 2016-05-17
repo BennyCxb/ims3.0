@@ -1411,12 +1411,13 @@ define(function (require, exports, module) {
                 iFrame.style.height = '100%';
             iFrame.style.overflowY = 'hidden';
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
+            var mtrText = data.material.replace(/px/g,'em');
             iFrame.srcdoc = '<html><head><style>body {font-size:' +
-                (0.5 * DEFAULT_FONT_SIZE * scale) +
-                'px;background-color: ' +
+                (0.125 * DEFAULT_FONT_SIZE * scale) +
+                'px; background-color: ' +
                 data.style.backgroundColor
                 + ';}</style></head><body>' +
-                data.material +
+                mtrText +
                 '</body></html>';
             this.mElement.appendChild(iFrame);
             var overlay = document.createElement('div');
@@ -1468,7 +1469,7 @@ define(function (require, exports, module) {
             lines = (text.match(/<br>/g) || []).length + 1,
             cHeight = this.mHeight * this.mContext.mZoomFactor;
         div.style.textAlign = 'center';
-        div.style.fontSize = cHeight * 0.3 + 'px';
+        div.style.fontSize = cHeight * 0.5 + 'px';
         div.style.color = resource.style.TextColor;
         div.style.overflow = 'hidden';
         div.style.whiteSpace = 'nowrap';
