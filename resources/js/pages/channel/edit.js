@@ -1227,26 +1227,28 @@ define(function (require, exports, module) {
         for (var a = 0; a < programList.length; a++) {
             var program = programList[a];
             var errorMsg = "";
-            if (program.lifetime_start.length != 16) {
-                if (program.lifetime_start.length != 19) {
-                    errorMsg = "请输入正确的节目生效时间!\n";
+            if (program != null) {
+                if (program.lifetime_start.length != 16) {
+                    if (program.lifetime_start.length != 19) {
+                        errorMsg = "请输入正确的节目生效时间!\n";
+                        alert(errorMsg);
+                        return false;
+                    }
+                }
+                if (program.lifetime_end.length != 16) {
+                    if (program.lifetime_end.length != 19) {
+                        errorMsg = "请输入正确的节目失效时间!";
+                        alert(errorMsg);
+                        return false;
+                    }
+                }
+                var start_time = new Date(program.lifetime_start);
+                var end_time = new Date(program.lifetime_end);
+                if (start_time > end_time) {
+                    errorMsg = "节目生效时间晚于失效时间，请重新输入!"
                     alert(errorMsg);
                     return false;
                 }
-            }
-            if (program.lifetime_end.length != 16) {
-                if (program.lifetime_end.length != 19) {
-                    errorMsg = "请输入正确的节目失效时间!";
-                    alert(errorMsg);
-                    return false;
-                }
-            }
-            var start_time = new Date(program.lifetime_start);
-            var end_time = new Date(program.lifetime_end);
-            if (start_time > end_time) {
-                errorMsg = "节目生效时间晚于失效时间，请重新输入!"
-                alert(errorMsg);
-                return false;
             }
         }
         return true;

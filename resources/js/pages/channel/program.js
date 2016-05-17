@@ -17,7 +17,8 @@ define(function (require, exports, module) {
         editMode = false,
         widgetId = null,
         container = null;
-    
+
+    //载入
     function load(program, _container) {
         container = _container;
         editor = null;
