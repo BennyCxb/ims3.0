@@ -479,7 +479,7 @@ define(function (require, exports, module) {
                 }
             }
 
-            $(".mtr_time input").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+            $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //显示或隐藏次数
             if ($("#mtrCtrl_playType").val() == "Percent") {
