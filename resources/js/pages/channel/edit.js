@@ -1048,6 +1048,7 @@ define(function (require, exports, module) {
             if (!layout) {
                 layout = parseLayoutData2(res);
                 layout.id = layoutId;
+                layout.download_auth_type = res.BackgroundPic.Download_Auth_Type;
                 db.collection('layout').insert(layout);
             }
             var widgets = res.Layout_ControlBoxs.map(function (el) {
