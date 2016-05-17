@@ -74,6 +74,7 @@ define(function (require, exports, module) {
             {name: 'background_image_mid', type: 'number'},
             {name: 'background_image_url', type: 'string'},
             {name: 'bottom_margin', type: 'number'},
+            {name: 'download_auth_type', type: 'string'},
             {name: 'top_margin', type: 'number'},
             {name: 'left_margin', type: 'number'},
             {name: 'right_margin', type: 'number'},
@@ -299,7 +300,8 @@ define(function (require, exports, module) {
             bottom_margin: data.BottomMargin,
             background_color: data.BackgroundColor,
             background_image_mid: data.BackgroundPic_MID,
-            background_image_url: data.BackgroundPic_URL
+            background_image_url: data.BackgroundPic_URL,
+            download_auth_type: data.Download_Auth_Type
         };
     }
 
@@ -315,6 +317,7 @@ define(function (require, exports, module) {
             bottom_margin: data.BottomMargin,
             background_color: data.BackgroundColor,
             background_image_url: data.BackgroundPic.URL,
+            download_auth_type: data.Download_Auth_Type,
             background_image_mid: 0
         };
     }
@@ -439,7 +442,7 @@ define(function (require, exports, module) {
         programs.forEach(function (el, idx, arr) {
             var layout = db.collection('layout').select({id: el.layout_id})[0];
             var backgroundStyle = layout.background_image_url ?
-            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
+            'background-image:url(' + layout._image_url + ');-repeat:no-repeat;-size:100% 100%;background-position:center;' :
             'background-color:' + layout.background_color;
             var data = {
                 id: el.id,

@@ -136,7 +136,8 @@ define(function (require, exports, module) {
                 backgroundColor: layout.background_color,
                 backgroundImage: layout.background_image_url ? {
                     type: 'Image',
-                    url: layout.background_image_url
+                    url: layout.background_image_url,
+                    download_auth_type: layout.download_auth_type
                 } : {type: 'Unknown'},
                 widgets: widgets.map(function (el) {
                     return {
@@ -332,7 +333,7 @@ define(function (require, exports, module) {
                 } else {
                     value = this.value;
                 }
-                updates = {lifetime_start: value.replace('T', ' ')};
+                updates = {lifetime_end: value.replace('T', ' ')};
                 break;
             case 'count':
                 var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params);
