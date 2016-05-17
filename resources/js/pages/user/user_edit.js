@@ -122,6 +122,7 @@ define(function (require, exports, module) {
 						UTIL.cover.close(); 
 						type = "";   
 						alert("添加用户成功");
+                        USERS.loadUsersPage(1);
 					}else if(msg.rescode==500){
 						type = ""; 
 						alert("用户名已存在!");
@@ -129,8 +130,8 @@ define(function (require, exports, module) {
 					}else{
 						type = ""; 
 						alert("添加用户失败")
-						}	
-					USERS.loadUsersPage(1);
+                        USERS.loadUsersPage(1);
+						}
 				});
         });
 			}
