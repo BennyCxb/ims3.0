@@ -158,9 +158,9 @@ define(function (require, exports, module) {
         if (json.Users != undefined) {
             var rolData = json.Users;
 			 $("#usersTable tbody").append('<tr>'+
-                                    '<th class=""></th>'+
+                                    '<th class="col-md-1"></th>'+
                                     '<th class="users_name">用户名</th>'+
-                                    '<th class="users_ID">用户ID</th>'+
+                                   // '<th class="users_ID">用户ID</th>'+
                                 '</tr>');
 			//获取当前角色已绑定的用户
 			var userList = [];
@@ -212,7 +212,7 @@ define(function (require, exports, module) {
 						 var roltr = '<tr userID="' + userID + '">' +
 						  '<td class="user_checkbox"><input disabled="disabled" class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +
 						  '<td class="user_name">' + userName + '</td>' +
-						  '<td class="user_id">ID：' + userID + '</td>' + 
+						 // '<td class="user_id">ID：' + userID + '</td>' +
 						  '</tr>';
 					  $("#usersTable tbody").append(roltr);
 						}
@@ -220,14 +220,14 @@ define(function (require, exports, module) {
 					  var roltr = '<tr userID="' + userID + '">' +
 						  '<td class="user_checkbox"><input class="disassign" type="checkbox" checked="checked" userID="' + userID + '"></td>' +
 						  '<td class="user_name">' + userName + '</td>' +
-						  '<td class="user_id">ID：' + userID + '</td>' + 
+						//  '<td class="user_id">ID：' + userID + '</td>' +
 						  '</tr>';
 					  $("#usersTable tbody").append(roltr);
 				   }else{
 					   var roltr = '<tr userID="' + userID + '">' +
 						  '<td class="user_checkbox"><input class="assign" type="checkbox" userID="' + userID + '" userName="' + userName + '"></td>' +
 						  '<td class="user_name">' + userName + '</td>' +
-						  '<td class="user_id">ID：' + userID + '</td>' + 
+						//  '<td class="user_id">ID：' + userID + '</td>' +
 						  '</tr>';
 					  $("#usersTable tbody").append(roltr);
 				 }		
