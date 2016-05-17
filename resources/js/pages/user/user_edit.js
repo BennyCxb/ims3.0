@@ -130,7 +130,7 @@ define(function (require, exports, module) {
 						type = ""; 
 						alert("添加用户失败")
 						}	
-					USERS.loadUsersPage(_pageNO);
+					USERS.loadUsersPage(1);
 				});
         });
 			}
