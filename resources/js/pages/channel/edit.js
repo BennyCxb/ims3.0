@@ -1173,7 +1173,17 @@ define(function (require, exports, module) {
     function onDeleteProgram(programId) {
         $('#channel-editor-wrapper .channel-program-list ul>li[data-id=' + programId + ']').remove();
         db.collection('program').delete({id: programId});
-        var program = db.collection('program').select({})[0];
+        var programList = db.collection('program').select({});
+        var program = null;
+        for (var a = 0, b = 0; a<programList.length; a++) {
+            if (programList[a] == null) {
+                program = programList[a+1];
+                b++;
+            } else {
+                program = programList[b];
+                break;
+            }
+        }
         loadProgram(program);
     }
 
