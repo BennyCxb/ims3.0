@@ -23,7 +23,11 @@ define(function (require, exports, module) {
         /**
          * 保存常规节目的序列
          */
-        regularSortable = null;
+        regularSortable = null,
+        /**
+         * 保存定时节目的序列
+         */
+        timedSortable = null;
 
     /**
      * 初始化数据库
@@ -126,6 +130,7 @@ define(function (require, exports, module) {
         programHandle = null;
         channelId = null;
         regularSortable = null;
+        timedSortable = null;
         window.onpopstate = function () {
             onCloseEditor();
             window.onpopstate = undefined;
@@ -428,6 +433,9 @@ define(function (require, exports, module) {
     function renderTimedProgramList(programs) {
         var ul = $('#channel-editor-wrapper .channel-program-list-timed ul');
         ul.html('');
+        programs.sort(function (a, b) {
+            return a.sequence - b.sequence;
+        });
         programs.forEach(function (el, idx, arr) {
             var layout = db.collection('layout').select({id: el.layout_id})[0];
             var backgroundStyle = layout.background_image_url ?
@@ -440,7 +448,9 @@ define(function (require, exports, module) {
             };
             ul.append(templates.channel_edit_program_list_item(data));
         });
-        //timedSortable = Sortable.create(ul[0], {});
+        timedSortable = Sortable.create(ul[0], {
+            onSort: onTimedProgram
+        });
     }
 
     function onProgramNameChange(data) {
@@ -872,8 +882,8 @@ define(function (require, exports, module) {
                     Action: 'UpdateMaterial',
                     Data: {
                         ID: material.id,
-                        LifeEndTime: material.lifetime_end,
                         LifeStartTime: material.lifetime_start,
+                        LifeEndTime: material.lifetime_end,
                         ControlBox_ID: material.widget_id,
                         Name: material.name,
                         Name_eng: material.name_eng,
@@ -1101,6 +1111,16 @@ define(function (require, exports, module) {
                     maxSequence = sequence;
                 }
             });
+        }else if(type === 'Timed'){
+            var timedIds = timedSortable.toArray().map(function (el) {
+                return parseInt(el);
+            });
+            timedIds.forEach(function (programId) {
+                var sequence = db.collection('program').select({id: programId})[0].sequence;
+                if (sequence > maxSequence) {
+                    maxSequence = sequence;
+                }
+            });
         }
         db.collection('program').insert({
             is_time_segment_limit: 0,
@@ -1161,6 +1181,19 @@ define(function (require, exports, module) {
             return;
         }
         var sortedIds = regularSortable.toArray().map(function (el) {
+            return parseInt(el);
+        });
+        sortedIds.forEach(function (id, idx) {
+            db.collection('program').update({sequence: idx}, {id: id});
+        });
+    }
+
+    /**
+     * 当定时节目重排序时回调
+     * @param evt
+     */
+    function onTimedProgram(evt) {
+        var sortedIds = timedSortable.toArray().map(function (el) {
             return parseInt(el);
         });
         sortedIds.forEach(function (id, idx) {
