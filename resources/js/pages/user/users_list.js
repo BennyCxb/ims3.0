@@ -3,13 +3,14 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var templates = require('common/templates');
     var nDisplayItems = 10;
-
+    var _pageNO = 1;
     exports.init = function () {
-        exports.loadUsersPage(1); //加载默认页面
+        exports.loadUsersPage(_pageNO); //加载默认页面
     }
 
     // 加载页面数据
     exports.loadUsersPage = function (pageNum) {
+        _pageNO = pageNum;
         // loading
         $("#usersTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#usersLisTitle").html("");
@@ -47,11 +48,12 @@ define(function (require, exports, module) {
 			next: CONFIG.pager.next,
 			last: CONFIG.pager.last,
             page: CONFIG.pager.page,
-            currentPage: Number(json.Pager.page),
+            currentPage: _pageNO,
             onPageChange: function (num, type) {
                 if (type === 'change') {
+                    _pageNO = num;
 					$('#users-table-pager').jqPaginator('destroy');
-					exports.loadUsersPage(num);
+					exports.loadUsersPage(_pageNO);
                 }
             }
         });
@@ -113,6 +115,7 @@ define(function (require, exports, module) {
                		$("#usersTable tbody").append(roltr);
 				}
             }
+            exports.pageNum = _pageNO;
             //添加
             $("#user_add").click(function () {
                 //var page = "resources/pages/materials/materials_edit.html"
@@ -132,7 +135,7 @@ define(function (require, exports, module) {
 					var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails/' + currentID;
 					UTIL.ajax('post', url, data, function (msg) {
 						if(msg.rescode==200){alert("删除成功")}else{alert("删除失败")};
-                        exports.loadUsersPage(1); //刷新页面
+                        exports.loadUsersPage(_pageNO); //刷新页面
                     });
 				}
         	});

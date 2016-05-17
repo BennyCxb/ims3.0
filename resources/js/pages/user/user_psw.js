@@ -7,6 +7,7 @@ define(function (require, exports, module) {
 
     exports.init = function () {
 		var type = INDEX.type;
+        var _pageNO = Number(USERS.pageNum);
 		if(type){
 			uName = INDEX.userName;
 			$(".modal-title").html("<i class='fa fa-user-plus'></i>修改密码")
@@ -50,7 +51,7 @@ define(function (require, exports, module) {
 						if(msg.rescode == 200){  
 							alert("修改密码成功");
 							UTIL.cover.close(); 
-							USERS.loadUsersPage(1);	
+							USERS.loadUsersPage(_pageNO);
 						}else{
 							alert("修改密码失败")
 						}			
@@ -102,7 +103,7 @@ define(function (require, exports, module) {
 										}else{
 											alert("重置密码失败")
 											}	
-										USERS.loadUsersPage(1);			
+										USERS.loadUsersPage(_pageNO);
 									});
 								}
 			});

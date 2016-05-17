@@ -759,6 +759,7 @@ define(function(require, exports, module) {
             });
 
             function addTermClassName(input){
+
               var change = $.trim(input.val());
               var a = input.parent().parent();
               var t = a.children('span');
@@ -777,14 +778,17 @@ define(function(require, exports, module) {
                 "name": change
               }
 
+              _editTreeClassInput = input;
+
               UTIL.ajax(
                 'POST',
                 CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
                 JSON.stringify(data),
                 function(data){
-                  var a = $('#termclass-tree').find('.focus').children('a');
+                  var a = _editTreeClassInput.parent().parent();
                   var input = a.children('div').children('input');
                   var t = a.children('span');
+                  
                   var li = a.parent();
                   if(data.rescode == '200'){
                     t.html(' ' + $.trim(input.val()));

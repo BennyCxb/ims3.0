@@ -150,6 +150,7 @@ define(function(require, exports, module) {
         var a = dom.children('a');
         var angle = $('<i class="glyphicon glyphicon glyphicon-chevron-right"></i>');
         a.prepend(angle);
+        angle.next().remove();
         angle.click(function(e){
         	e.preventDefault();
 		      e.stopPropagation();

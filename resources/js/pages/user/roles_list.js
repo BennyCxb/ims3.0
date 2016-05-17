@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     };
     // 加载页面数据
     exports.loadRolesPage = function (pageNum) {
+        _pageNO = pageNum;
         // loading
         $("#rolesTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#rolesLisTitle").html("");
@@ -64,7 +65,7 @@ define(function (require, exports, module) {
                 if (type === 'change') {
                     _pageNO = num;
 					$('#roles-table-pager').jqPaginator('destroy');
-					loadRolesPage(_pageNO);
+                    exports.loadRolesPage(_pageNO);
                 }
             }
         });
