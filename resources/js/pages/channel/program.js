@@ -308,8 +308,13 @@ define(function (require, exports, module) {
                 updateTimer(data);
             });
         });
-        $('#channel-editor-wrapper .channel-program-header input').change(onProgramEdit);
+        $('#channel-editor-wrapper .channel-program-header input').change(onProgramEdit,chengeName);
         $('#channel-editor-wrapper .channel-program-timer input').change(onProgramEdit);
+    }
+
+    function chengeName() {             //改节目名时修改节目列表的名字
+        var programName = $('#channel-editor-wrapper .channel-program-header input').val();
+        $(".program-list-item.selected").find("span").text(programName);
     }
 
     function onProgramEdit() {          //频道保存到缓存
