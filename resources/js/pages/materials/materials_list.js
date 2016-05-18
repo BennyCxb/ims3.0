@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     var INDEX = require("../index.js");
     var MTRU = require("pages/materials/materials_upload.js");
     var templates = require('common/templates');
-    var nDisplayItems = 15,
+    var nDisplayItems = 10,
         last;
     var curPage = 1;
 
