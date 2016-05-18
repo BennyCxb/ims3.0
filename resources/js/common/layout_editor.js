@@ -1395,7 +1395,7 @@ define(function (require, exports, module) {
             marquee.style.backgroundColor = data.style.backgroundColor;
             this.mElement.appendChild(marquee);
             if (data.style.speed > 0) {
-                var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
+                //var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
                 $(marquee).marquee({
                     direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right',
                     duration: Math.floor(7800 * 1000 / (500 * scale * data.style.speed))
@@ -1416,7 +1416,7 @@ define(function (require, exports, module) {
                 (0.125 * DEFAULT_FONT_SIZE * scale) +
                 'px; background-color: ' +
                 data.style.backgroundColor
-                + ';}</style></head><body>' +
+                + '; font-family: "微软雅黑";}</style></head><body>' +
                 mtrText +
                 '</body></html>';
             this.mElement.appendChild(iFrame);

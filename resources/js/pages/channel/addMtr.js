@@ -273,11 +273,6 @@ define(function (require, exports, module) {
         }, 500);
     }
 
-    //function onSearch(_keyword, typeId) {
-    //    keyword = typeof(_keyword) === 'string' ? _keyword : '';
-    //    loadPage(1, Number(typeId));
-    //}
-
     //校验复选框勾选的个数
     function mtrCb() {
         var Ck = $(".mtr_checkbox div.icheckbox_flat-blue.checked").length;	//当前选中复选框个数
