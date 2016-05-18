@@ -415,27 +415,27 @@ define(function (require, exports, module) {
                     var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
-                    var mtrTypeclass;
-                    switch (mtrData[x].Type_ID) {
-                        case 1:
-                            if (mtrData[x].Is_Live == 0) {
-                                var dbtype_name = "视频";
-                                mtrTypeclass = "fa fa-file-video-o";
-                            } else {
-                                var dbtype_name = "直播";
-                                mtrTypeclass = "fa fa-file-o";
-                            }
+                    var mtrTypeclass,
+                        dbTypeName;
+                    switch (mtrData[x].Type_Name) {
+                        case "Video":
+                            dbTypeName = "视频";
+                            mtrTypeclass = "fa fa-file-video-o";
                             break;
-                        case 2:
-                            var dbtype_name = "图片";
+                        case "Live":
+                            dbTypeName = "直播";
+                            mtrTypeclass = "fa fa-file-o";
+                            break;
+                        case "Image":
+                            dbTypeName = "图片";
                             mtrTypeclass = "fa fa-file-image-o";
                             break;
-                        case 3:
-                            var dbtype_name = "音频";
+                        case "Audio":
+                            dbTypeName = "音频";
                             mtrTypeclass = "fa fa-file-audio-o";
                             break;
-                        case 4:
-                            var dbtype_name = "文本";
+                        case "文本":
+                            dbTypeName = "文本";
                             mtrTypeclass = "fa fa-file-text-o";
                             break;
                     }
@@ -470,7 +470,7 @@ define(function (require, exports, module) {
                         time_segment_duration: 99999,
                         time_segment_start: "",
                         type_id: dbtype_id,
-                        type_name: dbtype_name,
+                        type_name: dbTypeName,
                         download_auth_type: mtrData[x].Download_Auth_Type,
                         url: mtrData[x].URL,
                         widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
