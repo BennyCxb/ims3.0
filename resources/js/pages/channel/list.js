@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     // global variables
     var requestUrl = config.serverRoot,
         projectName = config.projectName,
-        nDisplayItems = 15,
+        nDisplayItems = 10,
         _pageNO = 1,
         last;
 

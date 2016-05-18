@@ -214,7 +214,7 @@ define(function (require, exports, module) {
             else {
                 $("#mtr_choiseTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtr_choiseTable tbody").append('<h3 style="text-align:center;">当前格式无可用资源</h3>');
+                $("#mtr_choiseTable tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
         }
         //清空状态列
