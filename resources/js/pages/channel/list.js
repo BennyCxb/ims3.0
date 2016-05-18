@@ -344,6 +344,7 @@ define(function (require, exports, module) {
             onPageChange: function (num, type) {
                 _pageNO = num;
                 if (type === 'change') {
+                    $(".select-all i").attr("class", "fa fa-square-o");
                     loadPage(_pageNO);
                 }
             }
@@ -391,7 +392,6 @@ define(function (require, exports, module) {
                                 break;
                         }
                         check_td = '<td class="chn_check">' + status + '</td>';
-
                         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
@@ -425,7 +425,6 @@ define(function (require, exports, module) {
                 $("#channel-table tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
             checkCheckBtns();
-
         }
 
         //复选框样式
@@ -464,7 +463,6 @@ define(function (require, exports, module) {
                         $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                         $('#channel-list-controls .btn-publish').attr('disabled', false);
                         $('#channel-list-controls .btn-delete').prop('disabled', false);
-
                 }
             } else {
                 if (util.getLocalParameter('config_canCheck') == '0') {
@@ -530,9 +528,7 @@ define(function (require, exports, module) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
                         }
-
                     }
-
                 }else {
                     var checked = $("#channel-table input[type='checkBox']:checked");
                     if (checked.length != '1') {
@@ -575,17 +571,14 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
                         }
                     }
-
-
                 }
             }
-
         }
 
         //发布详情
         $('.chn_detail').click(function(e){
             var self = $(this);
-                        e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
             var chnID = self.parent().attr('chnID');
             exports.chnID = chnID;
@@ -616,7 +609,6 @@ define(function (require, exports, module) {
 //            checkboxClass: 'icheckbox_flat-blue',
 //            radioClass: 'iradio_flat-blue'
 //        });
-
     }
 
     function checkCheck() {
@@ -631,6 +623,4 @@ define(function (require, exports, module) {
             $('#chn_unpass').css('display', 'none');
         }
     }
-
-
 });

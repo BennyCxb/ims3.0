@@ -220,7 +220,6 @@ define(function (require, exports, module) {
         //清空状态列
         $(".mtr_choise_status").empty();
 
-
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({
             checkboxClass: 'icheckbox_flat-blue',
@@ -256,7 +255,7 @@ define(function (require, exports, module) {
             }
             mtrCb();
         })
-
+        mtrCb();
     }
 
     //搜索事件
