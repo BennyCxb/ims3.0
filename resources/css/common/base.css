@@ -383,6 +383,7 @@ a {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    color: #3c8dbc;
 }
 
 .mtrCtrl_duration {
