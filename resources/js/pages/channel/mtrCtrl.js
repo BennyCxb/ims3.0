@@ -357,11 +357,30 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
+                    var mtrTypeclass;
+                    switch (mtrData[x].type_id) {
+                        case 1:
+                            if (mtrData[x].type_name == "视频") {
+                                mtrTypeclass = "fa fa-file-video-o";
+                            } else {
+                                mtrTypeclass = "fa fa-file-o";
+                            }
+                            break;
+                        case 2:
+                            mtrTypeclass = "fa fa-file-image-o";
+                            break;
+                        case 3:
+                            mtrTypeclass = "fa fa-file-audio-o";
+                            break;
+                        case 4:
+                            mtrTypeclass = "fa fa-file-text-o";
+                            break;
+                    }
                     if (mtrData[x].type_name == "文本" || mtrData[x].material_type == "Live") {		//文本和直播无预览效果
-                        var mtrCtrl_name_tr = mtrData[x].name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
                     } else {
-                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].url);
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].url + ' target="_blank">' + mtrData[x].name + '</a>';
+                        var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
+                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].url + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
                     }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
@@ -396,22 +415,28 @@ define(function (require, exports, module) {
                     var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
+                    var mtrTypeclass;
                     switch (mtrData[x].Type_ID) {
                         case 1:
                             if (mtrData[x].Is_Live == 0) {
                                 var dbtype_name = "视频";
+                                mtrTypeclass = "fa fa-file-video-o";
                             } else {
                                 var dbtype_name = "直播";
+                                mtrTypeclass = "fa fa-file-o";
                             }
                             break;
                         case 2:
                             var dbtype_name = "图片";
+                            mtrTypeclass = "fa fa-file-image-o";
                             break;
                         case 3:
                             var dbtype_name = "音频";
+                            mtrTypeclass = "fa fa-file-audio-o";
                             break;
                         case 4:
                             var dbtype_name = "文本";
+                            mtrTypeclass = "fa fa-file-text-o";
                             break;
                     }
                     if (mtrData[x].Duration == undefined) {
@@ -455,17 +480,17 @@ define(function (require, exports, module) {
                     //拼接
                     if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' target="_blank">' + mtrData[x].Name + '</a>';
+                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
                         if (mtrData[x].Type_Name == "Image") {                     //图片
                             var trDuration = "00:00:15";
                         } else {
                             var trDuration = mtrData[x].Duration;
                         }
                     } else if (mtrData[x].Type_Name == "文本") {                  //文本
-                        var mtrCtrl_name_tr = mtrData[x].Name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "00:00:15";
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        var mtrCtrl_name_tr = mtrData[x].Name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "01:00:00";
                     }
                     var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
@@ -479,7 +504,7 @@ define(function (require, exports, module) {
                 }
             }
 
-            $(".mtr_time input").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+            $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //显示或隐藏次数
             if ($("#mtrCtrl_playType").val() == "Percent") {

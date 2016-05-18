@@ -10,8 +10,7 @@ define(function(require, exports, module) {
 	// global variables
 	var requestUrl    = config.serverRoot,
 		projectName   = config.projectName,
-		nDisplayItems = 15,
-        keyword       = '',
+		nDisplayItems = 10,
         last;
 
 	// 初始化页面
@@ -37,18 +36,18 @@ define(function(require, exports, module) {
 			console.log(layoutId);
 			ev.stopPropagation();
 		});
-		$('#layout-list-controls .select-all').click(function (ev) {
-			var hasUncheckedItems = false;
-			$('#layout-table div').each(function (idx, el) {
-				if (!(hasUncheckedItems || $(el).hasClass('checked'))) {
-					hasUncheckedItems = true;
-				}
-			});
-			$('#layout-table tr').each(function (idx, el) {
-				$(el).iCheck(hasUncheckedItems ? 'check' : 'uncheck');
-			});
-			onSelectedItemChanged();
-		});
+        $('#layout-list-controls .select-all').click(function (ev) {
+            var hasUncheckedItems = false;
+            $('#layout-table div').each(function (idx, el) {
+                if (!(hasUncheckedItems || $(el).hasClass('checked'))) {
+                    hasUncheckedItems = true;
+                }
+            });
+            $('#layout-table tr').each(function (idx, el) {
+                $(el).iCheck(hasUncheckedItems ? 'check' : 'uncheck');
+            });
+            onSelectedItemChanged();
+        });
 		$('#layout-list-controls .btn-delete').click(onDeleteLayout);
 
 		//$('#channel-list-search').keyup(function (ev) {
@@ -71,7 +70,6 @@ define(function(require, exports, module) {
             setTimeout(function(){          //设时延迟0.5s执行
                 if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
-                    keyword = typeof($('#channel-list-search').val()) === 'string' ? $('#channel-list-search').val() : '';
                     loadPage(1);
                 }
             },500);
@@ -79,7 +77,7 @@ define(function(require, exports, module) {
     }
 
     function onSelectedItemChanged(adjustCount) {
-		var selectedCount = typeof(adjustCount) === 'number' ? adjustCount: 0;
+		var selectedCount = typeof(adjustCount) === 'number' ? adjustCount+1: 1;
 		$('#layout-table div').each(function (idx, el) {
 			if ($(el).hasClass('checked')) {
 				selectedCount++;
@@ -89,10 +87,10 @@ define(function(require, exports, module) {
 		$('#layout-list-controls .select-all>i')
 			.toggleClass('fa-square-o', hasUncheckedItems)
 			.toggleClass('fa-check-square-o', !hasUncheckedItems);
-		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 1);
-		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 1);
+		$('#layout-list-controls .btn-publish').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-publish-later').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-copy').prop('disabled', selectedCount !== 2);
+		$('#layout-list-controls .btn-delete').prop('disabled', selectedCount !== 2);
 	}
 
 	function onDeleteLayout(ev) {
@@ -136,7 +134,7 @@ define(function(require, exports, module) {
 			per_page: nDisplayItems,
 			orderby: 'CreateTime',
 			sortby: 'DESC',
-			keyword: keyword
+			keyword: $('#channel-list-search').val()
 		};
 		var data = JSON.stringify({
 			action: 'listPage',
@@ -171,7 +169,7 @@ define(function(require, exports, module) {
         $("#layout-table>tbody").append('<tr>' +
         '<th class="mod_checkbox" style="width:32px;"></th>' +
         '<th class="mod_name">模板名</th>' +
-        '<th class="mod_size_center">宽×高</th>' +
+        '<th class="mod_size_center">尺寸</th>' +
         '<th class="mod_user_center">创建人</th>' +
         '<th class="mod_create_time_center">创建时间</th>'+
         '</tr>');

@@ -12,7 +12,6 @@ define(function(require, exports, module) {
       _snapTermID,
       _termStatusCount,
       _editTreeClassInput,
-      keyword = "",
       last;
 
   exports.init = function(){
@@ -86,7 +85,6 @@ define(function(require, exports, module) {
         setTimeout(function(){          //设时延迟0.5s执行
             if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
-              keyword = typeof($('#term_search').val()) === 'string' ? $('#term_search').val() : '';
               loadTermList(_pageNO);
             }
         },500);
@@ -365,7 +363,7 @@ define(function(require, exports, module) {
         "page": _pageNO,
         "orderby": "",
         "sortby": "",
-        "keyword": keyword,
+        "keyword": $('#term_search').val(),
         "status": status
       }
     }
@@ -561,6 +559,7 @@ define(function(require, exports, module) {
             configOneTerm.MAC = li.attr("mac");
             configOneTerm.channel = li.attr("channel");
             configOneTerm.preChannel = li.attr("preChannel");
+            configOneTerm.termState = li.attr("status");
             configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })
@@ -759,6 +758,7 @@ define(function(require, exports, module) {
             });
 
             function addTermClassName(input){
+
               var change = $.trim(input.val());
               var a = input.parent().parent();
               var t = a.children('span');
@@ -777,14 +777,17 @@ define(function(require, exports, module) {
                 "name": change
               }
 
+              _editTreeClassInput = input;
+
               UTIL.ajax(
                 'POST',
                 CONFIG.serverRoot + '/backend_mgt/v2/termcategory',
                 JSON.stringify(data),
                 function(data){
-                  var a = $('#termclass-tree').find('.focus').children('a');
+                  var a = _editTreeClassInput.parent().parent();
                   var input = a.children('div').children('input');
                   var t = a.children('span');
+                  
                   var li = a.parent();
                   if(data.rescode == '200'){
                     t.html(' ' + $.trim(input.val()));

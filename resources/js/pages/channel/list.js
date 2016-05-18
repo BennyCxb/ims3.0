@@ -12,9 +12,8 @@ define(function (require, exports, module) {
     // global variables
     var requestUrl = config.serverRoot,
         projectName = config.projectName,
-        nDisplayItems = 15,
+        nDisplayItems = 10,
         _pageNO = 1,
-        keyword = '',
         last;
 
     // 初始化页面
@@ -169,14 +168,8 @@ define(function (require, exports, module) {
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
-        //$('#channel-list-nav').keyup(function (ev) {
-        //    if (ev.which === 13) {
-        //        onSearch($('#channel-list-nav input').val());
-        //        ev.stopPropagation();
-        //    }
-        //});
-        //搜索事件
 
+        //搜索事件
         $("#channelSearch").keyup(function (event) {
             if (event.keyCode == 13) {
                 onSearch(event);
@@ -188,7 +181,6 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
-                    keyword = typeof($('#channelSearch').val()) === 'string' ? $('#channelSearch').val() : '';
                     loadPage(_pageNO);
                 }
             }, 500);
@@ -323,7 +315,7 @@ define(function (require, exports, module) {
             per_page: String(nDisplayItems),
             orderby: 'ID',
             sortby: '',
-            keyword: keyword,
+            keyword: $('#channelSearch').val(),
             status: ''
         };
         var data = JSON.stringify({
@@ -352,6 +344,7 @@ define(function (require, exports, module) {
             onPageChange: function (num, type) {
                 _pageNO = num;
                 if (type === 'change') {
+                    $(".select-all i").attr("class", "fa fa-square-o");
                     loadPage(_pageNO);
                 }
             }
@@ -399,7 +392,6 @@ define(function (require, exports, module) {
                                 break;
                         }
                         check_td = '<td class="chn_check">' + status + '</td>';
-
                         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
                             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
                             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
@@ -433,7 +425,6 @@ define(function (require, exports, module) {
                 $("#channel-table tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
             checkCheckBtns();
-
         }
 
         //复选框样式
@@ -472,7 +463,6 @@ define(function (require, exports, module) {
                         $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                         $('#channel-list-controls .btn-publish').attr('disabled', false);
                         $('#channel-list-controls .btn-delete').prop('disabled', false);
-
                 }
             } else {
                 if (util.getLocalParameter('config_canCheck') == '0') {
@@ -538,9 +528,7 @@ define(function (require, exports, module) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
                         }
-
                     }
-
                 }else {
                     var checked = $("#channel-table input[type='checkBox']:checked");
                     if (checked.length != '1') {
@@ -583,17 +571,14 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
                         }
                     }
-
-
                 }
             }
-
         }
 
         //发布详情
         $('.chn_detail').click(function(e){
             var self = $(this);
-                        e.preventDefault();
+            e.preventDefault();
             e.stopPropagation();
             var chnID = self.parent().attr('chnID');
             exports.chnID = chnID;
@@ -624,7 +609,6 @@ define(function (require, exports, module) {
 //            checkboxClass: 'icheckbox_flat-blue',
 //            radioClass: 'iradio_flat-blue'
 //        });
-
     }
 
     function checkCheck() {
@@ -639,6 +623,4 @@ define(function (require, exports, module) {
             $('#chn_unpass').css('display', 'none');
         }
     }
-
-
 });

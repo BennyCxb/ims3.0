@@ -8,7 +8,7 @@ define(function (require, exports, module) {
         durationInput = require('common/duration_input'),
         layoutEditor = require('common/layout_editor'),
         timer = require('pages/channel/timer'),
-        toast = require('common/toast');
+		toast = require('common/toast');
 
     var db = null,
         programId = null,
@@ -18,6 +18,7 @@ define(function (require, exports, module) {
         widgetId = null,
         container = null;
 
+    //载入
     function load(program, _container) {
         container = _container;
         editor = null;
@@ -38,23 +39,23 @@ define(function (require, exports, module) {
             widgets = db.collection('widget').select({program_id: programId});
         renderProgramView(program, layout, widgets);
         registerEventListeners();
-
+        
     }
 
     function renderProgramView(program, layout, widgets) {
         var p = program.schedule_params === '' ? {} : JSON.parse(program.schedule_params),
             duration = typeof p.duration === 'number' ? p.duration : 0,
             data = {
-                name: program.name,
-                lifetime_start: program.lifetime_start.replace(' ', 'T'),
-                lifetime_end: program.lifetime_end.replace(' ', 'T'),
-                count: p.count,
-                layout: {
-                    name: layout.name,
-                    width: layout.width,
-                    height: layout.height
-                }
-            };
+            name: program.name,
+            lifetime_start: program.lifetime_start.replace(' ', 'T'),
+            lifetime_end: program.lifetime_end.replace(' ', 'T'),
+            count: p.count,
+            layout: {
+                name: layout.name,
+                width: layout.width,
+                height: layout.height
+            }
+        };
         $('#channel-editor-wrapper .channel-program-editor')
             .html(templates.channel_edit_program(data));
         new durationInput.DurationInput({
@@ -90,7 +91,7 @@ define(function (require, exports, module) {
         }
         loadWidget(w);
     }
-
+    
     function onDurationChange(duration) {
         var schedule_params = JSON.parse(db.collection('program').select({id: programId})[0].schedule_params),
             params = {};
@@ -112,43 +113,44 @@ define(function (require, exports, module) {
     function loadWidget(widget) {
         //console.log(widget);
         //资源控件页面加载
-        var page = "resources/pages/channel/mtrCtrl.html";
-        $(".channel-program-widget").load(page);
+		var page = "resources/pages/channel/mtrCtrl.html";
+		$(".channel-program-widget").load(page);
         localStorage.setItem('currentWidget', JSON.stringify(widget));
     }
 
-    function renderEditor(layout, widgets) {
+    function renderEditor (layout, widgets) {
 
         widgets.sort(function (a, b) {
             return a.z_index - b.z_index;
         });
         var json = {
-            id: layout.id,
-            name: layout.name,
-            nameEng: layout.name_eng,
-            width: layout.width,
-            height: layout.height,
-            topMargin: layout.top_margin,
-            leftMargin: layout.left_margin,
-            rightMargin: layout.right_margin,
-            bottomMargin: layout.bottom_margin,
-            backgroundColor: layout.background_color,
-            backgroundImage: layout.background_image_url ? {
-                type: 'Image',
-                url: layout.background_image_url
-            } : {type: 'Unknown'},
-            widgets: widgets.map(function (el) {
-                return {
-                    top: el.top,
-                    left: el.left,
-                    width: el.width,
-                    height: el.height,
-                    id: el.id,
-                    type: el.type,
-                    typeName: el.type_name
-                };
-            })
-        };
+                id: layout.id,
+                name: layout.name,
+                nameEng: layout.name_eng,
+                width: layout.width,
+                height: layout.height,
+                topMargin: layout.top_margin,
+                leftMargin: layout.left_margin,
+                rightMargin: layout.right_margin,
+                bottomMargin: layout.bottom_margin,
+                backgroundColor: layout.background_color,
+                backgroundImage: layout.background_image_url ? {
+                    type: 'Image',
+                    url: layout.background_image_url,
+                    download_auth_type: layout.download_auth_type
+                } : {type: 'Unknown'},
+                widgets: widgets.map(function (el) {
+                    return {
+                        top: el.top,
+                        left: el.left,
+                        width: el.width,
+                        height: el.height,
+                        id: el.id,
+                        type: el.type,
+                        typeName: el.type_name
+                    };
+                })
+            };
 
         var canvas = $('#channel-editor-wrapper .channel-program-layout-body'),
             canvasHeight = canvas.height(),
@@ -244,7 +246,7 @@ define(function (require, exports, module) {
         editor.showPreview(data);
     }
 
-    function registerEventListeners() {
+    function registerEventListeners () {
         messageDispatcher.reset();
         container.subscribeEvent(messageDispatcher);
         messageDispatcher.on('channel_overall_schedule_params.change', function (data) {
@@ -279,7 +281,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-preview').click(function () {
             if (!editMode) {
-                toast.show('温馨提示：当前预览是您最后一次保存的内容');
+				toast.show('温馨提示：当前预览是您最后一次保存的内容');
                 showPreview(editor);
                 editMode = true;
                 $(this).children('i')
@@ -311,6 +313,9 @@ define(function (require, exports, module) {
     }
 
     function onProgramEdit() {          //频道保存到缓存
+        var programName = $('#channel-editor-wrapper .channel-program-header input').val(); //改节目名时修改节目列表的名字
+        $(".program-list-item.selected").find("span").text(programName);
+
         var field = this.getAttribute('data-field'),
             updates = null, value;
         switch (field) {
@@ -365,7 +370,7 @@ define(function (require, exports, module) {
             .toggleClass('timed-program', timed)
             .toggleClass('percent-channel', percent);
     }
-
+    
     function updateTimer(str) {
         var fields = $('#channel-editor-wrapper .channel-editor-program-trigger span'),
             segments = str.split(' '),
@@ -385,10 +390,10 @@ define(function (require, exports, module) {
         fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
     }
 
-    function onSelectWidget(widget) {
+    function onSelectWidget (widget) {
         $('.channel-program-layout-footer li').css("border", "solid 1px #ddd");     //初始化下方边框
-        $('.channel-program-layout-footer li').each(function () {
-            if ($(this).attr("data-id") == widget.id) {
+        $('.channel-program-layout-footer li').each(function(){
+            if ($(this).attr("data-id") == widget.id){
                 $(this).css("border", "solid 1px #3c8dbc");
             }
         });

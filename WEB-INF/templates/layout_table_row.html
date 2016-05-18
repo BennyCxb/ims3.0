@@ -1,10 +1,10 @@
 <tr data-layout-id="<%=id%>">
-    <td style="width: 32px;"><input type="checkbox"></td>
-    <td><b><a href="#layout/edit?id=<%=id%>" class="btn-table-detail"><%=name%></a></b></td>
-    <td>宽:<%=width%></td>
-    <td>高:<%=height%></td>
-    <td>背景色:<%=background_color%></td>
-    <td>创建人:<%=operator%></td>
-    <td>创建时间:<%=create_time%></td>
+    <td class="mod_checkbox" style="width: 32px;"><input type="checkbox"></td>
+    <td class="mod_name"><b><a href="#layout/edit?id=<%=id%>" class="btn-table-detail"><%=name%></a></b></td>
+    <td class="mod_size_center"><%=width%>×<%=height%></td>
+    <!--<td><%=height%></td>-->
+    <!--<td>背景色:<%=background_color%></td>-->
+    <td class="mod_user_center"><%=operator%></td>
+    <td class="mod_create_time_center"><%=create_time%></td>
     <!-- <td>编辑</td> -->
 </tr>

@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 	var userListArr = [];
 
     exports.init = function () {
-        exports.loadRolesPage(_pageNO); //加载默认页面
+        exports.loadRolesPage(1); //加载默认页面
         //添加
         $("#roles_add").click(function () {
             //var page = "resources/pages/materials/materials_edit.html"
@@ -23,6 +23,7 @@ define(function (require, exports, module) {
     };
     // 加载页面数据
     exports.loadRolesPage = function (pageNum) {
+        _pageNO = pageNum;
         // loading
         $("#rolesTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#rolesLisTitle").html("");
@@ -64,7 +65,7 @@ define(function (require, exports, module) {
                 if (type === 'change') {
                     _pageNO = num;
 					$('#roles-table-pager').jqPaginator('destroy');
-					loadRolesPage(_pageNO);
+                    exports.loadRolesPage(_pageNO);
                 }
             }
         });
@@ -119,7 +120,7 @@ define(function (require, exports, module) {
 					var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users"><a class="roles_assign" title="分配用户" style=" display: inline-block;width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
+					'<td class="users"><a class="roles_assign" title="分配用户" style="width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
 					'<td></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
@@ -127,7 +128,7 @@ define(function (require, exports, module) {
                 var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users"><a class="roles_assign" title="分配用户"  style=" display:inline-block;width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
+					'<td class="users"><a class="roles_assign" title="分配用户"  style="width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
 					'<td><a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);

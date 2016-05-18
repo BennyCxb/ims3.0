@@ -2,7 +2,6 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var nDisplayItems = 10;
-    var termMac = '';
     var pageNumC = 1;
     var last;
 
@@ -40,7 +39,6 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
-                    termMac = typeof($('#termlogSearch').val()) === 'string' ? $('#termlogSearch').val() : '';
                     exports.loadTermlogPage(1);
                 }
             }, 500);
@@ -63,7 +61,7 @@ define(function (require, exports, module) {
         var data = JSON.stringify({
             project_name: CONFIG.projectName,
             action: 'getTermLog',
-            termMAC: termMac,
+            termMAC: $('#termlogSearch').val(),
             Pager: {
                 "total": -1,
                 "per_page": 10,

@@ -3,8 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var MTRCTRL = require("pages/channel/mtrCtrl");
     var LAYOUTEDIT = require("pages/layout/edit");
-    var nDisplayItems = 10,
-        keyword = "";
+    var nDisplayItems = 10;
 
 
     exports.init = function () {
@@ -142,7 +141,7 @@ define(function (require, exports, module) {
             per_page: nDisplayItems,
             orderby: 'CreateTime',
             sortby: 'DESC',
-            keyword: keyword,
+            keyword: $('#mtrChoiseSearch').val(),
             status: status
         };
         var data = JSON.stringify({
@@ -215,12 +214,11 @@ define(function (require, exports, module) {
             else {
                 $("#mtr_choiseTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtr_choiseTable tbody").append('<h3 style="text-align:center;">当前格式无可用资源</h3>');
+                $("#mtr_choiseTable tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
         }
         //清空状态列
         $(".mtr_choise_status").empty();
-
 
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({
@@ -257,25 +255,19 @@ define(function (require, exports, module) {
             }
             mtrCb();
         })
-
+        mtrCb();
     }
 
     //搜索事件
     function onSearch(event) {
-        var typeId = $("#mtrSearch").attr("typeId");
+        var typeId = $("#mtrChoiseSearch").attr("typeId");
         last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
         setTimeout(function () {          //设时延迟0.5s执行
             if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
-                keyword = typeof($('#mtrSearch').val()) === 'string' ? $('#mtrSearch').val() : '';
-                exports.loadPage(1, Number(typeId));
+                loadPage(1, Number(typeId));
             }
         }, 500);
-    }
-
-    function onSearch(_keyword, typeId) {
-        keyword = typeof(_keyword) === 'string' ? _keyword : '';
-        loadPage(1, Number(typeId));
     }
 
     //校验复选框勾选的个数

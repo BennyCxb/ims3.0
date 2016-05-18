@@ -23,7 +23,11 @@ define(function (require, exports, module) {
         /**
          * 保存常规节目的序列
          */
-        regularSortable = null;
+        regularSortable = null,
+        /**
+         * 保存定时节目的序列
+         */
+        timedSortable = null;
 
     /**
      * 初始化数据库
@@ -70,6 +74,7 @@ define(function (require, exports, module) {
             {name: 'background_image_mid', type: 'number'},
             {name: 'background_image_url', type: 'string'},
             {name: 'bottom_margin', type: 'number'},
+            {name: 'download_auth_type', type: 'string'},
             {name: 'top_margin', type: 'number'},
             {name: 'left_margin', type: 'number'},
             {name: 'right_margin', type: 'number'},
@@ -126,6 +131,7 @@ define(function (require, exports, module) {
         programHandle = null;
         channelId = null;
         regularSortable = null;
+        timedSortable = null;
         window.onpopstate = function () {
             onCloseEditor();
             window.onpopstate = undefined;
@@ -294,7 +300,8 @@ define(function (require, exports, module) {
             bottom_margin: data.BottomMargin,
             background_color: data.BackgroundColor,
             background_image_mid: data.BackgroundPic_MID,
-            background_image_url: data.BackgroundPic_URL
+            background_image_url: data.BackgroundPic_URL,
+            download_auth_type: data.Download_Auth_Type
         };
     }
 
@@ -310,6 +317,7 @@ define(function (require, exports, module) {
             bottom_margin: data.BottomMargin,
             background_color: data.BackgroundColor,
             background_image_url: data.BackgroundPic.URL,
+            download_auth_type: data.Download_Auth_Type,
             background_image_mid: 0
         };
     }
@@ -428,6 +436,9 @@ define(function (require, exports, module) {
     function renderTimedProgramList(programs) {
         var ul = $('#channel-editor-wrapper .channel-program-list-timed ul');
         ul.html('');
+        programs.sort(function (a, b) {
+            return a.sequence - b.sequence;
+        });
         programs.forEach(function (el, idx, arr) {
             var layout = db.collection('layout').select({id: el.layout_id})[0];
             var backgroundStyle = layout.background_image_url ?
@@ -440,7 +451,9 @@ define(function (require, exports, module) {
             };
             ul.append(templates.channel_edit_program_list_item(data));
         });
-        //timedSortable = Sortable.create(ul[0], {});
+        timedSortable = Sortable.create(ul[0], {
+            onSort: onTimedProgram
+        });
     }
 
     function onProgramNameChange(data) {
@@ -493,8 +506,10 @@ define(function (require, exports, module) {
             if (!selectedProgram || selectedProgram.schedule_type !== deleteType) {
                 alert('没有选中节目');
                 return;
+            };
+            if (confirm("确定删除该节目？")) {
+                onDeleteProgram(selectedProgram.id);
             }
-            onDeleteProgram(selectedProgram.id);
         });
         $('#channel-editor-wrapper .channel-program-list ul').delegate('li', 'click', function () {
             var programId = Number(this.getAttribute('data-id')),
@@ -550,6 +565,13 @@ define(function (require, exports, module) {
      */
     function onSaveChannel() {
         if (!inputCheck()) return;
+        //alert('保存频道可能需要几分钟时间，请耐心等待!');
+        //$("#channel-editor-wrapper").append('<div id="dialog" title="提示">'+
+        //    '<p>保存频道可能需要几分钟时间，请耐心等待!</p>'+
+        //'</div>');
+        //$(function(){
+        //    $("#dialog").dialog();
+        //});
         $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled", "disabled");
         setTimeout(removeDisabled, config.letTimeout);
         remoteCreateOrUpdateChannel()
@@ -872,8 +894,8 @@ define(function (require, exports, module) {
                     Action: 'UpdateMaterial',
                     Data: {
                         ID: material.id,
-                        LifeEndTime: material.lifetime_end,
                         LifeStartTime: material.lifetime_start,
+                        LifeEndTime: material.lifetime_end,
                         ControlBox_ID: material.widget_id,
                         Name: material.name,
                         Name_eng: material.name_eng,
@@ -1033,6 +1055,7 @@ define(function (require, exports, module) {
             if (!layout) {
                 layout = parseLayoutData2(res);
                 layout.id = layoutId;
+                layout.download_auth_type = res.BackgroundPic.Download_Auth_Type;
                 db.collection('layout').insert(layout);
             }
             var widgets = res.Layout_ControlBoxs.map(function (el) {
@@ -1101,6 +1124,16 @@ define(function (require, exports, module) {
                     maxSequence = sequence;
                 }
             });
+        }else if(type === 'Timed'){
+            var timedIds = timedSortable.toArray().map(function (el) {
+                return parseInt(el);
+            });
+            timedIds.forEach(function (programId) {
+                var sequence = db.collection('program').select({id: programId})[0].sequence;
+                if (sequence > maxSequence) {
+                    maxSequence = sequence;
+                }
+            });
         }
         db.collection('program').insert({
             is_time_segment_limit: 0,
@@ -1147,7 +1180,17 @@ define(function (require, exports, module) {
     function onDeleteProgram(programId) {
         $('#channel-editor-wrapper .channel-program-list ul>li[data-id=' + programId + ']').remove();
         db.collection('program').delete({id: programId});
-        var program = db.collection('program').select({})[0];
+        var programList = db.collection('program').select({});
+        var program = null;
+        for (var a = 0, b = 0; a<programList.length; a++) {
+            if (programList[a] == null) {
+                program = programList[a+1];
+                b++;
+            } else {
+                program = programList[b];
+                break;
+            }
+        }
         loadProgram(program);
     }
 
@@ -1161,6 +1204,19 @@ define(function (require, exports, module) {
             return;
         }
         var sortedIds = regularSortable.toArray().map(function (el) {
+            return parseInt(el);
+        });
+        sortedIds.forEach(function (id, idx) {
+            db.collection('program').update({sequence: idx}, {id: id});
+        });
+    }
+
+    /**
+     * 当定时节目重排序时回调
+     * @param evt
+     */
+    function onTimedProgram(evt) {
+        var sortedIds = timedSortable.toArray().map(function (el) {
             return parseInt(el);
         });
         sortedIds.forEach(function (id, idx) {
@@ -1192,26 +1248,28 @@ define(function (require, exports, module) {
         for (var a = 0; a < programList.length; a++) {
             var program = programList[a];
             var errorMsg = "";
-            if (program.lifetime_start.length != 16) {
-                if (program.lifetime_start.length != 19) {
-                    errorMsg = "请输入正确的节目生效时间!\n";
+            if (program != null) {
+                if (program.lifetime_start.length != 16) {
+                    if (program.lifetime_start.length != 19) {
+                        errorMsg = "请输入正确的节目生效时间!\n";
+                        alert(errorMsg);
+                        return false;
+                    }
+                }
+                if (program.lifetime_end.length != 16) {
+                    if (program.lifetime_end.length != 19) {
+                        errorMsg = "请输入正确的节目失效时间!";
+                        alert(errorMsg);
+                        return false;
+                    }
+                }
+                var start_time = new Date(program.lifetime_start);
+                var end_time = new Date(program.lifetime_end);
+                if (start_time > end_time) {
+                    errorMsg = "节目生效时间晚于失效时间，请重新输入!"
                     alert(errorMsg);
                     return false;
                 }
-            }
-            if (program.lifetime_end.length != 16) {
-                if (program.lifetime_end.length != 19) {
-                    errorMsg = "请输入正确的节目失效时间!";
-                    alert(errorMsg);
-                    return false;
-                }
-            }
-            var start_time = new Date(program.lifetime_start);
-            var end_time = new Date(program.lifetime_end);
-            if (start_time > end_time) {
-                errorMsg = "节目生效时间晚于失效时间，请重新输入!"
-                alert(errorMsg);
-                return false;
             }
         }
         return true;

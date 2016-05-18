@@ -69,24 +69,12 @@ define(function (require, exports, module) {
             q = v * (1 - f * s);
             t = v * (1 - (1 - f) * s);
             switch (i % 6) {
-                case 0:
-                    r = v, g = t, b = p;
-                    break;
-                case 1:
-                    r = q, g = v, b = p;
-                    break;
-                case 2:
-                    r = p, g = v, b = t;
-                    break;
-                case 3:
-                    r = p, g = q, b = v;
-                    break;
-                case 4:
-                    r = t, g = p, b = v;
-                    break;
-                case 5:
-                    r = v, g = p, b = q;
-                    break;
+                case 0: r = v, g = t, b = p; break;
+                case 1: r = q, g = v, b = p; break;
+                case 2: r = p, g = v, b = t; break;
+                case 3: r = p, g = q, b = v; break;
+                case 4: r = t, g = p, b = v; break;
+                case 5: r = v, g = p, b = q; break;
             }
             return {
                 r: Math.round(r * 255),
@@ -179,10 +167,10 @@ define(function (require, exports, module) {
                 return;
         }
         widget.resize({
-            top: Math.round(t / zf),
-            left: Math.round(l / zf),
-            width: Math.round(w / zf),
-            height: Math.round(h / zf)
+            top     : Math.round(t / zf),
+            left    : Math.round(l / zf),
+            width   : Math.round(w / zf),
+            height  : Math.round(h / zf)
         });
         widget.notifyDragEvent();
     }
@@ -300,45 +288,45 @@ define(function (require, exports, module) {
      */
     function LayoutEditor(obj, viewWidth, viewHeight, editable) {
 
-        this.mTopRuler = document.createElement('div');
-        this.mLeftRuler = document.createElement('div');
-        this.mCanvas = document.createElement('div');
-        this.mCanvasContainer = document.createElement('div');
+        this.mTopRuler          = document.createElement('div');
+        this.mLeftRuler         = document.createElement('div');
+        this.mCanvas            = document.createElement('div');
+        this.mCanvasContainer   = document.createElement('div');
         this.mCanvasContainer.appendChild(this.mCanvas);
-        this.mElement = document.createElement('div');
+        this.mElement           = document.createElement('div');
         this.mElement.appendChild(this.mTopRuler);
         this.mElement.appendChild(this.mLeftRuler);
         this.mElement.appendChild(this.mCanvasContainer);
 
-        var zx = (viewWidth - RULER_WIDTH) / obj.width;
-        var zy = (viewHeight - RULER_WIDTH) / obj.height;
-        var zoomFactor = Math.min(zx, zy) * MIN_CANVAS_SCALE;
-        var wWidth = viewWidth - RULER_WIDTH;
-        var wHeight = viewHeight - RULER_WIDTH;
-
+        var zx          = (viewWidth - RULER_WIDTH) / obj.width;
+        var zy          = (viewHeight - RULER_WIDTH) / obj.height;
+        var zoomFactor  = Math.min(zx, zy) * MIN_CANVAS_SCALE;
+        var wWidth      = viewWidth - RULER_WIDTH;
+        var wHeight     = viewHeight - RULER_WIDTH;
+        
         var layout = new Layout({
-            width: obj.width,
-            height: obj.height,
-            backgroundColor: obj.backgroundColor,
-            backgroundImage: obj.backgroundImage,
-            topMargin: obj.topMargin,
-            bottomMargin: obj.bottomMargin,
-            leftMargin: obj.leftMargin,
-            rightMargin: obj.rightMargin,
-            id: obj.id,
-            name: obj.name,
-            nameEng: obj.nameEng,
-            widgets: obj.widgets,
-            element: this.mCanvas,
-            context: this
+            width:              obj.width,
+            height:             obj.height,
+            backgroundColor:    obj.backgroundColor,
+            backgroundImage:    obj.backgroundImage,
+            topMargin:          obj.topMargin,
+            bottomMargin:       obj.bottomMargin,
+            leftMargin:         obj.leftMargin,
+            rightMargin:        obj.rightMargin,
+            id:                 obj.id,
+            name:               obj.name,
+            nameEng:            obj.nameEng,
+            widgets:            obj.widgets,
+            element:            this.mCanvas,
+            context:            this
         });
 
-        this.mWindowWidth = wWidth;
-        this.mWindowHeight = wHeight;
-        this.mViewWidth = viewWidth;
-        this.mViewHeight = viewHeight;
-        this.mLayout = layout;
-        this.mZoomFactor = zoomFactor;
+        this.mWindowWidth   = wWidth;
+        this.mWindowHeight  = wHeight;
+        this.mViewWidth     = viewWidth;
+        this.mViewHeight    = viewHeight;
+        this.mLayout        = layout;
+        this.mZoomFactor    = zoomFactor;
         this.mWidgetsChangedListener = null;
         this.mFocusChangedListener = null;
 
@@ -437,11 +425,11 @@ define(function (require, exports, module) {
      * @param viewHeight
      */
     LayoutEditor.prototype.resize = function (viewWidth, viewHeight) {
-        var zx = (viewWidth - RULER_WIDTH) / this.mLayout.mWidth;
-        var zy = (viewHeight - RULER_WIDTH) / this.mLayout.mHeight;
-        this.mZoomFactor = Math.min(zx, zy) * MIN_CANVAS_SCALE;
-        this.mWindowWidth = viewWidth - RULER_WIDTH;
-        this.mWindowHeight = viewHeight - RULER_WIDTH;
+        var zx              = (viewWidth - RULER_WIDTH) / this.mLayout.mWidth;
+        var zy              = (viewHeight - RULER_WIDTH) / this.mLayout.mHeight;
+        this.mZoomFactor    = Math.min(zx, zy) * MIN_CANVAS_SCALE;
+        this.mWindowWidth   = viewWidth - RULER_WIDTH;
+        this.mWindowHeight  = viewHeight - RULER_WIDTH;
         this.onResize();
     };
 
@@ -547,31 +535,31 @@ define(function (require, exports, module) {
      */
     function Layout(obj) {
 
-        this.mWidth = obj.width;
-        this.mHeight = obj.height;
-        this.mBackgroundColor = obj.backgroundColor;
-        this.mBackgroundImage = obj.backgroundImage;
-        this.mTopMargin = obj.topMargin;
-        this.mBottomMargin = obj.bottomMargin;
-        this.mLeftMargin = obj.leftMargin;
-        this.mRightMargin = obj.rightMargin;
-        this.mId = obj.id;
-        this.mName = obj.name;
-        this.mNameEng = obj.nameEng;
-        this.mElement = obj.element;
-        this.mContext = obj.context;
+        this.mWidth             = obj.width;
+        this.mHeight            = obj.height;
+        this.mBackgroundColor   = obj.backgroundColor;
+        this.mBackgroundImage   = obj.backgroundImage;
+        this.mTopMargin         = obj.topMargin;
+        this.mBottomMargin      = obj.bottomMargin;
+        this.mLeftMargin        = obj.leftMargin;
+        this.mRightMargin       = obj.rightMargin;
+        this.mId                = obj.id;
+        this.mName              = obj.name;
+        this.mNameEng           = obj.nameEng;
+        this.mElement           = obj.element;
+        this.mContext           = obj.context;
 
-        this.mWidgets = [];
-        this.mColorIterator = createColorIterator();
-
-        this.mFocusMask = document.createElement('div');
-        this.mFocusMask.style.position = 'absolute';
-        this.mContent = document.createElement('div');
+        this.mWidgets           = [];
+        this.mColorIterator     = createColorIterator();
+        
+        this.mFocusMask                     = document.createElement('div');
+        this.mFocusMask.style.position      = 'absolute';
+        this.mContent                       = document.createElement('div');
         this.mContent.appendChild(this.mFocusMask);
-        this.mContent.style.position = 'absolute';
-        this.mContent.style.top = this.mTopMargin + 'px';
-        this.mContent.style.left = this.mLeftMargin + 'px';
-        this.mContent.style.backgroundSize = '100% 100%';
+        this.mContent.style.position        = 'absolute';
+        this.mContent.style.top             = this.mTopMargin + 'px';
+        this.mContent.style.left            = this.mLeftMargin + 'px';
+        this.mContent.style.backgroundSize  = '100% 100%';
         this.mElement.appendChild(this.mContent);
         this.mElement.style.boxShadow = '0 5px 10px 0 rgba(0, 0, 0, 0.26)';
 
@@ -775,10 +763,10 @@ define(function (require, exports, module) {
             l2 = widget.mLeft * zoomFactor + WIDGET_BORDER_TOLERATE;
             t1 = widget.mTop * zoomFactor - WIDGET_BORDER_TOLERATE;
             t2 = widget.mTop * zoomFactor + WIDGET_BORDER_TOLERATE;
-            r1 = (widget.mLeft + widget.mWidth) * zoomFactor - WIDGET_BORDER_TOLERATE;
-            r2 = (widget.mLeft + widget.mWidth) * zoomFactor + WIDGET_BORDER_TOLERATE;
-            b1 = (widget.mTop + widget.mHeight) * zoomFactor - WIDGET_BORDER_TOLERATE;
-            b2 = (widget.mTop + widget.mHeight) * zoomFactor + WIDGET_BORDER_TOLERATE;
+            r1 = (widget.mLeft  + widget.mWidth)    * zoomFactor - WIDGET_BORDER_TOLERATE;
+            r2 = (widget.mLeft  + widget.mWidth)    * zoomFactor + WIDGET_BORDER_TOLERATE;
+            b1 = (widget.mTop   + widget.mHeight)   * zoomFactor - WIDGET_BORDER_TOLERATE;
+            b2 = (widget.mTop   + widget.mHeight)   * zoomFactor + WIDGET_BORDER_TOLERATE;
             if (ry < b2 && ry > t1) {
                 if (rx < r1 && rx > l2) {
                     if (ry > t2) {
@@ -851,11 +839,11 @@ define(function (require, exports, module) {
     Layout.prototype.focus = function (widget) {
         this.mFocusedWidget = widget;
         var zoomFactor = this.mContext.mZoomFactor;
-        this.mFocusMask.style.top = widget ? this.mFocusedWidget.mTop * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.left = widget ? this.mFocusedWidget.mLeft * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.width = widget ? this.mFocusedWidget.mWidth * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.height = widget ? this.mFocusedWidget.mHeight * zoomFactor + 'px' : '0px';
-        this.mFocusMask.style.border = widget ? 'solid 1px rgb(0,255,255)' : 'none';
+        this.mFocusMask.style.top         = widget ? this.mFocusedWidget.mTop   * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.left        = widget ? this.mFocusedWidget.mLeft  * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.width       = widget ? this.mFocusedWidget.mWidth * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.height      = widget ? this.mFocusedWidget.mHeight    * zoomFactor + 'px' : '0px';
+        this.mFocusMask.style.border      = widget ? 'solid 1px rgb(0,255,255)' : 'none';
         this.mContext.notifyFocusChanged();
     };
 
@@ -879,9 +867,9 @@ define(function (require, exports, module) {
      */
     Layout.prototype.onDraw = function () {
         var zoomFactor = this.mContext.mZoomFactor;
-        this.mElement.style.width = this.mWidth * zoomFactor + 'px';
+        this.mElement.style.width  = this.mWidth  * zoomFactor + 'px';
         this.mElement.style.height = this.mHeight * zoomFactor + 'px';
-        this.mContent.style.width = (this.mWidth - this.mLeftMargin - this.mRightMargin) * zoomFactor + 'px';
+        this.mContent.style.width  = (this.mWidth - this.mLeftMargin - this.mRightMargin) * zoomFactor + 'px';
         this.mContent.style.height = (this.mHeight - this.mTopMargin - this.mBottomMargin) * zoomFactor + 'px';
         this.setBackgroundColor(this.mBackgroundColor);
         this.setBackgroundImage(this.mBackgroundImage);
@@ -993,22 +981,22 @@ define(function (require, exports, module) {
      * @constructor
      */
     function Widget(obj, layout) {
-        this.mLeft = obj.left;
-        this.mTop = obj.top;
-        this.mWidth = obj.width;
-        this.mHeight = obj.height;
-        this.mId = obj.id;
-        this.mType = obj.type;
-        this.mTypeName = obj.typeName;
-        this.mLayout = layout;
-        this.mContext = layout.mContext;
-        this.mElement = document.createElement('div');
+        this.mLeft      = obj.left;
+        this.mTop       = obj.top;
+        this.mWidth     = obj.width;
+        this.mHeight    = obj.height;
+        this.mId        = obj.id;
+        this.mType      = obj.type;
+        this.mTypeName  = obj.typeName;
+        this.mLayout    = layout;
+        this.mContext   = layout.mContext;
+        this.mElement   = document.createElement('div');
         this.mBackgroundColor = layout.nextColor();
-        this.mElement.style.textAlign = 'center';
-        this.mElement.style.position = 'absolute';
-        this.mElement.style.verticalAlign = 'middle';
-        this.mElement.style.color = '#ffffff';
-        this.mElement.innerText = obj.typeName;
+        this.mElement.style.textAlign       = 'center';
+        this.mElement.style.position        = 'absolute';
+        this.mElement.style.verticalAlign   = 'middle';
+        this.mElement.style.color           = '#ffffff';
+        this.mElement.innerText             = obj.typeName;
     }
 
     /**
@@ -1048,8 +1036,8 @@ define(function (require, exports, module) {
         ) {
             return false;
         }
-        this.mLeft = x;
-        this.mTop = y;
+        this.mLeft  = x;
+        this.mTop   = y;
         this.onResize();
         return true;
     };
@@ -1067,8 +1055,8 @@ define(function (require, exports, module) {
      * @param obj
      */
     Widget.prototype.resize = function (obj) {
-        this.mLeft = obj.left;
-        this.mTop = obj.top;
+        this.mLeft  = obj.left;
+        this.mTop   = obj.top;
         this.mWidth = obj.width;
         this.mHeight = obj.height;
         this.onResize();
@@ -1089,9 +1077,9 @@ define(function (require, exports, module) {
      */
     Widget.prototype.onDraw = function () {
         this.mElement.style.backgroundColor = this.mBackgroundColor;
-        this.mElement.style.top = this.mTop * this.mContext.getZoomFactor() + 'px';
-        this.mElement.style.left = this.mLeft * this.mContext.getZoomFactor() + 'px';
-        this.mElement.style.width = this.mWidth * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.top             = this.mTop    * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.left            = this.mLeft   * this.mContext.getZoomFactor() + 'px';
+        this.mElement.style.width           = this.mWidth  * this.mContext.getZoomFactor() + 'px';
         this.mElement.style.lineHeight =
             this.mElement.style.height =
                 this.mHeight * this.mContext.getZoomFactor() + 'px';
@@ -1264,7 +1252,6 @@ define(function (require, exports, module) {
     function ImageWidget() {
         Widget.apply(this, arguments);
     }
-
     ImageWidget.prototype = Object.create(Widget.prototype);
     ImageWidget.prototype.constructor = ImageWidget;
     ImageWidget.prototype.showPreview = function (data) {
@@ -1301,11 +1288,10 @@ define(function (require, exports, module) {
     function VideoWidget() {
         Widget.apply(this, arguments);
     }
-
     VideoWidget.prototype = Object.create(Widget.prototype);
     VideoWidget.prototype.constructor = VideoWidget;
     VideoWidget.prototype.showPreview = function (data) {
-
+        
         function suffix(suffix) {
             return this.indexOf(suffix, this.length - suffix.length) !== -1;
         }
@@ -1368,7 +1354,6 @@ define(function (require, exports, module) {
     function AudioWidget() {
         Widget.apply(this, arguments);
     }
-
     AudioWidget.prototype = Object.create(Widget.prototype);
     AudioWidget.prototype.constructor = AudioWidget;
     AudioWidget.prototype.showPreview = function (data) {
@@ -1381,7 +1366,6 @@ define(function (require, exports, module) {
     function HTMLWidget() {
         Widget.apply(this, arguments);
     }
-
     HTMLWidget.prototype = Object.create(Widget.prototype);
     HTMLWidget.prototype.constructor = HTMLWidget;
     HTMLWidget.prototype.showPreview = function (data) {
@@ -1411,10 +1395,10 @@ define(function (require, exports, module) {
             marquee.style.backgroundColor = data.style.backgroundColor;
             this.mElement.appendChild(marquee);
             if (data.style.speed > 0) {
-                var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
+                //var textLength = this.mElement.offsetHeight * 0.8 * data.material.length;
                 $(marquee).marquee({
                     direction: data.style.direction === 'Right_2_Left' ? 'left' : 'right',
-                    duration: Math.floor(textLength * 1000 / (500 * scale * data.style.speed))
+                    duration: Math.floor(7800 * 1000 / (500 * scale * data.style.speed))
                 });
             }
         } else {
@@ -1427,12 +1411,13 @@ define(function (require, exports, module) {
                 iFrame.style.height = '100%';
             iFrame.style.overflowY = 'hidden';
             // http://stackoverflow.com/questions/8240101/set-content-of-iframe
+            var mtrText = data.material.replace(/px/g,'em');
             iFrame.srcdoc = '<html><head><style>body {font-size:' +
-                (0.5 * DEFAULT_FONT_SIZE * scale) +
-                'px;background-color: ' +
+                (0.125 * DEFAULT_FONT_SIZE * scale) +
+                'px; background-color: ' +
                 data.style.backgroundColor
-                + ';}</style></head><body>' +
-                data.material +
+                + '; font-family: "微软雅黑";}</style></head><body>' +
+                mtrText +
                 '</body></html>';
             this.mElement.appendChild(iFrame);
             var overlay = document.createElement('div');
@@ -1458,7 +1443,6 @@ define(function (require, exports, module) {
     function ClockWidget() {
         Widget.apply(this, arguments);
     }
-
     ClockWidget.prototype = Object.create(Widget.prototype);
     ClockWidget.prototype.constructor = ClockWidget;
     ClockWidget.prototype.showPreview = function (resource) {
@@ -1469,13 +1453,13 @@ define(function (require, exports, module) {
         }
 
         var format = {
-                Time: 'hh:MM:ss',
-                Date: 'yyyy-mm-dd',
-                Week: 'dddd',
-                DateTime: 'yyyy-mm-dd hh:MM:ss',
-                DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
-                DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
-            }[resource.style.Type],
+            Time: 'hh:MM:ss',
+            Date: 'yyyy-mm-dd',
+            Week: 'dddd',
+            DateTime: 'yyyy-mm-dd hh:MM:ss',
+            DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
+            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
+        }[resource.style.Type],
             now = new Date();
         if (!format) {
             format = 'hh:MM:ss';
@@ -1485,7 +1469,7 @@ define(function (require, exports, module) {
             lines = (text.match(/<br>/g) || []).length + 1,
             cHeight = this.mHeight * this.mContext.mZoomFactor;
         div.style.textAlign = 'center';
-        div.style.fontSize = cHeight * 0.3 + 'px';
+        div.style.fontSize = cHeight * 0.5 + 'px';
         div.style.color = resource.style.TextColor;
         div.style.overflow = 'hidden';
         div.style.whiteSpace = 'nowrap';
@@ -1507,7 +1491,6 @@ define(function (require, exports, module) {
     function WeatherWidget() {
         Widget.apply(this, arguments);
     }
-
     WeatherWidget.prototype = Object.create(Widget.prototype);
     WeatherWidget.prototype.constructor = WeatherWidget;
     WeatherWidget.prototype.showPreview = function (resource) {

@@ -80,30 +80,30 @@ define(function (require, exports, module) {
         if (_url == "") return realUrl;
         if (type == "None") {
             realUrl = _url;
-            return realUrl;
-        }
-        var data = JSON.stringify({
-            action: "getRealURL",
-            project_name: CONFIG.projectName,
-            URL: _url
-        })
+        }else if (type == "Qiniu") {
+            var data = JSON.stringify({
+                action: "getRealURL",
+                project_name: CONFIG.projectName,
+                URL: _url
+            })
 
-        var ajax = $.ajax({
-            type: 'post',
-            url: CONFIG.serverRoot + '/backend_mgt/v1/qiniu/',
-            data: data,
-            timeout: CONFIG.letTimeout,
-            async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
-            success: function (data) {
-                realUrl = JSON.parse(data).URL;
-                //successFn(realUrl);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                // XMLHttpRequest.status
-                // alert('连接服务器出错 ' + textStatus + errorThrown);
-                ajax.abort();
-            }
-        });
+            var ajax = $.ajax({
+                type: 'post',
+                url: CONFIG.serverRoot + '/backend_mgt/v1/qiniu/',
+                data: data,
+                timeout: CONFIG.letTimeout,
+                async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
+                success: function (data) {
+                    realUrl = JSON.parse(data).URL;
+                    //successFn(realUrl);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    // XMLHttpRequest.status
+                    // alert('连接服务器出错 ' + textStatus + errorThrown);
+                    ajax.abort();
+                }
+            });
+        }
         return realUrl;
     }
 
