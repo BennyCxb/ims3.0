@@ -120,7 +120,7 @@ define(function (require, exports, module) {
 					var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users"><a class="roles_assign" title="分配用户" style=" display: inline-block;width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
+					'<td class="users"><a class="roles_assign" title="分配用户" style="width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
 					'<td></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
@@ -128,7 +128,7 @@ define(function (require, exports, module) {
                 var roltr = '<tr class="rol-row" num="'+x+'" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
                     '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' + 
-					'<td class="users"><a class="roles_assign" title="分配用户"  style=" display:inline-block;width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
+					'<td class="users"><a class="roles_assign" title="分配用户"  style="width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
 					'<td><a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a></td>' +
                     '</tr>';
                 $("#rolesTable tbody").append(roltr);
