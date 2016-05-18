@@ -169,7 +169,7 @@ define(function(require, exports, module) {
         $("#layout-table>tbody").append('<tr>' +
         '<th class="mod_checkbox" style="width:32px;"></th>' +
         '<th class="mod_name">模板名</th>' +
-        '<th class="mod_size_center">宽×高</th>' +
+        '<th class="mod_size_center">尺寸</th>' +
         '<th class="mod_user_center">创建人</th>' +
         '<th class="mod_create_time_center">创建时间</th>'+
         '</tr>');
