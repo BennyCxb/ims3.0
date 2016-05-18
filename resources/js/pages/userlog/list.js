@@ -3,7 +3,6 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var templates = require('common/templates');
     var nDisplayItems = 10;
-    var keyword = '';
     var last;
 
     exports.init = function () {
@@ -21,7 +20,6 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
-                    keyword = typeof($('#userlogSearch').val()) === 'string' ? $('#userlogSearch').val() : '';
                     exports.loadUserlogPage(1);
                 }
             }, 500);
@@ -49,7 +47,7 @@ define(function (require, exports, module) {
                 "page": pageNum,
                 "orderby": "",
                 "sortby": "desc",
-                "keyword": keyword
+                "keyword": $('#userlogSearch').val()
             }
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/userlog';

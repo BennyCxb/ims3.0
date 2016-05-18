@@ -14,7 +14,6 @@ define(function (require, exports, module) {
         projectName = config.projectName,
         nDisplayItems = 15,
         _pageNO = 1,
-        keyword = '',
         last;
 
     // 初始化页面
@@ -169,14 +168,8 @@ define(function (require, exports, module) {
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
-        //$('#channel-list-nav').keyup(function (ev) {
-        //    if (ev.which === 13) {
-        //        onSearch($('#channel-list-nav input').val());
-        //        ev.stopPropagation();
-        //    }
-        //});
-        //搜索事件
 
+        //搜索事件
         $("#channelSearch").keyup(function (event) {
             if (event.keyCode == 13) {
                 onSearch(event);
@@ -188,7 +181,6 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
-                    keyword = typeof($('#channelSearch').val()) === 'string' ? $('#channelSearch').val() : '';
                     loadPage(_pageNO);
                 }
             }, 500);
@@ -323,7 +315,7 @@ define(function (require, exports, module) {
             per_page: String(nDisplayItems),
             orderby: 'ID',
             sortby: '',
-            keyword: keyword,
+            keyword: $('#channelSearch').val(),
             status: ''
         };
         var data = JSON.stringify({

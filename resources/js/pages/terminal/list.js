@@ -12,7 +12,6 @@ define(function(require, exports, module) {
       _snapTermID,
       _termStatusCount,
       _editTreeClassInput,
-      keyword = "",
       last;
 
   exports.init = function(){
@@ -86,7 +85,6 @@ define(function(require, exports, module) {
         setTimeout(function(){          //设时延迟0.5s执行
             if(last-event.timeStamp==0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
-              keyword = typeof($('#term_search').val()) === 'string' ? $('#term_search').val() : '';
               loadTermList(_pageNO);
             }
         },500);
@@ -365,7 +363,7 @@ define(function(require, exports, module) {
         "page": _pageNO,
         "orderby": "",
         "sortby": "",
-        "keyword": keyword,
+        "keyword": $('#term_search').val(),
         "status": status
       }
     }

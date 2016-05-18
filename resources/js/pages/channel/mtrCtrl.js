@@ -357,6 +357,25 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
+                    var mtrTypeclass;
+                    switch (mtrData[x].type_id) {
+                        case 1:
+                            if (mtrData[x].Is_Live == 0) {
+                                mtrTypeclass = "fa-file-video-o";
+                            } else {
+                                mtrTypeclass = "fa-file-o";
+                            }
+                            break;
+                        case 2:
+                            mtrTypeclass = "fa-file-image-o";
+                            break;
+                        case 3:
+                            mtrTypeclass = "fa-file-audio-o";
+                            break;
+                        case 4:
+                            mtrTypeclass = "fa-file-text-o";
+                            break;
+                    }
                     if (mtrData[x].type_name == "文本" || mtrData[x].material_type == "Live") {		//文本和直播无预览效果
                         var mtrCtrl_name_tr = mtrData[x].name;
                     } else {
@@ -396,22 +415,28 @@ define(function (require, exports, module) {
                     var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
+                    var mtrTypeclass;
                     switch (mtrData[x].Type_ID) {
                         case 1:
                             if (mtrData[x].Is_Live == 0) {
                                 var dbtype_name = "视频";
+                                mtrTypeclass = "fa-file-video-o";
                             } else {
                                 var dbtype_name = "直播";
+                                mtrTypeclass = "fa-file-o";
                             }
                             break;
                         case 2:
                             var dbtype_name = "图片";
+                            mtrTypeclass = "fa-file-image-o";
                             break;
                         case 3:
                             var dbtype_name = "音频";
+                            mtrTypeclass = "fa-file-audio-o";
                             break;
                         case 4:
                             var dbtype_name = "文本";
+                            mtrTypeclass = "fa-file-text-o";
                             break;
                     }
                     if (mtrData[x].Duration == undefined) {

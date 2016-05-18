@@ -3,8 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var MTRCTRL = require("pages/channel/mtrCtrl");
     var LAYOUTEDIT = require("pages/layout/edit");
-    var nDisplayItems = 10,
-        keyword = "";
+    var nDisplayItems = 10;
 
 
     exports.init = function () {
@@ -142,7 +141,7 @@ define(function (require, exports, module) {
             per_page: nDisplayItems,
             orderby: 'CreateTime',
             sortby: 'DESC',
-            keyword: keyword,
+            keyword: $('#mtrChoiseSearch').val(),
             status: status
         };
         var data = JSON.stringify({
@@ -267,7 +266,6 @@ define(function (require, exports, module) {
         setTimeout(function () {          //设时延迟0.5s执行
             if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
-                keyword = typeof($('#mtrChoiseSearch').val()) === 'string' ? $('#mtrChoiseSearch').val() : '';
                 loadPage(1, Number(typeId));
             }
         }, 500);
