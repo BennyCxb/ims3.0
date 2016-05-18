@@ -85,7 +85,7 @@ define(function (require, exports, module) {
 			$("#password1").val("");
 			$("#email1").val("");
 			$("#description1").val("");
-			$(".modal-title").html("<i class='fa fa-user'></i>新建用户");
+			$(".modal-title").html("<i class='fa fa-user-plus'></i>新建用户");
             var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/; //验证邮箱的正则表达式
 			//确定
 			$("#user_create1").click(function () {

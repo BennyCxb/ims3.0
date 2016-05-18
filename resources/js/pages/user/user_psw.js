@@ -10,7 +10,7 @@ define(function (require, exports, module) {
         var _pageNO = Number(USERS.pageNum);
 		if(type){
 			uName = INDEX.userName;
-			$(".modal-title").html("<i class='fa fa-user-plus'></i>修改密码")
+			$(".modal-title").html("<i class='fa fa-user'></i>修改密码")
 			$("#user_name").val(uName);
 			$("#password").val("");
 			$("#password1").val("");
