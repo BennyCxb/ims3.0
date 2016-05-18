@@ -19,16 +19,112 @@ define(function(require, exports, module) {
       _restartTimer,
       _heartBeatPeriod,
       _mainServer,
-      _programSync;
+      _programSync,
+      _downloadLog,
+      _downloadLogCheck;
 
+  function checkDownloadLog(){
+    if(!$('#CO-log').hasClass('disabled')){
+      return;
+    }
+
+    var data = {
+      "project_name": CONFIG.projectName,
+      "action": "getInfo",
+      "ID": exports.termID
+    }
+
+    console.log('check download log');
+    
+    UTIL.ajax(
+      'POST', 
+      CONFIG.serverRoot + '/backend_mgt/v2/term', 
+      JSON.stringify(data), 
+      function(data){
+        console.log(data.Name + ' data.LogcatURL:' + data.LogcatURL);
+        if(data.LogcatURL === ''){
+          _downloadLog = setTimeout(function(){
+            checkDownloadLog();
+          },CONFIG.termSnapInterval)
+        }else{
+          $('#CO-log-download').attr('href',data.LogcatURL);
+          $('#CO-log-download').attr('download','termlog');
+          $('#CO-log-download').show();
+          $('#CO-log').removeClass('disabled');
+          $('#CO-log').html('获取');
+        }
+      }
+    );
+  }
+      
   exports.init = function() {
 
     inputInit();
     loadInfo();
 
+    // 下载日志初始化
+    if(_downloadLogCheck){
+      clearTimeout(_downloadLogCheck);
+    }
+    $('#CO-log-download').hide();
+
     // 关闭
     $('#CO-close').click(function(){
       UTIL.cover.close();
+    })
+
+    // 下载日志
+    $('#CO-log').click(function(){
+      if($('#CO-log').hasClass('disabled')){
+        return;
+      }
+      else{
+        $('#CO-log').addClass('disabled');
+        
+        var data = {
+          "project_name": CONFIG.projectName,
+          "action": "termLogcat",
+          "ID": exports.termID,
+          "uploadURL": CONFIG.Resource_UploadURL
+        }
+        UTIL.ajax(
+          'POST',
+          CONFIG.serverRoot + '/backend_mgt/v2/term',
+          JSON.stringify(data),
+          function(data){
+            if(data.rescode !== '200'){
+              alert('下载日志失败，请重试');
+              $('#CO-log').removeClass('disabled');
+              $('#CO-log').html('获取');
+            }else{
+              $('#CO-log').html('获取中，请稍后...');
+              $('#CO-log-download').hide();
+
+              checkDownloadLog();
+
+              if(_downloadLogCheck){
+                clearTimeout(_downloadLogCheck);
+              }
+
+              // 获取终端log超时设置
+              _downloadLogCheck = setTimeout(function(){
+
+                if(!$('#CO-log').hasClass('disabled')){
+                  return;
+                }
+
+                console.log('check getlog wait time');
+                alert('获取日志超时，请重试');
+                $('#CO-log').removeClass('disabled');
+                $('#CO-log').html('获取');
+              },CONFIG.termGetLogWait)
+
+            }
+          }
+        )
+
+      }
+      
     })
 
     // 保存

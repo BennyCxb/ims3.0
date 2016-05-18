@@ -10,6 +10,7 @@ define(function (require, exports, module) {
     // exports.termListLoadInterval = 60 * 1000;
     exports.termSnapInterval = 1 * 1000;
     exports.termSnapWait = 30 * 1000;
+    exports.termGetLogWait = 2 * 60 * 1000;
     exports.pager = {
         pageSize: 15,
         visiblePages: 10,
