@@ -150,6 +150,11 @@ a {
     top: 0px;
 }
 
+/*终端列表页面*/
+#term_list small {
+    display: inline-block;
+}
+
 /*终端日志列表页面*/
 .termID, .termIP, .eventType, .date {
     text-align: center;
