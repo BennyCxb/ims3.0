@@ -377,10 +377,10 @@ define(function (require, exports, module) {
                             break;
                     }
                     if (mtrData[x].type_name == "文本" || mtrData[x].material_type == "Live") {		//文本和直播无预览效果
-                        var mtrCtrl_name_tr = mtrData[x].name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
                     } else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].url);
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].url + ' target="_blank">' + mtrData[x].name + '</a>';
+                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].url + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
                     }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
@@ -395,7 +395,7 @@ define(function (require, exports, module) {
                     }
                     var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="' + mtrData[x].sequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
-                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '"><i class="' + mtrTypeclass + '"></i>&nbsp;<b>' + mtrCtrl_name_tr + '</b></td>' +
+                        '<td class="mtrCtrl_name" title="' + mtrData[x].name + '"><b>' + mtrCtrl_name_tr + '</b></td>' +
                         '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value="' + duration + '"></td>' +
                         '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=' + dbcount + '></td>' +
                         '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
@@ -480,17 +480,17 @@ define(function (require, exports, module) {
                     //拼接
                     if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' target="_blank">' + mtrData[x].Name + '</a>';
+                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
                         if (mtrData[x].Type_Name == "Image") {                     //图片
                             var trDuration = "00:00:15";
                         } else {
                             var trDuration = mtrData[x].Duration;
                         }
                     } else if (mtrData[x].Type_Name == "文本") {                  //文本
-                        var mtrCtrl_name_tr = mtrData[x].Name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "00:00:15";
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        var mtrCtrl_name_tr = mtrData[x].Name;
+                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "01:00:00";
                     }
                     var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
