@@ -559,6 +559,7 @@ define(function(require, exports, module) {
             configOneTerm.MAC = li.attr("mac");
             configOneTerm.channel = li.attr("channel");
             configOneTerm.preChannel = li.attr("preChannel");
+            configOneTerm.termState = li.attr("status");
             configOneTerm.requireJS = "pages/terminal/list.js";
             UTIL.cover.load('resources/pages/terminal/configOneTerm.html');
           })

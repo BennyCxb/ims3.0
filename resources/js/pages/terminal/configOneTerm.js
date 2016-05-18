@@ -13,6 +13,7 @@ define(function(require, exports, module) {
   exports.diskInfo;
   exports.channel;
   exports.preChannel;
+  exports.termState;
 
   var _workSeqments,
       _downloadSeqments,
@@ -34,14 +35,14 @@ define(function(require, exports, module) {
       "ID": exports.termID
     }
 
-    console.log('check download log');
+    // console.log('check download log');
     
     UTIL.ajax(
       'POST', 
       CONFIG.serverRoot + '/backend_mgt/v2/term', 
       JSON.stringify(data), 
       function(data){
-        console.log(data.Name + ' data.LogcatURL:' + data.LogcatURL);
+        // console.log(data.Name + ' data.LogcatURL:' + data.LogcatURL);
         if(data.LogcatURL === ''){
           _downloadLog = setTimeout(function(){
             checkDownloadLog();
@@ -67,6 +68,10 @@ define(function(require, exports, module) {
       clearTimeout(_downloadLogCheck);
     }
     $('#CO-log-download').hide();
+
+    if(exports.termState === 'offline'){
+      $('#CO-log-box').css('display', 'none');
+    }
 
     // 关闭
     $('#CO-close').click(function(){
@@ -113,7 +118,7 @@ define(function(require, exports, module) {
                   return;
                 }
 
-                console.log('check getlog wait time');
+                // console.log('check getlog wait time');
                 alert('获取日志超时，请重试');
                 $('#CO-log').removeClass('disabled');
                 $('#CO-log').html('获取');
