@@ -1031,7 +1031,8 @@ define(function (require, exports, module) {
         if (location.hash.indexOf('?id=') === -1) {
             location.hash = '#layout/edit?id=' + channelId;
         }
-        location.reload();
+        exports.init();
+        //location.reload();
     }
 
     function onSaveChannelFail() {
