@@ -569,7 +569,7 @@ define(function (require, exports, module) {
         var Ck = $(".icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $(".icheckbox_flat-blue").length;			//复选框总个数
         if (Ck == 1) {
-            var dlurl = $(".icheckbox_flat-blue.checked").parent().next().find("a").attr("href");
+            var dlurl = $(".icheckbox_flat-blue.checked").parent().next().find("a").attr("url");
             var typeId = $("#mtrChoise li.active").attr("typeid");
             if (typeId != "4" && typeId != "5") {
                 $("#mtr_download").removeAttr("disabled");

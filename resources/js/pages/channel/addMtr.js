@@ -195,8 +195,8 @@ define(function (require, exports, module) {
                     if (material_type == "文本" || material_type == "Live") {		//文本无预览效果
                         var mtr_choise_tr = mtrData[x].Name;
                     } else {
-                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)
-                        var mtr_choise_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
+                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
+                        var mtr_choise_tr = '<a url=' + mtrData[x].URL + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
                     }
                     var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
                         '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
@@ -219,6 +219,30 @@ define(function (require, exports, module) {
         }
         //清空状态列
         $(".mtr_choise_status").empty();
+
+        //预览操作
+        $(".mtr_choise_name a").each(function(){
+            $(this).click(function(){
+                var z_index = parseInt($(this).parents("tr").index())-1;
+                if(mtrData[z_index].Type_Name == "Video"){
+                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                    if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
+                        alert("当前视频格式暂不支持预览！");
+                        return;
+                    }
+                } else if(mtrData[z_index].Type_Name == "Audio"){
+                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                    if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
+                        alert("当前音频格式暂不支持试听！");
+                        return;
+                    }
+                }
+                exports.viewData = mtrData[z_index];
+                $("#cover_area").empty();
+                var page = "resources/pages/materials/materials_preview.html";
+                UTIL.cover.load(page);
+            });
+        });
 
         //复选框样式
         $('#mtr_choiseTable input[type="checkbox"]').iCheck({

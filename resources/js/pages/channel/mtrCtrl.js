@@ -380,7 +380,7 @@ define(function (require, exports, module) {
                         var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
                     } else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].url + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
+                        var mtrCtrl_name_tr = '<a url=' + mtrData[x].url + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
                     }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
@@ -480,7 +480,7 @@ define(function (require, exports, module) {
                     //拼接
                     if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
-                        var mtrCtrl_name_tr = '<a href="' + mtrUrl + '" url=' + mtrData[x].URL + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
+                        var mtrCtrl_name_tr = '<a url=' + mtrData[x].URL + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
                         if (mtrData[x].Type_Name == "Image") {                     //图片
                             var trDuration = "00:00:15";
                         } else {
@@ -505,6 +505,32 @@ define(function (require, exports, module) {
             }
 
             $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+
+            //预览操作
+            $(".mtrCtrl_name a").each(function(){
+                $(this).click(function(){
+                    var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+                    var z_index = parseInt($(this).parents("tr").index());
+                    if(mtrData[z_index].type_name == "视频"){
+                        var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                        if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
+                            alert("当前视频格式暂不支持预览！");
+                            return;
+                        }
+                    } else if(mtrData[z_index].type_name == "音频"){
+                        var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                        if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
+                            alert("当前音频格式暂不支持试听！");
+                            return;
+                        }
+                    }
+                    exports.viewData = mtrData[z_index];
+                    $("#cover_area").empty();
+                    var page = "resources/pages/materials/materials_preview.html";
+                    UTIL.cover.load(page);
+                });
+            });
+
 
             //显示或隐藏次数
             if ($("#mtrCtrl_playType").val() == "Percent") {
