@@ -168,6 +168,8 @@ define(function (require, exports, module) {
                 function(data){
                     if(data.rescode === '200'){
                         alert("保存并提交成功");
+                        //解除绑定，一般放在提交触发事件中
+                        $(window).unbind('beforeunload');
                         var pageNum = $("#materials-table-pager li.active").find("a").text();
                         MTR.loadPage(pageNum, 4);
                         back();
@@ -191,6 +193,8 @@ define(function (require, exports, module) {
                 success: function (data, textStatus) {
                     if (parseInt(data.rescode) == 200) {
                         alert("保存成功");
+                        //解除绑定，一般放在提交触发事件中
+                        $(window).unbind('beforeunload');
                         $("#mtrText").trigger("click");
                         back();
                     } else {
