@@ -1332,7 +1332,7 @@ define(function (require, exports, module) {
             video.style.objectFit = 'fill';
             source.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             source.setAttribute('type', 'video/mp4');
-            source.textContent = '该视频格式不支持预览';
+            video.textContent = '该视频格式不支持预览';
             video.appendChild(source);
             this.mElement.appendChild(video);
         }
