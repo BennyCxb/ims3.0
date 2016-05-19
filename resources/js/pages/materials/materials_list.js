@@ -107,12 +107,10 @@ define(function (require, exports, module) {
         //拼接
         if (json.Materials != undefined) {
             var mtrData = json.Materials;
-
             var check_th = '';
             if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                 check_th = '<th class="mtr_check">审核状态</th>';
             }
-
             $("#mtrTable tbody").append('<tr>' +
                 '<th class="mtr_checkbox"></th>' +
                 '<th class="mtr_name">文件名</th>' +
@@ -129,12 +127,8 @@ define(function (require, exports, module) {
                     if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
                         var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
                     } else {
-                        //if (mtrData[x].Download_Auth_Type == "None") {
-                        //    var mtrUrl = mtrData[x].URL;
-                        //} else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
-                        //}
-                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a url="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                     }
                     // 审核状态
                     var check_td = '';
@@ -189,7 +183,6 @@ define(function (require, exports, module) {
         //
         $(".icheckbox_flat-blue").parent().parent().click(function () {
             $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-            var obj = $(this).find("input");
             if ($(this).find("input").prop("checked") == true) {
                 $(this).find("input").prop("checked", false);
                 $(this).find("div").prop("class", "icheckbox_flat-blue");
@@ -204,8 +197,31 @@ define(function (require, exports, module) {
         $(".icheckbox_flat-blue ins").click(function () {
             mtrCb();
         })
-    }
 
+        //预览操作
+        $(".mtr_name a").each(function(){
+            $(this).click(function(){
+                var z_index = parseInt($(this).parents("tr").index())-1;
+                if(mtrData[z_index].Type_Name == "Video"){
+                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                    if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
+                        alert("当前视频格式暂不支持预览！");
+                        return;
+                    }
+                } else if(mtrData[z_index].Type_Name == "Audio"){
+                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
+                    if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
+                        alert("当前音频格式暂不支持试听！");
+                        return;
+                    }
+                }
+                exports.viewData = mtrData[z_index];
+                $("#cover_area").empty();
+                var page = "resources/pages/materials/materials_preview.html";
+                UTIL.cover.load(page);
+            });
+        });
+    }
 
     //绑定事件
     function bind() {
@@ -221,7 +237,6 @@ define(function (require, exports, module) {
                 $("#upload_box").css("display", "block");
                 MTRU.beginUpload();
             }
-
         });
         // 添加文本按钮点击
         $('#mtr_addText').click(function () {
