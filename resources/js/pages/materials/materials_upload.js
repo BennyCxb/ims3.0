@@ -15,8 +15,6 @@ define(function (require, exports, module) {
             $("#Tbe_filesList tr").each(function () {
                 if ($(this).attr("status") == "uploading") {
                     DispClose = true;
-                    //解除绑定
-                    $(window).unbind('beforeunload');
                 }
             })
             if (DispClose) {
@@ -263,6 +261,8 @@ define(function (require, exports, module) {
                                 c++;
                                 if (c == _upl_list.length) {
                                     status = "end";
+                                    //解除绑定
+                                    $(window).unbind('beforeunload');
                                 }
                             }
                         }
