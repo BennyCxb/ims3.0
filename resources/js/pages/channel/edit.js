@@ -343,6 +343,12 @@ define(function (require, exports, module) {
     }
 
     function parseMaterialData(data) {
+        var typeName = data.Type_Name;
+        if (data.Is_Live != undefined) {
+            if (data.Is_Live == 1) {
+                typeName = "直播";
+            }
+        }
         return {
             id: data.ID,
             widget_id: data.ControlBox_ID,
@@ -358,7 +364,7 @@ define(function (require, exports, module) {
             time_segment_duration: data.TimeSegment_Duration,
             time_segment_start: data.TimeSegment_Start,
             type_id: data.Type_ID,
-            type_name: data.Type_Name,
+            type_name: typeName,
             download_auth_type: data.Download_Auth_Type,
             url: data.URL
         };
@@ -1032,7 +1038,7 @@ define(function (require, exports, module) {
             location.hash = '#channel/edit?id=' + channelId;
         }
         //loadChannelData(channelId);
-        //location.reload();
+        location.reload();
     }
 
     function onSaveChannelFail() {

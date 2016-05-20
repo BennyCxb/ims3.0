@@ -376,11 +376,11 @@ define(function (require, exports, module) {
                             mtrTypeclass = "fa fa-file-text-o";
                             break;
                     }
-                    if (mtrData[x].type_name == "文本" || mtrData[x].material_type == "Live") {		//文本和直播无预览效果
+                    if (mtrData[x].type_name == "文本" || mtrData[x].type_name == "直播") {		//文本和直播无预览效果
                         var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
                     } else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
-                        var mtrCtrl_name_tr = '<a url=' + mtrData[x].url + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
+                        var mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
                     }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
@@ -392,6 +392,9 @@ define(function (require, exports, module) {
                         var duration = formatTime(schedule_params.duration);
                     } else {
                         var duration = "00:00:15";
+                        if (mtrData[x].type_name == "直播") {
+                            var duration = "01:00:00";
+                        }
                     }
                     var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="' + mtrData[x].sequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
@@ -443,7 +446,13 @@ define(function (require, exports, module) {
                         var mtrDuration = "15";
                     } else {
                         var mtrDuration = formatSecond(mtrData[x].Duration).toString();
-                        if (mtrDuration == 0) mtrDuration = 15;
+                        if (mtrDuration == 0) {
+                            mtrDuration = 15;
+                            if (mtrData[x].Type_Name == "Live") {
+                                mtrDuration = 3600;
+                            }
+                        }
+
                     }
                     var dbduration = {
                         duration: mtrDuration     //将时间转为秒
@@ -510,7 +519,11 @@ define(function (require, exports, module) {
             $(".mtrCtrl_name a").each(function(){
                 $(this).click(function(){
                     var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
-                    var z_index = parseInt($(this).parents("tr").index());
+                    for (var a = 0; a < mtrData.length; a++) {
+                        if (mtrData[a].url == $(this).attr("url")) {
+                            z_index = a;
+                        }
+                    }
                     if(mtrData[z_index].type_name == "视频"){
                         var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
                         if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
