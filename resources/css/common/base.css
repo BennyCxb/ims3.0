@@ -425,7 +425,7 @@ a {
     padding: 0px;
 }
 
-#mtrC_weatherNormal_box div {
+#mtrC_weatherNormal_box div, #mtrC_weatherOneline_box div {
     float: left;
 }
 
@@ -455,6 +455,27 @@ a {
     border-radius: 4px;
     background: #f4f4f4 url(../../img/img_grid.png);
     padding-left: 50px;
+    margin-bottom: 0px;
+}
+
+#mtrC_weatherOneline_box {
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f4f4f4 url(../../img/img_grid.png);
+    padding-left: 50px;
+    min-height: 0px;
+    margin-bottom: 0px;
+}
+
+#mtrC_weatherOneline_box img {
+    width: 50px;
+}
+
+#mtrC_weatherOneline_box div:nth-child(2) {
+    height: 50px;
+    line-height: 50px;
+    font-size: 25px;
 }
 
 #mtrCtrl_Table input {

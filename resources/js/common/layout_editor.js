@@ -1458,7 +1458,8 @@ define(function (require, exports, module) {
             Week: 'dddd',
             DateTime: 'yyyy-mm-dd hh:MM:ss',
             DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
-            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd'
+            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd',
+            TimeAnim: 'hh:MM:ss'
         }[resource.style.Type],
             now = new Date();
         if (!format) {
@@ -1500,7 +1501,11 @@ define(function (require, exports, module) {
 
         this.mElement.dataset.background = this.mElement.style.backgroundColor;
         this.mElement.style.backgroundColor = 'transparent';
-        this.mElement.style.backgroundImage = 'url(resources/img/weather2.png)';
+        if (resource.style.Type == "Normal") {
+            this.mElement.style.backgroundImage = 'url(resources/img/weather2.png)';
+        } else if (resource.style.Type == "oneline") {
+            this.mElement.style.backgroundImage = 'url(resources/img/weather3.png)';
+        }
         this.mElement.style.backgroundSize = 'contain';
         this.mElement.style.backgroundPosition = 'center';
         this.mElement.style.backgroundRepeat = 'no-repeat';

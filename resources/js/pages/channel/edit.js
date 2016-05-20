@@ -1038,7 +1038,7 @@ define(function (require, exports, module) {
             location.hash = '#channel/edit?id=' + channelId;
         }
         //loadChannelData(channelId);
-        location.reload();
+        //location.reload();
     }
 
     function onSaveChannelFail() {

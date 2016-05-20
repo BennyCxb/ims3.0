@@ -303,6 +303,9 @@ define(function (require, exports, module) {
                         case 'DateTimeWeekV':
                             $("#mtrC_dtDateTimeWeekV").next().trigger("click");
                             break;
+                        case 'TimeAnim':
+                            $("#mtrC_dtTimeAnim").next().trigger("click");
+                            break;
                     }
                 }
                 clockTextColor();
@@ -321,8 +324,11 @@ define(function (require, exports, module) {
                     $("#weatherFlip_time").val(wStyle.SwitchPeriod);
                     var wctype = wStyle.Type;
                     switch (wctype) {
-                        case 'Time':
+                        case 'Normal':
                             $("#mtrC_weatherNormal").next().trigger("click");
+                            break;
+                        case 'Oneline':
+                            $("#mtrC_weatherOneline").next().trigger("click");
                             break;
                     }
                 }
