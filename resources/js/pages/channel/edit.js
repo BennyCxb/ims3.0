@@ -1029,9 +1029,9 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
         alert('保存成功!');
         if (location.hash.indexOf('?id=') === -1) {
-            location.hash = '#layout/edit?id=' + channelId;
+            location.hash = '#channel/edit?id=' + channelId;
         }
-        exports.init();
+        //loadChannelData(channelId);
         //location.reload();
     }
 
