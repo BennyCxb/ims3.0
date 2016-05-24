@@ -382,17 +382,6 @@ define(function (require, exports, module) {
                             mtrTypeclass = "fa fa-file-text-o";
                             break;
                     }
-                    if (mtrData[x].type_name == "文本" || mtrData[x].type_name == "直播") {		//文本和直播无预览效果
-                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
-                    } else {
-                        var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
-                        var mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
-                    }
-                    if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
-                        var dbcount = JSON.parse(mtrData[x].schedule_params).count;
-                    } else {
-                        var dbcount = 1;
-                    }
                     var schedule_params = JSON.parse(mtrData[x].schedule_params) === '' ? {} : JSON.parse(mtrData[x].schedule_params);
                     if (schedule_params != {}) {
                         var duration = formatTime(schedule_params.duration);
@@ -402,10 +391,29 @@ define(function (require, exports, module) {
                             var duration = "01:00:00";
                         }
                     }
+                    var mtrCtrl_name_tr,
+                        mtrCtrl_duration_tr;
+                    if (mtrData[x].type_name == "文本" || mtrData[x].type_name == "直播") {		    //文本和直播无预览效果
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
+                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + '></td>'
+                    } else {
+                        if (mtrData[x].type_name == "视频" || mtrData[x].type_name == "音频") {     //视频和音频无法修改时长
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + ' disabled></td>'
+                        } else {
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + '></td>'
+                        }
+                        var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
+                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
+                    }
+                    if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
+                        var dbcount = JSON.parse(mtrData[x].schedule_params).count;
+                    } else {
+                        var dbcount = 1;
+                    }
                     var mtrtr = '<tr data-id="' + mtrData[x].id + '" mtrid="' + mtrData[x].resource_id + '" mtrsequence="' + mtrData[x].sequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].resource_id + '"></td>' +
                         '<td class="mtrCtrl_name" title="' + mtrData[x].name + '"><b>' + mtrCtrl_name_tr + '</b></td>' +
-                        '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value="' + duration + '"></td>' +
+                        mtrCtrl_duration_tr +
                         '<td class="mtrCtrl_times"><input type="number" class="mtrC_times"  value=' + dbcount + '></td>' +
                         '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                         '</tr>';
@@ -493,25 +501,31 @@ define(function (require, exports, module) {
                     DB.collection("material").insert(intDate);                      //存入缓存
                     var data_id = DB.collection("material").lastInsertId();         //查询刚添加的ID
                     //拼接
+                    var mtrCtrl_name_tr,
+                        mtrCtrl_duration_tr;
                     if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
-                        var mtrCtrl_name_tr = '<a url=' + mtrData[x].URL + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
+                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
                         if (mtrData[x].Type_Name == "Image") {                     //图片
                             var trDuration = "00:00:15";
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
                         } else {
                             var trDuration = mtrData[x].Duration;
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + ' disabled></td>'
                         }
                     } else if (mtrData[x].Type_Name == "文本") {                  //文本
-                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "00:00:15";
+                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + ' disabled></td>'
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        var mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "01:00:00";
+                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + ' disabled></td>'
                     }
                     var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
                         '<td class="mtrCtrl_name" title="' + mtrData[x].Name + '"><b>' + mtrCtrl_name_tr + '</b></td>' +
-                        '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>' +
+                        mtrCtrl_duration_tr +
                         '<td class="mtrCtrl_times"><input type="number" class="mtrC_times" value=1></td>' +
                         '<td class="mtrCtrl_delete"><a id="btn_ctrlDel" class="btn_ctrlDel"><i class="fa fa-trash-o"></i></a></th>' +
                         '</tr>';
