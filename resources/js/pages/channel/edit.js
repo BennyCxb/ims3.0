@@ -1036,9 +1036,12 @@ define(function (require, exports, module) {
         alert('保存成功!');
         if (location.hash.indexOf('?id=') === -1) {
             location.hash = '#channel/edit?id=' + channelId;
+        } else {
+            exports.init();
         }
         //loadChannelData(channelId);
         //location.reload();
+
     }
 
     function onSaveChannelFail() {

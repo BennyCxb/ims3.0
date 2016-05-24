@@ -886,7 +886,11 @@ define(function (require, exports, module) {
                 var m = parseInt(time / 60);
                 var s = parseInt(time % 60);
                 if (m < 10 && s < 10) {
-                    time = "00:0" + m + ":0" + s;
+                    if (s = 0) {
+                        time = "00:0" + m + ":00";
+                    } else {
+                        time = "00:0" + m + ":0" + s;
+                    }
                 } else if (m < 10 && s >= 10) {
                     time = "00:0" + m + ":" + s;
                 } else {
@@ -898,9 +902,11 @@ define(function (require, exports, module) {
                 var s = parseInt(time % 3600 % 60 % 60);
                 if (h < 10) {
                     if (m < 10) {
-                        if (s < 10) {
+                        if (s =0) {
+                            time = "0" + h + ":0" + m + ":00";
+                        } else if (s < 10) {
                             time = "0" + h + ":0" + m + ":0" + s;
-                        } else {
+                        } else if (s >=10){
                             time = "0" + h + ":0" + m + ":" + s;
                         }
                     } else {
