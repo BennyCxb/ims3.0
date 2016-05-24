@@ -18,6 +18,7 @@ define(function (require, exports, module) {
         instance;
 
     function openDialog() {
+        instance = null;
         if (instance) {
             console.error('模版列表对话框已经存在!');
             return;
