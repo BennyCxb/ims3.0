@@ -522,23 +522,23 @@ define(function (require, exports, module) {
             $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //预览操作
-            $(".mtrCtrl_name a").each(function(){
-                $(this).click(function(){
+            $(".mtrCtrl_name a").each(function () {
+                $(this).click(function () {
                     var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
                     for (var a = 0; a < mtrData.length; a++) {
                         if (mtrData[a].url == $(this).attr("url")) {
                             z_index = a;
                         }
                     }
-                    if(mtrData[z_index].type_name == "视频"){
+                    if (mtrData[z_index].type_name == "视频") {
                         var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
-                        if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
+                        if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
                             alert("当前视频格式暂不支持预览！");
                             return;
                         }
-                    } else if(mtrData[z_index].type_name == "音频"){
+                    } else if (mtrData[z_index].type_name == "音频") {
                         var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
-                        if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
+                        if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
                             alert("当前音频格式暂不支持试听！");
                             return;
                         }
@@ -677,7 +677,10 @@ define(function (require, exports, module) {
             var time = {
                 duration: formatSecond($(this).val())
             };
-            DB.collection("material").update({schedule_params: JSON.stringify(time)}, {resource_id: Number($(this).parent().parent().attr("mtrid"))});
+            DB.collection("material").update({schedule_params: JSON.stringify(time)}, {
+                resource_id: Number($(this).parent().parent().attr("mtrid")),
+                widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+            });
         })
         $(".mtrC_times").change(function () {
             if (!inputCheck()) return;
@@ -691,7 +694,11 @@ define(function (require, exports, module) {
                     duration: formatSecond($(this).parent().prev().find("input").val())
                 };
             }
-            DB.collection("material").update({schedule_params: JSON.stringify(schedule_params)}, {resource_id: Number($(this).parent().parent().attr("mtrid"))});
+            DB.collection("material").update({schedule_params: JSON.stringify(schedule_params)},
+                {
+                    resource_id: Number($(this).parent().parent().attr("mtrid")),
+                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+                });
         })
     }
 
