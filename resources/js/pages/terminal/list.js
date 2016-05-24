@@ -430,79 +430,86 @@ define(function(require, exports, module) {
         // term_list
         var tl = data.termList.terms;
         $('#term_list').empty();
-        for(var i = 0; i < tl.length; i++){
+        if (tl.length != 0) {
+          for(var i = 0; i < tl.length; i++){
 
-          var downloadStatus = JSON.parse(tl[i].CurrentChannelDownloadInfo),
-              downloadNum,
-              downloadDisplay = "visible";
-          if(downloadStatus.AllFiles === 0){
-            downloadNum = "无下载任务";
-            downloadStatus = '-';
-            downloadDisplay = 'hidden';
-          }else{
-            downloadNum = "已下载：" + downloadStatus.DownloadFiles +'个，未下载' + (downloadStatus.AllFiles - downloadStatus.DownloadFiles)+'个';
-            downloadStatus = Math.floor(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
-          }
+            var downloadStatus = JSON.parse(tl[i].CurrentChannelDownloadInfo),
+                downloadNum,
+                downloadDisplay = "visible";
+            if(downloadStatus.AllFiles === 0){
+              downloadNum = "无下载任务";
+              downloadStatus = '-';
+              downloadDisplay = 'hidden';
+            }else{
+              downloadNum = "已下载：" + downloadStatus.DownloadFiles +'个，未下载' + (downloadStatus.AllFiles - downloadStatus.DownloadFiles)+'个';
+              downloadStatus = Math.floor(downloadStatus.DownloadFiles/downloadStatus.AllFiles*100)+'%';
+            }
 
-          var preloadStatus = JSON.parse(tl[i].PreDownloadInfo),
-              preloadNum,
-              preloadDisplay = "visible";
-          if(preloadStatus.AllFiles === 0){
-            preloadNum = "无下载任务";
-            preloadStatus = '-';
-            preloadDisplay = 'hidden';
-          }else{
-            preloadNum = "已下载：" + preloadStatus.DownloadFiles +'个，未下载' + (preloadStatus.AllFiles - preloadStatus.DownloadFiles)+'个';
-            preloadStatus = Math.floor(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
-          }
+            var preloadStatus = JSON.parse(tl[i].PreDownloadInfo),
+                preloadNum,
+                preloadDisplay = "visible";
+            if(preloadStatus.AllFiles === 0){
+              preloadNum = "无下载任务";
+              preloadStatus = '-';
+              preloadDisplay = 'hidden';
+            }else{
+              preloadNum = "已下载：" + preloadStatus.DownloadFiles +'个，未下载' + (preloadStatus.AllFiles - preloadStatus.DownloadFiles)+'个';
+              preloadStatus = Math.floor(preloadStatus.DownloadFiles/preloadStatus.AllFiles*100)+'%';
+            }
 
-          var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
-          var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
-          var snap = (tl[i].Online === 0)?'':'<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
+            var statusName = (tl[i].Online === 0)?'离线':((tl[i].Status === 'Running')?'运行':'休眠');
+            var status = (tl[i].Online === 0)?'offline':((tl[i].Status === 'Running')?'running':'shutdown');
+            var snap = (tl[i].Online === 0)?'':'<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
             var diskArr = tl[i].DiskInfo.split("MB");
             var diskinfo1 = diskArr[0];
             var diskinfo2 = diskArr[1].substring(1);
             var restdisk = Number(diskinfo2) - Number(diskinfo1);
             //console.log(restdisk)
             var diskinfo = restdisk+"MB/"+diskinfo2+"MB";
-          $('#term_list').append('' +
-            '<tr channel="'+ tl[i].Channel_Name +'" preChannel="'+ tl[i].PreDownload_Channel_Name +'" tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
-              '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
-              '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
-              '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ diskinfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
-              '<td style="line-height:26px; padding-top:10px;">当前频道：'+
-              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ChannelName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName)) +
-              '<br />当前节目：'+
-              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName)) +
-              '<br />当前视频：'+
-              ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
-              '</td>' +
-              '<td  style=" padding-top:11px;">' +
+            $('#term_list').append('' +
+                '<tr channel="'+ tl[i].Channel_Name +'" preChannel="'+ tl[i].PreDownload_Channel_Name +'" tid="'+ tl[i].ID +'" tname="'+tl[i].Name+'" ip="'+tl[i].IP+'" mac="'+tl[i].MAC+'" disk="'+tl[i].DiskInfo+'" cpu="'+tl[i].Cpu+'" mem="'+tl[i].Mem+'" status="' + status + '">' +
+                '<td style="width:36px; padding-leftt:12px;"><input type="checkbox" style="left:4px;"></td>' +
+                '<td style="width:36px; padding-right:0; padding-left:0"><i class="fa fa-television term-icon '+status+'" style="position:relative; left:10px;"></i></td>'+
+                '<td style="padding-left:0;"><a class="pointer"><strong>'+ tl[i].Name +'&nbsp</strong><small class="term-status-small">('+statusName+')</small></a><br/><small>磁盘：</small><small>'+ diskinfo +'</small><br/><small>CPU：</small><small>'+ tl[i].Cpu +'%</small><br/><small>内存：</small><small>'+ tl[i].Mem +'</small></td>' +
+                '<td style="line-height:26px; padding-top:10px;">当前频道：'+
+                ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ChannelName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ChannelName)) +
+                '<br />当前节目：'+
+                ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramName===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramName)) +
+                '<br />当前视频：'+
+                ((tl[i].CurrentPlayInfo==='')?'':(JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo===undefined?'':JSON.parse(tl[i].CurrentPlayInfo).ProgramPlayInfo)) +
+                '</td>' +
+                '<td  style=" padding-top:11px;">' +
                 '<span title="'+downloadNum+'" style="font-size: 12px; color: grey;">下载：'+downloadStatus+'</span>' +
                 '<div style="visibility:'+downloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
-                   '<div class="progress-bar progress-bar-success" role="progressbar" ' +
-                      'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
-                      'style="width: '+ downloadStatus +';">' +
-                      '<span class="sr-only">'+ downloadStatus +' 完成（成功）</span>' +
-                   '</div>' +
+                '<div class="progress-bar progress-bar-success" role="progressbar" ' +
+                'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: '+ downloadStatus +';">' +
+                '<span class="sr-only">'+ downloadStatus +' 完成（成功）</span>' +
+                '</div>' +
                 '</div>' +
                 '<span title="'+preloadNum+'" style="font-size: 12px; color: grey; position:relative; top:6px; line-height:31px;">预下载：'+preloadStatus+'</span>' +
                 '<div style="visibility:'+preloadDisplay+'; height: 10px; margin-top: 0px;" class="progress progress-striped">' +
-                   '<div class="progress-bar progress-bar-success" role="progressbar" ' +
-                      'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
-                      'style="width: '+ preloadStatus +';">' +
-                      '<span class="sr-only">'+ preloadStatus +' 完成（成功）</span>' +
-                   '</div>' +
+                '<div class="progress-bar progress-bar-success" role="progressbar" ' +
+                'aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ' +
+                'style="width: '+ preloadStatus +';">' +
+                '<span class="sr-only">'+ preloadStatus +' 完成（成功）</span>' +
                 '</div>' +
-              '</td>' +
-              '<td  style="padding-top:30px; float:right; position:relative">' +
-              snap + '<button style=" position:relative; margin-top:-16px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
-              '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
-              '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' +
-              '</td>' +
-            '</tr>'
-          )
+                '</div>' +
+                '</td>' +
+                '<td  style="padding-top:30px; float:right; position:relative">' +
+                snap + '<button style=" position:relative; margin-top:-16px;" class="log btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="查看日志"><i class="fa fa-file-text-o"></i></a></button>' + '</br>' +
+                '<small style="white-space:nowrap; float:right; color: #9c9c9c">IP：'+ tl[i].IP +'</small></br>' +
+                '<small  style="white-space:nowrap; float:right; color: #9c9c9c">version：' + tl[i].TermVersion + '</small>' +
+                '</td>' +
+                '</tr>'
+            )
+          }
+        } else {
+          $('#term-table-pager').jqPaginator('destroy');
+
+          $("#term_list").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
         }
+
 
         // 复选
         // 复选全选按钮初始化
