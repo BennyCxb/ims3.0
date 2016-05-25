@@ -122,13 +122,18 @@ define(function (require, exports, module) {
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
+                var mtrName_tr;
                 for (var x = 0; x < mtrData.length; x++) {
                     var material_type = mtrData[x].Type_Name;
-                    if (material_type == "文本" || material_type == "Live") {		//文本和直播无预览效果
-                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
+                    if (material_type == "Live") {		//直播无预览效果
+                        mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
                     } else {
-                        var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
-                        var mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a url="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                        if (material_type == "文本") {
+                            mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="#materials/materials_addText?id=' + mtrData[x].ID + '">' + mtrData[x].Name + '</a></b></td>';
+                        } else {
+                            var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
+                            mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a url="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
+                        }
                     }
                     // 审核状态
                     var check_td = '';
@@ -239,9 +244,9 @@ define(function (require, exports, module) {
             }
         });
         // 添加文本按钮点击
-        $('#mtr_addText').click(function () {
-            openEditor();
-        })
+        //$('#mtr_addText').click(function () {
+        //    openEditor();
+        //})
         // 添加直播按钮点击
         $('#mtr_addLive').click(function () {
             openLive();
@@ -347,7 +352,13 @@ define(function (require, exports, module) {
             var typeId = $("#mtrChoise li.active").attr("typeid");
             if (typeId == "4") {			//编辑文本
                 $("#mtr_edit").attr("edit_type", "文本");
-                openEditor();
+                var mtrHref;
+                for (var x = 0; x < $(".mtr_cb").length; x++) {
+                    if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
+                        mtrHref = $(".mtr_cb:eq(" + x + ")").parents("td").next().find("a").attr("href");
+                    }
+                }
+                location.hash = mtrHref;
             } else if (typeId == "5") {	//编辑直播
                 $("#mtr_edit").attr("edit_type", "直播");
                 openLive();

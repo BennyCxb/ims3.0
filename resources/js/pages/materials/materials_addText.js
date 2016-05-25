@@ -4,7 +4,6 @@ define(function (require, exports, module) {
     var MTR = require("pages/materials/materials_list.js");
     var _mtrId;
     exports.init = function () {
-
         var DispClose = false;
         $(window).bind('beforeunload', function () {
             var editor = CKEDITOR.instances.editor1;//获取编辑器对象,editor1 为 textarea 的ID
@@ -31,17 +30,12 @@ define(function (require, exports, module) {
         CKEDITOR.replace('editor1');
         //关闭窗口
         $("#Tmtr_back").click(function () {
-            back();
+            backList();
         });
 
         $('#Tmtr_viewlast').click(function(){
             var viewText = require("pages/materials/materials_viewText.js");
-            var mtrId;
-            for (var x = 0; x < $(".mtr_cb").length; x++) {
-                if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                    mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID");
-                }
-            }
+            var mtrId = location.hash.substring(location.hash.lastIndexOf('?id=')+4);
             viewText.materialID = mtrId;
             viewText.materialName = '已通过审核的内容';
             var page = "resources/pages/materials/materials_viewText.html";
@@ -50,15 +44,9 @@ define(function (require, exports, module) {
     }
 
     function loadPage() {
-    	if ($("#mtr_edit").attr("edit_type") == "文本"){			//保存
+    	if (location.hash.indexOf('?id=') != -1){			//保存
     		$("#mtr_atTitle").html("编辑文本");
-    		var mtrId;
-            for (var x = 0; x < $(".mtr_cb").length; x++) {
-                if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                    mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID");
-                }
-            }
-
+    		var mtrId = location.hash.substring(location.hash.lastIndexOf('?id=')+4);
             jsons ={};
             jsons["Action"] = "Get";
             jsons["Project"] = UTIL.getCookie("project_name");
@@ -95,7 +83,6 @@ define(function (require, exports, module) {
                 onSaveAndSubmit(mtrId);
             })
     	}else {		
-            									
             //添加
             $('#Tmtr_viewlast').hide();
     		$("#mtr_atTitle").html("添加文本");
@@ -113,12 +100,10 @@ define(function (require, exports, module) {
     }
 
     //返回
-    function back() {
-        $("#addtext_box").html("");
-        $("#mtr_edit").removeAttr("edit_type");
-        $("#list_box").css("display", "block");
+    function backList() {
         var editor = CKEDITOR.instances['editor1'];
         if (editor) { editor.destroy(true); }
+        location.hash = '#materials/materials_list';
     }
 
     function onSaveAndSubmit(mtrId){
@@ -168,11 +153,9 @@ define(function (require, exports, module) {
                 function(data){
                     if(data.rescode === '200'){
                         alert("保存并提交成功");
+                        backList();
                         //解除绑定，一般放在提交触发事件中
                         $(window).unbind('beforeunload');
-                        var pageNum = $("#materials-table-pager li.active").find("a").text();
-                        MTR.loadPage(pageNum, 4);
-                        back();
                     }else{
                         '提交失败'
                     }
@@ -193,10 +176,10 @@ define(function (require, exports, module) {
                 success: function (data, textStatus) {
                     if (parseInt(data.rescode) == 200) {
                         alert("保存成功");
+                        backList();
                         //解除绑定，一般放在提交触发事件中
                         $(window).unbind('beforeunload');
-                        $("#mtrText").trigger("click");
-                        back();
+                        //$("#mtrText").trigger("click");
                     } else {
                         alert("保存失败");
                     }
@@ -211,8 +194,6 @@ define(function (require, exports, module) {
     	        success:function (data, textStatus){
     	            if (parseInt(data.rescode) == 200){
     	                alert("保存成功");
-                        var pageNum = $("#materials-table-pager li.active").find("a").text();
-                        MTR.loadPage(pageNum, 4);
                         back();
     	            }else{
     	                alert("保存失败");
