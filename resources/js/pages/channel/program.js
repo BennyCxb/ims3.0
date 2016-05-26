@@ -384,7 +384,7 @@ define(function (require, exports, module) {
             .toggleClass('date-timer', !dayTimer);
         fields[0].textContent = segments[4] === '*' ? '每月' : segments[4] + '月';
         fields[1].textContent = segments[3] === '*' ? '每日' : segments[3] + '日';
-        fields[2].textContent = segments[6] === '*' ? '每日' : segments[6] + '日';
+        fields[2].textContent = segments[6] === '*' ? '每日' : '每周' + segments[6];
         fields[3].textContent = segments[2] === '*' ? '每点' : segments[2] + '点';
         fields[4].textContent = segments[1] === '*' ? '每分' : segments[1] + '分';
         fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
