@@ -378,16 +378,52 @@ define(function (require, exports, module) {
         if (segments[6] !== '*' || (segments[5] === '*' &&
             segments[4] === '*' && segments[3] === '*')) {
             dayTimer = true;
+            var weekday = segments[6].split(',');
+            var week;
+            if (weekday[0] != undefined) {
+                week = toWeekday(weekday[0]);
+                if (weekday[1] != undefined) {
+                    week += ',' + toWeekday(weekday[1]);
+                    if (weekday[2] != undefined) {
+                        week += ',' + toWeekday(weekday[2]);
+                        if (weekday[3] != undefined) {
+                            week += ',' + toWeekday(weekday[3]);
+                            if (weekday[4] != undefined) {
+                                week += ',' + toWeekday(weekday[4]);
+                                if (weekday[5] != undefined) {
+                                    week += ',' + toWeekday(weekday[5]);
+                                    if (weekday[6] != undefined) {
+                                        week += ',' + toWeekday(weekday[6]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         $('#channel-editor-wrapper .channel-editor-program-trigger')
             .toggleClass('day-timer', dayTimer)
             .toggleClass('date-timer', !dayTimer);
         fields[0].textContent = segments[4] === '*' ? '每月' : segments[4] + '月';
         fields[1].textContent = segments[3] === '*' ? '每日' : segments[3] + '日';
-        fields[2].textContent = segments[6] === '*' ? '每日' : '每周' + segments[6];
+        fields[2].textContent = segments[6] === '*' ? '每日' : '每' + week;
         fields[3].textContent = segments[2] === '*' ? '每点' : segments[2] + '点';
         fields[4].textContent = segments[1] === '*' ? '每分' : segments[1] + '分';
         fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
+    }
+
+    function toWeekday(num) {
+        switch(num){
+            case '1' : return '周一'; break;
+            case '2' : return '周二'; break;
+            case '3' : return '周三'; break;
+            case '4' : return '周四'; break;
+            case '5' : return '周五'; break;
+            case '6' : return '周六'; break;
+            case '7' : return '周日'; break;
+            default: return '' ;
+        }
     }
 
     function onSelectWidget (widget) {
