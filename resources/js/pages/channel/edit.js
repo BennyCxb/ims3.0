@@ -424,9 +424,10 @@ define(function (require, exports, module) {
         });
         programs.forEach(function (el, idx, arr) {
             var layout = db.collection('layout').select({id: el.layout_id})[0];
-            var backgroundStyle = layout.background_image_url ?
-            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
-            'background-color:' + layout.background_color;
+            //var backgroundStyle = layout.background_image_url ?
+            //'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
+            //'background-color:' + layout.background_color;
+            var backgroundStyle = 'background-image:url(' + getThumbnail(layout) + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' ;
             var data = {
                 id: el.id,
                 name: el.name,
@@ -447,9 +448,7 @@ define(function (require, exports, module) {
         });
         programs.forEach(function (el, idx, arr) {
             var layout = db.collection('layout').select({id: el.layout_id})[0];
-            var backgroundStyle = layout.background_image_url ?
-            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' :
-            'background-color:' + layout.background_color;
+            var backgroundStyle = 'background-image:url(' + getThumbnail(layout) + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;' ;
             var data = {
                 id: el.id,
                 name: el.name,
@@ -1165,9 +1164,10 @@ define(function (require, exports, module) {
                     '#channel-editor-wrapper .channel-program-list-regular ul' :
                     '#channel-editor-wrapper .channel-program-list-timed ul'
             ),
-            backgroundStyle = layout.background_image_url ?
-            'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
-            'background-color:' + layout.background_color,
+            //backgroundStyle = layout.background_image_url ?
+            //'background-image:url(' + layout.background_image_url + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center' :
+            //'background-color:' + layout.background_color,
+            backgroundStyle = 'background-image:url(' + getThumbnail(layout) + ');background-repeat:no-repeat;background-size:100% 100%;background-position:center;',
             data = {
                 id: program.id,
                 name: program.name,
@@ -1248,6 +1248,31 @@ define(function (require, exports, module) {
             return null;
         }
         return db.collection('program').select({id: programId})[0]
+    }
+
+    /**
+     *获取缩略图
+     */
+    function getThumbnail(layout) {
+        var background_image;
+        if (layout.background_image_url == "" && layout.download_auth_type == "") {
+            var data = JSON.stringify({
+                project_name: projectName,
+                action: 'getThumbnail',
+                data: {
+                    layout_id: String(layout.id),
+                }
+            });
+            util.ajax2('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+                if (Number(res.ID) != undefined) {
+                    console.log('获取缩略图添加成功!');
+                    background_image = res.Thumbnail;
+                }
+            })
+        } else {
+            background_image = util.getRealURL(layout.download_auth_type, layout.background_image_url);
+        }
+        return background_image;
     }
 
     /**

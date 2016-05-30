@@ -79,8 +79,9 @@ define(function (require, exports, module) {
 
         $('#layout-list-dialog .layout-list').html('');
         json.LayoutList.forEach(function (el, idx, arr) {
-            var style = el.BackgroundPic.Type === 'Unknown' ?
-                'background-color: ' + el.BackgroundColor : 'background-image: url(' + el.BackgroundPic.URL + ')';
+            //var style = el.BackgroundPic.Type === 'Unknown' ?
+            //    'background-color: ' + el.BackgroundColor : 'background-image: url(' + getThumbnail(el) + ')';
+            var style = 'background-image: url(' + getThumbnail(el) + ')';
             var data = {
                 id: el.ID,
                 name: el.Name,
@@ -132,6 +133,31 @@ define(function (require, exports, module) {
 
     function onCloseDialog(listener) {
         instance.onCloseDialogListener = listener;
+    }
+
+    /**
+     *获取缩略图
+     */
+    function getThumbnail(el) {
+        var background_image;
+        if (el.BackgroundPic.Type == "Unknown") {
+            var data = JSON.stringify({
+                project_name: projectName,
+                action: 'getThumbnail',
+                data: {
+                    layout_id: String(el.ID),
+                }
+            });
+            util.ajax2('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+                if (Number(res.ID) != undefined) {
+                    console.log('获取缩略图添加成功!');
+                    background_image = res.Thumbnail;
+                }
+            })
+        } else {
+            background_image = util.getRealURL(el.BackgroundPic.Download_Auth_Type, el.BackgroundPic.URL);
+        }
+        return background_image;
     }
 
     exports.open = openDialog;

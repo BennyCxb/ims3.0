@@ -5,6 +5,10 @@ define(function (require, exports, module) {
         ajax(type, url, data, successFn, dataType);
     };
 
+    exports.ajax2 = function (type, url, data, successFn, dataType) {
+        ajax2(type, url, data, successFn, dataType);
+    };
+
     exports.cover = {
         'load': function (url,layer) {
             if(!layer) {
@@ -129,6 +133,31 @@ define(function (require, exports, module) {
             }
         })
 
+    }
+
+    //非异步
+    function ajax2(type, url, data, successFn, dataType) {
+        var data = JSON.parse(data);
+        data.user = $('#USER-NAME').html();
+        data = JSON.stringify(data);
+        var dataType = (dataType === undefined ? 'json' : dataType);
+
+        var ajax = $.ajax({
+            type: type,
+            url: url,
+            dataType: dataType,
+            data: data,
+            timeout: CONFIG.letTimeout,
+            async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
+            success: function (data) {
+                successFn(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                // XMLHttpRequest.status
+                // alert('连接服务器出错 ' + textStatus + errorThrown);
+                ajax.abort();
+            }
+        })
     }
 
 });

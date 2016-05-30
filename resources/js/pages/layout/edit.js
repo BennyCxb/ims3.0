@@ -275,7 +275,6 @@ define(function(require, exports, module) {
         });
         util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
             if (Number(res.rescode) !== 200) {
-
                 cb(res);
                 return;
             }
@@ -312,7 +311,25 @@ define(function(require, exports, module) {
                 cb(res);
                 return;
             }
-            cb();
+            //生成缩略图
+            html2canvas( $(".layout-editor-canvas").children().children().eq(2).children() ,{
+                onrendered: function(canvas){
+                    var data = JSON.stringify({
+                        project_name: projectName,
+                        action: 'updateThumbnail',
+                        data: {
+                            layout_id: String(json.id),
+                            Thumbnail: canvas.toDataURL(),
+                        }
+                    });
+                    util.ajax2('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
+                        if (Number(res.rescode) == 200) {
+                            console.log('控件缩略图添加成功!');
+                        }
+                    })
+                    cb();
+                }
+            });
         });
     }
 
