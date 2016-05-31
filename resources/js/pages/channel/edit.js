@@ -1255,7 +1255,7 @@ define(function (require, exports, module) {
      */
     function getThumbnail(layout) {
         var background_image;
-        if (layout.background_image_url == "" && layout.download_auth_type == "") {
+        if ((layout.background_image_url == "" && layout.download_auth_type == "") || (layout.background_image_url == undefined && layout.download_auth_type == undefined)) {
             var data = JSON.stringify({
                 project_name: projectName,
                 action: 'getThumbnail',
