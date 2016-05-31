@@ -233,7 +233,7 @@ define(function (require, exports, module) {
         } else {
             this.tHours = th.map(function (el) {
                 return parseInt(el);
-            }).sort();
+            });
         }
         var tm = $('#channel-editor-timer .minute-selector select').val();
         if (tm === null || tm.includes('*')) {
@@ -241,7 +241,7 @@ define(function (require, exports, module) {
         } else {
             this.tMinutes = tm.map(function (el) {
                 return parseInt(el);
-            }).sort();
+            });
         }
         var ts = $('#channel-editor-timer .second-selector select').val();
         if (tm === null || ts.includes('*')) {
@@ -249,7 +249,7 @@ define(function (require, exports, module) {
         } else {
             this.tSeconds = ts.map(function (el) {
                 return parseInt(el);
-            }).sort();
+            });
         }
         this.saveCallback && this.saveCallback(Timer.encode(this));
     };
