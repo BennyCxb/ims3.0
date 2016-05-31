@@ -199,6 +199,19 @@ define(function (require, exports, module) {
                     break;
                 case 'WebBox':
                     style = w.style === '' ? {} : JSON.parse(w.style);
+                    var mtrData;
+                    var Data = JSON.stringify({
+                        "Project": config.projectName,
+                        "Action": "GetCheckText"
+                    })
+                    util.ajax2(
+                        'POST',
+                        config.serverRoot + '/backend_mgt/v1/webmaterials/'+material.resource_id,
+                        Data,
+                        function(data){
+                            mtrData = data;
+                        },'text'
+                    )
                     if (style.Type === 'Marquee') {
                         style = {
                             type: style.Type,
@@ -207,6 +220,7 @@ define(function (require, exports, module) {
                             speed: Number(style.ScrollSpeed),
                             backgroundColor: style.BackgroundColor
                         };
+                        mtrData = mtrData.replace(/<\/?.+?>/g,"")
                     } else {
                         style = {
                             type: style.Type,
@@ -214,21 +228,7 @@ define(function (require, exports, module) {
                             backgroundColor: style.BackgroundColor
                         };
                     }
-                    //var mtrData;
-                    //var data = JSON.stringify({
-                    //    "Project": config.projectName,
-                    //    "Action": "GetCheckText"
-                    //})
-                    //util.ajax(
-                    //    'POST',
-                    //    config.serverRoot + '/backend_mgt/v1/webmaterials/'+material.resource_id,
-                    //    data,
-                    //    function(data){
-                    //        mtrData = data;
-                    //        data[w.id] = {material: mtrData, style: style};
-                    //    },'text'
-                    //)
-                    data[w.id] = {material: w.material, style: style};
+                    data[w.id] = {material: mtrData, style: style};
                     break;
                 case 'ClockBox':
                     style = w.style === '' ? {} : JSON.parse(w.style);
@@ -281,7 +281,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-preview').click(function () {
             if (!editMode) {
-				toast.show('温馨提示：当前预览是您最后一次保存的内容');
+				//toast.show('温馨提示：当前预览是您最后一次保存的内容');
                 showPreview(editor);
                 editMode = true;
                 $(this).children('i')
