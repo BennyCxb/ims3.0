@@ -288,6 +288,7 @@ define(function (require, exports, module) {
                     .addClass('fa-stop')
                     .removeClass('fa-play-circle-o');
                 $(this).get(0).lastChild.nodeValue = '   取消预览 ';
+                $(this).attr("is_preview","true");
             } else {
                 editor.hidePreview();
                 editMode = false;
@@ -295,6 +296,7 @@ define(function (require, exports, module) {
                     .removeClass('fa-stop')
                     .addClass('fa-play-circle-o');
                 $(this).get(0).lastChild.nodeValue = '   预览节目 ';
+                $(this).attr("is_preview","false");
             }
         });
         $('#channel-editor-wrapper .btn-channel-setup-timer').click(function () {
