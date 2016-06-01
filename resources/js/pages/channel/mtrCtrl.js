@@ -40,6 +40,12 @@ define(function (require, exports, module) {
             UTIL.cover.load(page);
         })
 
+        // 批量修改
+        $('#mtr_batchOperation').click(function () {
+            var page = "resources/pages/channel/mtrBatchOperation.html";
+            UTIL.cover.load(page);
+        })
+
         // 统计时长
         $('#mtr_countTime').click(function () {
             var conutTime = 0;
@@ -533,6 +539,7 @@ define(function (require, exports, module) {
                 }
             }
 
+            // 时间控件绑定
             $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //预览操作
@@ -618,6 +625,7 @@ define(function (require, exports, module) {
                 onSort: onResortMaterial
             });
 
+            mtrCb();
             mtrAttrSave()
         }
     }
@@ -846,8 +854,8 @@ define(function (require, exports, module) {
 
     //校验复选框勾选的个数
     function mtrCb() {
-        var Ck = $(".icheckbox_flat-blue.checked").length;	//当前选中复选框个数
-        var Uck = $(".icheckbox_flat-blue").length;			//复选框总个数
+        var Ck = $("#mtrCtrl_Table .icheckbox_flat-blue.checked").length;	//当前选中复选框个数
+        var Uck = $("#mtrCtrl_Table .icheckbox_flat-blue").length;			//复选框总个数
         //控制全选按钮全选或者不全选状态
         if (Ck != 0) {
             $("#mtr_delete").removeAttr("disabled");
@@ -855,12 +863,17 @@ define(function (require, exports, module) {
             $("#mtr_delete").attr("disabled", true);
         }
         if (Uck != 0) {
+            $("#mtr_batchOperation").removeAttr("disabled");
+            $("#mtr_countTime").removeAttr("disabled");
             if (Ck == Uck) {
                 $(".fa.fa-square-o").attr("class", "fa fa-check-square-o");
             } else {
                 $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
             }
         } else {
+            $("#mtr_delete").attr("disabled", true);
+            $("#mtr_batchOperation").attr("disabled", true);
+            $("#mtr_countTime").attr("disabled", true);
             $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
             $(".checkbox-toggle").data("clicks", false);
         }
