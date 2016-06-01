@@ -43,8 +43,6 @@ define(function (require, exports, module) {
                 if ($(this).attr("disabled") == undefined) {
                     $(this).val($("#batchDuration").val());
                     $(this).trigger("change");
-                } else {
-                    return false;
                 }
             })
         }
