@@ -9,7 +9,7 @@
 
 #layout-list-dialog .layout-list {
     clear: both;
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
     list-style: none;
     margin-bottom: 0;
