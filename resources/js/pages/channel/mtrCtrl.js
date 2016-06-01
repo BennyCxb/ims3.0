@@ -101,6 +101,7 @@ define(function (require, exports, module) {
             $("#box_tableHeader").hide();
             return;
         }
+        mtrCb();
         exports.loadPage(widget);
     }
 
