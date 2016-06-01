@@ -613,8 +613,10 @@ define(function (require, exports, module) {
         if (Uck != 0) {
             if (Ck == Uck) {
                 $(".fa.fa-square-o").attr("class", "fa fa-check-square-o");
+                $(".checkbox-toggle").data('clicks', true);
             } else {
                 $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
+                $(".checkbox-toggle").data('clicks', false);
             }
         }
     }

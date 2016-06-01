@@ -302,8 +302,10 @@ define(function (require, exports, module) {
         if (Uck != 0) {
             if (Ck == Uck) {
                 $("#mtr_allCheck i").attr("class", "fa fa-check-square-o");
+                $(".checkbox-toggle").data('clicks', true);
             } else {
                 $("#mtr_allCheck i").attr("class", "fa fa-square-o");
+                $(".checkbox-toggle").data('clicks', false);
             }
         }
     }
