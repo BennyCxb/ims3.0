@@ -1145,7 +1145,7 @@ define(function (require, exports, module) {
             template_id: 0,
             lifetime_start: '1970-01-01 00:00:00',
             lifetime_end: '2030-01-01 00:00:00',
-            name: '新建节目',
+            name: layout.name,
             name_eng: 'new program',
             schedule_params: '{\"duration\":3600,\"count\":1}',
             schedule_type: type,
