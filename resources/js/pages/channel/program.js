@@ -224,8 +224,8 @@ define(function (require, exports, module) {
                     } else {
                         style = {
                             type: style.Type,
-                            pageDownPeriod: Number(style.PageDownPeriod),
-                            backgroundColor: style.BackgroundColor
+                            pageDownPeriod: Number($("#mtrC_pageDownPeriod").val()),
+                            backgroundColor: $("#text_bgcolor").val()
                         };
                     }
                     data[w.id] = {material: mtrData, style: style};

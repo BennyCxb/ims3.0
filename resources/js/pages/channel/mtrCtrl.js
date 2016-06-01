@@ -595,6 +595,7 @@ define(function (require, exports, module) {
                     widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
                 });
                 $(this).parent().parent().remove();
+                mtrCb();
             })
 
             //复选框样式
