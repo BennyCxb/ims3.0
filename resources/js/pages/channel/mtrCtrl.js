@@ -861,11 +861,12 @@ define(function (require, exports, module) {
         //控制全选按钮全选或者不全选状态
         if (Ck != 0) {
             $("#mtr_delete").removeAttr("disabled");
+            $("#mtr_batchOperation").removeAttr("disabled");
         } else {
             $("#mtr_delete").attr("disabled", true);
+            $("#mtr_batchOperation").attr("disabled", true);
         }
         if (Uck != 0) {
-            $("#mtr_batchOperation").removeAttr("disabled");
             $("#mtr_countTime").removeAttr("disabled");
             if (Ck == Uck) {
                 $(".fa.fa-square-o").attr("class", "fa fa-check-square-o");
@@ -905,7 +906,7 @@ define(function (require, exports, module) {
     function formatTime(longTime) {
         //转化为 小时+分+秒
         var time = parseFloat(longTime);
-        if (time != null && time != "") {
+        if (time != null && time != "" || time == 0) {
             if (time < 60) {
                 var s = time;
                 if (time < 10) {

@@ -39,19 +39,23 @@ define(function (require, exports, module) {
                 $("#batchDuration").focus();
                 return;
             }
-            $(".mtrCtrl_time").each(function() {
-                if ($(this).attr("disabled") == undefined) {
-                    $(this).val($("#batchDuration").val());
-                    $(this).trigger("change");
+        }
+        var obj1,
+            obj2;
+        $("input:checkbox[class='mtr_cb']:checked").each(function () {
+            obj1 = $(this).parents("tr").find(".mtrCtrl_time");
+            obj2 = $(this).parents("tr").find(".mtrC_times");
+            if ($("#batchDuration").val() != "") {
+                if (obj1.attr("disabled") == undefined) {
+                    obj1.val($("#batchDuration").val());
+                    obj1.trigger("change");
                 }
-            })
-        }
-        if ($("#batchTime").val() != "") {
-            $(".mtrC_times").each(function() {
-                $(this).val($("#batchTime").val());
-                $(this).trigger("change");
-            })
-        }
+            }
+            if ($("#batchTime").val() != "") {
+                obj2.val($("#batchTime").val());
+                obj2.trigger("change");
+            }
+        })
         UTIL.cover.close();
     }
 })
