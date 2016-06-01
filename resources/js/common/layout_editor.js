@@ -1076,7 +1076,7 @@ define(function (require, exports, module) {
      * 绘制widget
      */
     Widget.prototype.onDraw = function () {
-        if ($('#channel-editor-wrapper .btn-channel-preview').attr("is_preview") == "false") {
+        if ($('#channel-editor-wrapper .btn-channel-preview').attr("is_preview") == "false" || location.hash.indexOf('#layout/edit') != -1 ) {
             this.mElement.style.backgroundColor = this.mBackgroundColor;
         }
         this.mElement.style.top             = this.mTop    * this.mContext.getZoomFactor() + 'px';
