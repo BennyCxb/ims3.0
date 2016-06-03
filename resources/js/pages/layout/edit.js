@@ -192,6 +192,10 @@ define(function(require, exports, module) {
             location.hash = '#layout/list';
         });
         $('#layout-editor-wrapper .btn-layout-editor-save').click(onSaveLayout);
+        $('#layout-editor-wrapper .btn-layout-editor-saveExit').click(function() {
+            $(this).attr("exit", "true");
+            onSaveLayout();
+        });
         $('#layout-editor-wrapper .layout-editor-widgets').delegate('li', 'click', function (ev) {
             var index = Number(this.getAttribute('data-widget-index'));
             editor.mLayout.mWidgets[index].requestFocus();
@@ -231,8 +235,12 @@ define(function(require, exports, module) {
                             console.log('控件更新成功!');
                             $('#layout-editor-wrapper .btn-layout-editor-save').removeAttr("disabled");
                             alert('保存成功!');
-                            if (isNewLayout) {
-                                location.hash = '#layout/edit?id=' + json.id
+                            if ($('#layout-editor-wrapper .btn-layout-editor-saveExit').attr("exit") == "true"){
+                                location.hash = '#layout/list';
+                            }else {
+                                if (isNewLayout) {
+                                    location.hash = '#layout/edit?id=' + json.id;
+                                }
                             }
                             //location.reload();
                         });

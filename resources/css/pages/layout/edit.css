@@ -195,6 +195,12 @@
     margin-right: 15px;
 }
 
+.btn-layout-editor-saveExit{
+    display: inline;
+    float: right;
+    margin-right: 15px;
+}
+
 .btn-layout-editor-exit{
     display: inline;
     float: right;
