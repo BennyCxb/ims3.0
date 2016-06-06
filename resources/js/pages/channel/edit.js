@@ -1046,12 +1046,13 @@ define(function (require, exports, module) {
         db.commit();
         db.beginTransaction();
         $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
-        alert('保存成功!');
+
         if ($('#channel-editor-wrapper .btn-channel-editor-saveRelease').attr("release") == "true") {
             onPublishChannel();
-        }
-        if ($('#channel-editor-wrapper .btn-channel-editor-saveSubmit').attr("audit") == "true") {
+        } else if ($('#channel-editor-wrapper .btn-channel-editor-saveSubmit').attr("audit") == "true") {
             onSubmitAudit();
+        } else {
+            alert('保存成功!');
         }
         if (location.hash.indexOf('?id=') === -1) {
             location.hash = '#channel/edit?id=' + channelId;
@@ -1313,11 +1314,11 @@ define(function (require, exports, module) {
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
             util.ajax2('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
-                    alert("频道预发布成功！")
+                    alert("频道保存并发布成功！")
                     location.hash = '#channel/list';
                 }
                 else {
-                    alert("频道预发布失败！")
+                    alert("频道保存并发布失败！")
                 }
             });
             util.cover.close();
@@ -1338,10 +1339,10 @@ define(function (require, exports, module) {
             JSON.stringify(data),
             function (data) {
                 if (data.rescode === '200') {
-                    alert('已提交审核！');
+                    alert('保存并提交审核成功！');
                     location.hash = '#channel/list';
                 } else {
-                    alert('提交审核失败！');
+                    alert('保存并提交审核失败！');
                 }
             }
         )
