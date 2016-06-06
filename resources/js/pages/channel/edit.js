@@ -1305,13 +1305,13 @@ define(function (require, exports, module) {
             //var tList = JSON.stringify(data.termList);
             var post_data = JSON.stringify({
                 project_name: config.projectName,
-                action: 'publishPreDownloadChannel',
+                action: 'publishChannel',
                 channelID: channelId,
                 categoryList: data.categoryList,
                 termList: data.termList
             });
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
-            util.ajax('post', url, post_data, function (msg) {
+            util.ajax2('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
                     alert("频道预发布成功！")
                     location.hash = '#channel/list';
