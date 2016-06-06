@@ -134,7 +134,7 @@ define(function (require, exports, module) {
         regularSortable = null;
         timedSortable = null;
         window.onpopstate = function () {
-            //onCloseEditor();
+            onCloseEditor();
             window.onpopstate = undefined;
         };
         db = crud.Database.getInstance();
@@ -495,7 +495,7 @@ define(function (require, exports, module) {
      * 注册事件监听
      */
     function registerEventListeners() {
-        $('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor);
+        $('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor, onBackList);
         $('#channel-editor-wrapper .btn-channel-editor-save').click(onSaveChannel);
         //$('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
         $('#channel-editor-wrapper .btn-program-new').click(function () {
@@ -562,7 +562,13 @@ define(function (require, exports, module) {
         if (programHandle) {
             programHandle.send('program.reset', null);
         }
+        if (location.hash.indexOf('?id=') === -1) {
+            location.hash = '#channel/list';
+        }
         window.onpopstate = undefined;
+    }
+
+    function onBackList() {
         location.hash = '#channel/list';
     }
 
