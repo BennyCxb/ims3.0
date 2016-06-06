@@ -11,7 +11,8 @@ define(function (require, exports, module) {
         crud = require('common/crud'),
         toast = require('common/toast'),
         layoutDialog = require('pages/layout/list_dialog'),
-        programCtrl = require('pages/channel/program');
+        programCtrl = require('pages/channel/program'),
+        getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
 
     /**
      * 全局配置
@@ -141,8 +142,6 @@ define(function (require, exports, module) {
         configDatabase();
         var _channelId = Number(util.getHashParameters().id);
         loadChannelData(isNaN(_channelId) ? null : _channelId);
-
-
     };
 
     /**
@@ -382,6 +381,12 @@ define(function (require, exports, module) {
             programs = db.collection('program').select({});
         renderProgramList(channel, programs);
         registerEventListeners();
+        //筛选审核状态
+        if (util.getLocalParameter('config_checkSwitch') == '1') {
+            $('#channel-editor-wrapper .btn-channel-editor-saveRelease').hide();
+        } else {
+            $('#channel-editor-wrapper .btn-channel-editor-saveSubmit').hide();
+        }
     }
 
     /**
@@ -497,6 +502,14 @@ define(function (require, exports, module) {
     function registerEventListeners() {
         $('#channel-editor-wrapper .btn-channel-editor-close').click(onCloseEditor, onBackList);
         $('#channel-editor-wrapper .btn-channel-editor-save').click(onSaveChannel);
+        $('#channel-editor-wrapper .btn-channel-editor-saveRelease').click(function() {
+            $(this).attr("release", "true");
+            onSaveChannel();
+        });
+        $('#channel-editor-wrapper .btn-channel-editor-saveSubmit').click(function() {
+            $(this).attr("audit", "true");
+            onSubmitAudit();
+        });
         //$('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
         $('#channel-editor-wrapper .btn-program-new').click(function () {
             var type = this.getAttribute('data-program-type');
@@ -1034,14 +1047,18 @@ define(function (require, exports, module) {
         db.beginTransaction();
         $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
         alert('保存成功!');
+        if ($('#channel-editor-wrapper .btn-channel-editor-saveRelease').attr("release") == "true") {
+            onPublishChannel();
+        }
+        if ($('#channel-editor-wrapper .btn-channel-editor-saveSubmit').attr("audit") == "true") {
+            onSubmitAudit();
+        }
         if (location.hash.indexOf('?id=') === -1) {
             location.hash = '#channel/edit?id=' + channelId;
         } else {
             exports.init();
         }
-        //loadChannelData(channelId);
         //location.reload();
-
     }
 
     function onSaveChannelFail() {
@@ -1266,7 +1283,7 @@ define(function (require, exports, module) {
             });
             util.ajax2('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
                 if (Number(res.ID) != undefined) {
-                    console.log('获取缩略图添加成功!');
+                    //console.log('获取缩略图添加成功!');
                     background_image = res.Thumbnail;
                 }
             })
@@ -1274,6 +1291,60 @@ define(function (require, exports, module) {
             background_image = util.getRealURL(layout.download_auth_type, layout.background_image_url);
         }
         return background_image;
+    }
+
+    /**
+     *保存并发布
+     */
+    function onPublishChannel() {
+        util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
+        getClassAndTerm.channelID = channelId;
+        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.save = function (data) {
+            //var cList = JSON.stringify(data.categoryList);
+            //var tList = JSON.stringify(data.termList);
+            var post_data = JSON.stringify({
+                project_name: config.projectName,
+                action: 'publishPreDownloadChannel',
+                channelID: channelId,
+                categoryList: data.categoryList,
+                termList: data.termList
+            });
+            var url = config.serverRoot + '/backend_mgt/v2/termcategory';
+            util.ajax('post', url, post_data, function (msg) {
+                if (msg.rescode == 200) {
+                    alert("频道预发布成功！")
+                    location.hash = '#channel/list';
+                }
+                else {
+                    alert("频道预发布失败！")
+                }
+            });
+            util.cover.close();
+        }
+    }
+
+    function onSubmitAudit() {
+        var ids = new Array();
+        ids.push(channelId);
+        var data = {
+            "project_name": config.projectName,
+            "action": "submitToCheck",
+            "ChannelIDs": ids
+        }
+        util.ajax(
+            'POST',
+            config.serverRoot + '/backend_mgt/v2/channels',
+            JSON.stringify(data),
+            function (data) {
+                if (data.rescode === '200') {
+                    alert('已提交审核！');
+                    location.hash = '#channel/list';
+                } else {
+                    alert('提交审核失败！');
+                }
+            }
+        )
     }
 
     /**
