@@ -581,6 +581,7 @@ define(function (require, exports, module) {
         var Uck = $(".icheckbox_flat-blue").length;			//复选框总个数
         if (Ck == 1) {
             var dlurl = $(".icheckbox_flat-blue.checked").parent().next().find("a").attr("url");
+            var dlname = $(".icheckbox_flat-blue.checked").parent().next().find("a").text();
             var typeId = $("#mtrChoise li.active").attr("typeid");
             if (typeId != "4" && typeId != "5") {
                 $("#mtr_download").removeAttr("disabled");
@@ -588,7 +589,7 @@ define(function (require, exports, module) {
 
             $("#mtr_edit").removeAttr("disabled");
             $("#mtr_download").find("a").attr("href", dlurl);           //下载
-            $("#mtr_download").find("a").attr("download", dlurl);
+            $("#mtr_download").find("a").attr("download", dlname);
         } else {
             if (Ck == 0) {
                 $("#mtr_delete").attr("disabled", true);
