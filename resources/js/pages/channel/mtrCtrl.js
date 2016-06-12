@@ -60,8 +60,9 @@ define(function (require, exports, module) {
         $("#mtr_delete").click(function () {
             $("input:checkbox[class='mtr_cb']:checked").each(function () {
                 DB.collection("material").delete({
-                    resource_id: Number($(this).attr("mtrid")),
-                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+                    id          : Number($(this).parents("tr").attr("data-id")),
+                    resource_id : Number($(this).parents("tr").attr("mtrid")),
+                    widget_id   : Number($("#mtrCtrl_Title").attr("widget_id"))
                 });
                 $(this).parents("tr").remove();
             });
@@ -591,10 +592,11 @@ define(function (require, exports, module) {
             //单个删除
             $(".btn_ctrlDel").click(function () {
                 DB.collection("material").delete({
-                    resource_id: Number($(this).parent().parent().attr("mtrid")),
-                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
+                    id          : Number($(this).parents("tr").attr("data-id")),
+                    resource_id : Number($(this).parents("tr").attr("mtrid")),
+                    widget_id   : Number($("#mtrCtrl_Title").attr("widget_id"))
                 });
-                $(this).parent().parent().remove();
+                $(this).parents("tr").remove();
                 mtrCb();
             })
 
