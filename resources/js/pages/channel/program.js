@@ -34,6 +34,7 @@ define(function (require, exports, module) {
     }
 
     function initProgramView() {
+        CWdefault(programId);
         var program = db.collection('program').select({id: programId})[0],
             layout = db.collection('layout').select({id: layoutId})[0],
             widgets = db.collection('widget').select({program_id: programId});
@@ -458,6 +459,29 @@ define(function (require, exports, module) {
         }
 
     }());
+
+    function CWdefault(programId) {
+        var widgets = db.collection('widget').select({program_id: programId});
+        widgets.forEach(function(el, idx, arr) {
+            //时钟插件默认值
+            if (el.type == "ClockBox") {
+                var cstyle = {
+                    TextColor: "#000000",
+                    Type: "Time",
+                }
+                db.collection("widget").update({style: JSON.stringify(cstyle)}, {id: el.id});
+            }
+            //天气插件默认值
+            if (el.type == "WeatherBox") {
+                var wstyle = {
+                    Type: "Normal",
+                    SwitchPeriod: 10,
+                    TextColor: "#000000"
+                }
+                db.collection("widget").update({style: JSON.stringify(wstyle)}, {id: el.id});
+            }
+        })
+    }
 
     exports.load = load;
 

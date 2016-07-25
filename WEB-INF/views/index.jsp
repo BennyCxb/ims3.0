@@ -132,8 +132,8 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 3.0.1
     </div>
-    <strong><a href="http://www.cleartv.cn">清鹤科技</a></strong> All rights
-    reserved.
+    <!--<strong><a href="http://www.cleartv.cn">清鹤科技</a></strong> All rights reserved.-->
+    <strong>&nbsp;</strong>
     <span id="USER-NAME" style="display: none;"><sec:authentication property="name"/></span>
   </footer>
 

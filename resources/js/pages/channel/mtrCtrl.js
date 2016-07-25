@@ -908,66 +908,34 @@ define(function (require, exports, module) {
     function formatTime(longTime) {
         //转化为 小时+分+秒
         var time = parseFloat(longTime);
+        var h,
+            m,
+            s
         if (time != null && time != "" || time == 0) {
             if (time < 60) {
-                var s = time;
-                if (time < 10) {
-                    time = "00:00:0" + s;
-                } else {
-                    time = "00:00:" + s;
-                }
-            } else if (time > 60 && time < 3600) {
-                var m = parseInt(time / 60);
-                var s = parseInt(time % 60);
-                if (m < 10 && s < 10) {
-                    if (s = 0) {
-                        time = "00:0" + m + ":00";
-                    } else {
-                        time = "00:0" + m + ":0" + s;
-                    }
-                } else if (m < 10 && s >= 10) {
-                    time = "00:0" + m + ":" + s;
-                } else {
-                    time = "00:" + m + ":" + s;
-                }
+                h = "00";
+                m = "00";
+                s = format(time);
+            } else if (time >= 60 && time < 3600) {
+                h = "00";
+                m = format(parseInt(time / 60));
+                s = format(parseInt(time % 60));
             } else if (time >= 3600 && time < 86400) {
-                var h = parseInt(time / 3600);
-                var m = parseInt(time % 3600 / 60);
-                var s = parseInt(time % 3600 % 60 % 60);
-                if (h < 10) {
-                    if (m < 10) {
-                        if (s =0) {
-                            time = "0" + h + ":0" + m + ":00";
-                        } else if (s < 10) {
-                            time = "0" + h + ":0" + m + ":0" + s;
-                        } else if (s >=10){
-                            time = "0" + h + ":0" + m + ":" + s;
-                        }
-                    } else {
-                        if (s < 10) {
-                            time = "0" + h + ":" + m + ":0" + s;
-                        } else {
-                            time = "0" + h + ":" + m + ":" + s;
-                        }
-                    }
-                } else {
-                    if (m < 10) {
-                        if (s < 10) {
-                            time = h + ":0" + m + ":0" + s;
-                        } else {
-                            time = h + ":0" + m + ":" + s;
-                        }
-                    } else {
-                        if (s < 10) {
-                            time = h + ":" + m + ":0" + s;
-                        } else {
-                            time = h + ":" + m + ":" + s;
-                        }
-                    }
-                }
+                h = format(parseInt(time / 3600));
+                m = format(parseInt(time % 3600 / 60));
+                s = format(parseInt(time % 3600 % 60 % 60));
             }
+            time = h + ":" + m + ":" + s;
         }
         return time;
+    }
+
+    function format(time) {
+        if (time < 10) {
+            return "0" + time;
+        } else {
+            return time;
+        }
     }
 
     function formatSecond(longTime) {
