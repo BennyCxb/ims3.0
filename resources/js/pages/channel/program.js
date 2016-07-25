@@ -464,7 +464,7 @@ define(function (require, exports, module) {
         var widgets = db.collection('widget').select({program_id: programId});
         widgets.forEach(function(el, idx, arr) {
             //时钟插件默认值
-            if (el.type == "ClockBox") {
+            if (el.type == "ClockBox" && el.style == "") {
                 var cstyle = {
                     TextColor: "#000000",
                     Type: "Time",
@@ -472,7 +472,7 @@ define(function (require, exports, module) {
                 db.collection("widget").update({style: JSON.stringify(cstyle)}, {id: el.id});
             }
             //天气插件默认值
-            if (el.type == "WeatherBox") {
+            if (el.type == "WeatherBox" && el.style == "") {
                 var wstyle = {
                     Type: "Normal",
                     SwitchPeriod: 10,
