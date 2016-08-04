@@ -114,6 +114,7 @@ define(function (require, exports, module) {
     function ajax(type, url, data, successFn, dataType) {
         var data = JSON.parse(data);
         data.user = $('#USER-NAME').html();
+        data.token = exports.getCookie("token");
         data = JSON.stringify(data);
         var dataType = (dataType === undefined ? 'json' : dataType);
 
@@ -132,13 +133,13 @@ define(function (require, exports, module) {
                 ajax.abort();
             }
         })
-
     }
 
     //非异步
     function ajax2(type, url, data, successFn, dataType) {
         var data = JSON.parse(data);
         data.user = $('#USER-NAME').html();
+        data.token = exports.getCookie("token");
         data = JSON.stringify(data);
         var dataType = (dataType === undefined ? 'json' : dataType);
 

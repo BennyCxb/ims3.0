@@ -1,3 +1,5 @@
+var token;
+
 function usernameChenge(value) {
     $("#j_username").attr("value", value.substring(0, value.indexOf('@')));
     $("#j_project_name").attr("value", value.substring(value.lastIndexOf('@') + 1));
@@ -6,7 +8,7 @@ function usernameChenge(value) {
 //校验是否为空
 function inputCheck(){
     var errorMsg = "";
-	if ($("#l_username").val() == "") {
+    if ($("#l_username").val() == "") {
         errorMsg = "请您输入用户名！";
         $("#error_m").html(errorMsg);
         $("#error_m").next().hide();
@@ -17,20 +19,28 @@ function inputCheck(){
         $("#error_m").next().hide();
         return false;
     }
-	
-	if ($("#l_password").val() == "") {
+
+    if ($("#l_password").val() == "") {
         errorMsg = "\n请您输入密码！";
         $("#error_m").html(errorMsg);
         $("#error_m").next().hide();
         return false;
     }
 
-	
-	var userName = $("#l_username").val();
-	$("#j_username").attr("value", userName.substring(0, userName.indexOf('@')));
-	$("#j_project_name").attr("value", userName.substring(userName.lastIndexOf('@') + 1));
-	
-	cookies();
+    var userName = $("#l_username").val();
+    $("#j_username").attr("value", userName.substring(0, userName.indexOf('@')));
+    $("#j_project_name").attr("value", userName.substring(userName.lastIndexOf('@') + 1));
+    var data = JSON.stringify({
+        action: 'GetToken',
+        projectName: $("#j_project_name").val(),
+        account: $("#j_username").val(),
+        password: $("#l_password").val()
+    });
+    ajax('post', CONFIG.requestURL + '/backend_mgt/v2/logon/', data, function(data) {
+        console.log(data);
+        token = data.token;
+        cookies();
+    });
 }
 
 //设置cookie
@@ -56,6 +66,31 @@ function cookies(){
 		var project_name = $("#j_project_name").attr("value");
 		setCookie("project_name",project_name);
 	}
+    if (token != undefined) {
+        setCookie("token",token);
+    }
+}
+
+function ajax(type, url, data, successFn, dataType) {
+    var data = JSON.parse(data);
+    data = JSON.stringify(data);
+    var dataType = (dataType === undefined ? 'json' : dataType);
+
+    var ajax = $.ajax({
+        type: type,
+        url: url,
+        dataType: dataType,
+        data: data,
+        timeout: CONFIG.letTimeout,
+        success: function (data) {
+            successFn(data);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            // XMLHttpRequest.status
+            // alert('连接服务器出错 ' + textStatus + errorThrown);
+            ajax.abort();
+        }
+    })
 }
 
 $(function(){
