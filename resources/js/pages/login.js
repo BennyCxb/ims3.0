@@ -37,7 +37,6 @@ function inputCheck(){
         password: $("#l_password").val()
     });
     ajax('post', CONFIG.requestURL + '/backend_mgt/v2/logon/', data, function(data) {
-        console.log(data);
         token = data.token;
         cookies();
     });
@@ -82,7 +81,7 @@ function ajax(type, url, data, successFn, dataType) {
         dataType: dataType,
         data: data,
         timeout: CONFIG.letTimeout,
-        async: false,
+        //async: false,
         success: function (data) {
             successFn(data);
         },
