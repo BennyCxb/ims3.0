@@ -108,38 +108,65 @@ define(function (require, exports, module) {
 
     function onSaveAndSubmit(mtrId){
         _mtrId = mtrId;
-        var action;
         var editor_data = CKEDITOR.instances.editor1.getData();
         if(mtrId == null){
-            $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
-                + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-                type: "POST",
-                data: editor_data,
-                dataType: "json",
-                success: function (data, textStatus) {
-                    if (parseInt(data.rescode) == 200) {
-                        submit();
-                    } else {
-                        alert("保存失败");
-                    }
+            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
+            var data = JSON.stringify({
+                action : 'Post',
+                project: CONFIG.projectName,
+                name: encodeURIComponent($("#Tmtr_name").val()),
+                content: editor_data
+            })
+            UTIL.ajax('POST', url, data, function (msg) {
+                if (parseInt(msg.rescode) == 200) {
+                    submit();
+                } else {
+                    alert("保存失败");
                 }
-            });
+            })
+            //$.ajax({
+            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
+            //    + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
+            //    type: "POST",
+            //    data: editor_data,
+            //    dataType: "json",
+            //    success: function (data, textStatus) {
+            //        if (parseInt(data.rescode) == 200) {
+            //            submit();
+            //        } else {
+            //            alert("保存失败");
+            //        }
+            //    }
+            //});
         }else {
-            $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
-                + "&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-                type: "POST",
-                data: editor_data,
-                dataType: "json",
-                success:function (data, textStatus){
-                    if (parseInt(data.rescode) == 200){
-                        submit();
-                    }else{
-                        alert("保存失败");
-                    }
+            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
+            var data = JSON.stringify({
+                action : 'Post',
+                project: CONFIG.projectName,
+                name: encodeURIComponent($("#Tmtr_name").val()),
+                content: editor_data
+            })
+            UTIL.ajax('POST', url, data, function (msg) {
+                if (parseInt(msg.rescode) == 200) {
+                    submit();
+                } else {
+                    alert("保存失败");
                 }
-            });
+            })
+            //$.ajax({
+            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
+            //    + "&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
+            //    type: "POST",
+            //    data: editor_data,
+            //    dataType: "json",
+            //    success:function (data, textStatus){
+            //        if (parseInt(data.rescode) == 200){
+            //            submit();
+            //        }else{
+            //            alert("保存失败");
+            //        }
+            //    }
+            //});
         }
         function submit(){
             var data2 = {
@@ -170,40 +197,73 @@ define(function (require, exports, module) {
     	var action;
     	var editor_data = CKEDITOR.instances.editor1.getData();
     	if(mtrId == null){
-            $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
-                + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-                type: "POST",
-                data: editor_data,
-                dataType: "json",
-                success: function (data, textStatus) {
-                    if (parseInt(data.rescode) == 200) {
-                        alert("保存成功");
-                        backList();
-                        //解除绑定，一般放在提交触发事件中
-                        $(window).unbind('beforeunload');
-                        //$("#mtrText").trigger("click");
-                    } else {
-                        alert("保存失败");
-                    }
+            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
+            var data = JSON.stringify({
+                action : 'Post',
+                project: CONFIG.projectName,
+                name: encodeURIComponent($("#Tmtr_name").val()),
+                content: editor_data
+            })
+            UTIL.ajax('POST', url, data, function (msg) {
+                if (parseInt(data.rescode) == 200) {
+                    alert("保存成功");
+                    backList();
+                    //解除绑定，一般放在提交触发事件中
+                    $(window).unbind('beforeunload');
+                    //$("#mtrText").trigger("click");
+                } else {
+                    alert("保存失败");
                 }
-            });
+            })
+            //$.ajax({
+            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
+            //    + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
+            //    type: "POST",
+            //    data: editor_data,
+            //    dataType: "json",
+            //    success: function (data, textStatus) {
+            //        if (parseInt(data.rescode) == 200) {
+            //            alert("保存成功");
+            //            backList();
+            //            //解除绑定，一般放在提交触发事件中
+            //            $(window).unbind('beforeunload');
+            //            //$("#mtrText").trigger("click");
+            //        } else {
+            //            alert("保存失败");
+            //        }
+            //    }
+            //});
     	}else {
-    	    $.ajax({
-    	        url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
-                +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-    	        type: "POST",
-    	        data: editor_data,
-    	        dataType: "json",
-    	        success:function (data, textStatus){
-    	            if (parseInt(data.rescode) == 200){
-    	                alert("保存成功");
-                        back();
-    	            }else{
-    	                alert("保存失败");
-    	            }
-    	        }
-    	    });
+            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
+            var data = JSON.stringify({
+                action : 'Post',
+                project: CONFIG.projectName,
+                name: encodeURIComponent($("#Tmtr_name").val()),
+                content: editor_data
+            })
+            UTIL.ajax('POST', url, data, function (msg) {
+                if (parseInt(data.rescode) == 200){
+                    alert("保存成功");
+                    back();
+                }else{
+                    alert("保存失败");
+                }
+            })
+    	    //$.ajax({
+    	    //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
+             //   +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
+    	    //    type: "POST",
+    	    //    data: editor_data,
+    	    //    dataType: "json",
+    	    //    success:function (data, textStatus){
+    	    //        if (parseInt(data.rescode) == 200){
+    	    //            alert("保存成功");
+             //           back();
+    	    //        }else{
+    	    //            alert("保存失败");
+    	    //        }
+    	    //    }
+    	    //});
     	}
         
     }

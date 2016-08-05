@@ -81,7 +81,7 @@ function ajax(type, url, data, successFn, dataType) {
         dataType: dataType,
         data: data,
         timeout: CONFIG.letTimeout,
-        //async: false,
+        async: false,
         success: function (data) {
             successFn(data);
         },
