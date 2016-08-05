@@ -112,7 +112,8 @@ define(function (require, exports, module) {
         var editor_data = CKEDITOR.instances.editor1.getData();
         if(mtrId == null){
             $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
+                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
+                + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
                 type: "POST",
                 data: editor_data,
                 dataType: "json",
@@ -126,7 +127,8 @@ define(function (require, exports, module) {
             });
         }else {
             $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
+                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
+                + "&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
                 type: "POST",
                 data: editor_data,
                 dataType: "json",
@@ -169,7 +171,8 @@ define(function (require, exports, module) {
     	var editor_data = CKEDITOR.instances.editor1.getData();
     	if(mtrId == null){
             $.ajax({
-                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
+                url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
+                + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
                 type: "POST",
                 data: editor_data,
                 dataType: "json",
@@ -187,7 +190,8 @@ define(function (require, exports, module) {
             });
     	}else {
     	    $.ajax({
-    	        url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html(),
+    	        url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
+                +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
     	        type: "POST",
     	        data: editor_data,
     	        dataType: "json",
