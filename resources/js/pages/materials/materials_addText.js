@@ -1,7 +1,6 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var MTR = require("pages/materials/materials_list.js");
     var _mtrId;
     exports.init = function () {
         var DispClose = false;
@@ -49,7 +48,7 @@ define(function (require, exports, module) {
     		var mtrId = location.hash.substring(location.hash.lastIndexOf('?id=')+4);
             jsons ={};
             jsons["Action"] = "Get";
-            jsons["Project"] = UTIL.getCookie("project_name");
+            jsons["Project"] = CONFIG.projectName;
             $.post(
                 CONFIG.serverRoot + "/backend_mgt/v1/webmaterials/"+mtrId,
                 JSON.stringify(jsons),
@@ -62,7 +61,7 @@ define(function (require, exports, module) {
 
             jsons1 ={};
             jsons1["Action"] = "GetText";
-            jsons1["Project"] = UTIL.getCookie("project_name");
+            jsons1["Project"] = CONFIG.projectName;
             $.post(
                 CONFIG.serverRoot + "/backend_mgt/v1/webmaterials/"+mtrId,
                 JSON.stringify(jsons1),
@@ -114,7 +113,7 @@ define(function (require, exports, module) {
             var data = JSON.stringify({
                 action : 'Post',
                 project: CONFIG.projectName,
-                name: encodeURIComponent($("#Tmtr_name").val()),
+                name: $("#Tmtr_name").val(),
                 content: editor_data
             })
             UTIL.ajax('POST', url, data, function (msg) {
@@ -143,11 +142,11 @@ define(function (require, exports, module) {
             var data = JSON.stringify({
                 action : 'Post',
                 project: CONFIG.projectName,
-                name: encodeURIComponent($("#Tmtr_name").val()),
+                name: $("#Tmtr_name").val(),
                 content: editor_data
             })
             UTIL.ajax('POST', url, data, function (msg) {
-                if (parseInt(msg.rescode) == 200) {
+                if (msg.rescode == 200) {
                     submit();
                 } else {
                     alert("保存失败");
@@ -169,16 +168,16 @@ define(function (require, exports, module) {
             //});
         }
         function submit(){
-            var data2 = {
+            var data2 = JSON.stringify({
               "project_name": CONFIG.projectName,
               "action": "submitToCheck",
               "material_type": "WebText",
               "MaterialIDs": [_mtrId]
-            }
+            });
             UTIL.ajax(
                 'POST', 
                 CONFIG.serverRoot + '/backend_mgt/v1/materials', 
-                JSON.stringify(data2), 
+                data2,
                 function(data){
                     if(data.rescode === '200'){
                         alert("保存并提交成功");
@@ -194,18 +193,17 @@ define(function (require, exports, module) {
     }
 
     function onSubmit(mtrId) {
-    	var action;
     	var editor_data = CKEDITOR.instances.editor1.getData();
     	if(mtrId == null){
             var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
             var data = JSON.stringify({
                 action : 'Post',
                 project: CONFIG.projectName,
-                name: encodeURIComponent($("#Tmtr_name").val()),
+                name: $("#Tmtr_name").val(),
                 content: editor_data
             })
             UTIL.ajax('POST', url, data, function (msg) {
-                if (parseInt(data.rescode) == 200) {
+                if (msg.rescode == 200) {
                     alert("保存成功");
                     backList();
                     //解除绑定，一般放在提交触发事件中
@@ -238,13 +236,13 @@ define(function (require, exports, module) {
             var data = JSON.stringify({
                 action : 'Post',
                 project: CONFIG.projectName,
-                name: encodeURIComponent($("#Tmtr_name").val()),
+                name: $("#Tmtr_name").val(),
                 content: editor_data
             })
             UTIL.ajax('POST', url, data, function (msg) {
-                if (parseInt(data.rescode) == 200){
+                if (msg.rescode == 200){
                     alert("保存成功");
-                    back();
+                    backList();
                 }else{
                     alert("保存失败");
                 }
