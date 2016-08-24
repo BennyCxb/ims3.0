@@ -121,20 +121,6 @@ define(function (require, exports, module) {
                     alert("保存失败");
                 }
             })
-            //$.ajax({
-            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
-            //    + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-            //    type: "POST",
-            //    data: editor_data,
-            //    dataType: "json",
-            //    success: function (data, textStatus) {
-            //        if (parseInt(data.rescode) == 200) {
-            //            submit();
-            //        } else {
-            //            alert("保存失败");
-            //        }
-            //    }
-            //});
         } else {
             var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
             var data = JSON.stringify({
@@ -150,20 +136,6 @@ define(function (require, exports, module) {
                     alert("保存失败");
                 }
             })
-            //$.ajax({
-            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
-            //    + "&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-            //    type: "POST",
-            //    data: editor_data,
-            //    dataType: "json",
-            //    success:function (data, textStatus){
-            //        if (parseInt(data.rescode) == 200){
-            //            submit();
-            //        }else{
-            //            alert("保存失败");
-            //        }
-            //    }
-            //});
         }
         function submit() {
             var data2 = JSON.stringify({
@@ -211,24 +183,6 @@ define(function (require, exports, module) {
                     alert("保存失败");
                 }
             })
-            //$.ajax({
-            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project=" + UTIL.getCookie("project_name") + "&action=Post&name=" + encodeURIComponent($("#Tmtr_name").val())
-            //    + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-            //    type: "POST",
-            //    data: editor_data,
-            //    dataType: "json",
-            //    success: function (data, textStatus) {
-            //        if (parseInt(data.rescode) == 200) {
-            //            alert("保存成功");
-            //            backList();
-            //            //解除绑定，一般放在提交触发事件中
-            //            $(window).unbind('beforeunload');
-            //            //$("#mtrText").trigger("click");
-            //        } else {
-            //            alert("保存失败");
-            //        }
-            //    }
-            //});
         } else {
             var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
             var data = JSON.stringify({
@@ -245,21 +199,6 @@ define(function (require, exports, module) {
                     alert("保存失败");
                 }
             })
-            //$.ajax({
-            //    url: CONFIG.serverRoot + "/backend_mgt/v1/webmaterials?project="+ UTIL.getCookie("project_name") +"&action=Update&ID="+ mtrId
-            //   +"&name="+encodeURIComponent($("#Tmtr_name").val()) + "&username=" + $('#USER-NAME').html() + "&token=" + UTIL.getCookie("token"),
-            //    type: "POST",
-            //    data: editor_data,
-            //    dataType: "json",
-            //    success:function (data, textStatus){
-            //        if (parseInt(data.rescode) == 200){
-            //            alert("保存成功");
-            //           back();
-            //        }else{
-            //            alert("保存失败");
-            //        }
-            //    }
-            //});
         }
 
     }

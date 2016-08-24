@@ -30,7 +30,6 @@ define(function (require, exports, module) {
         }
     };
 
-
     exports.getHashParameters = function () {
         var queryString = window.location.hash.match(/\?(.*)/);
         if (queryString === null) {
@@ -160,6 +159,4 @@ define(function (require, exports, module) {
             }
         })
     }
-
-
 });
