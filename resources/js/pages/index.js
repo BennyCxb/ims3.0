@@ -1,9 +1,14 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
+ 
+    var username=UTIL.getCookie('account');
+    var project=UTIL.getCookie('project_name');
 
     exports.init = function () {
-        
+        $("#username").html(username + '@' + project);
+        $("#bar").html(username+'@'+project);
+        $("#USER-NAME").html(username);
         // 存储权限
         initUserConfigs();
 
@@ -11,7 +16,7 @@ define(function (require, exports, module) {
 
     	//登出
         $("#logout").click(function () {
-            window.location.href = "login.jsp";
+            window.location.href = "login.html";
         });
 		//修改密码
 		$("#repassword").click(function(){
@@ -81,7 +86,9 @@ define(function (require, exports, module) {
     	var data = JSON.stringify({
             action: 'GetFunctionModules',
             project_name: CONFIG.projectName,
-            UserName: $('#USER-NAME').html(),
+            // UserName: $('#USER-NAME').html(),
+            UserName: 'root',
+
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
         UTIL.ajax('post', url, data, function(json){

@@ -33,8 +33,8 @@
 	     <intercept-url pattern='/search*' access='ROLE_USER,ROLE_ADMIN' /> 
 	     <intercept-url pattern='/term*' access='ROLE_USER,ROLE_ADMIN' /> 
 	     <intercept-url pattern='/upload*' access='ROLE_USER,ROLE_ADMIN' /> 
-	     <form-login login-page='/login.jsp' default-target-url='/index' authentication-failure-url='/login.jsp?error=true'/> 
-	     <logout logout-success-url='/login.jsp' /> 
+	     <form-login login-page='/login.html' default-target-url='/index' authentication-failure-url='/login.html?error=true'/>
+	     <logout logout-success-url='/login.html' />
 	     <anonymous username='guest' granted-authority='ROLE_GUEST'/> 
 	     <remember-me/> 
 	   </http> 
