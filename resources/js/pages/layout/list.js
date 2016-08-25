@@ -11,11 +11,12 @@ define(function(require, exports, module) {
 	var requestUrl    = config.serverRoot,
 		projectName   = config.projectName,
 		nDisplayItems = 10,
+		_pageNO = 1,
         last;
 
 	// 初始化页面
 	exports.init = function() {
-		loadPage(1);
+		loadPage(_pageNO);
 		registerEventListeners();
 	};
 
@@ -159,8 +160,9 @@ define(function(require, exports, module) {
             page: config.pager.page,
 			currentPage: Number(json.Pager.page),
 			onPageChange: function (num, type) {
+				_pageNO = num;
 				if (type === 'change') {
-					loadPage(num);
+					loadPage(_pageNO);
 				}
 			}
 		});
