@@ -258,7 +258,7 @@ define(function (require, exports, module) {
             id: getCurrentChannelId()
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/copy', data, function (res) {
-            alert(res.status === 'ok' ? '复制成功' : '复制失败');
+            alert(JSON.parse(res).rescode === 200 ? '复制成功' : '复制失败');
             loadPage(_pageNO);
         }, 'text');
     }
