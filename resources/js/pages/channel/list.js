@@ -133,7 +133,7 @@ define(function (require, exports, module) {
 
     };
 
-    exports.loadPage = function(){
+    exports.loadPage = function () {
         loadPage(_pageNO);
     }
 
@@ -167,6 +167,7 @@ define(function (require, exports, module) {
         });
         $('#channel-list-controls .btn-publish').click(publishChannel);
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
+        $('#channel-list-controls .btn-copy').click(copyChannel);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
 
         //搜索事件
@@ -252,13 +253,14 @@ define(function (require, exports, module) {
 
     function copyChannel() {
         var data = JSON.stringify({
-            Action: 'Copy',
-            Project: projectName,
-            ChannelID: getCurrentChannelId()
+            action: 'copychannel',
+            project: projectName,
+            id: getCurrentChannelId()
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, function (res) {
-            alert(Number(res.rescode) === 200 ? '复制成功' : '复制失败');
-        });
+        util.ajax('post', requestUrl + '/backend_mgt/v2/copy', data, function (res) {
+            alert(res.status === 'ok' ? '复制成功' : '复制失败');
+            loadPage(_pageNO);
+        }, 'text');
     }
 
     function deleteChannel() {
@@ -365,7 +367,7 @@ define(function (require, exports, module) {
                 check_th +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
-              //  '<th class="chn_detail">发布详情</th>'+
+                    //  '<th class="chn_detail">发布详情</th>'+
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
@@ -398,7 +400,7 @@ define(function (require, exports, module) {
                             check_td +
                             '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
                             '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                           // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                                // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                             '</tr>';
                         $("#channel-table tbody").append(chntr);
                     } else {
@@ -413,16 +415,16 @@ define(function (require, exports, module) {
                                 check_td +
                                 '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
                                 '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                               // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                                    // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
                                 '</tr>';
                             $("#channel-table tbody").append(chntr);
                         }
                     }
                 }
-            }else{
+            } else {
                 $("#channel-table tbody").empty();
                 $('#channel-table-pager').empty();
-                $("#channel-table tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#channel-table tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
             }
             checkCheckBtns();
         }
@@ -458,11 +460,13 @@ define(function (require, exports, module) {
                 if (checked.length != '1') {
                     $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                     $('#channel-list-controls .btn-publish').attr('disabled', true);
+                    $('#channel-list-controls .btn-copy').attr('disabled', true);
                     $('#channel-list-controls .btn-delete').prop('disabled', true);
                 } else {
-                        $('#channel-list-controls .btn-publish-later').attr('disabled', false);
-                        $('#channel-list-controls .btn-publish').attr('disabled', false);
-                        $('#channel-list-controls .btn-delete').prop('disabled', false);
+                    $('#channel-list-controls .btn-publish-later').attr('disabled', false);
+                    $('#channel-list-controls .btn-publish').attr('disabled', false);
+                    $('#channel-list-controls .btn-copy').attr('disabled', false);
+                    $('#channel-list-controls .btn-delete').prop('disabled', false);
                 }
             } else {
                 if (util.getLocalParameter('config_canCheck') == '0') {
@@ -474,6 +478,7 @@ define(function (require, exports, module) {
                         $('#chn_unpass').attr('disabled', true);
                         $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                         $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        $('#channel-list-controls .btn-copy').attr('disabled', true);
                         $('#channel-list-controls .btn-delete').prop('disabled', true);
                     } else {
                         //已通过
@@ -483,6 +488,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                             $('#channel-list-controls .btn-publish').attr('disabled', false);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -496,6 +502,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -509,6 +516,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -522,6 +530,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -529,7 +538,7 @@ define(function (require, exports, module) {
                             }
                         }
                     }
-                }else {
+                } else {
                     var checked = $("#channel-table input[type='checkBox']:checked");
                     if (checked.length != '1') {
                         $('#chn_submit').attr('disabled', true);
@@ -537,6 +546,7 @@ define(function (require, exports, module) {
                         $('#chn_unpass').attr('disabled', true);
                         $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                         $('#channel-list-controls .btn-publish').attr('disabled', true);
+                        $('#channel-list-controls .btn-copy').attr('disabled', true);
                         $('#channel-list-controls .btn-delete').prop('disabled', true);
                     } else {
                         //已通过和未通过
@@ -546,6 +556,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                             $('#channel-list-controls .btn-publish').attr('disabled', false);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                         }
                         else if ($(checked).parent().parent().parent().attr('check_status') == '3') {
                             $('#chn_submit').attr('disabled', true);
@@ -553,6 +564,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                         }
                         //待审核
                         else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
@@ -561,6 +573,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', false);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                         }
                         //待提交
                         else {
@@ -569,6 +582,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', true);
                         }
                     }
                 }
@@ -576,7 +590,7 @@ define(function (require, exports, module) {
         }
 
         //发布详情
-        $('.chn_detail').click(function(e){
+        $('.chn_detail').click(function (e) {
             var self = $(this);
             e.preventDefault();
             e.stopPropagation();
