@@ -502,7 +502,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -516,7 +516,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -530,7 +530,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                             if (config.userName == $(checked).parent().parent().parent().attr('chnCU')) {
                                 $('#channel-list-controls .btn-delete').prop('disabled', false);
                             } else {
@@ -564,7 +564,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                         }
                         //待审核
                         else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
@@ -573,7 +573,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', false);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                         }
                         //待提交
                         else {
@@ -582,7 +582,7 @@ define(function (require, exports, module) {
                             $('#chn_unpass').attr('disabled', true);
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
-                            $('#channel-list-controls .btn-copy').attr('disabled', true);
+                            $('#channel-list-controls .btn-copy').attr('disabled', false);
                         }
                     }
                 }
