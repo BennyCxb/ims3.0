@@ -89,6 +89,8 @@ define(function (require, exports, module) {
                 project_name: CONFIG.projectName,
                 URL: _url
             })
+            data.user = CONFIG.userName;
+            data.token = CONFIG.token;
 
             var ajax = $.ajax({
                 type: 'post',
@@ -112,7 +114,7 @@ define(function (require, exports, module) {
 
     function ajax(type, url, data, successFn, dataType) {
         var data = JSON.parse(data);
-        data.user = $('#USER-NAME').html();
+        data.user = CONFIG.userName;
         data.token = CONFIG.token;
         data = JSON.stringify(data);
         var dataType = (dataType === undefined ? 'json' : dataType);
@@ -137,7 +139,7 @@ define(function (require, exports, module) {
     //非异步
     function ajax2(type, url, data, successFn, dataType) {
         var data = JSON.parse(data);
-        data.user = $('#USER-NAME').html();
+        data.user = CONFIG.userName;
         data.token = CONFIG.token;
         data = JSON.stringify(data);
         var dataType = (dataType === undefined ? 'json' : dataType);

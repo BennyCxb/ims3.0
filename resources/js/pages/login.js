@@ -34,8 +34,8 @@ $(document).ready(function () {
                 var err = resault['errInfo'];
                 if (status == 200) {
                     cookies("project_name", projectName);
-                    cookies('account', account);
-                    cookies('token', resault.token);
+                    cookies("account", account);
+                    cookies("token", resault.token);
                     window.location.href = CONFIG.requestURL + '/index.html';
                 } else {
                     // window.location.href=CONFIG.requestURL+'/ims3/'

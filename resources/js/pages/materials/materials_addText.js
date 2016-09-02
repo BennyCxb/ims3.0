@@ -124,7 +124,7 @@ define(function (require, exports, module) {
         } else {
             var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
             var data = JSON.stringify({
-                action: 'Post',
+                action: 'Update',
                 project: CONFIG.projectName,
                 name: $("#Tmtr_name").val(),
                 content: editor_data
@@ -186,7 +186,7 @@ define(function (require, exports, module) {
         } else {
             var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
             var data = JSON.stringify({
-                action: 'Post',
+                action: 'Update',
                 project: CONFIG.projectName,
                 name: $("#Tmtr_name").val(),
                 content: editor_data
