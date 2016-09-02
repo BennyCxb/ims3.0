@@ -170,7 +170,7 @@ define(function (require, exports, module) {
         })
         UTIL.ajax('POST', url, data, function (msg) {
             if (msg.rescode == 200) {
-                if (UTIL.getLocalParameter('config_checkSwitch') == '0') {         //未开启权限
+                if (UTIL.getLocalParameter('config_checkSwitch') == '0' && _mtrId != null) {         //未开启权限
                     var data2 = JSON.stringify({
                         action: "UpdateWebMaterialInternal",
                         project_name: CONFIG.projectName,
@@ -179,7 +179,7 @@ define(function (require, exports, module) {
                     });
                     UTIL.ajax(
                         'POST',
-                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        CONFIG.serverRoot + '/backend_mgt/v2/channels',
                         data2,
                         function (data) {
                             if (data.rescode === '200') {
@@ -203,7 +203,7 @@ define(function (require, exports, module) {
             }
         })
     }
-
+// wfrsafsdfdzxcasdfasdad
     //检测文本框事件
     function inputCheck() {
         var errormsg = "";
