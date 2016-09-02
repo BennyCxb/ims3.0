@@ -48,12 +48,12 @@ define(function (require, exports, module) {
     function loadPage() {
         if (location.hash.indexOf('?id=') != -1) {			//编辑
             $("#mtr_atTitle").html("编辑文本");
-            var mtrId = location.hash.substring(location.hash.lastIndexOf('?id=') + 4);
+            _mtrId = location.hash.substring(location.hash.lastIndexOf('?id=') + 4);
             var data1 = JSON.stringify({
                 Action: 'Get',
                 Project: CONFIG.projectName,
             })
-            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials/" + mtrId;
+            var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials/" + _mtrId;
             UTIL.ajax('POST', url, data1, function (msg) {
                 $("#Tmtr_name").val(msg.Materials[0].Name);
             })
@@ -69,14 +69,14 @@ define(function (require, exports, module) {
             //保存
             $("#Tmtr_save").click(function () {
                 if (!inputCheck()) return;
-                onSubmit(mtrId);
+                onSubmit();
             })
 
             //保存并提交
-            //$("#Tmtr_submit").click(function () {
-            //    if (!inputCheck()) return;
-            //    onSaveAndSubmit(mtrId);
-            //})
+            $("#Tmtr_submit").click(function () {
+                if (!inputCheck()) return;
+                onSaveAndSubmit();
+            })
         } else {
             //添加
             $('#Tmtr_viewlast').hide();
@@ -87,10 +87,10 @@ define(function (require, exports, module) {
             })
 
             //保存并提交
-            //$("#Tmtr_submit").click(function () {
-            //    if (!inputCheck()) return;
-            //    onSaveAndSubmit();
-            //})
+            $("#Tmtr_submit").click(function () {
+                if (!inputCheck()) return;
+                onSaveAndSubmit();
+            })
         }
     }
 
@@ -103,60 +103,60 @@ define(function (require, exports, module) {
         location.hash = '#materials/materials_list';
     }
 
-    //function onSaveAndSubmit(mtrId) {
-    //    _mtrId = mtrId;
-    //    var editor_data = CKEDITOR.instances.editor1.getData();
-    //    var action;
-    //    if (mtrId == null) {
-    //        action = "Post";
-    //    } else {
-    //        action = "Update";
-    //    }
-    //    var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
-    //    var data = JSON.stringify({
-    //        action: action,
-    //        project: CONFIG.projectName,
-    //        name: $("#Tmtr_name").val(),
-    //        content: editor_data
-    //    })
-    //    UTIL.ajax('POST', url, data, function (msg) {
-    //        if (parseInt(msg.rescode) == 200) {
-    //            submit();
-    //        } else {
-    //            alert("保存失败");
-    //        }
-    //    })
-    //
-    //    function submit() {
-    //        var data2 = JSON.stringify({
-    //            "project_name": CONFIG.projectName,
-    //            "action": "submitToCheck",
-    //            "material_type": "WebText",
-    //            "MaterialIDs": [_mtrId]
-    //        });
-    //        UTIL.ajax(
-    //            'POST',
-    //            CONFIG.serverRoot + '/backend_mgt/v1/materials',
-    //            data2,
-    //            function (data) {
-    //                if (data.rescode === '200') {
-    //                    alert("保存并提交成功");
-    //                    backList();
-    //                    //解除绑定，一般放在提交触发事件中
-    //                    $(window).unbind('beforeunload');
-    //                } else {
-    //                    alert("保存并提交失败");
-    //                }
-    //            }
-    //        )
-    //    }
-    //}
+    function onSaveAndSubmit() {
+        var editor_data = CKEDITOR.instances.editor1.getData();
+        var action;
+        if (_mtrId == null) {
+            action = "Post";
+        } else {
+            action = "Update";
+        }
+        var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
+        var data = JSON.stringify({
+            action: action,
+            project: CONFIG.projectName,
+            name: $("#Tmtr_name").val(),
+            ID : _mtrId,
+            content: editor_data
+        })
+        UTIL.ajax('POST', url, data, function (msg) {
+            if (parseInt(msg.rescode) == 200) {
+                submitToCheck();
+            } else {
+                alert("保存失败");
+            }
+        })
 
-    function onSubmit(mtrId) {
+        function submitToCheck() {
+            var data = JSON.stringify({
+                action: "submitToCheck",
+                project_name: CONFIG.projectName,
+                material_type: "WebText",
+                MaterialIDs: [_mtrId]
+            });
+            UTIL.ajax(
+                'POST',
+                CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                data,
+                function (data) {
+                    if (data.rescode === '200') {
+                        alert("保存并提交成功");
+                        backList();
+                        //解除绑定，一般放在提交触发事件中
+                        $(window).unbind('beforeunload');
+                    } else {
+                        alert("保存并提交失败");
+                    }
+                }
+            )
+        }
+    }
+
+    function onSubmit() {
         var editor_data = CKEDITOR.instances.editor1.getData();
         var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
         var action;
-        if (mtrId == null) {
+        if (_mtrId == null) {
             action = "Post";
         } else {
             action = "Update";
@@ -165,31 +165,39 @@ define(function (require, exports, module) {
             action: action,
             project: CONFIG.projectName,
             name: $("#Tmtr_name").val(),
+            ID : _mtrId,
             content: editor_data
         })
         UTIL.ajax('POST', url, data, function (msg) {
             if (msg.rescode == 200) {
-                var data2 = JSON.stringify({
-                    "project_name": CONFIG.projectName,
-                    "action": "submitToCheck",
-                    "material_type": "WebText",
-                    "MaterialIDs": [_mtrId]
-                });
-                UTIL.ajax(
-                    'POST',
-                    CONFIG.serverRoot + '/backend_mgt/v1/materials',
-                    data2,
-                    function (data) {
-                        if (data.rescode === '200') {
-                            alert("保存成功");
-                            backList();
-                            //解除绑定，一般放在提交触发事件中
-                            $(window).unbind('beforeunload');
-                        } else {
-                            alert("保存失败");
+                if (UTIL.getLocalParameter('config_checkSwitch') == '0') {         //未开启权限
+                    var data2 = JSON.stringify({
+                        action: "UpdateWebMaterialInternal",
+                        project_name: CONFIG.projectName,
+                        material_type: "WebText",
+                        webmaterialID: _mtrId
+                    });
+                    UTIL.ajax(
+                        'POST',
+                        CONFIG.serverRoot + '/backend_mgt/v1/materials',
+                        data2,
+                        function (data) {
+                            if (data.rescode === '200') {
+                                alert("保存成功");
+                                backList();
+                                //解除绑定，一般放在提交触发事件中
+                                $(window).unbind('beforeunload');
+                            } else {
+                                alert("保存失败");
+                            }
                         }
-                    }
-                )
+                    )
+                } else {
+                    alert("保存成功");
+                    backList();
+                    //解除绑定，一般放在提交触发事件中
+                    $(window).unbind('beforeunload');
+                }
             } else {
                 alert("保存失败");
             }
