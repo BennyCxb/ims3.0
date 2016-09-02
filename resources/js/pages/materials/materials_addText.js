@@ -203,7 +203,7 @@ define(function (require, exports, module) {
             }
         })
     }
-// wfrsafsdfdzxcasdfasdad
+
     //检测文本框事件
     function inputCheck() {
         var errormsg = "";
