@@ -2,18 +2,13 @@ $(document).ready(function () {
     $('#submit').click(function () {
         $("#error_m").html("");
         if ($("#username").val() == "") {
-            // errorMsg = "请您输入用户名！";
-
             $("#error_m").html("请您输入用户名！");
-
+            return false;
         } else if ($("#username").val().substring(0, $("#username").val().indexOf('@')) == "") {
-            // errorMsg = "\n用户名格式不正确！例：xxx@develop";
             $("#error_m").html("\n用户名格式不正确！例：xxx@develop");
             return false;
         } else if ($("#password").val() == "") {
-            // errorMsg = "\n请您输入密码！";
             $("#error_m").html("\n请您输入密码！");
-            // $("#error_m").next().hide();
             return false;
         }
         var account = $("#username").val().split('@')[0];
@@ -38,16 +33,16 @@ $(document).ready(function () {
                     cookies("token", resault.token);
                     window.location.href = CONFIG.requestURL + '/index.html';
                 } else {
-                    // window.location.href=CONFIG.requestURL+'/ims3/'
                     $("#error_m").html(err);
-
                 }
-
             });
 
     })
+}).keydown(function(e) {
+    if (e.keyCode == 13) {
+        $("#submit").trigger("click");
+    }
 });
-
 
 function cookies(projectname, value) {
     if (getCookie(projectname) == undefined) {
@@ -57,21 +52,6 @@ function cookies(projectname, value) {
     }
 }
 
-
-//
-//
-//
-// function usernameChenge(value) {
-//     $("#j_username").attr("value", value.substring(0, value.indexOf('@')));
-//     $("#j_project_name").attr("value", value.substring(value.lastIndexOf('@') + 1));
-// }
-//
-// //校验是否为空
-//
-//
-
-//
-//
 // //设置cookie
 function setCookie(name, value, days) {
     //var exp=new Date();

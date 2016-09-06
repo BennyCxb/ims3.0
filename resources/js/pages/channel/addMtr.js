@@ -196,7 +196,7 @@ define(function (require, exports, module) {
                         var mtr_choise_tr = mtrData[x].Name;
                     } else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
-                        var mtr_choise_tr = '<a url=' + mtrData[x].URL + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
+                        var mtr_choise_tr = '<a url=' + mtrUrl + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
                     }
                     var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
                         '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
