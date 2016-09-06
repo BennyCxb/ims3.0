@@ -132,6 +132,12 @@ a {
     margin-bottom: 12px;
 }
 
+.login-box > .login-logo > a {
+    cursor:default;
+    color: white;
+    font-size: 36px;
+}
+
 .login-box-body {
     background-color: rgba(255,255,255,.85);
 }
