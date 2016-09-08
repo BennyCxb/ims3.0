@@ -22,11 +22,7 @@ define(function (require, exports, module) {
         _mainServer,
         _programSync,
         _downloadLog,
-        _downloadLogCheck,
-        _rotate,
-        _outputMode,
-        _remoteADB,
-        _debug;
+        _downloadLogCheck;
 
     function checkDownloadLog() {
         if (!$('#CO-log').hasClass('disabled')) {
@@ -420,6 +416,7 @@ define(function (require, exports, module) {
         $("#CO-outputMode").bootstrapSwitch();
         $("#CO-remoteADB").bootstrapSwitch();
         $("#CO-debug").bootstrapSwitch();
+        $("#CO-restartSwitch, #CO-rotate, #CO-outputMode").parent().parent().css("float", "left");
 
         $('#CO-workSwitch').on('switchChange.bootstrapSwitch', function (event, state) {
             if (state) {

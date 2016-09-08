@@ -34,6 +34,8 @@
                 </div>
             </div>
         </form>
+        <hr>
+
         <div class="form-group">
             <label style="color: #72afd2;">终端信息</label>
         </div>
@@ -80,9 +82,9 @@
                 </div>
             </div>
         </form>
+        <hr>
 
         <div class="form-group">
-            <br>
             <label style="color: #72afd2;">配置信息</label>
         </div>
         <form class="form-horizontal">
@@ -209,41 +211,42 @@
                 <label class="col-sm-3 control-label">定时重启</label>
                 <div class="col-sm-9">
                     <input id="CO-restartSwitch" type="checkbox" checked>
-                </div>
-            </div>
-            <div class="form-group" id="CO-restartArea">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <div class="input-group" style="width: 150px; float: left;">
-                        <div class="input-group-addon">
-                            <i class="fa fa-clock-o"></i>
+                    <div id="CO-restartArea">
+                        <div class="col-sm-offset-3">
+                            <div class="input-group" style="width: 150px; float: left;">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" class="form-control" id="CO-restartTime"
+                                       style="display: inline-block; width: 113px;">
+                            </div>
+                            <div style="float: left; width:70px; text-align: center; height: 34px; line-height: 34px;">
+                                （每天）
+                            </div>
                         </div>
-                        <input type="text" class="form-control" id="CO-restartTime"
-                               style="display: inline-block; width: 120px;">
-                    </div>
-                    <div style="float: left; width:70px; text-align: center; height: 34; line-height: 34px;">
-                        （每天）
                     </div>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-3 control-label">屏幕旋转</label>
                 <div class="col-sm-9">
                     <input id="CO-rotate" type="checkbox" checked>
-                </div>
-            </div>
-            <div class="form-group" id="CO-rotateArea">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <div class="input-group" style="width: 158px; float: left;">
-                        <select id="CO-rotate-type" class="form-control">
-                            <option value="soft">软件旋转模式</option>
-                            <option value="hard">硬件旋转模式</option>
-                        </select>
-                    </div>
-                    <div class="input-group" style="width: 158px; float: left; margin-left: 30px;">
-                        <select id="CO-rotate-degree" class="form-control">
-                            <option value="90">顺时针90度</option>
-                            <option value="-90">逆时针90度</option>
-                        </select>
+                    <div id="CO-rotateArea">
+                        <div class="col-sm-offset-3">
+                            <div class="input-group" style="width: 150px; float: left;">
+                                <select id="CO-rotate-type" class="form-control">
+                                    <option value="soft">软件旋转模式</option>
+                                    <option value="hard">硬件旋转模式</option>
+                                </select>
+                            </div>
+                            <div class="input-group" style="width: 150px; float: left; margin-left: 14px;">
+                                <select id="CO-rotate-degree" class="form-control">
+                                    <option value="90">顺时针90度</option>
+                                    <option value="-90">逆时针90度</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -251,22 +254,22 @@
                 <label class="col-sm-3 control-label">屏幕输出模式</label>
                 <div class="col-sm-9">
                     <input id="CO-outputMode" type="checkbox" checked>
-                </div>
-            </div>
-            <div class="form-group" id="CO-outputModeArea">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <div class="input-group" style="width: 158px; float: left;">
-                        <select id="CO-outputMode-mode" class="form-control">
-                            <option value="2160p60hz420">4K,60hz</option>
-                            <option value="2160p50hz420">4K,50hz</option>
-                            <option value="2160p30hz">4K,30hz</option>
-                            <option value="1080p60hz">1080p,60hz</option>
-                            <option value="1080i60hz">1080i,60hz</option>
-                            <option value="1080p50hz">1080p,50hz</option>
-                            <option value="1080i50hz">1080i,50hz</option>
-                            <option value="720p60hz">720p,60hz</option>
-                            <option value="720p50hz">720p,50hz</option>
-                        </select>
+                    <div id="CO-outputModeArea">
+                        <div class="col-sm-offset-3">
+                            <div class="input-group" style="width: 150px; float: left;">
+                                <select id="CO-outputMode-mode" class="form-control">
+                                    <option value="2160p60hz420">4K,60hz</option>
+                                    <option value="2160p50hz420">4K,50hz</option>
+                                    <option value="2160p30hz">4K,30hz</option>
+                                    <option value="1080p60hz">1080p,60hz</option>
+                                    <option value="1080i60hz">1080i,60hz</option>
+                                    <option value="1080p50hz">1080p,50hz</option>
+                                    <option value="1080i50hz">1080i,50hz</option>
+                                    <option value="720p60hz">720p,60hz</option>
+                                    <option value="720p50hz">720p,50hz</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
