@@ -19,63 +19,62 @@
           </div>
           <form class="form-horizontal">
               <div class="form-group">
-                <label class="col-sm-2 control-label">当前频道</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">当前频道</label>
+                <div class="col-sm-9">
                   <div class="checkbox">
                       <label id="CC-Channel" style="padding-left: 0; cursor: default;"></label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">预下发频道</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">预下发频道</label>
+                <div class="col-sm-9">
                   <div class="checkbox">
                       <label id="CC-PreChannel" style="padding-left: 0; cursor: default;"></label>
                   </div>
                 </div>
               </div>
-          </form>   
-
-          <div class="form-group">   
-              <br>
+          </form>
+          <hr>
+          <div class="form-group">
               <label style="color: #72afd2;">配置信息</label>
           </div> 
           <form class="form-horizontal">
               <div class="form-group">
-                <label class="col-sm-2 control-label">升级服务器</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">升级服务器</label>
+                <div class="col-sm-9">
                   <input type="text" class="form-control" id="CC-upgradeURL" placeholder="升级服务器地址">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">日志服务器</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">日志服务器</label>
+                <div class="col-sm-9">
                   <input type="text" class="form-control" id="CC-logURL" placeholder="日志服务器地址">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">音量</label>
+                <label class="col-sm-3 control-label">音量</label>
                 <div class="col-sm-8">
                   <input id="CC-vol-slider" type="text" value="" class="slider form-control" data-slider-id="green">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">城市</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">城市</label>
+                <div class="col-sm-9">
                   <select id="CC-city" class="form-control select2" multiple="multiple" data-placeholder="请选择城市（终端将会显示所选城市的天气信息）" style="width: 100%;">
                   </select>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">工作区间</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">工作区间</label>
+                <div class="col-sm-9">
                     <input id="CC-workSwitch" type="checkbox" checked>
                 </div>
               </div>
               <div class="form-group" id="CC-workWeekRepeatArea">
-                <div class="col-sm-offset-2 col-sm-10" id="CC-workWeekRepeat">
+                <div class="col-sm-offset-3 col-sm-9" id="CC-workWeekRepeat">
                   <div  class="checkbox">
                       <label style="padding-left: 0; ">
                           <input type="checkbox">
@@ -109,7 +108,7 @@
                 </div>
               </div>
               <div class="form-group" id="CC-workArea">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-3 col-sm-9">
                   <div class="input-group" style="width: 150px; float: left;">
                       <div class="input-group-addon">
                           <i class="fa fa-clock-o"></i>
@@ -128,13 +127,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">下载区间</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">下载区间</label>
+                <div class="col-sm-9">
                     <input id="CC-downloadSwitch" type="checkbox" checked>
                 </div>
               </div>
               <div class="form-group" id="CC-downloadArea">
-                  <div class="col-sm-offset-2 col-sm-10">
+                  <div class="col-sm-offset-3 col-sm-9">
                   <div class="input-group" style="width: 150px; float: left;">
                       <div class="input-group-addon">
                           <i class="fa fa-clock-o"></i>
@@ -156,23 +155,82 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">定时重启</label>
-                <div class="col-sm-10">
+                <label class="col-sm-3 control-label">定时重启</label>
+                <div class="col-sm-9">
                     <input id="CC-restartSwitch" type="checkbox" checked>
+                    <div id="CC-restartArea">
+                        <div class="col-sm-offset-3">
+                            <div class="input-group" style="width: 150px; float: left;">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-clock-o"></i>
+                                </div>
+                                <input type="text" class="form-control" id="CC-restartTime" style="display: inline-block; width: 113px;">
+                            </div>
+                            <div style="float: left; width:70px; text-align: center; height: 34px; line-height: 34px;">
+                                （每天）
+                            </div>
+                        </div>
+                    </div>
                 </div>
               </div>
-              <div class="form-group" id="CC-restartArea">
-                  <div class="col-sm-offset-2 col-sm-10">
-                  <div class="input-group" style="width: 150px; float: left;">
-                      <div class="input-group-addon">
-                          <i class="fa fa-clock-o"></i>
+
+
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">屏幕旋转</label>
+                  <div class="col-sm-9">
+                      <input id="CC-rotate" type="checkbox" checked>
+                      <div id="CC-rotateArea">
+                          <div class="col-sm-offset-3">
+                              <div class="input-group" style="width: 150px; float: left;">
+                                  <select id="CC-rotate-type" class="form-control">
+                                      <option value="soft">软件旋转模式</option>
+                                      <option value="hard">硬件旋转模式</option>
+                                  </select>
+                              </div>
+                              <div class="input-group" style="width: 150px; float: left; margin-left: 14px;">
+                                  <select id="CC-rotate-degree" class="form-control">
+                                      <option value="90">顺时针90度</option>
+                                      <option value="-90">逆时针90度</option>
+                                  </select>
+                              </div>
+                          </div>
                       </div>
-                      <input type="text" class="form-control" id="CC-restartTime" style="display: inline-block; width: 120px;">
                   </div>
-                  <div style="float: left; width:70px; text-align: center; height: 34; line-height: 34px;">
-                      （每天）
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">屏幕输出模式</label>
+                  <div class="col-sm-9">
+                      <input id="CC-outputMode" type="checkbox" checked>
+                      <div id="CC-outputModeArea">
+                          <div class="col-sm-offset-3">
+                              <div class="input-group" style="width: 150px; float: left;">
+                                  <select id="CC-outputMode-mode" class="form-control">
+                                      <option value="2160p60hz420">4K,60hz</option>
+                                      <option value="2160p50hz420">4K,50hz</option>
+                                      <option value="2160p30hz">4K,30hz</option>
+                                      <option value="1080p60hz">1080p,60hz</option>
+                                      <option value="1080i60hz">1080i,60hz</option>
+                                      <option value="1080p50hz">1080p,50hz</option>
+                                      <option value="1080i50hz">1080i,50hz</option>
+                                      <option value="720p60hz">720p,60hz</option>
+                                      <option value="720p50hz">720p,50hz</option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">远程调试ADB</label>
+                  <div class="col-sm-9">
+                      <input id="CC-remoteADB" type="checkbox" checked>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">打印本地日志</label>
+                  <div class="col-sm-9">
+                      <input id="CC-debug" type="checkbox" checked>
+                  </div>
               </div>
           </form>    
       </div>
