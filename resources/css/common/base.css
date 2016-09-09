@@ -1,6 +1,6 @@
 /*font*/
 body, h1, h2, h3, h4, h5, h6 {
-    font-family: "Helvetica Neue", Helvetica, Arial, '等线', '微软雅黑', '黑体', sans-serif !important;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, '等线', '微软雅黑', sans-serif !important;
 }
 
 /*select2*/
@@ -378,6 +378,18 @@ a {
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 600;
+}
+/*文本编辑页面*/
+.Tmtr-text-type {
+    margin: 0px 10px;
+}
+
+.Tmtr-text-type > label {
+    margin-left: 10px;
+}
+
+#mtr-input-url {
+    display: none;
 }
 
 /*资源控件页面*/

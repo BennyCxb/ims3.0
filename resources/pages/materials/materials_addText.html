@@ -11,11 +11,27 @@
                 <label>文本资源名称：</label>
                 <input type="text" class="form-control" id="Tmtr_name" placeholder="请输入文本资源名称">
             </div>
-            <form>
-            <textarea id="editor1" name="editor1" rows="10" cols="80">
-            
-            </textarea>
-            </form>
+            <div class="form-group">
+                <label>文本类型：</label>
+                <label class="Tmtr-text-type">
+                    <input id="Tmtr-type-text" type="radio" name="r1" class="minimal" value="text" checked><label>普通文本</label>
+                </label>
+                <label class="Tmtr-text-type">
+                    <input id="Tmtr-type-url" type="radio" name="r1" class="minimal" value="url"><label>URL文本</label>
+                </label>
+            </div>
+            <div id="mtr-input-text">
+                <form>
+                <textarea id="editor1" name="editor1" rows="10" cols="80">
+
+                </textarea>
+                </form>
+            </div>
+            <div id="mtr-input-url"  class="form-group">
+                <label>URL地址：</label>
+                <input type="text" class="form-control" id="Tmtr_url" placeholder="请输入URL地址">
+            </div>
+
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

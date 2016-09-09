@@ -1,7 +1,8 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
-    var _mtrId;
+    var _mtrId,
+        mtrTextType;
     exports.init = function () {
         var DispClose = false;
         $(window).bind('beforeunload', function () {
@@ -63,7 +64,12 @@ define(function (require, exports, module) {
                 Project: CONFIG.projectName,
             })
             UTIL.ajax('POST', url, data2, function (msg) {
-                CKEDITOR.instances['editor1'].setData(msg)
+                if (msg.substring(0, 1) == "<") {
+                    CKEDITOR.instances['editor1'].setData(msg)
+                } else {
+                    $("#Tmtr-type-url").iCheck("check");
+                    $("#Tmtr_url").val(msg);
+                }
             }, 'text')
 
             //保存
@@ -77,8 +83,7 @@ define(function (require, exports, module) {
                 if (!inputCheck()) return;
                 onSaveAndSubmit();
             })
-        } else {
-            //添加
+        } else {        //添加
             $('#Tmtr_viewlast').hide();
             $("#mtr_atTitle").html("添加文本");
             $("#Tmtr_save").click(function () {
@@ -92,6 +97,21 @@ define(function (require, exports, module) {
                 onSaveAndSubmit();
             })
         }
+
+        //iCheck for radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            radioClass: 'iradio_minimal-blue'
+        }).on("ifChecked", function() {
+            mtrTextType = $('input[name="r1"]:checked').val();
+            if (mtrTextType === "text") {
+                $("#mtr-input-text").show();
+                $("#mtr-input-url").hide();
+            } else {
+                $("#mtr-input-text").hide();
+                $("#mtr-input-url").show();
+            }
+        });
+
     }
 
     //返回
@@ -153,7 +173,12 @@ define(function (require, exports, module) {
     }
 
     function onSubmit() {
-        var editor_data = CKEDITOR.instances.editor1.getData();
+        if (mtrTextType == "text") {
+            var editor_data = CKEDITOR.instances.editor1.getData();
+        } else {
+            var editor_data = $("#Tmtr_url").val();
+        }
+
         var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
         var action;
         if (_mtrId == null) {
