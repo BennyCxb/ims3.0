@@ -6,6 +6,11 @@ define(function (require, exports, module) {
     var project = CONFIG.projectName;
 
     exports.init = function () {
+        if (CONFIG.token == undefined) {
+            alert("登录验证过期，请重新登录！");
+            window.location.href = "login.html";
+            return false;
+        }
         $("#username").html(username + '@' + project);
         $("#bar").html(username + '@' + project);
         $("#USER-NAME").html(username);

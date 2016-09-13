@@ -31,7 +31,7 @@ $(document).ready(function () {
                     cookies("project_name", projectName);
                     cookies("account", account);
                     cookies("token", resault.token);
-                    window.location.href = CONFIG.requestURL + '/index.html';
+                    window.location.href = "index.html";
                 } else {
                     $("#error_m").html(err);
                 }
