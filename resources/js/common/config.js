@@ -2,10 +2,8 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
 
     exports.userName = UTIL.getCookie("account");
-    exports.serverRoot = 'http://192.168.18.202';
-    exports.Resource_UploadURL = "http://192.168.18.202/upload";
-    //exports.serverRoot = 'http://imsoperate.cleartv.cn';
-    //exports.Resource_UploadURL = "http://imsresource.cleartv.cn/upload";
+    exports.serverRoot = CONFIG.requestURL;
+    exports.Resource_UploadURL = CONFIG.requestURL + "/upload";
     exports.projectName = UTIL.getCookie('project_name');
     exports.token = UTIL.getCookie('token');
     // exports.termListLoadInterval = 60 * 1000;
@@ -22,6 +20,4 @@ define(function (require, exports, module) {
         page: '<li><a href="javascript:;">{{page}}</a></li>'
     }
     exports.letTimeout = 60000;
-    // exports.serverRoot = '../../testdata/';
-
 });
