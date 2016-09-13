@@ -238,9 +238,8 @@ define(function (require, exports, module) {
                     }
                 }
                 exports.viewData = mtrData[z_index];
-                $("#cover_area").empty();
                 var page = "resources/pages/materials/materials_preview.html";
-                UTIL.cover.load(page);
+                UTIL.cover.load(page, 3);
             });
         });
 

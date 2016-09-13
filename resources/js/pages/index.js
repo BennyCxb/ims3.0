@@ -11,6 +11,7 @@ define(function (require, exports, module) {
             window.location.href = "login.html";
             return false;
         }
+        $("#i_version span").text(CONFIG.version);
         $("#username").html(username + '@' + project);
         $("#bar").html(username + '@' + project);
         $("#USER-NAME").html(username);

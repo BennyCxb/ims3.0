@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#l_version span").text(CONFIG.version);
+
     $('#submit').click(function () {
         $("#error_m").html("");
         if ($("#username").val() == "") {

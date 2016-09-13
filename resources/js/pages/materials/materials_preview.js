@@ -15,7 +15,7 @@ define(function (require, exports, module) {
                 MTRCTRL.viewData = undefined;
                 ADDMTR.viewData = undefined;
                 $("#mtrPrevieBg").remove();
-                $("#cover_area").hide();
+                UTIL.cover.close(3);
             });
         });
 

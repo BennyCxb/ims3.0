@@ -4,6 +4,7 @@ define(function (require, exports, module) {
     exports.userName = UTIL.getCookie("account");
     exports.serverRoot = CONFIG.requestURL;
     exports.Resource_UploadURL = CONFIG.uploadURL;
+    exports.version = CONFIG.version;
     exports.projectName = UTIL.getCookie('project_name');
     exports.token = UTIL.getCookie('token');
     // exports.termListLoadInterval = 60 * 1000;

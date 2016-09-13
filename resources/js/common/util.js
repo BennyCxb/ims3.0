@@ -10,22 +10,28 @@ define(function (require, exports, module) {
     };
 
     exports.cover = {
-        'load': function (url,layer) {
-            if(!layer) {
+        'load': function (url, layer) {
+            if (!layer) {
                 $('#cover_area').css('display', 'flex');
                 $('#cover_area').load(url);
-            }else{
+            } else if (layer == 2) {
                 $('#cover_area2').css('display', 'flex');
                 $('#cover_area2').load(url);
+            } else if (layer == 3) {
+                $('#cover_area_preview').css('display', 'flex');
+                $('#cover_area_preview').load(url);
             }
         },
         'close': function (layer) {
-            if(!layer) {
+            if (!layer) {
                 $('#cover_area').css('display', 'none');
                 $('#cover_area').empty();
-            }else{
+            } else if (layer == 2) {
                 $('#cover_area2').css('display', 'none');
                 $('#cover_area2').empty();
+            } else if (layer == 3) {
+                $('#cover_area_preview').css('display', 'none');
+                $('#cover_area_preview').empty();
             }
         }
     };
@@ -78,12 +84,12 @@ define(function (require, exports, module) {
         }
     };
 
-    exports.getRealURL = function (type,_url, successFn) {
+    exports.getRealURL = function (type, _url, successFn) {
         var realUrl = "";
         if (_url == "") return realUrl;
         if (type == "None") {
             realUrl = _url;
-        }else if (type == "Qiniu") {
+        } else if (type == "Qiniu") {
             var data = JSON.stringify({
                 action: "getRealURL",
                 project_name: CONFIG.projectName,
