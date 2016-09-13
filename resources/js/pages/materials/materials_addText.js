@@ -2,7 +2,7 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var _mtrId,
-        mtrTextType;
+        mtrTextType = "0";
     exports.init = function () {
         var DispClose = false;
         $(window).bind('beforeunload', function () {
@@ -47,8 +47,11 @@ define(function (require, exports, module) {
     }
 
     function loadPage() {
+        _mtrId = null;
+        mtrTextType = "0";
         if (location.hash.indexOf('?id=') != -1) {			//编辑
             $("#mtr_atTitle").html("编辑文本");
+            $('input[type="radio"].Tmtr-minimal').prop("disabled", true);
             _mtrId = location.hash.substring(location.hash.lastIndexOf('?id=') + 4);
             var data1 = JSON.stringify({
                 Action: 'Get',
@@ -71,39 +74,29 @@ define(function (require, exports, module) {
                     $("#Tmtr_url").val(msg);
                 }
             }, 'text')
-
-            //保存
-            $("#Tmtr_save").click(function () {
-                if (!inputCheck()) return;
-                onSubmit();
-            })
-
-            //保存并提交
-            $("#Tmtr_submit").click(function () {
-                if (!inputCheck()) return;
-                onSaveAndSubmit();
-            })
         } else {        //添加
             $('#Tmtr_viewlast').hide();
             $("#mtr_atTitle").html("添加文本");
-            $("#Tmtr_save").click(function () {
-                if (!inputCheck()) return;
-                onSubmit();
-            })
-
-            //保存并提交
-            $("#Tmtr_submit").click(function () {
-                if (!inputCheck()) return;
-                onSaveAndSubmit();
-            })
         }
 
+        //保存
+        $("#Tmtr_save").click(function () {
+            if (!inputCheck()) return;
+            onSubmit();
+        })
+
+        //保存并提交
+        $("#Tmtr_submit").click(function () {
+            if (!inputCheck()) return;
+            onSaveAndSubmit();
+        })
+
         //iCheck for radio inputs
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+        $('input[type="radio"].Tmtr-minimal').iCheck({
             radioClass: 'iradio_minimal-blue'
-        }).on("ifChecked", function() {
-            mtrTextType = $('input[name="r1"]:checked').val();
-            if (mtrTextType === "text") {
+        }).on("ifChecked", function () {
+            mtrTextType = $('input[type="radio"].Tmtr-minimal:checked').val();
+            if (Number(mtrTextType) === 0) {
                 $("#mtr-input-text").show();
                 $("#mtr-input-url").hide();
             } else {
@@ -125,20 +118,25 @@ define(function (require, exports, module) {
 
     function onSaveAndSubmit() {
         var editor_data = CKEDITOR.instances.editor1.getData();
-        var action;
         if (_mtrId == null) {
-            action = "Post";
+            var data = JSON.stringify({
+                action: "Post",
+                project: CONFIG.projectName,
+                name: $("#Tmtr_name").val(),
+                content: editor_data,
+                Is_Live: Number(mtrTextType)
+            })
         } else {
-            action = "Update";
+            var data = JSON.stringify({
+                action: "Update",
+                project: CONFIG.projectName,
+                name: $("#Tmtr_name").val(),
+                ID: _mtrId,
+                content: editor_data,
+                Is_Live: Number(mtrTextType)
+            })
         }
         var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
-        var data = JSON.stringify({
-            action: action,
-            project: CONFIG.projectName,
-            name: $("#Tmtr_name").val(),
-            ID : _mtrId,
-            content: editor_data
-        })
         UTIL.ajax('POST', url, data, function (msg) {
             if (parseInt(msg.rescode) == 200) {
                 submitToCheck();
@@ -173,26 +171,31 @@ define(function (require, exports, module) {
     }
 
     function onSubmit() {
-        if (mtrTextType == "text") {
+        if (Number(mtrTextType) === 0) {
             var editor_data = CKEDITOR.instances.editor1.getData();
         } else {
             var editor_data = $("#Tmtr_url").val();
         }
 
         var url = CONFIG.serverRoot + "/backend_mgt/v1/webmaterials";
-        var action;
         if (_mtrId == null) {
-            action = "Post";
+            var data = JSON.stringify({
+                action: "Post",
+                project: CONFIG.projectName,
+                name: $("#Tmtr_name").val(),
+                content: editor_data,
+                Is_Live: Number(mtrTextType)
+            })
         } else {
-            action = "Update";
+            var data = JSON.stringify({
+                action: "Update",
+                project: CONFIG.projectName,
+                name: $("#Tmtr_name").val(),
+                ID: _mtrId,
+                content: editor_data,
+                Is_Live: Number(mtrTextType)
+            })
         }
-        var data = JSON.stringify({
-            action: action,
-            project: CONFIG.projectName,
-            name: $("#Tmtr_name").val(),
-            ID : _mtrId,
-            content: editor_data
-        })
         UTIL.ajax('POST', url, data, function (msg) {
             if (msg.rescode == 200) {
                 if (UTIL.getLocalParameter('config_checkSwitch') == '0' && _mtrId != null) {         //未开启权限
