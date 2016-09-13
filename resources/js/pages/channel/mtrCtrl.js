@@ -12,15 +12,20 @@ define(function (require, exports, module) {
 
         //文本类型下拉框
         $("#mtrC_textType").change(function () {
-            if ($("#mtrC_textType").val() == "Normal") {
-                $("#mtrC_effect").hide();
-                $("#mtrC_flip").css('display', 'inline');
-            } else {
+            if ($("#mtrC_textType").val() == "Marquee") {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
                 $("#mtrC_scrollDirection").val("Left_2_Right");
                 $("#mtrC_scrollSpeed").val("0");
                 $("#mtrC_flip").hide();
+            } else {
+                if ($("#mtrC_textType").val() == "Normal") {
+                    $("#box_text_time").children().first().text("翻页间隔");
+                } else {
+                    $("#box_text_time").children().first().text("刷新间隔");
+                }
+                $("#mtrC_effect").hide();
+                $("#mtrC_flip").css('display', 'inline');
             }
         })
 
@@ -266,9 +271,12 @@ define(function (require, exports, module) {
                         $("#mtrC_effect").show();
                     } else {
                         $("#mtrC_flip").show();
+                        if (wStyle.Type == "Normal") {
+                            $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
+                        } else {
+                            $("#mtrC_pageDownPeriod").val(wStyle.RefreshPeriod);
+                        }
                     }
-
-                    $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                     $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
                     $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
@@ -685,10 +693,16 @@ define(function (require, exports, module) {
                 ScrollSpeed: $("#mtrC_scrollSpeed").val(),
                 BackgroundColor: $("#text_bgcolor").val()
             }
-        } else {
+        } else if ($("#mtrC_textType").val() == "Normal") {
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
+                BackgroundColor: $("#text_bgcolor").val()
+            }
+        } else if ($("#mtrC_textType").val() == "WebURL") {
+            var wstyle = {
+                Type: $("#mtrC_textType").val(),
+                RefreshPeriod: $("#mtrC_pageDownPeriod").val(),
                 BackgroundColor: $("#text_bgcolor").val()
             }
         }
