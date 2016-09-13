@@ -1,0 +1,45 @@
+<!-- <label>
+        <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp视频控件
+    </label>
+--> 
+<li style="display: none">
+    <label>当前控件:</label>
+    <input type="text" readonly="readonly" value="<%=type%>">
+</li>
+
+
+
+<div class="input-group" style="width: 115px; display: inline; float: left;">
+    <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px;">x</label>
+    <input type="number" value="<%=left%>" class="form-control"  data-property-id="widget-left" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1">
+</div>
+<div class="input-group" style="width: 100px;display: inline; float: left;">
+    <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px;">y</label>
+    <input type="number" value="<%=top%>" class="form-control" data-property-id="widget-top" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1">
+</div>
+
+<div class="input-group" class="input-group" style="width: 115px; display: inline; float: left;">
+    <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px;">宽</label>
+    <input type="number" value="<%=width%>" class="form-control" data-property-id="widget-width" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1">
+   
+</div>
+
+<div class="input-group" style="width: 100px;display: inline; float: left;">
+    <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px;">高</label>
+    <input type="number" value="<%=height%>" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1">
+    
+</div>
+
+
+
+
+<div class="input-group" style="width: 230px;display: inline; float: left; top: 4px;">
+    <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px;">层</label>
+    <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px;">上移一层</button>
+    <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">下移一层</button>
+</div>
+
+
+<!-- <li>
+    <button class="btn-layout-editor-delete-widget">删除控件</button>
+</li> -->

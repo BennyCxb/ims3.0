@@ -1,0 +1,168 @@
+<div class="channel-program-header box-header with-border">
+
+    <input value="<%=name%>" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold;" />
+    <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px;">
+        <i class="glyphicon glyphicon-edit" style="color: #555"></i>
+    </small>
+    <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" is_preview="false" style="position: relative; top: 0px; margin-left: 15px;">
+        <i class="fa  fa-play-circle-o"></i>
+        &nbsp&nbsp预览节目
+    </button>
+</div>
+
+
+
+    <div class="channel-program-timer">
+
+        <div class="input-group">
+            <span class="input-group-addon" title="开始时间">
+                <i class="fa fa fa-calendar-check-o"></i>
+            </span>
+            <input type="date" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start.match(/([^T]+)T/)[1]%>">
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon" title="失效时间">
+                <i class="fa fa-calendar-times-o"></i>
+            </span>
+            <input type="date" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_end.match(/([^T]+)T/)[1]%>">
+        </div>
+
+        <div class="channel-editor-program-trigger input-group input-group-sm">
+            <div class="input-group-btn"  style="float: left;">
+              <button type="button" class="btn btn-danger btn-channel-setup-timer">
+                <i class="fa fa-fw fa-bomb"></i>
+                <b>定时触发</b>
+              </button>
+            </div>
+
+
+            <!-- /btn-group -->
+            <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px;">
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                </label>
+                <label class="timer-field timer-field-date">
+                    <span></span>
+                </label>
+                <label class="timer-field timer-field-day">
+                    <span></span>
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                </label>
+                <label class="timer-field">
+                    <span></span>
+                </label>
+            </label>
+
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon" title="生效时间">
+                <i class="fa fa-calendar-check-o"></i>
+            </span>
+            <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="<%=lifetime_start%>">
+        </div>
+        <p style="float: left; position: relative; top: 10px; left: 8px;">-</p>
+        <div class="input-group">
+            <span class="input-group-addon" title="失效时间">
+                <i class="fa fa-calendar-times-o"></i>
+            </span>
+            <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="<%=lifetime_end%>">
+        </div>
+        <div class="input-group" style="width: 150px;">
+            <span class="input-group-addon"  title="播放时长">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
+            <div class="program-duration-container"></div>
+        </div>
+        <div class="input-group" style="width: 100px;   ">
+            <span class="input-group-addon" title="播放次数">
+                <i class="glyphicon glyphicon-time"></i>
+            </span>
+            <input type="number" class="form-control" data-field="count" value="<%=count%>">
+        </div>
+
+    </div>
+
+<div class="channel-program-body">
+    <div class="channel-program-layout">
+        <div class="channel-program-layout-header">
+            <span class="channel-program-layout-header-info">模版:<%=layout.name%></span>
+            <span class="channel-program-layout-header-info">宽:<%=layout.width%></span>
+            <span  class="channel-program-layout-header-info">高:<%=layout.height%></span>
+
+        </div>
+        <div class="channel-program-layout-body">
+        </div>
+        <div class="channel-program-layout-footer">
+            <ul></ul>
+        </div>
+    </div>
+    <div class="channel-program-widget">
+        正在加载数据
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    (function (obj,hint){
+
+    function getLength(str){  
+            var realLength = 0;  
+            for (var i = 0; i < str.length; i++){  
+                var charCode = str.charCodeAt(i);
+                
+                if (charCode >= 0 && charCode <= 128)   
+                realLength += 1;  
+                else   
+                realLength += 2;
+
+            }
+
+            return realLength;  
+        }  
+
+        //get name
+        var $obj = $(obj);
+        var t = $obj.val();
+        var length = getLength(t);
+        var width = parseFloat($obj.css('font-size'));
+        var left = length * width/2 +57;
+
+        //get hint
+        var $hint = $(hint);
+        
+        //ux fix
+        $obj.css('cursor','pointer');
+
+        //reposition
+        $hint.css('left',left);
+
+        //event
+        $hint.click(function(){
+            $obj.focus().val(t);
+        });
+        $obj.focus(function(){
+            $hint.css('display','none');
+            $obj.css('cursor','');
+        });
+        $obj.blur(function(){
+            $hint.css('display','');
+            $obj.css('cursor','pointer');
+            //reposition
+            var t = $obj.val();
+            var length = getLength(t);
+            var width = parseFloat($obj.css('font-size'));
+            var left = length * width/2 +57;
+            $hint.css('left',left);
+        });
+    }('.direct-name-003','.direct-name-003-hint'))
+
+
+</script>
