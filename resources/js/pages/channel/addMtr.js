@@ -224,22 +224,23 @@ define(function (require, exports, module) {
         $(".mtr_choise_name a").each(function(){
             $(this).click(function(){
                 var z_index = parseInt($(this).parents("tr").index())-1;
-                if(mtrData[z_index].Type_Name == "Video"){
+                if (mtrData[z_index].Type_Name != "文本") {
                     var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
-                    if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
-                        alert("当前视频格式暂不支持预览！");
-                        return;
+                    if (mtrData[z_index].Type_Name == "Video") {
+                        if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
+                            alert("当前视频格式暂不支持预览！");
+                            return;
+                        }
+                    } else if (mtrData[z_index].Type_Name == "Audio") {
+                        if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
+                            alert("当前音频格式暂不支持试听！");
+                            return;
+                        }
                     }
-                } else if(mtrData[z_index].Type_Name == "Audio"){
-                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
-                    if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
-                        alert("当前音频格式暂不支持试听！");
-                        return;
-                    }
+                    exports.viewData = mtrData[z_index];
+                    var page = "resources/pages/materials/materials_preview.html";
+                    UTIL.cover.load(page, 3);
                 }
-                exports.viewData = mtrData[z_index];
-                var page = "resources/pages/materials/materials_preview.html";
-                UTIL.cover.load(page, 3);
             });
         });
 
