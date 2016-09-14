@@ -117,7 +117,11 @@ define(function (require, exports, module) {
     }
 
     function onSaveAndSubmit() {
-        var editor_data = CKEDITOR.instances.editor1.getData();
+        if (Number(mtrTextType) === 0) {
+            var editor_data = CKEDITOR.instances.editor1.getData();
+        } else {
+            var editor_data = $("#Tmtr_url").val();
+        }
         if (_mtrId == null) {
             var data = JSON.stringify({
                 action: "Post",
@@ -236,7 +240,16 @@ define(function (require, exports, module) {
     function inputCheck() {
         var errormsg = "";
         if ($("#Tmtr_name").val() == "") {
-            errormsg += "请输入文本资源名称！";
+            errormsg += "请输入文本资源名称！\n";
+        }
+        if (Number(mtrTextType) === 1) {
+            var url = $("#Tmtr_url").val();
+            var regExp = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/;
+            if ($("#Tmtr_url").val() == "") {
+                errormsg += "请输入URL地址！\n";
+            } else if (!regExp.test(url)) {
+                errormsg += "请输入正确的URL地址！\n";
+            }
         }
         if (errormsg != "") {
             alert(errormsg);
