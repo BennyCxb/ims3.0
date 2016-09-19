@@ -28,32 +28,32 @@ define(function (require, exports, module) {
         switch (type) {
             case 1:
                 mtrType = "Video";
-                $("#mtrLisTitle").html("视频列表");
                 $("#mtrSearch").attr("placeholder", "搜索视频");
                 $("#mtrSearch").attr("typeId", "1");
                 break;
             case 2:
                 mtrType = "Image";
-                $("#mtrLisTitle").html("图片列表");
                 $("#mtrSearch").attr("placeholder", "搜索图片");
                 $("#mtrSearch").attr("typeId", "2");
                 break;
             case 3:
                 mtrType = "Audio";
-                $("#mtrLisTitle").html("音频列表");
                 $("#mtrSearch").attr("placeholder", "搜索音频");
                 $("#mtrSearch").attr("typeId", "3");
                 break;
             case 4:
                 mtrType = "WebText";
-                $("#mtrLisTitle").html("文本列表");
                 $("#mtrSearch").attr("placeholder", "搜索文本");
                 $("#mtrSearch").attr("typeId", "4");
                 break;
             case 5:
                 mtrType = "Live";
-                $("#mtrLisTitle").html("直播列表");
                 $("#mtrSearch").attr("placeholder", "搜索直播");
+                $("#mtrSearch").attr("typeId", "5");
+                break;
+            case 6:
+                mtrType = "Office";
+                $("#mtrSearch").attr("placeholder", "搜索Office/PDF");
                 $("#mtrSearch").attr("typeId", "5");
                 break;
         }

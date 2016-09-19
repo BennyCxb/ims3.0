@@ -7,7 +7,6 @@ define(function (require, exports, module) {
         Qiniu_UploadUrl = "",
         qiniu_url = "",
         domain = "";
-    ;
 
     exports.init = function () {
         var DispClose = false;
@@ -160,7 +159,11 @@ define(function (require, exports, module) {
         var formData, startDate;
         formData = new FormData();
         if (uploadQiniu == "0") {                 //普通上传
-            xhr.open('POST', CONFIG.Resource_UploadURL, true);
+            if (["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(f.name.substring(f.name.lastIndexOf('.') + 1)) > -1) {
+                xhr.open('POST', CONFIG.serverRoot + "/backend_mgt/v2/office/", true);
+            } else {
+                xhr.open('POST', CONFIG.Resource_UploadURL, true);
+            }
         } else if (uploadQiniu == "1") {          //七牛上传
             var strS = f.name.split(".");
             var subS = strS[strS.length - 1];
@@ -171,6 +174,8 @@ define(function (require, exports, module) {
             formData.append('token', uploadToken);
             qiniu_url = "http://" + domain + "/" + key;
         }
+        formData.append("name", CONFIG.userName);
+        formData.append("project", CONFIG.projectName);
         formData.append('file', f);
         var taking;
         var xh = new upl_file(xhr);
@@ -207,7 +212,7 @@ define(function (require, exports, module) {
                 var fileName = f.name;
             } catch (e) {
             }
-            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "") {
+            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "" && ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(fileName.substring(fileName.lastIndexOf('.') + 1)) == -1) {
                 var blkRet = JSON.parse(xhr.responseText);
                 var duration,
                     downloadAuthType,
@@ -280,6 +285,13 @@ define(function (require, exports, module) {
                         _upl_list[num].status = 'end';
                     }
                 });
+            } else if (xhr.readyState == 4 && xhr.status == 200 && ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(fileName.substring(fileName.lastIndexOf('.') + 1)) > -1) {
+                if (JSON.parse(xhr.response).rescode == 200) {
+                    $("#upl_tr_" + num).attr("status", "end");
+                    $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
+                    $("#upl_speed_" + num).html("");
+                    $("#upl_status_" + num).html("上传成功");
+                }
             } else if (xhr.status != 200 && xhr.responseText) {
                 $("#upl_tr_" + num).prop("status", "end");
                 $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
