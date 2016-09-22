@@ -1,10 +1,11 @@
 define(function (require, exports, module) {
     var UTIL = require("common/util.js");
+    var CONFIG = require("common/config.js");
     var CRUD = require("common/crud.js");
     var DB = CRUD.Database.getInstance();
+    var widgetData;
 
     exports.init = function () {
-
         //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -65,9 +66,9 @@ define(function (require, exports, module) {
         $("#mtr_delete").click(function () {
             $("input:checkbox[class='mtr_cb']:checked").each(function () {
                 DB.collection("material").delete({
-                    id          : Number($(this).parents("tr").attr("data-id")),
-                    resource_id : Number($(this).parents("tr").attr("mtrid")),
-                    widget_id   : Number($("#mtrCtrl_Title").attr("widget_id"))
+                    id: Number($(this).parents("tr").attr("data-id")),
+                    resource_id: Number($(this).parents("tr").attr("mtrid")),
+                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
                 });
                 $(this).parents("tr").remove();
             });
@@ -112,6 +113,7 @@ define(function (require, exports, module) {
     }
 
     exports.loadPage = function (widget) {
+        widgetData = widget;
         $(".cp-popover-container").remove();
         $("#mtrCtrl_Table tbody").empty();	//初始化
         $("#mtrCtrl_Table thead").empty();
@@ -184,15 +186,17 @@ define(function (require, exports, module) {
             $("#mtrCtrl_Title").prev().css("background-color", widgetColor);
             $("#mtrCtrl_Title").attr("widget_id", widget.id);
 
-            widgetLoad(widget);
+            widgetLoad();
         } else {
             $("#mtrCtrl_Title").html("当前无控件");
         }
 
     }
 
-    //加载控件属性
-    function widgetLoad(widgetData) {
+    /**
+     * 加载控件属性
+     **/
+    function widgetLoad() {
         //color picker with addon
         $("#text_color").ColorPickerSliders({               //文本字体颜色
             color: '#000000',
@@ -228,7 +232,7 @@ define(function (require, exports, module) {
             title: '注：最右侧为透明度',
             onchange: function (ev, color) {
                 $(".mtrC_datetime").css("color", color.tiny.toRgbString());
-                clockTextColor();
+                clockSave();
             }
         });
         $("#weatherText_color").ColorPickerSliders({        //天气文本颜色
@@ -244,7 +248,6 @@ define(function (require, exports, module) {
                 weatherSave();
             }
         });
-        var widgetType = widgetData.type;
         var wOsp = JSON.parse(widgetData.overall_schedule_params);
         if (wOsp.Type == undefined) {
             var wOspType = "Sequence";
@@ -252,7 +255,7 @@ define(function (require, exports, module) {
             var wOspType = wOsp.Type;
         }
         $("#mtrCtrl_playType").val(wOspType);
-        switch (widgetType) {
+        switch (widgetData.type) {
             case 'VideoBox':
                 if (wOsp.Type != undefined) {
                     playTypeSave();
@@ -329,7 +332,7 @@ define(function (require, exports, module) {
                             break;
                     }
                 }
-                clockTextColor();
+                clockSave();
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} : JSON.parse(widgetData.style);
@@ -377,17 +380,19 @@ define(function (require, exports, module) {
         $("#widget_attribute").append('<label>左距离：' + wleft + '</label><label>上距离：' + wtop + '</label><label>尺寸：' + wwidth + '×' + wheight + '</label>');
 
         var mtrData = DB.collection("material").select({widget_id: widgetData.id});
-        if (widgetType != "ClockBox") {
+        if (widgetData.type != "ClockBox") {
             exports.getSelectedID(mtrData, true);
         }
 
         //绑定触发事件
         save();
-        clockAttrSave();
+        clockChange();
         weatherChange();
     }
 
-    //将数据添加到列表
+    /**
+     * 将数据添加到列表
+     **/
     exports.getSelectedID = function (mtrData, getWidgetMtr) {
         mtrData.sort(function (a, b) {
             return a.sequence - b.sequence
@@ -396,7 +401,8 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
-                    var mtrTypeClass;
+                    var mtrTypeClass,
+                        duration;
                     switch (mtrData[x].type_id) {
                         case 1:
                             if (mtrData[x].type_name == "视频") {
@@ -414,17 +420,30 @@ define(function (require, exports, module) {
                         case 4:
                             mtrTypeClass = "fa fa-file-text-o";
                             break;
-                        case 5:
+                        case 7:
                             mtrTypeClass = "fa fa-file-word-o";
                             break;
                     }
                     var schedule_params = JSON.parse(mtrData[x].schedule_params) === '' ? {} : JSON.parse(mtrData[x].schedule_params);
                     if (schedule_params != {}) {
-                        var duration = formatTime(schedule_params.duration);
+                        duration = formatTime(schedule_params.duration);
                     } else {
-                        var duration = "00:00:15";
                         if (mtrData[x].type_name == "直播") {
-                            var duration = "01:00:00";
+                            duration = "01:00:00";
+                        } else if (mtrData[x].type_name == "Office") {
+                            var data = JSON.stringify({
+                                project_name: CONFIG.projectName,
+                                action: "getone",
+                                officeid: mtrData[x].resource_id
+                            })
+                            var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
+                            UTIL.ajax2('post', _url, data, function (msg) {
+                                var SwitchPeriod = JSON.parse(widgetData.style).SwitchPeriod;
+                                var count = Object.keys(msg).length
+                                duration = formatTime(SwitchPeriod * count);
+                            })
+                        } else {
+                            duration = "00:00:15";
                         }
                     }
                     var mtrCtrl_name_tr,
@@ -469,7 +488,10 @@ define(function (require, exports, module) {
                 }
                 for (var x = 0; x < mtrData.length; x++) {
                     var mtrTypeClass,
-                        dbTypeName;
+                        dbTypeName,
+                        mtrDuration,
+                        mtrCtrl_name_tr,
+                        mtrCtrl_duration_tr;
                     switch (mtrData[x].Type_Name) {
                         case "Video":
                             dbTypeName = "视频";
@@ -497,25 +519,39 @@ define(function (require, exports, module) {
                             break;
                     }
                     if (mtrData[x].Duration == undefined) {
-                        var mtrDuration = "15";
-                    } else {
-                        var mtrDuration = formatSecond(mtrData[x].Duration).toString();
-                        if (mtrDuration == 0) {
+                        if (mtrData[x].Type_Name == "Office") {
+                            var data = JSON.stringify({
+                                project_name: CONFIG.projectName,
+                                action: "getone",
+                                officeid: mtrData[x].ID
+                            })
+                            var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
+                            UTIL.ajax2('post', _url, data, function (msg) {
+                                var SwitchPeriod = Number($("#mtrC_office_switchPeriod").val());
+                                var count = Object.keys(msg).length;
+                                mtrDuration = SwitchPeriod * count;
+                            })
+                        } else {
                             mtrDuration = 15;
+                        }
+                    } else {
+                        mtrDuration = formatSecond(mtrData[x].Duration).toString();
+                        if (mtrDuration == 0) {
                             if (mtrData[x].Type_Name == "Live") {
                                 mtrDuration = 3600;
+                            } else {
+                                mtrDuration = 15;
                             }
                         }
-
                     }
                     var dbduration = {
-                        duration: mtrDuration     //将时间转为秒
+                        duration: mtrDuration       //将时间转为秒
                     }
                     if ($("#mtrCtrl_playType").val() == "Sequence") {
                         maxsequence++;
                     }
                     var dbtype_id = typeof mtrData[x].Type_ID === 'number' ? mtrData[x].Type_ID : {
-                        'Office' : 5,
+                        'Office': 5,
                         '文本': 4,
                         '音频': 3,
                         '图片': 2,
@@ -542,26 +578,20 @@ define(function (require, exports, module) {
                     DB.collection("material").insert(intDate);                      //存入缓存
                     var data_id = DB.collection("material").lastInsertId();         //查询刚添加的ID
                     //拼接
-                    var mtrCtrl_name_tr,
-                        mtrCtrl_duration_tr;
                     if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "Office") {       //视频、音乐、图片、Office
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
                         mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
-                        if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "Office") {                     //图片、Office
-                            var trDuration = "00:00:15";
-                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
+                        if (mtrData[x].Type_Name == "Image") {                     //图片
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + formatTime(mtrDuration) + '></td>'
                         } else {
-                            var trDuration = mtrData[x].Duration;
-                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + ' disabled></td>'
+                            mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + formatTime(mtrDuration) + ' disabled></td>'
                         }
                     } else if (mtrData[x].Type_Name == "文本") {                  //文本
                         mtrCtrl_name_tr = '<i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name;
-                        var trDuration = "00:00:15";
-                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
+                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + formatTime(mtrDuration) + '></td>'
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
                         mtrCtrl_name_tr = '<i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name;
-                        var trDuration = "01:00:00";
-                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
+                        mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + formatTime(mtrDuration) + '></td>'
                     }
                     var mtrtr = '<tr data-id="' + data_id + '" mtrid="' + mtrData[x].ID + '" mtrsequence="' + maxsequence + '">' +
                         '<td class="mtrCtrl_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
@@ -579,33 +609,32 @@ define(function (require, exports, module) {
 
             //预览操作
             // $(".mtrCtrl_name a").each(function () {
-                $(".mtrCtrl_name a").click(function () {
-                    var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
-                    var z_index;
-                    for (var a = 0; a < mtrData.length; a++) {
-                        if (mtrData[a].resource_id == $(this).parents("tr").attr("mtrid")) {
-                            z_index = a;
-                        }
+            $(".mtrCtrl_name a").click(function () {
+                var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+                var z_index;
+                for (var a = 0; a < mtrData.length; a++) {
+                    if (mtrData[a].resource_id == $(this).parents("tr").attr("mtrid")) {
+                        z_index = a;
                     }
-                    if (mtrData[z_index].type_name == "视频") {
-                        var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
-                        if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
-                            alert("当前视频格式暂不支持预览！");
-                            return;
-                        }
-                    } else if (mtrData[z_index].type_name == "音频") {
-                        var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
-                        if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
-                            alert("当前音频格式暂不支持试听！");
-                            return;
-                        }
+                }
+                if (mtrData[z_index].type_name == "视频") {
+                    var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
+                    if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
+                        alert("当前视频格式暂不支持预览！");
+                        return;
                     }
-                    exports.viewData = mtrData[z_index];
-                    var page = "resources/pages/materials/materials_preview.html";
-                    UTIL.cover.load(page, 3);
-                });
+                } else if (mtrData[z_index].type_name == "音频") {
+                    var backSuffix = mtrData[z_index].url.substring(mtrData[z_index].url.lastIndexOf("."));
+                    if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
+                        alert("当前音频格式暂不支持试听！");
+                        return;
+                    }
+                }
+                exports.viewData = mtrData[z_index];
+                var page = "resources/pages/materials/materials_preview.html";
+                UTIL.cover.load(page, 3);
+            });
             // });
-
 
             //显示或隐藏次数
             if ($("#mtrCtrl_playType").val() == "Percent") {
@@ -625,9 +654,9 @@ define(function (require, exports, module) {
             //单个删除
             $(".btn_ctrlDel").click(function () {
                 DB.collection("material").delete({
-                    id          : Number($(this).parents("tr").attr("data-id")),
-                    resource_id : Number($(this).parents("tr").attr("mtrid")),
-                    widget_id   : Number($("#mtrCtrl_Title").attr("widget_id"))
+                    id: Number($(this).parents("tr").attr("data-id")),
+                    resource_id: Number($(this).parents("tr").attr("mtrid")),
+                    widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))
                 });
                 $(this).parents("tr").remove();
                 mtrCb();
@@ -708,11 +737,14 @@ define(function (require, exports, module) {
         })
         //office切换间隔
         $("#mtrC_office_switchPeriod").change(function () {
+            officeDuration();
             officeSave();
         })
     }
 
-    //播放顺序保存
+    /**
+     * 播放顺序保存
+     **/
     function playTypeSave() {
         if (!inputCheck()) return;
         var overall_schedule_params = {
@@ -721,7 +753,9 @@ define(function (require, exports, module) {
         DB.collection("widget").update({overall_schedule_params: JSON.stringify(overall_schedule_params)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //文本效果保存
+    /**
+     * 文本效果保存
+     **/
     function textAttrSave() {
         if (!inputCheck()) return;
         if ($("#mtrC_textType").val() == "Marquee") {
@@ -748,7 +782,9 @@ define(function (require, exports, module) {
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //资源修改
+    /**
+     * 资源修改
+     **/
     function mtrAttrSave() {
         $(".mtrCtrl_time").change(function () {
             if (!inputCheck()) return;
@@ -780,20 +816,24 @@ define(function (require, exports, module) {
         })
     }
 
-    //时钟修改
-    function clockAttrSave() {
+    /**
+     * 时钟修改
+     **/
+    function clockChange() {
         //时钟字体颜色事件
         $("#clockText_color").bind("input propertychange", function () {
-            clockTextColor();
+            clockSave();
         })
         //时钟类型
         $(".rd_clock").next().click(function () {
-            clockTextColor();
+            clockSave();
         })
     }
 
-    //时钟字体颜色
-    function clockTextColor() {
+    /**
+     * 时钟字体颜色
+     **/
+    function clockSave() {
         if (!inputCheck()) return;
         var wstyle = {
             TextColor: $("#clockText_color").val(),
@@ -802,7 +842,9 @@ define(function (require, exports, module) {
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //天气控件
+    /**
+     * 天气控件
+     **/
     function weatherChange() {
         //字体颜色
         $("#weatherText_color").bind("input propertychange", function () {
@@ -817,7 +859,9 @@ define(function (require, exports, module) {
         })
     }
 
-    //天气保存
+    /**
+     * 天气保存
+     **/
     function weatherSave() {
         if (!inputCheck()) return;
         var wstyle = {
@@ -828,18 +872,43 @@ define(function (require, exports, module) {
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //Office数据加入缓存
+    /**
+     * Office数据加入缓存
+     **/
     function officeSave() {
         if (!inputCheck()) return;
         var wstyle = {
-            Type : $("#mtrC_office_type").val(),
-            SwitchPeriod  : Number($("#mtrC_office_switchPeriod").val()),
-            SwitchAnimation  : $("#mtrC_office_switchAnimation").val()
+            Type: $("#mtrC_office_type").val(),
+            SwitchPeriod: Number($("#mtrC_office_switchPeriod").val()),
+            SwitchAnimation: $("#mtrC_office_switchAnimation").val()
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
 
-    //校验
+    /**
+     * Office切换间隔改变文件播放时长
+     **/
+    function officeDuration() {
+        var switchPeriod = Number($("#mtrC_office_switchPeriod").val());
+        $("#mtrCtrl_Table tbody tr").each(function (el) {
+            var data = JSON.stringify({
+                project_name: CONFIG.projectName,
+                action: "getone",
+                officeid: $(this).attr("mtrid")
+            })
+            var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
+            UTIL.ajax('post', _url, data, function (msg) {
+                var count = Object.keys(msg).length
+                var duration = formatTime(switchPeriod * count);
+                $("#mtrCtrl_Table tbody tr:eq("+ el +")").find($(".mtrCtrl_time")).val(duration);
+            })
+        })
+    }
+
+
+    /**
+     * 校验
+     **/
     function inputCheck() {
         var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
         var errorMsg = "";
@@ -919,7 +988,9 @@ define(function (require, exports, module) {
 
     }
 
-    //校验复选框勾选的个数
+    /**
+     * 校验复选框勾选的个数
+     **/
     function mtrCb() {
         var Ck = $("#mtrCtrl_Table .icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $("#mtrCtrl_Table .icheckbox_flat-blue").length;			//复选框总个数

@@ -1,6 +1,5 @@
 define(function (require, exports, module) {
-    var UTIL = require("common/util.js"),
-        MTRCTRL = require("pages/channel/mtrCtrl");
+    var UTIL = require("common/util.js");
 
     exports.init = function () {
         //关闭窗口
@@ -16,11 +15,16 @@ define(function (require, exports, module) {
         loadPage();
     }
 
-    /*
+    /**
      *载入页面
      */
     function loadPage() {
         $("#batchDuration").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
+        $("input:checkbox[class='mtr_cb']:checked").each(function () {
+            if ($(this).parents("tr").find($(".mtrCtrl_time")).attr("disabled") == "disabled") {
+                $(".batchOperation-duration").hide();
+            }
+        })
         if ($("#mtrCtrl_playType").val() == "Percent") {
             $(".batchOperation-time").show();
         } else {
@@ -28,7 +32,7 @@ define(function (require, exports, module) {
         }
     }
 
-    /*
+    /**
      *保存事件
      */
     function onSubmit() {
