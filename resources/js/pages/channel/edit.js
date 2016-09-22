@@ -1112,6 +1112,10 @@ define(function (require, exports, module) {
                     type = 'WeatherBox';
                     type_name = '天气控件';
                     type_id = 6;
+                } else if (el.Type === 'OfficeBox') {
+                    type = 'OfficeBox';
+                    type_name = 'Office控件';
+                    type_id = 7;
                 }
                 return {
                     layout_id: layoutId,

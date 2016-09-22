@@ -1019,6 +1019,8 @@ define(function (require, exports, module) {
                 return new VideoWidget(obj, layout);
             case 'WeatherBox':
                 return new WeatherWidget(obj, layout);
+            case 'OfficeBox':
+                return new OfficeWidget(obj, layout);
         }
     };
 
@@ -1515,6 +1517,42 @@ define(function (require, exports, module) {
     WeatherWidget.prototype.hidePreview = function () {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
         this.mElement.style.backgroundImage = 'none';
+        Widget.prototype.hidePreview.call(this);
+    };
+
+    /**
+     * 图片控件
+     * @constructor
+     */
+    function OfficeWidget() {
+        Widget.apply(this, arguments);
+    }
+    OfficeWidget.prototype = Object.create(Widget.prototype);
+    OfficeWidget.prototype.constructor = OfficeWidget;
+    OfficeWidget.prototype.showPreview = function (data) {
+
+        while (this.mElement.firstChild) {
+            this.mElement.removeChild(this.mElement.firstChild);
+        }
+        if (data.material == undefined) {
+            data.material = "";
+        }
+        if (data.material.length === 0) {
+            this.mElement.textContent = this.mTypeName;
+            return;
+        }
+
+        this.mElement.dataset.background = this.mElement.style.backgroundColor;
+        this.mElement.style.backgroundColor = 'transparent';
+        var img = document.createElement('img');
+        img.setAttribute('width', '100%');
+        img.setAttribute('height', '100%');
+        img.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
+        this.mElement.appendChild(img);
+
+    };
+    OfficeWidget.prototype.hidePreview = function (data) {
+        this.mElement.style.backgroundColor = this.mElement.dataset.background;
         Widget.prototype.hidePreview.call(this);
     };
 

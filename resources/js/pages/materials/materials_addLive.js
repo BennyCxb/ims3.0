@@ -139,7 +139,7 @@ define(function (require, exports, module) {
             UTIL.ajax('post', url, data, function (msg) {
                 if (msg.rescode == 200) {
                     var pageNum = $("#materials-table-pager li.active").find("a").text();
-                    MTR.loadPage(pageNum, 5);
+                    MTR.loadPage(pageNum, "Live");
                     close();
                     alert("修改成功");
                 } else {

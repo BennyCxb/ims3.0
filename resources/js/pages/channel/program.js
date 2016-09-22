@@ -242,6 +242,9 @@ define(function (require, exports, module) {
                 case 'ImageBox':
                     data[w.id] = {download_auth_type: material.download_auth_type, material: material.url};
                     break;
+                case 'OfficeBox':
+                    data[w.id] = {download_auth_type: material.download_auth_type, material: material.url};
+                    break;
             }
         });
         editor.showPreview(data);

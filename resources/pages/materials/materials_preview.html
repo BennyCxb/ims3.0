@@ -1,5 +1,5 @@
-<section id="mtrPrevieBg" class="">
-    <article id="mtrView_videoArea" name="media">
+<section id="mtrPrevieBg">
+    <article id="mtrView_videoArea" class="mtrView" name="media">
         <video id="mtrView_video" style="width:100%; height:100%;" loop="loop" autoplay=true controls="controls">
             <source src="" type="video/mp4">
             <object style="width:100%; height:100%;">
@@ -9,7 +9,7 @@
         <a class="mtrView_close">关闭</a>
     </article>
 
-    <article id="mtrView_audioArea" name="media">
+    <article id="mtrView_audioArea" class="mtrView" name="media">
         <audio id="mtrView_audio" style="width:100%; height:100%;" loop="loop" autoplay=true controls="controls">
             <source src="" type="audio/mp3">
             <object style="width:100%; height:100%;">
@@ -19,9 +19,25 @@
         <a class="mtrView_close">关闭</a>
     </article>
 
-    <article id="mtrView_picArea">
-        <img style="height: 100%; margin: 0 auto; display: block; max-width: 100%;" src="" />
+    <article id="mtrView_picArea" class="mtrView">
+        <img style="height: 100%; margin: 0 auto; display: block; max-width: 100%;" src=""/>
         <a class="mtrView_close">关闭</a>
+    </article>
+
+    <article id="mtrView_officeArea" class="mtrView">
+        <!--<img style="height: 100%; margin: 0 auto; display: block; max-width: 100%;" src="" />-->
+        <a class="mtrView_close">关闭</a>
+        <div id="mtrViewCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+
+            </div>
+            <a class="left carousel-control" href="#mtrViewCarousel" data-slide="prev">
+                <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="right carousel-control" href="#mtrViewCarousel" data-slide="next">
+                <span class="fa fa-angle-right"></span>
+            </a>
+        </div>
     </article>
     <script>
         seajs.use("pages/materials/materials_preview.js", function (materials_preview) {

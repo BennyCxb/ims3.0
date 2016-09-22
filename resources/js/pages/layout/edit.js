@@ -564,6 +564,10 @@ define(function(require, exports, module) {
                 json.type = 'WeatherBox';
                 json.typeName = '天气控件';
                 break;
+            case 'office':
+                json.type = 'OfficeBox';
+                json.typeName = 'Office控件';
+                break;
         }
         var widget = layoutEditor.Widget.create(json, editor.getLayout());
         editor.getLayout().addWidget(widget);

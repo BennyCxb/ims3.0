@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     var MTRCTRL = require("pages/channel/mtrCtrl");
     var LAYOUTEDIT = require("pages/layout/edit");
     var nDisplayItems = 10;
-
+    var mtrTypeId;
 
     exports.init = function () {
         //关闭窗口
@@ -15,7 +15,7 @@ define(function (require, exports, module) {
         //搜索
         $("#mtrChoiseSearch").keyup(function (event) {
             if (event.keyCode == 13) {
-                var typeId = $("#mtrChoiseSearch").attr("typeId");
+                // var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
                 onSearch(event);
             }
         });
@@ -23,8 +23,8 @@ define(function (require, exports, module) {
 
         //下拉框点击事件
         $("#mtr_typeChiose").change(function () {
-            var typeId = $("#mtr_typeChiose").val();
-            loadPage(1, Number(typeId));
+            mtrTypeId = $("#mtr_typeChiose").val();
+            loadPage(1, Number(mtrTypeId));
         })
 
         //全选和全不选
@@ -57,7 +57,6 @@ define(function (require, exports, module) {
         //保存
         $("#amtr_add").click(function () {
             if ($("#mtr_addMtr").attr("is_choisebg") == "1") { //添加背景图
-
                 var mtrId = $("input:checkbox[class='amtr_cb']:checked").attr("mtrid");
                 var url = $("input:checkbox[class='amtr_cb']:checked").parent().parent().next().find("a").attr("url");
                 var datype = $("input:checkbox[class='amtr_cb']:checked").parent().parent().next().find("a").attr("datype");
@@ -80,7 +79,7 @@ define(function (require, exports, module) {
         // loading
         $("#mtr_choiseTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         //判断是否是视频控件选择列表
-        if ($("#mtr_addMtr").attr("typeid") == "1") {
+        if ($("#mtr_addMtr").attr("mtrTypeId") == "1") {
             if (type == 1) {
                 $("#dp_action").html("视频");
             } else if (type == 2) {
@@ -101,32 +100,37 @@ define(function (require, exports, module) {
                 mtrType = "Video";
                 $("#mtr_choiseTitle").html("视频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索视频");
-                $("#mtrChoiseSearch").attr("typeId", "1");
+                mtrTypeId = 1;
                 break;
             case 2:
                 mtrType = "Image";
                 $("#mtrChoiseSearch").attr("placeholder", "搜索图片");
-                $("#mtrChoiseSearch").attr("typeId", "2");
+                mtrTypeId = 2;
                 break;
             case 3:
                 mtrType = "Audio";
                 $("#mtr_choiseTitle").html("音频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索音频");
-                $("#mtrChoiseSearch").attr("typeId", "3");
+                mtrTypeId = 3;
                 break;
             case 4:
                 mtrType = "WebText";
                 $("#mtr_choiseTitle").html("文本控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索文本");
-                $("#mtrChoiseSearch").attr("typeId", "4");
+                mtrTypeId = 4;
                 break;
             case 5:
                 mtrType = "Live";
                 $("#mtr_choiseTitle").html("视频控件资源选择列表");
                 $("#mtrChoiseSearch").attr("placeholder", "搜索直播");
-                $("#mtrChoiseSearch").attr("typeId", "5");
+                mtrTypeId = 5;
                 break;
-            case 2:
+            case 7:
+                mtrType = "Office";
+                $("#mtr_choiseTitle").html("Office控件资源选择列表");
+                $("#mtrChoiseSearch").attr("placeholder", "搜索Office/PDF");
+                mtrTypeId = 7;
+                break;
         }
         var checkSwitch = UTIL.getLocalParameter('config_checkSwitch');
         if (checkSwitch == 1) {
@@ -134,7 +138,13 @@ define(function (require, exports, module) {
         } else {
             var status = "";
         }
-
+        if (type == 7) {
+            var action = "getlist";
+            var url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction';
+        } else {
+            var action = "GetPage";
+            var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+        }
         var pager = {
             page: String(pageNum),
             total: '0',
@@ -145,14 +155,12 @@ define(function (require, exports, module) {
             status: status
         };
         var data = JSON.stringify({
-            action: 'GetPage',
+            action: action,
             project_name: CONFIG.projectName,
             material_type: mtrType,
             Pager: pager
         });
-        var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
         UTIL.ajax('post', url, data, add);
-
     }
 
     //将数据添加到列表
@@ -173,8 +181,8 @@ define(function (require, exports, module) {
             onPageChange: function (num, type) {
                 if (type == 'change') {
                     $('#materials-table-pager').jqPaginator('destroy');
-                    var typeId = $("#mtrChoiseSearch").attr("typeid");
-                    loadPage(num, Number(typeId));
+                    var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
+                    loadPage(num, Number(mtrTypeId));
                 }
             }
         });
@@ -207,7 +215,7 @@ define(function (require, exports, module) {
                         '</tr>';
                     $("#mtr_choiseTable tbody").append(mtrtr);
                 }
-                if (material_type == "文本" || material_type == "Live" || material_type == "Image") {		//文本和直播图片无时长
+                if (material_type == "文本" || material_type == "Live" || material_type == "Image" || material_type == "Office") {		//文本和直播图片无时长
                     $(".mtr_time").empty();
                 }
             }
@@ -225,13 +233,14 @@ define(function (require, exports, module) {
             $(this).click(function(){
                 var z_index = parseInt($(this).parents("tr").index())-1;
                 if (mtrData[z_index].Type_Name != "文本") {
-                    var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                     if (mtrData[z_index].Type_Name == "Video") {
+                        var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
                             alert("当前视频格式暂不支持预览！");
                             return;
                         }
                     } else if (mtrData[z_index].Type_Name == "Audio") {
+                        var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
                             alert("当前音频格式暂不支持试听！");
                             return;
@@ -284,12 +293,12 @@ define(function (require, exports, module) {
 
     //搜索事件
     function onSearch(event) {
-        var typeId = $("#mtrChoiseSearch").attr("typeId");
+        // var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
         last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
         setTimeout(function () {          //设时延迟0.5s执行
             if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
             {
-                loadPage(1, Number(typeId));
+                loadPage(1, Number(mtrTypeId));
             }
         }, 500);
     }

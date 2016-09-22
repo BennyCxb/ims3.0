@@ -167,6 +167,12 @@ define(function (require, exports, module) {
                     $("#mtrCtrl_Table").hide();
                     $("#box_weather").show();
                     break;
+                case 'OfficeBox':
+                    $("#mtrCtrl_Title").html("Office控件");
+                    $("#box_tableHeader").show();
+                    $("#box_officeEffect").show();
+                    $("#mtr_addMtr").attr("typeId", "7");
+                    break;
             }
             //控件颜色
             var widgetColor;
@@ -249,7 +255,6 @@ define(function (require, exports, module) {
         switch (widgetType) {
             case 'VideoBox':
                 if (wOsp.Type != undefined) {
-
                     playTypeSave();
                 }
                 break;
@@ -350,6 +355,18 @@ define(function (require, exports, module) {
                 }
                 weatherSave();
                 break;
+            case 'OfficeBox':
+                if (widgetData.style != "") {
+                    var wStyle = JSON.parse(widgetData.style);
+                    $("#mtrC_office_type").val(wStyle.Type);
+                    $("#mtrC_office_switchAnimation").val(wStyle.SwitchAnimation);
+                    $("#mtrC_office_switchPeriod").val(wStyle.SwitchPeriod);
+                }
+                if (wOsp.Type != undefined) {
+                    playTypeSave();
+                }
+                officeSave();
+                break;
         }
 
         $("#widget_attribute").empty();
@@ -379,23 +396,26 @@ define(function (require, exports, module) {
         if (mtrData.length != 0) {
             if (getWidgetMtr == true) {     //获取
                 for (var x = 0; x < mtrData.length; x++) {
-                    var mtrTypeclass;
+                    var mtrTypeClass;
                     switch (mtrData[x].type_id) {
                         case 1:
                             if (mtrData[x].type_name == "视频") {
-                                mtrTypeclass = "fa fa-file-video-o";
+                                mtrTypeClass = "fa fa-file-video-o";
                             } else {
-                                mtrTypeclass = "fa fa-file-o";
+                                mtrTypeClass = "fa fa-file-o";
                             }
                             break;
                         case 2:
-                            mtrTypeclass = "fa fa-file-image-o";
+                            mtrTypeClass = "fa fa-file-image-o";
                             break;
                         case 3:
-                            mtrTypeclass = "fa fa-file-audio-o";
+                            mtrTypeClass = "fa fa-file-audio-o";
                             break;
                         case 4:
-                            mtrTypeclass = "fa fa-file-text-o";
+                            mtrTypeClass = "fa fa-file-text-o";
+                            break;
+                        case 5:
+                            mtrTypeClass = "fa fa-file-word-o";
                             break;
                     }
                     var schedule_params = JSON.parse(mtrData[x].schedule_params) === '' ? {} : JSON.parse(mtrData[x].schedule_params);
@@ -410,16 +430,16 @@ define(function (require, exports, module) {
                     var mtrCtrl_name_tr,
                         mtrCtrl_duration_tr;
                     if (mtrData[x].type_name == "文本" || mtrData[x].type_name == "直播") {		    //文本和直播无预览效果
-                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name;
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].name;
                         mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + '></td>'
                     } else {
-                        if (mtrData[x].type_name == "视频" || mtrData[x].type_name == "音频") {     //视频和音频无法修改时长
+                        if (mtrData[x].type_name == "视频" || mtrData[x].type_name == "音频" || mtrData[x].type_name == "Office") {     //视频和音频无法修改时长
                             mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + ' disabled></td>'
                         } else {
                             mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" value=' + duration + '></td>'
                         }
                         var mtrUrl = UTIL.getRealURL(mtrData[x].download_auth_type, mtrData[x].url);
-                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
+                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].name + '</a>';
                     }
                     if (JSON.parse(mtrData[x].schedule_params).count != undefined) {
                         var dbcount = JSON.parse(mtrData[x].schedule_params).count;
@@ -448,28 +468,32 @@ define(function (require, exports, module) {
                     var maxsequence = 0;
                 }
                 for (var x = 0; x < mtrData.length; x++) {
-                    var mtrTypeclass,
+                    var mtrTypeClass,
                         dbTypeName;
                     switch (mtrData[x].Type_Name) {
                         case "Video":
                             dbTypeName = "视频";
-                            mtrTypeclass = "fa fa-file-video-o";
+                            mtrTypeClass = "fa fa-file-video-o";
                             break;
                         case "Live":
                             dbTypeName = "直播";
-                            mtrTypeclass = "fa fa-file-o";
+                            mtrTypeClass = "fa fa-file-o";
                             break;
                         case "Image":
                             dbTypeName = "图片";
-                            mtrTypeclass = "fa fa-file-image-o";
+                            mtrTypeClass = "fa fa-file-image-o";
                             break;
                         case "Audio":
                             dbTypeName = "音频";
-                            mtrTypeclass = "fa fa-file-audio-o";
+                            mtrTypeClass = "fa fa-file-audio-o";
                             break;
                         case "文本":
                             dbTypeName = "文本";
-                            mtrTypeclass = "fa fa-file-text-o";
+                            mtrTypeClass = "fa fa-file-text-o";
+                            break;
+                        case "Office":
+                            dbTypeName = "Office";
+                            mtrTypeClass = "fa fa-file-word-o";
                             break;
                     }
                     if (mtrData[x].Duration == undefined) {
@@ -491,6 +515,7 @@ define(function (require, exports, module) {
                         maxsequence++;
                     }
                     var dbtype_id = typeof mtrData[x].Type_ID === 'number' ? mtrData[x].Type_ID : {
+                        'Office' : 5,
                         '文本': 4,
                         '音频': 3,
                         '图片': 2,
@@ -519,10 +544,10 @@ define(function (require, exports, module) {
                     //拼接
                     var mtrCtrl_name_tr,
                         mtrCtrl_duration_tr;
-                    if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image") {       //视频、音乐、图片
+                    if ((mtrData[x].Type_Name == "Video" && mtrData[x].Is_Live == 0) || mtrData[x].Type_Name == "Audio" || mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "Office") {       //视频、音乐、图片、Office
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL)         //获取真实url
-                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
-                        if (mtrData[x].Type_Name == "Image") {                     //图片
+                        mtrCtrl_name_tr = '<a url=' + mtrUrl + ' target="_blank"><i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name + '</a>';
+                        if (mtrData[x].Type_Name == "Image" || mtrData[x].Type_Name == "Office") {                     //图片、Office
                             var trDuration = "00:00:15";
                             mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
                         } else {
@@ -530,11 +555,11 @@ define(function (require, exports, module) {
                             mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + ' disabled></td>'
                         }
                     } else if (mtrData[x].Type_Name == "文本") {                  //文本
-                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "00:00:15";
                         mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
                     } else if (mtrData[x].Type_Name == "Live") {        //直播资源
-                        mtrCtrl_name_tr = '<i class="' + mtrTypeclass + '"></i>&nbsp;' + mtrData[x].Name;
+                        mtrCtrl_name_tr = '<i class="' + mtrTypeClass + '"></i>&nbsp;' + mtrData[x].Name;
                         var trDuration = "01:00:00";
                         mtrCtrl_duration_tr = '<td class="mtrCtrl_duration"><input type="text" class="mtrCtrl_time" step="1" value=' + trDuration + '></td>'
                     }
@@ -553,11 +578,12 @@ define(function (require, exports, module) {
             $(".mtrCtrl_time").inputmask("hh:mm:ss", {"placeholder": "hh:mm:ss"});
 
             //预览操作
-            $(".mtrCtrl_name a").each(function () {
-                $(this).click(function () {
+            // $(".mtrCtrl_name a").each(function () {
+                $(".mtrCtrl_name a").click(function () {
                     var mtrData = DB.collection("material").select({widget_id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+                    var z_index;
                     for (var a = 0; a < mtrData.length; a++) {
-                        if (mtrData[a].url == $(this).attr("url")) {
+                        if (mtrData[a].resource_id == $(this).parents("tr").attr("mtrid")) {
                             z_index = a;
                         }
                     }
@@ -578,7 +604,7 @@ define(function (require, exports, module) {
                     var page = "resources/pages/materials/materials_preview.html";
                     UTIL.cover.load(page, 3);
                 });
-            });
+            // });
 
 
             //显示或隐藏次数
@@ -670,6 +696,19 @@ define(function (require, exports, module) {
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
             playTypeSave();
+        })
+
+        //office显示类型
+        $("#mtrC_office_type").change(function () {
+            officeSave();
+        })
+        //office切换动画
+        $("#mtrC_office_switchAnimation").change(function () {
+            officeSave();
+        })
+        //office切换间隔
+        $("#mtrC_office_switchPeriod").change(function () {
+            officeSave();
         })
     }
 
@@ -785,6 +824,17 @@ define(function (require, exports, module) {
             Type: $("input:radio:checked").attr("weathertype"),
             SwitchPeriod: Number($("#weatherFlip_time").val()),
             TextColor: $("#weatherText_color").val()
+        }
+        DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
+    }
+
+    //Office数据加入缓存
+    function officeSave() {
+        if (!inputCheck()) return;
+        var wstyle = {
+            Type : $("#mtrC_office_type").val(),
+            SwitchPeriod  : Number($("#mtrC_office_switchPeriod").val()),
+            SwitchAnimation  : $("#mtrC_office_switchAnimation").val()
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }

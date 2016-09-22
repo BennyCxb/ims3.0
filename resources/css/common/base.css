@@ -215,17 +215,6 @@ a {
     top: 0px;
 }
 
-/*预览层*/
-#cover_area_preview {
-    z-index: 2010;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    top: 0px;
-}
-
 /*终端列表页面*/
 #term_list small {
     display: inline-block;
@@ -342,6 +331,55 @@ a {
 }
 
 /*资源预览页面*/
+#cover_area_preview {
+    z-index: 2010;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    top: 0px;
+}
+
+#mtrPrevieBg {
+    width: 100%;
+    height: 100%;
+}
+
+.mtrView {
+    max-height: 100%;
+}
+
+.mtrView > .mtrView-page {
+    position: absolute;
+    width: 200px;
+    bottom: 10px;
+    text-align: center;
+    margin-left: -100px;
+    left: 50%;
+    border-radius: 3px;
+    font-size: 18px;
+    padding: 5px;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+}
+
+#mtrView_officeArea .carousel-caption {
+    padding: 0px;
+}
+
+#currentPage {
+    width: 100px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 3px;
+}
+
+.mtrView > .carousel-control > .fa {
+    font-size: 100px;
+    margin-top: -50px;
+}
+
 #mtrView_videoArea {
     display: none;
     position: absolute;
@@ -375,6 +413,34 @@ a {
     margin-left: -500px;
 }
 
+#mtrView_officeArea {
+    display: none;
+    position: absolute;
+    width: 1000px;
+    height: 600px;
+    left: 50%;
+    top: 50%;
+    margin-top: -300px;
+    margin-left: -500px;
+}
+
+#mtrView_officeArea > .carousel.slide {
+    height: 100%;
+}
+
+#mtrView_officeArea > .carousel.slide > .carousel-inner {
+    height: 100%;
+}
+
+#mtrView_officeArea > .carousel.slide > .carousel-inner > .item {
+    height: 100%;
+    text-align: -webkit-center;
+}
+
+#mtrView_officeArea > .carousel.slide > .carousel-inner > .item > img {
+    height: 100%;
+}
+
 .mtrView_close {
     position: absolute;
     right: 0;
@@ -389,7 +455,9 @@ a {
     color: #FFFFFF;
     font-size: 14px;
     font-weight: 600;
+    z-index: 999;
 }
+
 /*文本编辑页面*/
 .Tmtr-text-type {
     margin: 0px 10px;
@@ -424,7 +492,7 @@ a {
     width: 100px;
 }
 
-#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect, #mtrC_bgFlip {
+#box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect, #mtrC_bgFlip, #box_officeEffect {
     display: none;
 }
 
