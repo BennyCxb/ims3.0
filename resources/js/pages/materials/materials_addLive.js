@@ -3,7 +3,6 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
 
-
     exports.init = function () {
         loadPage();
     }
@@ -13,7 +12,6 @@ define(function (require, exports, module) {
         $(".CA_close").click(function () {
             close();
         });
-
 
         if ($("#mtr_edit").attr("edit_type") == "直播") {			//修改
             $("#mtr_alTitle").html("编辑直播源");
@@ -51,13 +49,17 @@ define(function (require, exports, module) {
         }
     }
 
-    //关闭窗口
+    /**
+     * 关闭窗口
+     */
     function close() {
         $("#cover_area").html("");
         $("#cover_area").css("display", "none");
     }
 
-    //获取当前时间
+    /**
+     * 获取当前时间
+     **/
     function getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";
@@ -138,7 +140,7 @@ define(function (require, exports, module) {
             var url = CONFIG.serverRoot + '/backend_mgt/v1/materials/' + mtrId;
             UTIL.ajax('post', url, data, function (msg) {
                 if (msg.rescode == 200) {
-                    var pageNum = $("#materials-table-pager li.active").find("a").text();
+                    var pageNum = MTR.mtrList().pageNum;
                     MTR.loadPage(pageNum, "Live");
                     close();
                     alert("修改成功");
@@ -151,7 +153,9 @@ define(function (require, exports, module) {
 
     }
 
-    //检测文本框事件
+    /**
+     * 检测文本框事件
+     */
     function inputCheck() {
         var errormsg = "";
         if ($("#ULmtr_name").val() == "") {

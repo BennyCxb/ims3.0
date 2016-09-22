@@ -28,8 +28,7 @@ define(function (require, exports, module) {
             var url = CONFIG.serverRoot + '/backend_mgt/v1/materials/' + mtrId;
             UTIL.ajax('post', url, data, function(msg){
                 if(msg.rescode == 200){
-                    var pageNum = MTR.mtrList()
-                    MTR.loadPage(1, Number(typeId));
+                    MTR.loadPage(MTR.mtrList().pageNum, MTR.mtrList().mtrType);
                     close();
                 	alert("修改成功");
                 }else{

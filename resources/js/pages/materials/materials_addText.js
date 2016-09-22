@@ -3,6 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var _mtrId,
         mtrTextType = "0";
+
     exports.init = function () {
         var DispClose = false;
         $(window).bind('beforeunload', function () {
@@ -107,7 +108,9 @@ define(function (require, exports, module) {
 
     }
 
-    //返回
+    /**
+     * 返回
+     */
     function backList() {
         var editor = CKEDITOR.instances['editor1'];
         if (editor) {
@@ -236,7 +239,9 @@ define(function (require, exports, module) {
         })
     }
 
-    //检测文本框事件
+    /**
+     * 检测文本框事件
+     */
     function inputCheck() {
         var errormsg = "";
         if ($("#Tmtr_name").val() == "") {
