@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     exports.init = function () {
         checkCheck();
         bind();
-        exports.loadPage(1, "Video"); //加载默认页面
+        exports.loadPage(_pageNum, mtrType == undefined ? "Video" : mtrType ); //加载默认页面
     }
 
     // 加载页面数据
@@ -28,6 +28,12 @@ define(function (require, exports, module) {
         if (pageNum != undefined) {
             _pageNum = pageNum;
         }
+        $("#mtrChoise li").removeClass('active');
+        $("#mtrChoise li").each(function () {
+            if ($(this).attr("typename") == typeName) {
+                $(this).addClass("active");
+            }
+        })
         mtrType = typeName;
         switch (typeName) {
             case "Video":
@@ -248,32 +254,26 @@ define(function (require, exports, module) {
         })
         //加载视频列表
         $('#mtrVideo').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "Video");
         })
         //加载图片列表
         $('#mtrImage').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "Image");
         })
         //加载音频列表
         $('#mtrAudio').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "Audio");
         })
         //加载文本列表
         $('#mtrText').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "WebText");
         })
         //加载直播列表
         $('#mtrLive').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "Live");
         })
         //加载Office列表
         $('#mtrOffice').click(function () {
-            mtrChoise($(this));
             exports.loadPage(1, "Office");
         })
 
