@@ -352,6 +352,8 @@ define(function (require, exports, module) {
                 for (var x = 0; x < $(".mtr_cb").length; x++) {
                     if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
                         mtrHref = $(".mtr_cb:eq(" + x + ")").parents("td").next().find("a").attr("href");
+
+
                     }
                 }
                 location.hash = mtrHref;

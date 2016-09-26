@@ -159,11 +159,7 @@ define(function (require, exports, module) {
         var formData, startDate;
         formData = new FormData();
         if (uploadQiniu == "0") {                 //普通上传
-            if (["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(f.name.substring(f.name.lastIndexOf('.') + 1)) > -1) {
-                xhr.open('POST', CONFIG.serverRoot + "/backend_mgt/v2/office/", true);
-            } else {
-                xhr.open('POST', CONFIG.Resource_UploadURL, true);
-            }
+            xhr.open('POST', CONFIG.Resource_UploadURL, true);
         } else if (uploadQiniu == "1") {          //七牛上传
             var strS = f.name.split(".");
             var subS = strS[strS.length - 1];
@@ -212,7 +208,7 @@ define(function (require, exports, module) {
                 var fileName = f.name;
             } catch (e) {
             }
-            if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText != "" && ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(fileName.substring(fileName.lastIndexOf('.') + 1)) == -1) {
+            if (xhr.readyState == 4 && xhr.status == 200 && JSON.parse(xhr.response).rescode == 201) {
                 var blkRet = JSON.parse(xhr.responseText);
                 var duration,
                     downloadAuthType,
@@ -254,30 +250,7 @@ define(function (require, exports, module) {
                 var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
                 UTIL.ajax('post', url, data, function (data) {
                     if (parseInt(data.rescode) == 200) {
-                        $("#upl_tr_" + num).attr("status", "end");
-                        $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
-                        $("#upl_speed_" + num).html("");
-                        $("#upl_status_" + num).html("上传成功");
-                        _upl_list[num].status = "end";
-                        var status = "uploading";
-                        //判断是否全部上传完毕
-                        for (var b = 0, c = 0; b < _upl_list.length; b++) {
-                            if (_upl_list[b].status == "end") {
-                                c++;
-                                if (c == _upl_list.length) {
-                                    status = "end";
-                                    //解除绑定
-                                    $(window).unbind('beforeunload');
-                                }
-                            }
-                        }
-                        if (status == "end") {
-                            $("#box_fileList").attr("status", "end");
-                            var typeId = $("#mtrChoise li.active").attr("typeid");
-                            if (typeId == "1" || typeId == "2" || typeId == "3") {
-                                MTR.loadPage(1, Number(typeId));
-                            }
-                        }
+                        uploadSuccess(num);
                     } else {
                         $("#upl_tr_" + num).prop("status", "end");
                         $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
@@ -285,13 +258,8 @@ define(function (require, exports, module) {
                         _upl_list[num].status = 'end';
                     }
                 });
-            } else if (xhr.readyState == 4 && xhr.status == 200 && ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"].indexOf(fileName.substring(fileName.lastIndexOf('.') + 1)) > -1) {
-                if (JSON.parse(xhr.response).rescode == 200) {
-                    $("#upl_tr_" + num).attr("status", "end");
-                    $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
-                    $("#upl_speed_" + num).html("");
-                    $("#upl_status_" + num).html("上传成功");
-                }
+            } else if (xhr.readyState == 4 && xhr.status == 200 && JSON.parse(xhr.response).rescode == 200) {
+                uploadSuccess(num);
             } else if (xhr.status != 200 && xhr.responseText) {
                 $("#upl_tr_" + num).prop("status", "end");
                 $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
@@ -302,7 +270,39 @@ define(function (require, exports, module) {
         xhr.send(formData);
     };
 
-    //获取当前时间
+    /**
+     * 上传成功
+     * @num {string}
+     */
+    function uploadSuccess(num) {
+        $("#upl_tr_" + num).attr("status", "end");
+        $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
+        $("#upl_speed_" + num).html("");
+        $("#upl_status_" + num).html("上传成功");
+        _upl_list[num].status = "end";
+        var status = "uploading";
+        //判断是否全部上传完毕
+        for (var b = 0, c = 0; b < _upl_list.length; b++) {
+            if (_upl_list[b].status == "end") {
+                c++;
+                if (c == _upl_list.length) {
+                    status = "end";
+                    //解除绑定
+                    $(window).unbind('beforeunload');
+                }
+            }
+        }
+        if (status == "end") {
+            $("#box_fileList").attr("status", "end");
+            var mtrType = MTR.mtrList().mtrType;
+            MTR.loadPage(1, mtrType);
+        }
+    }
+
+    /**
+     * 获取当前时间
+     * @returns {string}
+     */
     function getNowFormatDate() {
         var date = new Date();
         var seperator1 = "-";

@@ -364,6 +364,8 @@ define(function (require, exports, module) {
                     $("#mtrC_office_type").val(wStyle.Type);
                     $("#mtrC_office_switchAnimation").val(wStyle.SwitchAnimation);
                     $("#mtrC_office_switchPeriod").val(wStyle.SwitchPeriod);
+                } else {
+                    $("#mtrC_office_switchPeriod").val(10);
                 }
                 if (wOsp.Type != undefined) {
                     playTypeSave();
