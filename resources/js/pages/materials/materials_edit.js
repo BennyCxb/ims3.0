@@ -5,13 +5,9 @@ define(function (require, exports, module) {
 
 
     exports.init = function () {
-        var mtrId;
-        for (var x = 0; x < $(".mtr_cb").length; x++) {
-            if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
-                mtrId = $(".mtr_cb:eq(" + x + ")").attr("mtrID");
-            }
-        }
-        loadPage(mtrId);
+        var mtrId = $("input[type=checkbox]:checked").attr("mtrID");
+        $("#Emtr_name").focus();
+        loadPage();
 
         //保存
         $("#Emtr_updata").click(function () {
@@ -56,7 +52,7 @@ define(function (require, exports, module) {
         })
     }
 
-    function loadPage(mtrId) {
+    function loadPage() {
         //关闭窗口
         $(".CA_close").click(function () {
             close();
