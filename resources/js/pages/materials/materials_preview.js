@@ -103,6 +103,7 @@ define(function (require, exports, module) {
                         + "<img src='" + zdata[i] + "' alt='" + (i + 1) + "'>"
                         + "<div class='carousel-caption'><div id='currentPage'>" + (i + 1) + "&nbsp;/&nbsp;" + totalPage +"</div></div>"
                         + "</div>")
+                    loadImage(zdata[i], function() {});
                     if (i == 0) {
                         $(".item:eq(0)").addClass("active");
                     }
@@ -113,4 +114,23 @@ define(function (require, exports, module) {
             });
         }
     }
+
+    /**
+     * 图片预加载
+     * @param url
+     * @param callback
+     */
+    function loadImage(url, callback) {
+        var img = new Image(); //创建一个Image对象，实现图片的预下载
+        img.src = url;
+
+        if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数
+            callback.call(img);
+            return; // 直接返回，不用再处理onload事件
+        }
+
+        img.onload = function () { //图片下载完毕时异步调用callback函数。
+            callback.call(img);//将回调函数的this替换为Image对象
+        };
+    };
 })

@@ -54,15 +54,17 @@ define(function (require, exports, module) {
                             _upl_list[i].xhr.abort();
                         }
                     }
-                    closeUpl_list();	//关闭上传窗口
+                    closeUpl_list();
                 }
             } else {
-                closeUpl_list();	//关闭上传窗口
+                closeUpl_list();
             }
         });
     }
 
-    //给上传列表添加信息
+    /**
+     * 给上传列表添加信息
+     */
     exports.beginUpload = function () {
         if ($("#file")[0].files.length > 0) {
             var trLeng = $("#Tbe_filesList tr").length - 1;
@@ -101,7 +103,9 @@ define(function (require, exports, module) {
         }
     }
 
-    //关闭上传窗口
+    /**
+     * 关闭上传窗口
+     */
     function closeUpl_list() {
         status = "";
         $("#page_upload").html("");
@@ -111,13 +115,19 @@ define(function (require, exports, module) {
         _upl_list.splice(0, _upl_list.length); //清空_upl_list
     }
 
-    //定义upl_file
+    /**
+     * 定义upl_file
+     * @param xhr
+     * @param status
+     */
     function upl_file(xhr, status) {
         this.xhr = xhr;
         this.status = status;
     }
 
-    //上传模块
+    /**
+     * 上传模块
+     */
     function upload() {
         $("#dpUpl").css("display", "block");
         if (uploadQiniu == "1") {
@@ -153,7 +163,12 @@ define(function (require, exports, module) {
         }
     }
 
-    // 上传
+    /**
+     * 开始上传
+     * @param f
+     * @param num
+     * @constructor
+     */
     function Qiniu_upload(f, num) {
         var xhr = new XMLHttpRequest();
         var formData, startDate;
