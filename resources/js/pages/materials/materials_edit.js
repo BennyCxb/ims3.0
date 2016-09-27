@@ -69,8 +69,6 @@ define(function (require, exports, module) {
      */
     function close() {
         UTIL.cover.close();
-        // $("#cover_area").html("");
-        // $("#cover_area").css("display", "none");
     }
 
     /**
