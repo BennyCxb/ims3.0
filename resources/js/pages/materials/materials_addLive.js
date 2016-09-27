@@ -53,8 +53,7 @@ define(function (require, exports, module) {
      * 关闭窗口
      */
     function close() {
-        $("#cover_area").html("");
-        $("#cover_area").css("display", "none");
+        UTIL.cover.close();
     }
 
     /**
