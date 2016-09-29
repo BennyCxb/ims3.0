@@ -214,8 +214,12 @@ define(function (require, exports, module) {
                     if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                         setUserConfig_check();
                     }
+                } else if (data.rescode === '401' && data.errInfo == "Token Unauthorized!"){
+                    alert("登录验证过期，请重新登录！");
+                    window.location.href = "login.html";
                 } else {
-                    console.log('获取审核权限开关失败');
+                    alert("请重新登录！");
+                    window.location.href = "login.html";
                 }
             }
         )
