@@ -1146,3 +1146,13 @@ a {
 .duration-input-hidden {
     display: none;
 }
+
+/* 终端配置 */
+.CO-sync-label {
+    float: left;
+}
+
+#CO-syncArea > .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}

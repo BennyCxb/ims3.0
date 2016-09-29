@@ -192,7 +192,9 @@ define(function (require, exports, module) {
         var xh = new upl_file(xhr);
         _upl_list.push(xh);
 
-        //上传FTP
+        /**
+         * 上传进度条
+         */
         xhr.upload.addEventListener("progress", function (evt) {
             if (evt.lengthComputable) {
                 var nowDate = new Date().getTime();
@@ -211,13 +213,20 @@ define(function (require, exports, module) {
                 $("#upl_tr_" + num).attr("status", "uploading");
                 $("#progressbar_" + num).css("width", percentComplete + "%");
                 $("#upl_speed_" + num).html(formatSpeed);
+                if (percentComplete == 100) {
+                    $("#upl_speed_" + num).html("");
+                    $("#upl_status_" + num).html("转换中…");
+                }
                 if (num <= _upl_list.length) {
                     _upl_list[num].status = 'uploading';
                 }
             }
         }, false);
 
-        //入库
+        /**
+         * 上传状态改变
+         * @param response
+         */
         xhr.onreadystatechange = function (response) {
             try {
                 var fileName = f.name;
@@ -269,6 +278,7 @@ define(function (require, exports, module) {
                     } else {
                         $("#upl_tr_" + num).prop("status", "end");
                         $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
+                        $("#upl_speed_" + num).html("");
                         $("#upl_status_" + num).html("上传失败");
                         _upl_list[num].status = 'end';
                     }
@@ -278,6 +288,7 @@ define(function (require, exports, module) {
             } else if (xhr.status != 200 && xhr.responseText) {
                 $("#upl_tr_" + num).prop("status", "end");
                 $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
+                $("#upl_speed_" + num).html("");
                 $("#upl_status_" + num).html("上传失败");
             }
         };

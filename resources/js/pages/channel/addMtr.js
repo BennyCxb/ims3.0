@@ -181,7 +181,6 @@ define(function (require, exports, module) {
             onPageChange: function (num, type) {
                 if (type == 'change') {
                     $('#materials-table-pager').jqPaginator('destroy');
-                    var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
                     loadPage(num, Number(mtrTypeId));
                 }
             }

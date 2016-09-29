@@ -149,7 +149,12 @@ define(function (require, exports, module) {
                 outputMode = ($("#CO-outputMode").bootstrapSwitch('state')) ? 1 : 0,
                 outputMode_mode = $("#CO-outputMode-mode").val(),
                 remoteADB = ($("#CO-remoteADB").bootstrapSwitch('state')) ? 1 : 0,
-                debug = ($("#CO-debug").bootstrapSwitch('state')) ? 1 : 0;
+                debug = ($("#CO-debug").bootstrapSwitch('state')) ? 1 : 0,
+                sync = ($("#CO-sync").bootstrapSwitch('state')) ? 1 : 0,
+                syncSetID = $('#CO-sync-setID').val(),
+                syncMulticastIP = $('#CO-sync-multicastIP').val(),
+                syncMulticastPort = Number($('#CO-sync-multicastPort').val()),
+                syncSwitchTimeout = Number($('#CO-sync-switchTimeout').val());
 
             $('#CO-workWeekRepeat input[type="checkbox"]').each(function (i, e) {
                 if ($(e)[0].checked) {
@@ -327,6 +332,33 @@ define(function (require, exports, module) {
                 restartTimer = JSON.stringify(restartTimer);
             }
 
+            //同步ID
+            if (syncSetID === '') {
+                alert('请输入终端同步ID');
+                $('#CO-sync-setID').focus();
+                return;
+            }
+            var reSpaceCheck = /^(\d+)\-(\d+)$/;
+            if (!reSpaceCheck.test(syncSetID)) {
+                alert("同步ID格式输入不正确，请重新输入");
+                $('#CO-sync-setID').focus();
+                return false;
+            }
+
+            //同步组播IP
+            if (syncMulticastIP === '') {
+                alert('请输入同步组播IP地址');
+                $('#CO-sync-multicastIP').focus();
+                return;
+            }
+            var reSpaceCheck = /^([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])$/;
+            if (reSpaceCheck.test(syncMulticastIP)) {
+            } else {
+                alert("同步组播IP地址输入不正确，请重新输入");
+                $('#CO-sync-multicastIP').focus();
+                return false;
+            }
+
             // 保存
             if (termName !== exports.termName) {
                 saveTermInfo();
@@ -356,53 +388,60 @@ define(function (require, exports, module) {
                 )
             }
 
-      function saveTermConfig(){
+            function saveTermConfig() {
 
-        var data = {
-          "project_name": CONFIG.projectName,
-          "action": "changeConfig",
-          "ID": exports.termID,
-          "config": {
-              "DownloadSeqments": downloadSeqments,
-              "WorkSeqments": workSeqments,
-              "UpgradeURL": upgradeURL,
-              "Volume": vol,
-              "HeartBeat_Period": _heartBeatPeriod,
-              "CityIDs": cityIDs,
-              "MainServer": _mainServer,
-              "RestartTimer": restartTimer,
-              "ProgramSync": _programSync,
-              "LogURL": logURL,
-              "RemoteADB": remoteADB,
-              "Debug": debug,
-              "Rotate": JSON.stringify({
-                  on: rotate,
-                  type: rotateType,
-                  degree: rotateDegree
-              }),
-              "OutputMode": JSON.stringify({
-                  on: outputMode,
-                  mode: outputMode_mode
-              })
-          }
-        }
+                var data = {
+                    "project_name": CONFIG.projectName,
+                    "action": "changeConfig",
+                    "ID": exports.termID,
+                    "config": {
+                        "DownloadSeqments": downloadSeqments,
+                        "WorkSeqments": workSeqments,
+                        "UpgradeURL": upgradeURL,
+                        "Volume": vol,
+                        "HeartBeat_Period": _heartBeatPeriod,
+                        "CityIDs": cityIDs,
+                        "MainServer": _mainServer,
+                        "RestartTimer": restartTimer,
+                        "ProgramSync": _programSync,
+                        "LogURL": logURL,
+                        "RemoteADB": remoteADB,
+                        "Debug": debug,
+                        "Rotate": JSON.stringify({
+                            on: rotate,
+                            type: rotateType,
+                            degree: rotateDegree
+                        }),
+                        "OutputMode": JSON.stringify({
+                            on: outputMode,
+                            mode: outputMode_mode
+                        }),
+                        "ProgramSync": JSON.stringify({
+                            on: sync,
+                            SyncSetID: syncSetID,
+                            SyncMulticastIP: syncMulticastIP,
+                            SyncMulticastPort: syncMulticastPort,
+                            SyncSwitchTimeout: syncSwitchTimeout
+                        })
+                    }
+                }
 
-        UTIL.ajax('POST',
-          CONFIG.serverRoot + '/backend_mgt/v2/term',
-          JSON.stringify(data),
-          function(data){
-            if(data.rescode === '200'){
-              alert('保存成功');
-              require(exports.requireJS).loadTermList();
-              UTIL.cover.close();
-            }else{
-              alert('保存终端配置失败' + data.errInfo);
+                UTIL.ajax('POST',
+                    CONFIG.serverRoot + '/backend_mgt/v2/term',
+                    JSON.stringify(data),
+                    function (data) {
+                        if (data.rescode === '200') {
+                            alert('保存成功');
+                            require(exports.requireJS).loadTermList();
+                            UTIL.cover.close();
+                        } else {
+                            alert('保存终端配置失败' + data.errInfo);
+                        }
+                    }
+                )
             }
-          }
-        )
-      }
-    })
-  }
+        })
+    }
 
     function inputInit() {
 
@@ -416,7 +455,19 @@ define(function (require, exports, module) {
         $("#CO-outputMode").bootstrapSwitch();
         $("#CO-remoteADB").bootstrapSwitch();
         $("#CO-debug").bootstrapSwitch();
+        $("#CO-sync").bootstrapSwitch();
         $("#CO-restartSwitch, #CO-rotate, #CO-outputMode").parent().parent().css("float", "left");
+
+        $("#CO-sync-multicastPort").change(function () {
+            if ($("#CO-sync-multicastPort").val() <= 1024) {
+                $("#CO-sync-multicastPort").val(1025);
+            }
+        })
+        $("#CO-sync-switchTimeout").change(function () {
+            if ($("#CO-sync-switchTimeout").val() <= 0) {
+                $("#CO-sync-switchTimeout").val(1);
+            }
+        })
 
         $('#CO-workSwitch').on('switchChange.bootstrapSwitch', function (event, state) {
             if (state) {
@@ -457,6 +508,14 @@ define(function (require, exports, module) {
                 $('#CO-outputModeArea').css('display', 'block');
             } else {
                 $('#CO-outputModeArea').css('display', 'none');
+            }
+        });
+
+        $("#CO-sync").on('switchChange.bootstrapSwitch', function (event, state) {
+            if (state) {
+                $('#CO-syncArea').css('display', 'block');
+            } else {
+                $('#CO-syncArea').css('display', 'none');
             }
         });
 
@@ -715,6 +774,16 @@ define(function (require, exports, module) {
                         if (debug === 0) {
                             $("#CO-debug").bootstrapSwitch('state', false);
                         }
+
+                        // 终端同步
+                        var programSync = JSON.parse(config.ProgramSync);
+                        if (programSync.on === 0) {
+                            $("#CO-sync").bootstrapSwitch('state', false);
+                        }
+                        $("#CO-sync-setID").val(programSync.SyncSetID);
+                        $("#CO-sync-multicastIP").val(programSync.SyncMulticastIP);
+                        $("#CO-sync-multicastPort").val(programSync.SyncMulticastPort);
+                        $("#CO-sync-switchTimeout").val(programSync.SyncSwitchTimeout);
 
                     }
                 }
