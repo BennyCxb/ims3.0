@@ -9,7 +9,7 @@ var watch    = require('gulp-watch');
 var plumber  = require('gulp-plumber');
 
 gulp.task('tpl', function() {
-	gulp.src('./WEB-INF/templates/*.html')
+	gulp.src('./resources/templates/*.html')
 	    .pipe(htmlmin({
 		    collapseWhitespace: true,
 		    conservativeCollapse: true
@@ -25,7 +25,7 @@ gulp.task('tpl', function() {
 });
 
 gulp.task('watch-tpl', function() {
-	watch('./WEB-INF/templates/*.html', function() {
+	watch('./resources/templates/*.html', function() {
 		gulp.start('tpl');
 	});
 });
