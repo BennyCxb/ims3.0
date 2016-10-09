@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     var LAYOUTEDIT = require("pages/layout/edit");
     var nDisplayItems = 10;
     var mtrTypeId;
+    var isVideoBox = false;
 
     exports.init = function () {
         //关闭窗口
@@ -23,8 +24,8 @@ define(function (require, exports, module) {
 
         //下拉框点击事件
         $("#mtr_typeChiose").change(function () {
-            mtrTypeId = $("#mtr_typeChiose").val();
-            loadPage(1, Number(mtrTypeId));
+            mtrTypeId = Number($("#mtr_typeChiose").val());
+            loadPage(1, mtrTypeId);
         })
 
         //全选和全不选
@@ -47,6 +48,11 @@ define(function (require, exports, module) {
 
         $("#mtr_addStatus").hide();
         var type = $("#mtr_addMtr").attr("typeid");
+        if (Number(type) == 1) {
+            isVideoBox = true;
+        } else {
+            isVideoBox = false;
+        }
         loadPage(1, Number(type));
 
         if ($("#mtr_addMtr").attr("is_choisebg") == "1") {
@@ -78,20 +84,6 @@ define(function (require, exports, module) {
     function loadPage(pageNum, type) {
         // loading
         $("#mtr_choiseTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
-        //判断是否是视频控件选择列表
-        if ($("#mtr_addMtr").attr("mtrTypeId") == "1") {
-            if (type == 1) {
-                $("#dp_action").html("视频");
-            } else if (type == 2) {
-                $("#mtr_choiseTitle").html("视频控件资源选择列表");
-                $("#dp_action").html("图片");
-            }
-        } else {
-            if (type == 2) {
-                $("#mtr_choiseTitle").html("图片控件资源选择列表");
-            }
-            $("#mtr_dplist").remove();
-        }
 
         //载入
         var mtrType;
@@ -132,6 +124,22 @@ define(function (require, exports, module) {
                 mtrTypeId = 7;
                 break;
         }
+
+        //判断是否是视频控件选择列表
+        if (isVideoBox) {
+            if (mtrTypeId == 1) {
+                $("#dp_action").html("视频");
+            } else if (mtrTypeId == 2) {
+                $("#mtr_choiseTitle").html("视频控件资源选择列表");
+                $("#dp_action").html("图片");
+            }
+        } else {
+            if (mtrTypeId == 2) {
+                $("#mtr_choiseTitle").html("图片控件资源选择列表");
+            }
+            $("#mtr_dplist").remove();
+        }
+
         var checkSwitch = UTIL.getLocalParameter('config_checkSwitch');
         if (checkSwitch == 1) {
             var status = "2";
