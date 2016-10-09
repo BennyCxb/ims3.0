@@ -215,7 +215,10 @@ define(function (require, exports, module) {
                 $("#upl_speed_" + num).html(formatSpeed);
                 if (percentComplete == 100) {
                     $("#upl_speed_" + num).html("");
-                    $("#upl_status_" + num).html("转换中…");
+                    $("#upl_status_" + num).html("转换中...");
+                    if (num <= _upl_list.length) {
+                        _upl_list[num].status = 'end';
+                    }
                 }
                 if (num <= _upl_list.length) {
                     _upl_list[num].status = 'uploading';

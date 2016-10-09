@@ -121,6 +121,7 @@ define(function (require, exports, module) {
                 check_th +
                 '<th class="mtr_size">大小</th>' +
                 '<th class="mtr_time">时长</th>' +
+                '<th class="mtr_status">状态</th>' +
                 '<th class="mtr_uploadUser">创建人</th>' +
                 '<th class="mtr_uploadDate">创建时间</th>' +
                 '</tr>');
@@ -163,12 +164,31 @@ define(function (require, exports, module) {
                         }
                         check_td = '<td class="mtr_check">' + status + '</td>';
                     }
+
+                    var mtr_status;
+                    if (mtrData[x].status != undefined) {
+                        switch (mtrData[x].status) {
+                            case 0:
+                                mtr_status = "转换失败";
+                                break;
+                            case 1:
+                                mtr_status = "待转换";
+                                break;
+                            case 2:
+                                mtr_status = "转换中";
+                                break;
+                            case 3:
+                                mtr_status = "转换成功";
+                                break;
+                        }
+                    }
                     var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
                         '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '"></td>' +
                         mtrName_tr +
                         check_td +
                         '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                         '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
+                        '<td class="mtr_status">' + mtr_status + '</td>' +
                         '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
                         '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
                         '</tr>';
@@ -181,8 +201,11 @@ define(function (require, exports, module) {
             }
         }
 
-        if (material_type == "文本" || material_type == "Live" || material_type == "Image" || material_type == "Office") {		//文本和直播图片无时长
-            $(".mtr_time").empty();
+        if (material_type == "Video" || material_type == "Audio") {		//视频和音频有时长
+            $(".mtr_time").show();
+        }
+        if (material_type == "Office") {
+            $(".mtr_status").show();
         }
         //复选框样式
         $('.mailbox-messages input[type="checkbox"]').iCheck({

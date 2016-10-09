@@ -278,6 +278,12 @@ a {
 }
 
 .mtr_time {
+    display: none;
+    text-align: center;
+}
+
+.mtr_status {
+    display: none;
     text-align: center;
 }
 
