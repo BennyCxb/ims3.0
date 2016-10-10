@@ -508,7 +508,7 @@ define(function (require, exports, module) {
         });
         $('#channel-editor-wrapper .btn-channel-editor-saveSubmit').click(function() {
             $(this).attr("audit", "true");
-            onSubmitAudit();
+            onSaveChannel();
         });
         //$('#channel-editor-wrapper .btn-channel-editor-publish').click(onPublishChannel);
         $('#channel-editor-wrapper .btn-program-new').click(function () {

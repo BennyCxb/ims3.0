@@ -93,7 +93,6 @@ define(function (require, exports, module) {
                             }
                         }
                     )
-                    alert('处理中...');
                 }
             })
 

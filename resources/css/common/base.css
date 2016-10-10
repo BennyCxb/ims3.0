@@ -1074,8 +1074,8 @@ a {
 /*////// toast ////////*/
 #toast-container {
     position: fixed;
-    left: 0;
-    bottom: 100px;
+    right: 0;
+    top: 60px;
     z-index: 3000;
 }
 
