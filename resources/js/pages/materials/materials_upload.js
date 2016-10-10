@@ -213,13 +213,6 @@ define(function (require, exports, module) {
                 $("#upl_tr_" + num).attr("status", "uploading");
                 $("#progressbar_" + num).css("width", percentComplete + "%");
                 $("#upl_speed_" + num).html(formatSpeed);
-                if (percentComplete == 100) {
-                    $("#upl_speed_" + num).html("");
-                    $("#upl_status_" + num).html("转换中...");
-                    if (num <= _upl_list.length) {
-                        _upl_list[num].status = 'end';
-                    }
-                }
                 if (num <= _upl_list.length) {
                     _upl_list[num].status = 'uploading';
                 }

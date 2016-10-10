@@ -148,9 +148,11 @@ define(function (require, exports, module) {
         }
         if (type == 7) {
             var action = "getlist";
+            var search = "material";
             var url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction';
         } else {
             var action = "GetPage";
+            var search = "";
             var url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
         }
         var pager = {
@@ -166,6 +168,7 @@ define(function (require, exports, module) {
             action: action,
             project_name: CONFIG.projectName,
             material_type: mtrType,
+            search: search,
             Pager: pager
         });
         UTIL.ajax('post', url, data, add);

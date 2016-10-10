@@ -71,15 +71,18 @@ define(function (require, exports, module) {
         };
         if (mtrType == "Office") {
             var action = "getlist";
+            var search = "status";
             var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
         } else {
             var action = "GetPage";
+            var search = "";
             var _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
         }
         var data = JSON.stringify({
             action: action,
             project_name: CONFIG.projectName,
             material_type: mtrType,
+            search: search,
             Pager: pager
         });
 

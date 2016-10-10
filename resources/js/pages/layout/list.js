@@ -145,7 +145,10 @@ define(function(require, exports, module) {
 		util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, render);
 	}
 
-	// 渲染界面
+	/**
+	 * 渲染界面
+	 * @param json
+	 */
 	function render(json) {
 
 		var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
