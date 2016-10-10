@@ -195,7 +195,7 @@ define(function (require, exports, module) {
 
     /**
      * 加载控件属性
-     **/
+     */
     function widgetLoad() {
         //color picker with addon
         $("#text_color").ColorPickerSliders({               //文本字体颜色
@@ -394,7 +394,9 @@ define(function (require, exports, module) {
 
     /**
      * 将数据添加到列表
-     **/
+     * @param mtrData
+     * @param getWidgetMtr
+     */
     exports.getSelectedID = function (mtrData, getWidgetMtr) {
         mtrData.sort(function (a, b) {
             return a.sequence - b.sequence
@@ -428,11 +430,7 @@ define(function (require, exports, module) {
                     }
                     var schedule_params = JSON.parse(mtrData[x].schedule_params) === '' ? {} : JSON.parse(mtrData[x].schedule_params);
                     if (schedule_params != {}) {
-                        duration = formatTime(schedule_params.duration);
-                    } else {
-                        if (mtrData[x].type_name == "直播") {
-                            duration = "01:00:00";
-                        } else if (mtrData[x].type_name == "Office") {
+                        if (mtrData[x].type_name == "Office") {
                             var data = JSON.stringify({
                                 project_name: CONFIG.projectName,
                                 action: "getone",
@@ -441,9 +439,15 @@ define(function (require, exports, module) {
                             var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
                             UTIL.ajax2('post', _url, data, function (msg) {
                                 var SwitchPeriod = JSON.parse(widgetData.style).SwitchPeriod;
-                                var count = Object.keys(msg).length
+                                var count = Object.keys(msg).length;
                                 duration = formatTime(SwitchPeriod * count);
                             })
+                        } else {
+                            duration = formatTime(schedule_params.duration);
+                        }
+                    } else {
+                        if (mtrData[x].type_name == "直播") {
+                            duration = "01:00:00";
                         } else {
                             duration = "00:00:15";
                         }
@@ -746,7 +750,7 @@ define(function (require, exports, module) {
 
     /**
      * 播放顺序保存
-     **/
+     */
     function playTypeSave() {
         if (!inputCheck()) return;
         var overall_schedule_params = {
@@ -757,7 +761,7 @@ define(function (require, exports, module) {
 
     /**
      * 文本效果保存
-     **/
+     */
     function textAttrSave() {
         if (!inputCheck()) return;
         if ($("#mtrC_textType").val() == "Marquee") {
@@ -786,7 +790,7 @@ define(function (require, exports, module) {
 
     /**
      * 资源修改
-     **/
+     */
     function mtrAttrSave() {
         $(".mtrCtrl_time").change(function () {
             if (!inputCheck()) return;
@@ -820,7 +824,7 @@ define(function (require, exports, module) {
 
     /**
      * 时钟修改
-     **/
+     */
     function clockChange() {
         //时钟字体颜色事件
         $("#clockText_color").bind("input propertychange", function () {
@@ -834,7 +838,7 @@ define(function (require, exports, module) {
 
     /**
      * 时钟字体颜色
-     **/
+     */
     function clockSave() {
         if (!inputCheck()) return;
         var wstyle = {
@@ -846,7 +850,7 @@ define(function (require, exports, module) {
 
     /**
      * 天气控件
-     **/
+     */
     function weatherChange() {
         //字体颜色
         $("#weatherText_color").bind("input propertychange", function () {
@@ -863,7 +867,7 @@ define(function (require, exports, module) {
 
     /**
      * 天气保存
-     **/
+     */
     function weatherSave() {
         if (!inputCheck()) return;
         var wstyle = {
@@ -876,7 +880,7 @@ define(function (require, exports, module) {
 
     /**
      * Office数据加入缓存
-     **/
+     */
     function officeSave() {
         if (!inputCheck()) return;
         var wstyle = {
@@ -889,7 +893,7 @@ define(function (require, exports, module) {
 
     /**
      * Office切换间隔改变文件播放时长
-     **/
+     */
     function officeDuration() {
         var switchPeriod = Number($("#mtrC_office_switchPeriod").val());
         $("#mtrCtrl_Table tbody tr").each(function (el) {
@@ -910,7 +914,7 @@ define(function (require, exports, module) {
 
     /**
      * 校验
-     **/
+     */
     function inputCheck() {
         var widgetData = JSON.parse(localStorage.getItem('currentWidget'));
         var errorMsg = "";
@@ -992,7 +996,7 @@ define(function (require, exports, module) {
 
     /**
      * 校验复选框勾选的个数
-     **/
+     */
     function mtrCb() {
         var Ck = $("#mtrCtrl_Table .icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $("#mtrCtrl_Table .icheckbox_flat-blue").length;			//复选框总个数
@@ -1074,8 +1078,12 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * 转时间为秒
+     * @param longTime
+     * @returns {number}
+     */
     function formatSecond(longTime) {
-        //转化为秒
         var arr = longTime.split(":");
         var h = Number(arr[0]);
         var m = Number(arr[1]);

@@ -133,7 +133,7 @@ define(function (require, exports, module) {
                 var mtrName_tr;
                 for (var x = 0; x < mtrData.length; x++) {
                     var material_type = mtrData[x].Type_Name;
-                    if (material_type == "Live") {		//直播无预览效果
+                    if (material_type == "Live" || (material_type == "Office" && mtrData[x].status != 3)) {		//直播无预览效果
                         mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '">' + mtrData[x].Name + '</td>';
                     } else {
                         if (material_type == "文本") {
