@@ -169,6 +169,7 @@ define(function (require, exports, module) {
                     }
 
                     var mtr_status;
+                    var transform_status = "transform_status=" + mtrData[x].status;
                     if (mtrData[x].status != undefined) {
                         switch (mtrData[x].status) {
                             case 0:
@@ -185,7 +186,8 @@ define(function (require, exports, module) {
                                 break;
                         }
                     }
-                    var mtrtr = '<tr ' + check_status + ' mtrID="' + mtrData[x].ID + '">' +
+
+                    var mtrtr = '<tr ' + check_status + ' ' + transform_status + ' mtrID="' + mtrData[x].ID + '">' +
                         '<td class="mtr_checkbox"><input type="checkbox" id="mtr_cb" class="mtr_cb" mtrID="' + mtrData[x].ID + '"></td>' +
                         mtrName_tr +
                         check_td +
@@ -557,6 +559,11 @@ define(function (require, exports, module) {
                 //已通过和未通过
                 else {
                     $('#mtr_submit').attr('disabled', true);
+                    $('#mtr_approve').attr('disabled', true);
+                    $('#mtr_reject').attr('disabled', true);
+                }
+
+                if ($(e).parent().parent().parent().attr('transform_status') != '3') {
                     $('#mtr_approve').attr('disabled', true);
                     $('#mtr_reject').attr('disabled', true);
                 }
