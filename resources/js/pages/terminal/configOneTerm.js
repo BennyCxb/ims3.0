@@ -736,15 +736,14 @@ define(function (require, exports, module) {
                         }
 
                         var trigger = RestartTimer.trigger.split(" ");
-
                         //starttime
                         var hour = trigger[2];
                         var minute = trigger[1];
                         var second = trigger[0];
                         if (hour !== '*' || minute !== '*' || second !== '*') {
-                            hour = (hour === '*') ? '00' : ((hour < 10) ? '0' + hour : hour);
-                            minute = (minute === '*') ? '00' : ((minute < 10) ? '0' + minute : minute);
-                            second = (second === '*') ? '00' : ((second < 10) ? '0' + second : second);
+                            hour = (hour === '*') ? '00' : hour;
+                            minute = (minute === '*') ? '00' : minute;
+                            second = (second === '*') ? '00' : second;
                             $('#CO-restartTime').val(hour + ':' + minute + ':' + second);
                         }
 
