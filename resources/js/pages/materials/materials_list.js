@@ -8,6 +8,7 @@ define(function (require, exports, module) {
         last;
     var _pageNum = 1;
     var mtrType;
+    var t1;
 
     exports.init = function () {
         checkCheck();
@@ -15,8 +16,13 @@ define(function (require, exports, module) {
         exports.loadPage(_pageNum, mtrType == undefined ? "Video" : mtrType ); //加载默认页面
     }
 
-    // 加载页面数据
+    /**
+     * 加载页面数据
+     * @param pageNum 当前页码
+     * @param typeName  类别
+     */
     exports.loadPage = function (pageNum, typeName) {
+        window.clearInterval(t1);
         // loading
         $("#mtrTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#addtext_box").empty();
@@ -87,8 +93,19 @@ define(function (require, exports, module) {
         });
 
         UTIL.ajax('post', _url, data, render);
+
+        //定时刷新
+        if (mtrType == "Office") {
+            t1 = window.setInterval(function() {
+                exports.loadPage(_pageNum, mtrType);
+            },60000);
+        }
     }
 
+    /**
+     * 绑定数据回调函数
+     * @param json
+     */
     function render(json) {
         $("#mtrTable tbody").empty();
         //翻页
@@ -261,7 +278,9 @@ define(function (require, exports, module) {
         });
     }
 
-    //绑定事件
+    /**
+     * 绑定事件
+     */
     function bind() {
         // 上传文件按钮点击
         $('#mtr_upload').click(function () {
@@ -517,13 +536,18 @@ define(function (require, exports, module) {
         }
     }
 
-    //列表分类点击事件
+    /**
+     * 列表分类点击事件
+     * @param obj
+     */
     function mtrChoise(obj) {
         $("#mtrChoise li").removeClass('active');
         obj.parent().attr("class", "active");
     }
 
-    //校验删除按钮
+    /**
+     * 校验删除按钮
+     */
     function checkDelBtns() {
         $("#mtrTable input[type='checkBox']:checked").each(function (i, e) {
             if ($(e).parent().parent().parent().find('td.mtr_uploadUser').html() != CONFIG.userName) {
@@ -533,7 +557,9 @@ define(function (require, exports, module) {
         })
     }
 
-    //校验批量操作的审核功能
+    /**
+     * 校验批量操作的审核功能
+     */
     function checkCheckBtns() {
         if ($("#mtrTable input[type='checkBox']:checked").length === 0) {
             $('#mtr_submit').attr('disabled', true);
@@ -573,7 +599,9 @@ define(function (require, exports, module) {
 
     }
 
-    //校验复选框勾选的个数
+    /**
+     * 校验复选框勾选的个数
+     */
     function mtrCb() {
         $("#mtr_delete").removeAttr("disabled");
         var Ck = $(".icheckbox_flat-blue.checked").length;	//当前选中复选框个数
@@ -620,7 +648,9 @@ define(function (require, exports, module) {
         }
     }
 
-    //打开直播编辑窗口
+    /**
+     * 打开直播编辑窗口
+     */
     function openLive() {
         var page = "resources/pages/materials/materials_addLive.html";
         UTIL.cover.load(page);
@@ -639,6 +669,10 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * 返回当前页码及类型
+     * @returns {{pageNum: number, mtrType: *}}
+     */
     exports.mtrList = function () {
         var listData = {
             pageNum: _pageNum,
