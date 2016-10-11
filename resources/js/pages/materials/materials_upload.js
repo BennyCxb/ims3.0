@@ -303,6 +303,10 @@ define(function (require, exports, module) {
         $("#upl_status_" + num).html("上传成功");
         _upl_list[num].status = "end";
         var status = "uploading";
+        setTimeout(function() {
+            $("#upl_tr_" + num).remove();
+        }, 1000)
+
         //判断是否全部上传完毕
         for (var b = 0, c = 0; b < _upl_list.length; b++) {
             if (_upl_list[b].status == "end") {
@@ -311,6 +315,9 @@ define(function (require, exports, module) {
                     status = "end";
                     //解除绑定
                     $(window).unbind('beforeunload');
+                    setTimeout(function() {
+                        closeUpl_list();
+                    }, 1000)
                 }
             }
         }

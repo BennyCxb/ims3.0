@@ -324,6 +324,7 @@ a {
 #box_fileList {
     overflow: auto;
     max-height: 450px;
+    min-height: 150px;
 }
 
 #file {
