@@ -252,9 +252,10 @@ define(function (require, exports, module) {
             var regExp = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/;
             if ($("#Tmtr_url").val() == "") {
                 errormsg += "请输入URL地址！\n";
-            } else if (!regExp.test(url)) {
-                errormsg += "请输入正确的URL地址！\n";
             }
+            // else if (!regExp.test(url)) {
+            //     errormsg += "请输入正确的URL地址！\n";
+            // }
         }
         if (errormsg != "") {
             alert(errormsg);

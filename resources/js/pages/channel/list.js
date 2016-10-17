@@ -168,6 +168,7 @@ define(function (require, exports, module) {
         $('#channel-list-controls .btn-publish-later').click(publishChannelLater);
         $('#channel-list-controls .btn-copy').click(copyChannel);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
+        $('#channel-list-controls .btn-export-offline').click(exportOffline);
 
         //搜索事件
         $("#channelSearch").keyup(function (event) {
@@ -263,6 +264,19 @@ define(function (require, exports, module) {
     }
 
     function deleteChannel() {
+        if (confirm("确定删除该频道？")) {
+            var data = JSON.stringify({
+                action: 'Delete',
+                project_name: projectName
+            });
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
+                alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
+                loadPage(_pageNO);
+            });
+        }
+    }
+
+    function exportOffline() {
         if (confirm("确定删除该频道？")) {
             var data = JSON.stringify({
                 action: 'Delete',

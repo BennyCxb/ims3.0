@@ -3,7 +3,7 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var MTRCTRL = require("pages/channel/mtrCtrl");
     var LAYOUTEDIT = require("pages/layout/edit");
-    var nDisplayItems = 10;
+    var nDisplayItems = 8;
     var mtrTypeId;
     var isVideoBox = false;
 
@@ -299,6 +299,12 @@ define(function (require, exports, module) {
             mtrCb();
         })
         mtrCb();
+
+        // $("#materials-table-pager").find("a").click(function () {
+        //     $("#mtr_choiseTable input[type='checkbox']:checked").forEach(function (el) {
+        //         console.log(el.attr("mtrid"));
+        //     })
+        // })
     }
 
     //搜索事件
