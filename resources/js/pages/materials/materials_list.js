@@ -155,6 +155,8 @@ define(function (require, exports, module) {
                     } else {
                         if (material_type == "文本") {
                             mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a href="#materials/materials_addText?id=' + mtrData[x].ID + '">' + mtrData[x].Name + '</a></b></td>';
+                        } else if (material_type == "Office" && mtrData[x].status == 3) {
+                            mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a url="' + mtrData[x].URL + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';
                         } else {
                             var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
                             mtrName_tr = '<td class="mtr_name" title="' + mtrData[x].Name + '"><b><a url="' + mtrUrl + '" target="_blank">' + mtrData[x].Name + '</a></b></td>';

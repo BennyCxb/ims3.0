@@ -171,7 +171,7 @@ define(function (require, exports, module) {
                     initChannelView(channelId);
                 });
 
-            util.ajax('post', requestUrl + '/backend_mgt/v2/channels', dataGetPrograms, function (res) {
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', dataGetPrograms, function (res) {
                 deferredGetPrograms.resolve(res.Programs);
             });
 
@@ -377,6 +377,7 @@ define(function (require, exports, module) {
      * 初始化频道页面
      */
     function initChannelView(channelId) {
+        // $('#edit-page-container').show();
         var channel = db.collection('channel').select({id: channelId})[0],
             programs = db.collection('program').select({});
         renderProgramList(channel, programs);
@@ -591,6 +592,7 @@ define(function (require, exports, module) {
     function onSaveChannel() {
         if (!inputCheck()) return;
         toast.show('温馨提示:正在保存，可能需要几分钟时间，请耐心等待');
+        // $('#edit-page-container').hide();
         $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled", "disabled");
         setTimeout(removeDisabled, config.letTimeout);
         remoteCreateOrUpdateChannel()
@@ -629,7 +631,7 @@ define(function (require, exports, module) {
                     Overall_Schedule_Paras: channel.overall_schedule_params
                 }
             });
-            util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
                 if (Number(res.rescode) !== 200) {
                     deferred.reject(res);
                     return;
@@ -1014,7 +1016,7 @@ define(function (require, exports, module) {
             ChannelID: channelId
         });
 
-        util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+        util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
             if (Number(res.rescode) !== 200) {
                 deferred.reject(res);
                 return;
@@ -1027,7 +1029,7 @@ define(function (require, exports, module) {
                         channelId
                     ]
                 });
-                util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, function (res) {
+                util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
                     if (Number(res.rescode) !== 200) {
                         deferred.reject(res);
                         return;
@@ -1339,7 +1341,7 @@ define(function (require, exports, module) {
         }
         util.ajax(
             'POST',
-            config.serverRoot + '/backend_mgt/v2/channels',
+            config.serverRoot + '/backend_mgt/v2/channels/',
             JSON.stringify(data),
             function (data) {
                 if (data.rescode === '200') {

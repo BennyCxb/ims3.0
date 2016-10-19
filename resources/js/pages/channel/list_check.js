@@ -82,7 +82,7 @@ define(function(require, exports, module) {
             Project: projectName,
             ChannelID: getCurrentChannelId()
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, function (res) {
+        util.ajax('post', requestUrl + '/backend_mgt/v1/channels/', data, function (res) {
             console.log(res);
             alert(Number(res.rescode) === 200 ? '复制成功' : '复制失败');
         });
@@ -143,7 +143,7 @@ define(function(require, exports, module) {
             Project: projectName,
             Pager: pager
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v1/channels', data, render);
+        util.ajax('post', requestUrl + '/backend_mgt/v1/channels/', data, render);
     }
 
     // 渲染界面

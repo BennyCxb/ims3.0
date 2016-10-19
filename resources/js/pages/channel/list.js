@@ -57,7 +57,7 @@ define(function (require, exports, module) {
                     }
                     util.ajax(
                         'POST',
-                        config.serverRoot + '/backend_mgt/v2/channels',
+                        config.serverRoot + '/backend_mgt/v2/channels/',
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
@@ -82,7 +82,7 @@ define(function (require, exports, module) {
                     }
                     util.ajax(
                         'POST',
-                        config.serverRoot + '/backend_mgt/v2/channels',
+                        config.serverRoot + '/backend_mgt/v2/channels/',
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
@@ -115,7 +115,7 @@ define(function (require, exports, module) {
                     }
                     util.ajax(
                         'POST',
-                        config.serverRoot + '/backend_mgt/v2/channels',
+                        config.serverRoot + '/backend_mgt/v2/channels/',
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
@@ -339,7 +339,7 @@ define(function (require, exports, module) {
             CheckLevel: CheckLevel,
             Pager: pager
         });
-        util.ajax('post', requestUrl + '/backend_mgt/v2/channels', data, render);
+        util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, render);
     }
 
     // 渲染界面
@@ -378,6 +378,7 @@ define(function (require, exports, module) {
                 '<th class="chn_checkbox" style="width:32px;"></th>' +
                 '<th class="chn_name">频道名</th>' +
                 check_th +
+                '<th class="chn_portStatus text-center">状态</th>' +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
                     //  '<th class="chn_detail">发布详情</th>'+
@@ -387,52 +388,78 @@ define(function (require, exports, module) {
                     // 审核状态
                     var check_td = '';
                     var check_status = '';
+                    var portStatus = '获取状态失败';
+                    switch (chnData[x].portStatus) {
+                        case 0:
+                            portStatus = '待导入';
+                            break;
+                        case 1:
+                            portStatus = '导入成功';
+                            break;
+                        case 2:
+                            portStatus = '导入失败';
+                            break;
+                        case 3:
+                            portStatus = '待导出';
+                            break;
+                        case 4:
+                            portStatus = '导出成功';
+                            break;
+                        case 5:
+                            portStatus = '导出失败';
+                            break;
+                        default:
+                            break;
+                    }
+
                     if (util.getLocalParameter('config_checkSwitch') == '1') {
-                        var status;
+                        var checkStatus;
                         check_status = "check_status=" + chnData[x].CheckLevel;
                         switch (chnData[x].CheckLevel) {
                             case 0:
-                                status = '待提交';
+                                checkStatus = '待提交';
                                 break;
                             case 1:
-                                status = '待审核';
+                                checkStatus = '待审核';
                                 break;
                             case 2:
-                                status = '已通过';
+                                checkStatus = '已通过';
                                 break;
                             case 3:
-                                status = '未通过';
+                                checkStatus = '未通过';
                                 break;
                             default:
                                 break;
                         }
-                        check_td = '<td class="chn_check">' + status + '</td>';
-                        var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
-                            '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                            '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
-                            check_td +
-                            '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
-                            '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                                // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
-                            '</tr>';
-                        $("#channel-table tbody").append(chntr);
-                    } else {
-                        for (var x = 0; x < chnData.length; x++) {
-
-                            // 未审核状态
-                            var check_td = '';
-                            var check_status = '';
-                            var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
-                                '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                                '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
-                                check_td +
-                                '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
-                                '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                                    // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
-                                '</tr>';
-                            $("#channel-table tbody").append(chntr);
-                        }
+                        check_td = '<td class="chn_check">' + checkStatus + '</td>';
                     }
+                    var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
+                        '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                        '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
+                        check_td +
+                        '<td class="chn_portStatus text-center">' + portStatus + '</td>' +
+                        '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
+                        '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
+                            // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                        '</tr>';
+                    $("#channel-table tbody").append(chntr);
+                    // } else {
+                    //     for (var x = 0; x < chnData.length; x++) {
+                    //         // 未审核状态
+                    //         var check_td = '';
+                    //         var check_status = '';
+                    //         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
+                    //             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                    //             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
+                    //             check_td +
+                    //             '<td class="chn_portStatus text-center">' + portStatus + '</td>' +
+                    //             '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
+                    //             '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
+                    //                 // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                    //             '</tr>';
+                    //         $("#channel-table tbody").append(chntr);
+                    //     }
+                    // }
                 }
             } else {
                 $("#channel-table tbody").empty();

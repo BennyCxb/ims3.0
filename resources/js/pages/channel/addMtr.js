@@ -3,11 +3,19 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var MTRCTRL = require("pages/channel/mtrCtrl");
     var LAYOUTEDIT = require("pages/layout/edit");
-    var nDisplayItems = 8;
+    var _pageNum = 1,
+        nDisplayItems = 8,
+        totalCounts;
     var mtrTypeId;
     var isVideoBox = false;
+    var mtrIds = {},
+        mtrJson = [],
+        mtrData;
 
     exports.init = function () {
+        mtrIds = {};
+        mtrJson = []
+        _pageNum = 1
         //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -16,7 +24,6 @@ define(function (require, exports, module) {
         //搜索
         $("#mtrChoiseSearch").keyup(function (event) {
             if (event.keyCode == 13) {
-                // var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
                 onSearch(event);
             }
         });
@@ -69,14 +76,40 @@ define(function (require, exports, module) {
                 LAYOUTEDIT.updateBackground(mtrId, url, datype);
             } else {
                 var datalist = [];
-                for (var x = 0; x < $(".amtr_cb").length; x++) {
-                    if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
-                        var mtrData = JSON.parse(unescape($(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("data")));
-                        datalist.push(mtrData);
-                    }
+                // for (var x = 0; x < $(".amtr_cb").length; x++) {
+                //     if ($(".amtr_cb:eq(" + x + ")").get(0).checked) {
+                //         var mtrData = JSON.parse(unescape($(".amtr_cb:eq(" + x + ")").parent().parent().parent().attr("data")));
+                //         datalist.push(mtrData);
+                //     }
+                // }
+                // MTRCTRL.getSelectedID(datalist);
+
+                var ids = [];
+                $("#mtr_choiseTable input[type='checkbox']:checked").map(function (index, el) {
+                    ids.push(el.value);
+                    $.each(mtrData, function (ind2, el2) {
+                        if (el2.ID == Number(el.value)) {
+                            mtrJson.push(el2);
+                            return false;
+                        }
+                    })
+                })
+                mtrIds[_pageNum] = ids;
+
+                var pageCount = Math.ceil(Math.max(totalCounts, 1) / nDisplayItems);
+                for (var i = 1; i < pageCount + 1; i++) {
+                    $.each(mtrIds[i], function (ind1, el1) {
+                        $.each(mtrJson, function (ind2, el2) {
+                            if (el1 == el2.ID) {
+                                datalist.push(el2);
+                                return true;
+                            }
+                        })
+                    })
                 }
                 MTRCTRL.getSelectedID(datalist);
             }
+            mtrIds = {};
             UTIL.cover.close();
         })
     }
@@ -174,11 +207,14 @@ define(function (require, exports, module) {
         UTIL.ajax('post', url, data, add);
     }
 
-    //将数据添加到列表
+    /**
+     * 将数据添加到列表
+     * @param json
+     */
     function add(json) {
         $("#mtr_choiseTable tbody").empty();
         //翻页
-        var totalCounts = Math.max(json.Pager.total, 1);
+        totalCounts = Math.max(json.Pager.total, 1);
         $('#materials-table-pager').jqPaginator({
             totalCounts: totalCounts,
             pageSize: nDisplayItems,
@@ -191,15 +227,27 @@ define(function (require, exports, module) {
             currentPage: Number(json.Pager.page),
             onPageChange: function (num, type) {
                 if (type == 'change') {
+                    var ids = [];
+                    $("#mtr_choiseTable input[type='checkbox']:checked").map(function (index, el) {
+                        ids.push(el.value);
+                        $.each(json.Materials, function (ind, el2) {
+                            if (el2.ID == Number(el.value)) {
+                                mtrJson.push(el2);
+                                return false;
+                            }
+                        })
+                    })
+                    mtrIds[_pageNum] = ids;
                     $('#materials-table-pager').jqPaginator('destroy');
-                    loadPage(num, Number(mtrTypeId));
+                    _pageNum = num;
+                    loadPage(_pageNum, Number(mtrTypeId));
                 }
             }
         });
 
         //拼接
         if (json.Materials != undefined) {
-            var mtrData = json.Materials;
+            mtrData = json.Materials;
             $("#mtr_choiseTable tbody").append('<tr>' +
                 '<th class="mtr_checkbox"></th>' +
                 '<th class="mtr_choise_name">文件名</th>' +
@@ -214,10 +262,10 @@ define(function (require, exports, module) {
                         var mtr_choise_tr = mtrData[x].Name;
                     } else {
                         var mtrUrl = UTIL.getRealURL(mtrData[x].Download_Auth_Type, mtrData[x].URL);
-                        var mtr_choise_tr = '<a url=' + mtrUrl + ' datype='+mtrData[x].Download_Auth_Type+' target="_blank">' + mtrData[x].Name + '</a>';
+                        var mtr_choise_tr = '<a url=' + mtrUrl + ' datype=' + mtrData[x].Download_Auth_Type + ' target="_blank">' + mtrData[x].Name + '</a>';
                     }
-                    var mtrtr = '<tr mtrid="' + mtrData[x].ID + '"  data="' + escape(JSON.stringify(mtrData[x])) + '">' +
-                        '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '"></td>' +
+                    var mtrtr = '<tr mtrid="' + mtrData[x].ID + '" data="' + escape(JSON.stringify(mtrData[x])) + '">' +
+                        '<td class="mtr_checkbox"><input type="checkbox" id="amtr_cb" class="amtr_cb" mtrid="' + mtrData[x].ID + '" value="' + mtrData[x].ID + '"></td>' +
                         '<td class="mtr_choise_name"><b>' + mtr_choise_tr + '</b></td>' +
                         '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                         '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
@@ -238,10 +286,24 @@ define(function (require, exports, module) {
         //清空状态列
         $(".mtr_choise_status").empty();
 
+        //勾选
+        if (mtrIds != {}) {
+            $("#mtr_choiseTable input[type='checkbox']").each(function (ind1, el1) {
+                if (mtrIds[_pageNum] != undefined) {
+                    $.each(mtrIds[_pageNum], function (ind2, el2) {
+                        if (Number(el1.value) == Number(el2)) {
+                            el1.checked = true;
+                            return false;
+                        }
+                    })
+                }
+            })
+        }
+
         //预览操作
-        $(".mtr_choise_name a").each(function(){
-            $(this).click(function(){
-                var z_index = parseInt($(this).parents("tr").index())-1;
+        $(".mtr_choise_name a").each(function () {
+            $(this).click(function () {
+                var z_index = parseInt($(this).parents("tr").index()) - 1;
                 if (mtrData[z_index].Type_Name != "文本") {
                     if (mtrData[z_index].Type_Name == "Video") {
                         var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
@@ -299,17 +361,13 @@ define(function (require, exports, module) {
             mtrCb();
         })
         mtrCb();
-
-        // $("#materials-table-pager").find("a").click(function () {
-        //     $("#mtr_choiseTable input[type='checkbox']:checked").forEach(function (el) {
-        //         console.log(el.attr("mtrid"));
-        //     })
-        // })
     }
 
-    //搜索事件
+    /**
+     * 搜索事件
+     * @param event
+     */
     function onSearch(event) {
-        // var mtrTypeId = $("#mtrChoiseSearch").attr("mtrTypeId");
         last = event.timeStamp;         //利用event的timeStamp来标记时间，这样每次的keyup事件都会修改last的值，注意last必需为全局变量
         setTimeout(function () {          //设时延迟0.5s执行
             if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
@@ -319,7 +377,9 @@ define(function (require, exports, module) {
         }, 500);
     }
 
-    //校验复选框勾选的个数
+    /**
+     * 校验复选框勾选的个数
+     */
     function mtrCb() {
         var Ck = $(".mtr_checkbox div.icheckbox_flat-blue.checked").length;	//当前选中复选框个数
         var Uck = $(".mtr_checkbox div.icheckbox_flat-blue").length;			//复选框总个数

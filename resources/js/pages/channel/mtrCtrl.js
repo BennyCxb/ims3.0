@@ -395,7 +395,7 @@ define(function (require, exports, module) {
     /**
      * 将数据添加到列表
      * @param mtrData
-     * @param getWidgetMtr
+     * @param getWidgetMtr {bool} 判断是获取还是新增
      */
     exports.getSelectedID = function (mtrData, getWidgetMtr) {
         mtrData.sort(function (a, b) {
