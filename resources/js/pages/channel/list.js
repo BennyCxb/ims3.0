@@ -7,7 +7,9 @@ define(function (require, exports, module) {
         config = require('common/config'),
         util = require('common/util'),
         toast = require('common/toast'),
-        getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js');
+        getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js'),
+        INDEX = require("../index.js"),
+        MTRU = require("pages/materials/materials_upload.js");;
 
     // global variables
     var requestUrl = config.serverRoot,
@@ -148,10 +150,10 @@ define(function (require, exports, module) {
             $(self).iCheck('check');
             onSelectedItemChanged();
         });
-        $('#channel-table').delegate('.btn-channel-detail', 'click', function (ev) {
-            var channelId = getChannelId(ev.target);
-            ev.stopPropagation();
-        });
+        // $('#channel-table').delegate('.btn-channel-detail', 'click', function (ev) {
+        //     var channelId = getChannelId(ev.target);
+        //     ev.stopPropagation();
+        // });
         $('#channel-list-controls .select-all').click(function (ev) {
             var hasUncheckedItems = false;
             $('#channel-table div').each(function (idx, el) {
@@ -169,6 +171,7 @@ define(function (require, exports, module) {
         $('#channel-list-controls .btn-copy').click(copyChannel);
         $('#channel-list-controls .btn-delete').click(deleteChannel);
         $('#channel-list-controls .btn-export-offline').click(exportOffline);
+        importOffline();
 
         //搜索事件
         $("#channelSearch").keyup(function (event) {
@@ -216,8 +219,6 @@ define(function (require, exports, module) {
                     util.cover.close();
                 }
             });
-
-
         }
     }
 
@@ -263,6 +264,9 @@ define(function (require, exports, module) {
         }, 'text');
     }
 
+    /**
+     * 删除频道
+     */
     function deleteChannel() {
         if (confirm("确定删除该频道？")) {
             var data = JSON.stringify({
@@ -276,15 +280,46 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * 导入离线包
+     */
+    function importOffline() {
+        // 上传文件按钮点击
+        $('#channel-list-controls .btn-import-offline').click(function () {
+            $('#file').trigger("click");
+        })
+        $("#file").unbind("change").change(function () {
+            if ($("#page_upload").children().length == 0) {
+                INDEX.upl();
+            } else {
+                $("#page_upload").css("display", "flex");
+                $("#upload_box").css("display", "block");
+                MTRU.beginUpload();
+            }
+        });
+    }
+
+    /**
+     * 导出频道
+     */
     function exportOffline() {
-        if (confirm("确定删除该频道？")) {
+        if (confirm("确定导出该频道？")) {
+            var ids = [];
+            $(".chn_cb[type=checkbox]:checked").each(function (index, el) {
+                ids.push(Number(el.value));
+            })
             var data = JSON.stringify({
-                action: 'Delete',
-                project_name: projectName
+                action: 'offline',
+                project: projectName,
+                id: ids
             });
-            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
-                alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
-                loadPage(_pageNO);
+            util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
+                if (Number(res.rescode) != 200) {
+                    alert('导出失败');
+                }
+                var t1 = window.setInterval(function() {
+                    loadPage(_pageNO);
+                },60000);
             });
         }
     }
@@ -381,37 +416,37 @@ define(function (require, exports, module) {
                 '<th class="chn_portStatus text-center">状态</th>' +
                 '<th class="chn_create">创建人</th>' +
                 '<th class="chn_createTime">创建时间</th>' +
-                    //  '<th class="chn_detail">发布详情</th>'+
+                '<th class="chn_operation">操作</th>'+
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
-                    // 审核状态
                     var check_td = '';
                     var check_status = '';
+                    var chn_operation_td = '';
                     var portStatus = '获取状态失败';
-                    switch (chnData[x].portStatus) {
-                        case 0:
-                            portStatus = '待导入';
+                    switch (chnData[x].Status) {
+                        case -1:
+                            portStatus = '';
                             break;
                         case 1:
-                            portStatus = '导入成功';
+                            portStatus = '等待导出';
                             break;
                         case 2:
-                            portStatus = '导入失败';
+                            portStatus = '导出中';
                             break;
                         case 3:
-                            portStatus = '待导出';
-                            break;
-                        case 4:
                             portStatus = '导出成功';
                             break;
-                        case 5:
+                        case 4:
                             portStatus = '导出失败';
                             break;
                         default:
                             break;
                     }
 
+                    chn_operation_td = '<td class="chn_operation">' +
+                        '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">下载</a>'+
+                        '</td>';
                     if (util.getLocalParameter('config_checkSwitch') == '1') {
                         var checkStatus;
                         check_status = "check_status=" + chnData[x].CheckLevel;
@@ -434,32 +469,15 @@ define(function (require, exports, module) {
                         check_td = '<td class="chn_check">' + checkStatus + '</td>';
                     }
                     var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
-                        '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
+                        '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '" value="' + chnData[x].ID + '"></td>' +
                         '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
                         check_td +
                         '<td class="chn_portStatus text-center">' + portStatus + '</td>' +
                         '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
                         '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                            // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
+                        chn_operation_td +
                         '</tr>';
                     $("#channel-table tbody").append(chntr);
-                    // } else {
-                    //     for (var x = 0; x < chnData.length; x++) {
-                    //         // 未审核状态
-                    //         var check_td = '';
-                    //         var check_status = '';
-                    //         var chntr = '<tr ' + check_status + ' chnID="' + chnData[x].ID + '" chnCU="' + chnData[x].CreateUserName + '">' +
-                    //             '<td class="chn_checkbox"><input type="checkbox" id="chn_cb" class="chn_cb" chnID="' + chnData[x].ID + '" url="' + chnData[x].URL + '"></td>' +
-                    //             '<td class="chn_name" title="' + chnData[x].Name + '"><b><a href="#channel/edit?id=' + chnData[x].ID + '">' + chnData[x].Name + '</a></b></td>' +
-                    //             check_td +
-                    //             '<td class="chn_portStatus text-center">' + portStatus + '</td>' +
-                    //             '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
-                    //             '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
-                    //                 // '<td class="chn_detail" title="' + chnData[x].CreateUserName + '"><a>发布详情</a></td>' +
-                    //             '</tr>';
-                    //         $("#channel-table tbody").append(chntr);
-                    //     }
-                    // }
                 }
             } else {
                 $("#channel-table tbody").empty();

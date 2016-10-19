@@ -280,8 +280,10 @@ define(function (require, exports, module) {
                     } else {
                         $("#mtrC_flip").show();
                         if (wStyle.Type == "Normal") {
+                            $("#box_text_time").children().first().text("翻页间隔");
                             $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                         } else {
+                            $("#box_text_time").children().first().text("刷新间隔");
                             $("#mtrC_pageDownPeriod").val(wStyle.RefreshPeriod);
                         }
                     }

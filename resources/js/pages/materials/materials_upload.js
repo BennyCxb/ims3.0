@@ -2,6 +2,7 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
+    var CHANNELLIST = require("pages/channel/list.js");
     var _upl_list = new Array(); //记录上传xhr, status(success, uploading);
     var uploadQiniu = "0",
         Qiniu_UploadUrl = "",
@@ -172,8 +173,12 @@ define(function (require, exports, module) {
     function Qiniu_upload(f, num) {
         var xhr = new XMLHttpRequest();
         var formData, startDate;
+        var fileExtension = f.name.substring(f.name.lastIndexOf('.') + 1);
         formData = new FormData();
-        if (uploadQiniu == "0") {                 //普通上传
+        if (uploadQiniu == "0" && fileExtension == "zip") {                 //导入离线包
+            xhr.open('POST', CONFIG.Resource_UploadURL, true);
+            formData.append('action', 'loadpackage');
+        } else if (uploadQiniu == "0") {                 //普通上传
             xhr.open('POST', CONFIG.Resource_UploadURL, true);
         } else if (uploadQiniu == "1") {          //七牛上传
             var strS = f.name.split(".");
@@ -228,6 +233,7 @@ define(function (require, exports, module) {
                 var fileName = f.name;
             } catch (e) {
             }
+            var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
             if (xhr.readyState == 4 && xhr.status == 200 && JSON.parse(xhr.response).rescode == 201) {
                 var blkRet = JSON.parse(xhr.responseText);
                 var duration,
@@ -279,6 +285,8 @@ define(function (require, exports, module) {
                         _upl_list[num].status = 'end';
                     }
                 });
+            } else if (xhr.readyState == 4 && xhr.status == 200 && JSON.parse(xhr.response).rescode == 200 && fileExtension == "zip") {
+                uploadSuccess(num, "import");
             } else if (xhr.readyState == 4 && xhr.status == 200 && JSON.parse(xhr.response).rescode == 200) {
                 uploadSuccess(num);
             } else if (xhr.status != 200 && xhr.responseText) {
@@ -296,7 +304,7 @@ define(function (require, exports, module) {
      * 上传成功
      * @num {string}
      */
-    function uploadSuccess(num) {
+    function uploadSuccess(num, type) {
         $("#upl_tr_" + num).attr("status", "end");
         $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
         $("#upl_speed_" + num).html("");
@@ -323,8 +331,12 @@ define(function (require, exports, module) {
         }
         if (status == "end") {
             $("#box_fileList").attr("status", "end");
-            var mtrType = MTR.mtrList().mtrType;
-            MTR.loadPage(1, mtrType);
+            if (type == "import") {
+                CHANNELLIST.loadPage();
+            } else {
+                var mtrType = MTR.mtrList().mtrType;
+                MTR.loadPage(1, mtrType);
+            }
         }
     }
 
