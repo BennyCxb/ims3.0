@@ -57,6 +57,9 @@ define(function (require, exports, module) {
             case "Live":
                 $("#mtrSearch").attr("placeholder", "搜索直播");
                 break;
+            case "WebUrl":
+                $("#mtrSearch").attr("placeholder", "搜索在线网页");
+                break;
             case "Office":
                 $("#mtrSearch").attr("placeholder", "搜索Office/PDF");
                 break;
@@ -303,6 +306,10 @@ define(function (require, exports, module) {
         $('#mtr_addLive').click(function () {
             openLive();
         })
+        // 添加在线网页按钮点击
+        $('#mtr_addURL').click(function () {
+            openURl();
+        })
         //加载视频列表
         $('#mtrVideo').click(function () {
             exports.loadPage(1, "Video");
@@ -322,6 +329,10 @@ define(function (require, exports, module) {
         //加载直播列表
         $('#mtrLive').click(function () {
             exports.loadPage(1, "Live");
+        })
+        //加载直播列表
+        $('#mtrWebUrl').click(function () {
+            exports.loadPage(1, "WebUrl");
         })
         //加载Office列表
         $('#mtrOffice').click(function () {
@@ -657,6 +668,14 @@ define(function (require, exports, module) {
      */
     function openLive() {
         var page = "resources/pages/materials/materials_addLive.html";
+        UTIL.cover.load(page);
+    }
+
+    /**
+     * 打开在线网页编辑窗口
+     */
+    function openURl() {
+        var page = "resources/pages/materials/materials_addURL.html";
         UTIL.cover.load(page);
     }
 

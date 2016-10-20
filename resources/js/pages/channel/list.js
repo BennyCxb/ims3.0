@@ -252,6 +252,9 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * 复制频道
+     */
     function copyChannel() {
         var data = JSON.stringify({
             action: 'copychannel',
