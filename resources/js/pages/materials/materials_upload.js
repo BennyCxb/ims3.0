@@ -8,6 +8,7 @@ define(function (require, exports, module) {
         Qiniu_UploadUrl = "",
         qiniu_url = "",
         domain = "";
+    var uploadType;
 
     exports.init = function () {
         var DispClose = false;
@@ -71,12 +72,15 @@ define(function (require, exports, module) {
             var trLeng = $("#Tbe_filesList tr").length - 1;
             for (var x = trLeng, y = trLeng + 1, z = 0; x < $("#file")[0].files.length + trLeng; x++, y++, z++) {
                 var file = $("#file")[0].files[z];
-                var tr = '<tr id="upl_tr_' + x + '" status><td>' + y + '</td><td id="upl_mtrName">' + file.name + '</td>' +
-                    '<td><div class="progress progress-xs progress-striped active">' +
-                    '<div id="progressbar_' + x + '" class="progress-bar progress-bar-primary" style="width: 0%"></div></div></td>' +
-                    '<td id="upl_speed_' + x + '"></td>' +
-                    '<td id="upl_status_' + x + '"><a class="upl_cancle">取消上传</td></tr>';
-                $("#Tbe_filesList tbody").append(tr);
+                var fileExtension = file.name.substring(file.name.lastIndexOf('.') + 1);
+                if ((uploadType == "import" && fileExtension == "zip") || (uploadType == "upload" && fileExtension != "zip")) {
+                    var tr = '<tr id="upl_tr_' + x + '" status><td>' + y + '</td><td id="upl_mtrName">' + file.name + '</td>' +
+                        '<td><div class="progress progress-xs progress-striped active">' +
+                        '<div id="progressbar_' + x + '" class="progress-bar progress-bar-primary" style="width: 0%"></div></div></td>' +
+                        '<td id="upl_speed_' + x + '"></td>' +
+                        '<td id="upl_status_' + x + '"><a class="upl_cancle">取消上传</td></tr>';
+                    $("#Tbe_filesList tbody").append(tr);
+                }
             }
             //取消上传
             $(".upl_cancle").click(function () {
@@ -171,9 +175,13 @@ define(function (require, exports, module) {
      * @constructor
      */
     function Qiniu_upload(f, num) {
+        var fileExtension = f.name.substring(f.name.lastIndexOf('.') + 1);
+        if ((uploadType == "import" && fileExtension != "zip") || (uploadType == "upload" && fileExtension == "zip")) {
+            alert(file.name + " 无法上传该格式文件");
+            return false;
+        }
         var xhr = new XMLHttpRequest();
         var formData, startDate;
-        var fileExtension = f.name.substring(f.name.lastIndexOf('.') + 1);
         formData = new FormData();
         if (uploadQiniu == "0" && fileExtension == "zip") {                 //导入离线包
             xhr.open('POST', CONFIG.Resource_UploadURL, true);
@@ -372,5 +380,9 @@ define(function (require, exports, module) {
             + seperator1 + strDate + " " + strHour + seperator2
             + strMin + seperator2 + strSec;
         return currentdate;
+    }
+
+    exports.uploadType = function (type) {
+        uploadType = type;
     }
 })

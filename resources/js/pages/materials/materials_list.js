@@ -286,7 +286,9 @@ define(function (require, exports, module) {
     function bind() {
         // 上传文件按钮点击
         $('#mtr_upload').click(function () {
+            $('#file').attr("accept", "image/*, audio/*, video/*, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf");
             $('#file').trigger("click");
+            MTRU.uploadType("upload");
         })
         $("#file").unbind("change").change(function () {
             if ($("#page_upload").children().length == 0) {

@@ -150,10 +150,10 @@ define(function (require, exports, module) {
             $(self).iCheck('check');
             onSelectedItemChanged();
         });
-        // $('#channel-table').delegate('.btn-channel-detail', 'click', function (ev) {
-        //     var channelId = getChannelId(ev.target);
-        //     ev.stopPropagation();
-        // });
+        $('#channel-table').delegate('.btn-channel-detail', 'click', function (ev) {
+            var channelId = getChannelId(ev.target);
+            ev.stopPropagation();
+        });
         $('#channel-list-controls .select-all').click(function (ev) {
             var hasUncheckedItems = false;
             $('#channel-table div').each(function (idx, el) {
@@ -286,7 +286,9 @@ define(function (require, exports, module) {
     function importOffline() {
         // 上传文件按钮点击
         $('#channel-list-controls .btn-import-offline').click(function () {
+            $('#file').attr("accept", ".zip");
             $('#file').trigger("click");
+            MTRU.uploadType("import");
         })
         $("#file").unbind("change").change(function () {
             if ($("#page_upload").children().length == 0) {
@@ -429,24 +431,30 @@ define(function (require, exports, module) {
                             portStatus = '';
                             break;
                         case 1:
-                            portStatus = '等待导出';
+                            portStatus = '等待生成';
                             break;
                         case 2:
-                            portStatus = '导出中';
+                            portStatus = '生成中';
                             break;
                         case 3:
-                            portStatus = '导出成功';
+                            portStatus = '生成成功';
                             break;
                         case 4:
-                            portStatus = '导出失败';
+                            portStatus = '生成失败';
                             break;
                         default:
                             break;
                     }
 
-                    chn_operation_td = '<td class="chn_operation">' +
-                        '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">下载</a>'+
-                        '</td>';
+                    if (chnData[x].URL == null) {
+                        chn_operation_td = '<td class="chn_operation">' +
+                            '</td>';
+                    } else {
+                        chn_operation_td = '<td class="chn_operation">' +
+                            '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">下载</a>'+
+                            '</td>';
+                    }
+
                     if (util.getLocalParameter('config_checkSwitch') == '1') {
                         var checkStatus;
                         check_status = "check_status=" + chnData[x].CheckLevel;
@@ -512,6 +520,7 @@ define(function (require, exports, module) {
 
         //校验批量操作的审核功能
         function checkCheckBtns() {
+            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
             if (util.getLocalParameter('config_checkSwitch') == '0') {
                 var checked = $("#channel-table input[type='checkBox']:checked");
                 //判断选中个数
@@ -520,6 +529,11 @@ define(function (require, exports, module) {
                     $('#channel-list-controls .btn-publish').attr('disabled', true);
                     $('#channel-list-controls .btn-copy').attr('disabled', true);
                     $('#channel-list-controls .btn-delete').prop('disabled', true);
+                    if (checked.length == 0) {
+                        $("#channel-list-controls .btn-export-offline").attr('disabled', true);
+                    } else {
+                        $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
+                    }
                 } else {
                     $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                     $('#channel-list-controls .btn-publish').attr('disabled', false);
@@ -538,6 +552,17 @@ define(function (require, exports, module) {
                         $('#channel-list-controls .btn-publish').attr('disabled', true);
                         $('#channel-list-controls .btn-copy').attr('disabled', true);
                         $('#channel-list-controls .btn-delete').prop('disabled', true);
+                        if (checked.length == 0) {
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
+                        } else {
+                            $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
+                            checked.each(function (index, el) {
+                                if ($(el).parents("tr").attr('check_status') != '2') {
+                                    $("#channel-list-controls .btn-export-offline").attr('disabled', true);
+                                    return false;
+                                }
+                            })
+                        }
                     } else {
                         //已通过
                         if ($(checked).parent().parent().parent().attr('check_status') == '2') {
@@ -552,6 +577,7 @@ define(function (require, exports, module) {
                             } else {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
+                            $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
                         }
                         //未通过
                         else if ($(checked).parent().parent().parent().attr('check_status') == '3') {
@@ -566,6 +592,7 @@ define(function (require, exports, module) {
                             } else {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                         //待审核
                         else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
@@ -580,6 +607,7 @@ define(function (require, exports, module) {
                             } else {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                         //待提交
                         else {
@@ -594,6 +622,7 @@ define(function (require, exports, module) {
                             } else {
                                 $('#channel-list-controls .btn-delete').prop('disabled', true);
                             }
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                     }
                 } else {
@@ -606,6 +635,17 @@ define(function (require, exports, module) {
                         $('#channel-list-controls .btn-publish').attr('disabled', true);
                         $('#channel-list-controls .btn-copy').attr('disabled', true);
                         $('#channel-list-controls .btn-delete').prop('disabled', true);
+                        if (checked.length == 0) {
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
+                        } else {
+                            $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
+                            checked.each(function (index, el) {
+                                if ($(el).parents("tr").attr('check_status') != '2') {
+                                    $("#channel-list-controls .btn-export-offline").attr('disabled', true);
+                                    return false;
+                                }
+                            })
+                        }
                     } else {
                         //已通过和未通过
                         if ($(checked).parent().parent().parent().attr('check_status') == '2') {
@@ -615,6 +655,7 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish-later').attr('disabled', false);
                             $('#channel-list-controls .btn-publish').attr('disabled', false);
                             $('#channel-list-controls .btn-copy').attr('disabled', false);
+                            $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
                         }
                         else if ($(checked).parent().parent().parent().attr('check_status') == '3') {
                             $('#chn_submit').attr('disabled', true);
@@ -623,6 +664,7 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
                             $('#channel-list-controls .btn-copy').attr('disabled', false);
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                         //待审核
                         else if ($(checked).parent().parent().parent().attr('check_status') == '1') {
@@ -632,6 +674,7 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
                             $('#channel-list-controls .btn-copy').attr('disabled', false);
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                         //待提交
                         else {
@@ -641,6 +684,7 @@ define(function (require, exports, module) {
                             $('#channel-list-controls .btn-publish-later').attr('disabled', true);
                             $('#channel-list-controls .btn-publish').attr('disabled', true);
                             $('#channel-list-controls .btn-copy').attr('disabled', false);
+                            $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                         }
                     }
                 }
