@@ -259,7 +259,7 @@ __p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; wid
 ((__t=(height))==null?'':__t)+
 '" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">背景色</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \n		    var realLength = 0;  \n		    for (var i = 0; i < str.length; i++){  \n		        var charCode = str.charCodeAt(i);\n		        \n		        if (charCode >= 0 && charCode <= 128)   \n		        realLength += 1;  \n		        else   \n		        realLength += 2;\n\n		    }\n\n		    return realLength;  \n		}  \n\n\n	function directName(obj,hint){\n		//get name\n		var $obj = $(obj);\n		var t = $obj.val();\n		var length = getLength(t);\n		var width = parseFloat($obj.css(\'font-size\'));\n		var left = length * width/2 +47;\n\n		//get hint\n		var $hint = $(hint);\n		\n		//ux fix\n		$obj.css(\'cursor\',\'pointer\');\n\n		//reposition\n		$hint.css(\'left\',left);\n\n		//event\n		$hint.click(function(){\n			$obj.focus().val(t);\n		});\n		$obj.focus(function(){\n			$hint.css(\'display\',\'none\');\n			$obj.css(\'cursor\',\'\');\n		});\n		$obj.blur(function(){\n			$hint.css(\'display\',\'\');\n			$obj.css(\'cursor\',\'pointer\');\n			//reposition\n			var t = $obj.val();\n			var length = getLength(t);\n			var width = parseFloat($obj.css(\'font-size\'));\n			var left = length * width/2 +47;\n			$hint.css(\'left\',left);\n		});\n	}\n\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
 }
 return __p;
 };
@@ -293,7 +293,7 @@ return __p;
 exports['layout_edit_widget_property']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<!-- <label>\n        <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp视频控件\n    </label>\n--> <li style="display: none"> <label>当前控件:</label> <input type="text" readonly="readonly" value="'+
+__p+='<!-- <label>\r\n        <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp视频控件\r\n    </label>\r\n--> <li style="display: none"> <label>当前控件:</label> <input type="text" readonly="readonly" value="'+
 ((__t=(type))==null?'':__t)+
 '"> </li> <div class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">x</label> <input type="number" value="'+
 ((__t=(left))==null?'':__t)+
@@ -303,7 +303,7 @@ __p+='<!-- <label>\n        <i class="glyphicon glyphicon glyphicon-film"></i>&n
 ((__t=(width))==null?'':__t)+
 '" class="form-control" data-property-id="widget-width" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">高</label> <input type="number" value="'+
 ((__t=(height))==null?'':__t)+
-'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">层</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">上移一层</button> <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">下移一层</button> </div> <!-- <li>\n    <button class="btn-layout-editor-delete-widget">删除控件</button>\n</li> -->';
+'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">层</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">上移一层</button> <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">下移一层</button> </div> <!-- <li>\r\n    <button class="btn-layout-editor-delete-widget">删除控件</button>\r\n</li> -->';
 }
 return __p;
 };
@@ -346,9 +346,32 @@ __p+='<tr data-layout-id="'+
 ((__t=(background_color))==null?'':__t)+
 '</td>--> <td class="mod_user_center">'+
 ((__t=(operator))==null?'':__t)+
-'</td> <td class="mod_create_time_center">'+
+'</td> <td class="mod_create_time_center create-time">'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
+}
+return __p;
+};
+exports['material_table_row']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<tr data-material-id="'+
+((__t=(id))==null?'':__t)+
+'"> <td class="mtr_checkbox" style="width: 32px"><input type="checkbox"></td> <td class="mtr_name"><b><a href="#layout/edit?id='+
+((__t=(id))==null?'':__t)+
+'" class="btn-table-detail">'+
+((__t=(name))==null?'':__t)+
+'</a></b></td> <td class="mtr_check"></td> <td class="mtr_size">'+
+((__t=(width))==null?'':__t)+
+'×'+
+((__t=(height))==null?'':__t)+
+'</td> <td class="mtr_time">'+
+((__t=(operator))==null?'':__t)+
+'</td> <td class="mtr_status">'+
+((__t=(operator))==null?'':__t)+
+'</td> <td class="mtr_create_time_center">'+
+((__t=(create_time))==null?'':__t)+
+'</td> </tr>';
 }
 return __p;
 };});

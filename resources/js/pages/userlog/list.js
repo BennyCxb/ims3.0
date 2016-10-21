@@ -81,8 +81,8 @@ define(function (require, exports, module) {
             $("#userlogTable tbody").append('<tr>' +
             '<th class="User">用户名</th>' +
             '<th class="OperationObject">操作对象</th>' +
-            '<th class="Datetime">时间</th>' +
             '<th class="Operation">操作</th>' +
+                '<th class="Datetime create-time">时间</th>' +
                 //'<th class="Detail">详情</th>'+
             '</tr>');
             if (rolData.length != 0) {
@@ -90,8 +90,8 @@ define(function (require, exports, module) {
                 var roltr = '<tr>' +
                     '<td class="User">' + rolData[x].User + '</td>' +
                     '<td class="OperationObject">' + rolData[x].OperationObject + '</td>' +
-                    '<td class="Datetime">' + rolData[x].Datetime + '</td>' +
                     '<td class="Operation">' + rolData[x].Operation + '</td>' +
+                    '<td class="Datetime create-time">' + rolData[x].Datetime + '</td>' +
                         //'<td class="Detail">' + rolData[x].Detail + '</td>' +
                     '</tr>';
                 $("#userlogTable tbody").append(roltr);

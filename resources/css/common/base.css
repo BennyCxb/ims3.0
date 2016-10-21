@@ -723,6 +723,10 @@ a {
     text-align: center;
 }
 
+.chn_operation {
+    text-align: center;
+}
+
 /*用户列表页面*/
 .role_name, .users_email, .user_resetPwd {
     text-align: center;
@@ -1169,4 +1173,9 @@ a {
 #CO-syncArea > .form-group {
     margin-right: 0;
     margin-left: 0;
+}
+
+
+.create-time {
+    width: 180px;
 }

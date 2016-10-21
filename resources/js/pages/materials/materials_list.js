@@ -78,21 +78,31 @@ define(function (require, exports, module) {
             keyword: $('#mtrSearch').val(),
             status: status
         };
+        var action, search, _url,
+            isWebUrl = 0;
         if (mtrType == "Office") {
-            var action = "getlist";
-            var search = "status";
-            var _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
-        } else {
-            var action = "GetPage";
-            var search = "";
-            var _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+            action = "getlist";
+            search = "status";
+            _url = CONFIG.serverRoot + '/backend_mgt/v2/officeaction/';
+        }
+        // else if (mtrType == "WebUrl") {
+        //     action = "GetPage";
+        //     isWebUrl = 1;
+        //     search = "";
+        //     _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
+        // }
+        else {
+            action = "GetPage";
+            search = "";
+            _url = CONFIG.serverRoot + '/backend_mgt/v1/materials';
         }
         var data = JSON.stringify({
             action: action,
             project_name: CONFIG.projectName,
             material_type: mtrType,
             search: search,
-            Pager: pager
+            Pager: pager,
+            isWebUrl: isWebUrl
         });
 
         UTIL.ajax('post', _url, data, render);
@@ -146,7 +156,7 @@ define(function (require, exports, module) {
                 '<th class="mtr_time">时长</th>' +
                 '<th class="mtr_status">状态</th>' +
                 '<th class="mtr_uploadUser">创建人</th>' +
-                '<th class="mtr_uploadDate">创建时间</th>' +
+                '<th class="mtr_uploadDate create-time">创建时间</th>' +
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
@@ -217,7 +227,7 @@ define(function (require, exports, module) {
                         '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
                         '<td class="mtr_status">' + mtr_status + '</td>' +
                         '<td class="mtr_uploadUser">' + mtrData[x].CreateUser + '</td>' +
-                        '<td class="mtr_uploadDate">' + mtrData[x].CreateTime + '</td>' +
+                        '<td class="mtr_uploadDate create-time">' + mtrData[x].CreateTime + '</td>' +
                         '</tr>';
                     $("#mtrTable tbody").append(mtrtr);
                 }

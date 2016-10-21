@@ -420,8 +420,8 @@ define(function (require, exports, module) {
                 check_th +
                 '<th class="chn_portStatus text-center">状态</th>' +
                 '<th class="chn_create">创建人</th>' +
-                '<th class="chn_createTime">创建时间</th>' +
-                '<th class="chn_operation">操作</th>'+
+                '<th class="chn_createTime  create-time">创建时间</th>' +
+                '<th class="chn_operation text-center">操作</th>'+
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
@@ -485,7 +485,7 @@ define(function (require, exports, module) {
                         check_td +
                         '<td class="chn_portStatus text-center">' + portStatus + '</td>' +
                         '<td class="chn_create" title="' + chnData[x].CreateUserName + '">' + chnData[x].CreateUserName + '</td>' +
-                        '<td class="chn_createTime" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
+                        '<td class="chn_createTime  create-time" title="' + chnData[x].CreateTime + '">' + chnData[x].CreateTime + '</td>' +
                         chn_operation_td +
                         '</tr>';
                     $("#channel-table tbody").append(chntr);

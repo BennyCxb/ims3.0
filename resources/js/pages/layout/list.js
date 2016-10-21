@@ -176,7 +176,7 @@ define(function(require, exports, module) {
         '<th class="mod_name">模板名</th>' +
         '<th class="mod_size_center">尺寸</th>' +
         '<th class="mod_user_center">创建人</th>' +
-        '<th class="mod_create_time_center">创建时间</th>'+
+        '<th class="mod_create_time_center create-time">创建时间</th>'+
         '</tr>');
         if(json.LayoutList!=0) {
             json.LayoutList.forEach(function (el, idx, arr) {
