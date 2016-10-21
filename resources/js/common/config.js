@@ -1,5 +1,7 @@
 define(function (require, exports, module) {
     var UTIL = require("common/util.js");
+    var ZH_CN = require("common/language/zh-CN.js");
+    var EN_US = require("common/language/en-US.js");
 
     exports.userName = UTIL.getCookie("account");
     exports.serverRoot = CONFIG.requestURL;
@@ -21,4 +23,19 @@ define(function (require, exports, module) {
         page: '<li><a href="javascript:;">{{page}}</a></li>'
     }
     exports.letTimeout = 60000;
+
+    /**
+     * 语言选择
+     * @param language
+     */
+    exports.selectLanguage = function (language) {
+        exports.language = language;
+        if (exports.language == "zh-CN") {
+            exports.languageJson = ZH_CN.JSON;
+        } else if (exports.language == "en-US") {
+            exports.languageJson = EN_US.JSON;
+        }
+    }
+
+    exports.selectLanguage(UTIL.getCookie("language"));
 });

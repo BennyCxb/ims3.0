@@ -154,6 +154,17 @@ a {
     text-align: center;
 }
 
+#l_language {
+    display: block;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+
+#l_language > .active {
+    color: grey;
+}
+
 #error_m {
     display: block;
     margin-top: 10px;

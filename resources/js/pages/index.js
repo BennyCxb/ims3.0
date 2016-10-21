@@ -4,8 +4,11 @@ define(function (require, exports, module) {
 
     var username = CONFIG.userName;
     var project = CONFIG.projectName;
+    var languageJSON;
 
     exports.init = function () {
+        languageJSON = CONFIG.languageJson.index;
+        selectLanguage();
         if (CONFIG.token == undefined) {
             alert("登录验证过期，请重新登录！");
             window.location.href = "login.html";
@@ -38,6 +41,15 @@ define(function (require, exports, module) {
         $("#page_upload").css("display", "flex");
     }
 
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#repassword").html('<i class="fa fa-unlock-alt"></i>'+languageJSON.resetPassword);
+        $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>'+languageJSON.logout);
+        $("#dpUpl").attr("title", languageJSON.dpUpl);
+    }
+
     function loadPage() {
 
         var page = window.location.hash.match(/^#([^?]*)/);
@@ -55,7 +67,7 @@ define(function (require, exports, module) {
 
         //刷新菜单的焦点
         $(".sidebar-menu li").attr("class", "treeview");
-        $(".sidebar-menu li ul li").removeAttr("class");
+        // $(".sidebar-menu li ul li").removeAttr("class");
         $(".sidebar-menu").find("a").each(function () {
             if (page != null) {
                 var activeHref = "#" + page;
@@ -117,10 +129,6 @@ define(function (require, exports, module) {
                                 '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>' +
                                 '<ul class="treeview-menu">' +
                                 '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> 频道</a></li>' +
-                                    // '<li><a href="#channel/list"><i class="fa fa-circle-o"></i> 频道列表</a></li>'+
-                                    // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
-                                    // '<li><a href="#channel/list_check"><i class="fa fa-circle-o"></i> 频道审核</a></li>'+
-                                    // '<li><a href="#channel/edit"><i class="fa fa-circle-o"></i> 新建频道</a></li>'+
                                 '</ul>' +
                                 '</li>');
                         }
@@ -128,11 +136,6 @@ define(function (require, exports, module) {
                     case 3:		//资源管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".sidebar-menu").append('<li id="treeview_mtr" class="treeview">' +
-                                    //'<a href="#materials/materials_list"><i class="fa fa-server"></i><span>&nbsp;资源存储</span><i class="fa fa-angle-left pull-right"></i></a>' +
-                                    //'<ul class="treeview-menu">' +
-                                    //'<li><a href="#materials/materials_list"><i class="fa fa-book"></i> 资源</a></li>' +
-                                    //'<li><a href="#materials/materials_list_check"><i class="fa fa-book"></i> 资源审核</a></li>' +
-                                    //'</ul>' +
                                 '<a href="#materials/materials_list">' +
                                 '<i class="fa fa-server"></i> <span>资源存储</span>' +
                                 '</a>' +
@@ -160,10 +163,8 @@ define(function (require, exports, module) {
                             $(".sidebar-menu").append('<li id="treeview_user" class="treeview">' +
                                 '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>' +
                                 '<ul class="treeview-menu">' +
-                                    // '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i>审核</a></li>'+
                                 '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>' +
                                 '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>' +
-                                    //'<li><a href="#funcmodule/list"><i class="fa fa-cube"></i> 功能模块</a></li>'+
                                 '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>' +
                                 '</ul>' +
                                 '</li>');

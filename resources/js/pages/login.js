@@ -1,4 +1,31 @@
+var languageJson = {
+    zh_CN: {
+        title1: "CLEAR",
+        title2: "信息发布系统",
+        loginTitle: "登录Clear Cloud 账户",
+        loginName: "登  录"
+    },
+    en_US: {
+        title1: "CLEAR",
+        title2: "IMS",
+        loginTitle: "Login Clear Cloud Account",
+        loginName: "Sing in"
+    }
+}
+
 $(document).ready(function () {
+    var language;
+    languageStatus()
+
+    $("#l_language .language_zh").click(function () {
+        setCookie("language", "zh-CN")
+        languageStatus()
+    })
+    $("#l_language .language_en").click(function () {
+        setCookie("language", "en-US")
+        languageStatus()
+    })
+
     $("#l_version span").text(CONFIG.version);
 
     $('#submit').click(function () {
@@ -40,7 +67,31 @@ $(document).ready(function () {
             });
 
     })
-}).keydown(function(e) {
+
+    /**
+     * 判断语言
+     */
+    function languageStatus() {
+        var obj
+        if (getCookie("language") == undefined) {
+            language = CONFIG.default_language;
+        } else {
+            language = getCookie("language");
+        }
+        if (language == "zh-CN") {
+            obj = languageJson.zh_CN;
+            $("#l_language .language_zh").addClass("active").attr("disabled", true);
+            $("#l_language .language_en").removeAttr("disabled").removeClass("active");
+        } else if (language == "en-US") {
+            obj = languageJson.en_US;
+            $("#l_language .language_en").addClass("active").attr("disabled", true);
+            $("#l_language .language_zh").removeAttr("disabled").removeClass("active");
+        }
+        $(".login-logo").html('<b>' + obj.title1 + '</b>&nbsp;' + obj.title2);
+        $(".login-box-body h3").html(obj.loginTitle);
+        $(".login-box-body #submit").val(obj.loginName);
+    }
+}).keydown(function (e) {
     if (e.keyCode == 13) {
         $("#submit").trigger("click");
     }
