@@ -47,6 +47,7 @@ define(function (require, exports, module) {
      * 语言切换绑定
      */
     function selectLanguage() {
+        $("title").html(languageJSON.title);
         $("#repassword").html('<i class="fa fa-unlock-alt"></i>'+languageJSON.resetPassword);
         $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>'+languageJSON.logout);
         $("#dpUpl").attr("title", languageJSON.dpUpl);
