@@ -10,7 +10,7 @@ define(function (require, exports, module) {
         languageJSON = CONFIG.languageJson.index;
         selectLanguage();
         if (CONFIG.token == undefined) {
-            alert("登录验证过期，请重新登录！");
+            alert(languageJSON.errorRelogin);
             window.location.href = "login.html";
             return false;
         }
@@ -108,6 +108,7 @@ define(function (require, exports, module) {
         });
         var url = CONFIG.serverRoot + '/backend_mgt/v2/userdetails';
         UTIL.ajax('post', url, data, function (json) {
+            var menuJson = languageJSON.menu;
             var jdtData = json.FunctionModules;
             for (var a = 0; a < jdtData.length; a++) {
                 var moduleId = jdtData[a].ModuleID;
@@ -115,10 +116,10 @@ define(function (require, exports, module) {
                     case 1:		//终端管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_term" class="menutree">' +
-                                '<a href="#"><i class="fa fa-dashboard"></i> <span>控制台</span></a>' +
+                                '<a href="#"><i class="fa fa-dashboard"></i> <span>' + menuJson.console + '</span></a>' +
                                 '<ul class="menutree-menu">' +
-                                '<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> 终端</a></li>' +
-                                '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> 日志</a></li>' +
+                                '<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> ' + menuJson.termList + '</a></li>' +
+                                '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> ' + menuJson.termLog + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                         }
@@ -126,9 +127,9 @@ define(function (require, exports, module) {
                     case 2:		//频道管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
-                                '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span></a>' +
+                                '<a href="#"><i class="fa fa-rocket"></i><span> ' + menuJson.releases + '</span></a>' +
                                 '<ul class="menutree-menu">' +
-                                '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> 频道</a></li>' +
+                                '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> ' + menuJson.channelList + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                         }
@@ -136,9 +137,9 @@ define(function (require, exports, module) {
                     case 3:		//资源管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_mtr" class="menutree">' +
-                                '<a href="#"><i class="fa fa-server"></i> <span>资源管理</span></a>' +
+                                '<a href="#"><i class="fa fa-server"></i><span> ' + menuJson.resource + '</span></a>' +
                                 '<ul class="menutree-menu">' +
-                                '<li><a href="#materials/materials_list"><i class="fa fa-newspaper-o"></i> 资源存储</a></li>' +
+                                '<li><a href="#materials/materials_list"><i class="fa fa-newspaper-o"></i> ' + menuJson.resourceList + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                         }
@@ -149,24 +150,24 @@ define(function (require, exports, module) {
                         if (jdtData[a].ReadWriteAuth == 1) {
                             if ($("#treeview_channel ul").length == 0) {
                                 $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
-                                    '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;模版</span></a>' +
+                                    '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;' + menuJson.layout + '</span></a>' +
                                     '<ul class="menutree-menu">' +
-                                    '<li><a href="#layout/list"><i class="fa fa-object-group"></i> 模版列表</a></li>' +
+                                    '<li><a href="#layout/list"><i class="fa fa-object-group"></i> ' + menuJson.layoutList + '</a></li>' +
                                     '</ul>' +
                                     '</li>');
                             } else {
-                                $("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-object-group"></i>节目模版</a></li>');
+                                $("#treeview_channel ul").append('<li><a href="#layout/list"><i class="fa fa-object-group"></i> ' + menuJson.layoutList + '</a></li>');
                             }
                         }
                         break;
                     case 6:		//用户管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_user" class="menutree">' +
-                                '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span></a>' +
+                                '<a href="#"><i class="fa fa-key"></i><span>&nbsp;' + menuJson.administratorTools + '</span></a>' +
                                 '<ul class="menutree-menu">' +
-                                '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>' +
-                                '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>' +
-                                '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>' +
+                                '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> ' + menuJson.userList + '</a></li>' +
+                                '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> ' + menuJson.roleList + '</a></li>' +
+                                '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> ' + menuJson.oplog + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                             break;
@@ -187,7 +188,7 @@ define(function (require, exports, module) {
             // })
 
             if ($(".box-index-menu li").length == 0) {
-                alert("您没有任何权限，请联系管理员！");
+                alert(languageJSON.errorNoPermissions);
             } else {
                 loadPage();
             }
@@ -217,10 +218,10 @@ define(function (require, exports, module) {
                         setUserConfig_check();
                     }
                 } else if (data.rescode === '401' && data.errInfo == "Token Unauthorized!"){
-                    alert("登录验证过期，请重新登录！");
+                    alert(languageJSON.errorRelogin);
                     window.location.href = "login.html";
                 } else {
-                    alert("请重新登录！");
+                    alert(languageJSON.errorRelogin2);
                     window.location.href = "login.html";
                 }
             }
