@@ -3,18 +3,25 @@ var languageJson = {
         title1: "CLEAR",
         title2: "信息发布系统",
         loginTitle: "登录Clear Cloud 账户",
-        loginName: "登  录"
+        loginName: "登  录",
+        error_prompt1: "请您输入用户名！",
+        error_prompt2: "用户名格式不正确！例：xxx@develop",
+        error_prompt3: "请您输入密码！"
     },
     en_US: {
         title1: "CLEAR",
         title2: "IMS",
         loginTitle: "Login Clear Cloud Account",
-        loginName: "Sing in"
+        loginName: "Sing in",
+        error_prompt1: "Please enter user name!",
+        error_prompt2: "User name format is not correct! Such as：xxx@develop",
+        error_prompt3: "Please enter your password!"
     }
 }
 
 $(document).ready(function () {
-    var language;
+    var language,
+        obj;
     languageStatus()
 
     $("#l_language .language_zh").click(function () {
@@ -31,13 +38,13 @@ $(document).ready(function () {
     $('#submit').click(function () {
         $("#error_m").html("");
         if ($("#username").val() == "") {
-            $("#error_m").html("请您输入用户名！");
+            $("#error_m").html(obj.error_prompt1);
             return false;
         } else if ($("#username").val().substring(0, $("#username").val().indexOf('@')) == "") {
-            $("#error_m").html("\n用户名格式不正确！例：xxx@develop");
+            $("#error_m").html(obj.error_prompt2);
             return false;
         } else if ($("#password").val() == "") {
-            $("#error_m").html("\n请您输入密码！");
+            $("#error_m").html(obj.error_prompt3);
             return false;
         }
         var account = $("#username").val().split('@')[0];
@@ -72,7 +79,6 @@ $(document).ready(function () {
      * 判断语言
      */
     function languageStatus() {
-        var obj
         if (getCookie("language") == undefined) {
             language = CONFIG.default_language;
         } else {
@@ -82,10 +88,12 @@ $(document).ready(function () {
             obj = languageJson.zh_CN;
             $("#l_language .language_zh").addClass("active").attr("disabled", true);
             $("#l_language .language_en").removeAttr("disabled").removeClass("active");
+            setCookie("language", "zh-CN")
         } else if (language == "en-US") {
             obj = languageJson.en_US;
             $("#l_language .language_en").addClass("active").attr("disabled", true);
             $("#l_language .language_zh").removeAttr("disabled").removeClass("active");
+            setCookie("language", "en-US")
         }
         $(".login-logo").html('<b>' + obj.title1 + '</b>&nbsp;' + obj.title2);
         $(".login-box-body h3").html(obj.loginTitle);

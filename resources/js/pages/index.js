@@ -35,7 +35,9 @@ define(function (require, exports, module) {
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
     };
-    //上传弹层页面
+    /**
+     * 上传弹层页面
+     */
     exports.upl = function () {
         $("#page_upload").load("resources/pages/materials/materials_upload.html");
         $("#page_upload").css("display", "flex");
@@ -51,32 +53,30 @@ define(function (require, exports, module) {
     }
 
     function loadPage() {
-
         var page = window.location.hash.match(/^#([^?]*)/);
-
         //page = page === null ? 'terminal/list' : page[1];
         if (page == null) {
-            if ($(".sidebar-menu li:eq(0) ul").length == 0) {
-                page = $(".sidebar-menu li:eq(0)").find("a").attr("href").substring(1);
+            if ($(".box-index-menu li:eq(0) ul").length == 0) {
+                page = $(".box-index-menu li:eq(0)").find("a").attr("href").substring(1);
             } else {
-                page = $(".sidebar-menu li:eq(0) ul li:eq(0)").find("a").attr("href").substring(1);
+                page = $(".box-index-menu li:eq(0) ul li:eq(0)").find("a").attr("href").substring(1);
             }
         } else {
             page = page[1];
         }
 
         //刷新菜单的焦点
-        $(".sidebar-menu li").attr("class", "treeview");
-        // $(".sidebar-menu li ul li").removeAttr("class");
-        $(".sidebar-menu").find("a").each(function () {
+        $(".box-index-menu li").attr("class", "menutree");
+        $(".box-index-menu li ul li").removeAttr("class");
+        $(".box-index-menu").find("a").each(function () {
             if (page != null) {
                 var activeHref = "#" + page;
                 if ($(this).attr("href") == activeHref) {
                     if ($(this).parent().attr("class") == null) {					//二级菜单
                         $(this).parent().attr("class", "active");
-                        $(this).parent().parent().parent().attr("class", "treeview active");
-                    } else if ($(this).parent().attr("class") == "treeview") {	//一级菜单
-                        $(this).parent().attr("class", "treeview active");
+                        $(this).parent().parent().parent().attr("class", "menutree active");
+                    } else if ($(this).parent().attr("class") == "menutree") {	//一级菜单
+                        $(this).parent().attr("class", "menutree active");
                     }
                 }
             }
@@ -114,9 +114,9 @@ define(function (require, exports, module) {
                 switch (moduleId) {
                     case 1:		//终端管理
                         if (jdtData[a].ReadWriteAuth == 1) {
-                            $(".sidebar-menu").append('<li id="treeview_term" class="treeview">' +
-                                '<a href="#"><i class="fa fa-dashboard"></i> <span>控制台</span> <i class="fa fa-angle-left pull-right"></i></a>' +
-                                '<ul class="treeview-menu">' +
+                            $(".box-index-menu").append('<li id="treeview_term" class="menutree">' +
+                                '<a href="#"><i class="fa fa-dashboard"></i> <span>控制台</span></a>' +
+                                '<ul class="menutree-menu">' +
                                 '<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> 终端</a></li>' +
                                 '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> 日志</a></li>' +
                                 '</ul>' +
@@ -125,9 +125,9 @@ define(function (require, exports, module) {
                         break;
                     case 2:		//频道管理
                         if (jdtData[a].ReadWriteAuth == 1) {
-                            $(".sidebar-menu").append('<li id="treeview_channel" class="treeview">' +
-                                '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span><i class="fa fa-angle-left pull-right"></i></a>' +
-                                '<ul class="treeview-menu">' +
+                            $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
+                                '<a href="#"><i class="fa fa-rocket"></i><span>&nbsp;发布管理</span></a>' +
+                                '<ul class="menutree-menu">' +
                                 '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> 频道</a></li>' +
                                 '</ul>' +
                                 '</li>');
@@ -135,10 +135,11 @@ define(function (require, exports, module) {
                         break;
                     case 3:		//资源管理
                         if (jdtData[a].ReadWriteAuth == 1) {
-                            $(".sidebar-menu").append('<li id="treeview_mtr" class="treeview">' +
-                                '<a href="#materials/materials_list">' +
-                                '<i class="fa fa-server"></i> <span>资源存储</span>' +
-                                '</a>' +
+                            $(".box-index-menu").append('<li id="treeview_mtr" class="menutree">' +
+                                '<a href="#"><i class="fa fa-server"></i> <span>资源管理</span></a>' +
+                                '<ul class="menutree-menu">' +
+                                '<li><a href="#materials/materials_list"><i class="fa fa-newspaper-o"></i> 资源存储</a></li>' +
+                                '</ul>' +
                                 '</li>');
                         }
                         break;
@@ -147,9 +148,9 @@ define(function (require, exports, module) {
                     case 5:		//模版管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             if ($("#treeview_channel ul").length == 0) {
-                                $(".sidebar-menu").append('<li id="treeview_channel" class="treeview">' +
-                                    '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;模版</span><i class="fa fa-angle-left pull-right"></i></a>' +
-                                    '<ul class="treeview-menu">' +
+                                $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
+                                    '<a href="#"><i class="glyphicon glyphicon-user"></i><span>&nbsp;模版</span></a>' +
+                                    '<ul class="menutree-menu">' +
                                     '<li><a href="#layout/list"><i class="fa fa-object-group"></i> 模版列表</a></li>' +
                                     '</ul>' +
                                     '</li>');
@@ -160,9 +161,9 @@ define(function (require, exports, module) {
                         break;
                     case 6:		//用户管理
                         if (jdtData[a].ReadWriteAuth == 1) {
-                            $(".sidebar-menu").append('<li id="treeview_user" class="treeview">' +
-                                '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span><i class="fa fa-angle-left pull-right"></i></a>' +
-                                '<ul class="treeview-menu">' +
+                            $(".box-index-menu").append('<li id="treeview_user" class="menutree">' +
+                                '<a href="#"><i class="fa fa-key"></i><span>&nbsp;管理员工具</span></a>' +
+                                '<ul class="menutree-menu">' +
                                 '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> 用户管理</a></li>' +
                                 '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> 角色权限</a></li>' +
                                 '<li><a id="menu_userlog" href="#userlog/list"><i class="fa fa-eye"></i> 操作日志</a></li>' +
@@ -174,18 +175,18 @@ define(function (require, exports, module) {
                         break;
                 }
             }
-            $(".sidebar-menu li:eq(0)").attr("class", "treeview active");
+            $(".box-index-menu li:eq(0)").attr("class", "menutree active");
             window.onhashchange = loadPage;
 
             //选择资源
-            $("#treeview_mtr").click(function () {
-                $(".sidebar-menu li").attr("class", "treeview");
-                $(".sidebar-menu li ul").css("display", "none");
-                $("#treeview_mtr").attr("class", "treeview active");
-                loadPage();
-            })
+            // $("#treeview_mtr").click(function () {
+            //     $(".box-index-menu li").attr("class", "menutree");
+            //     // $(".box-index-menu li ul").css("display", "none");
+            //     $("#treeview_mtr").attr("class", "menutree active");
+            //     loadPage();
+            // })
 
-            if ($(".sidebar-menu li").length == 0) {
+            if ($(".box-index-menu li").length == 0) {
                 alert("您没有任何权限，请联系管理员！");
             } else {
                 loadPage();
