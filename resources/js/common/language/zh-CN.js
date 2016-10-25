@@ -99,6 +99,7 @@ define(function (require, exports, module) {
             gain: "获取",
             gain_wait: "获取中，请稍后",
             save: "保存",
+            cancel: "取消",
             everyday: "每天",
             Monday: "周一",
             Tuesday: "周二",
@@ -136,7 +137,15 @@ define(function (require, exports, module) {
             al_gainTermInfoFaild: "获取终端配置信息失败",
             al_gainTermInfoCFFaild: "获取终端分类配置信息失败",
             cap_title: "此窗口是对该分类下所有终端的统一配置",
-            cap_foot: "配置保存中，终端数量较多，请等待..."
+            cap_foot: "配置保存中，终端数量较多，请等待...",
+            al_selectTt: "请选择终端分类",
+            al_gainTtFaild: "获取终端分类失败",
+            al_selectTtT: "请选择终端分类/终端",
+            all: "全部",
+            pl_searchTerm: "搜索终端",
+            screenshots: "截屏",
+            screenshotting: "截屏中",
+            screenshotsTimeout: "截屏超时，请重试"
         }
     }
 })
