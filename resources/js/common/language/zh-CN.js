@@ -146,6 +146,23 @@ define(function (require, exports, module) {
             screenshots: "截屏",
             screenshotting: "截屏中",
             screenshotsTimeout: "截屏超时，请重试"
+        },
+        termLog: {
+            title: "日志",
+            title_right: "终端MAC信息可以在 控制台->终端 里找到",
+            pl_search: "终端mac搜索",
+            termLog: "终端日志",
+            termName: "终端名",
+            termMac: "终端MAC",
+            eventType: "类型",
+            event: "日志内容",
+            date: "操作日期",
+            play: "播放",
+            pause: "暂停",
+            stop: "停止",
+            startPlay: "开始播放",
+            stopPlay: "停止播放",
+            empty: "空",
         }
     }
 })
