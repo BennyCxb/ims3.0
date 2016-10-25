@@ -22,7 +22,8 @@ define(function (require, exports, module) {
         _mainServer,
         _programSync,
         _downloadLog,
-        _downloadLogCheck;
+        _downloadLogCheck,
+        languageJSON;
 
     function checkDownloadLog() {
         if (!$('#CO-log').hasClass('disabled')) {
@@ -52,14 +53,14 @@ define(function (require, exports, module) {
                     $('#CO-log-download').attr('download', 'termlog');
                     $('#CO-log-download').show();
                     $('#CO-log').removeClass('disabled');
-                    $('#CO-log').html('获取');
+                    $('#CO-log').html(languageJSON.gain);
                 }
             }
         );
     }
 
     exports.init = function () {
-
+        selectLanguage();
         inputInit();
         loadInfo();
 
@@ -98,11 +99,11 @@ define(function (require, exports, module) {
                     JSON.stringify(data),
                     function (data) {
                         if (data.rescode !== '200') {
-                            alert('下载日志失败，请重试');
+                            alert(languageJSON.al_dlLogFaild);
                             $('#CO-log').removeClass('disabled');
-                            $('#CO-log').html('获取');
+                            $('#CO-log').html(languageJSON.gain);
                         } else {
-                            $('#CO-log').html('获取中，请稍后...');
+                            $('#CO-log').html(languageJSON.gain_wait + '...');
                             $('#CO-log-download').hide();
 
                             checkDownloadLog();
@@ -119,9 +120,9 @@ define(function (require, exports, module) {
                                 }
 
                                 // console.log('check getlog wait time');
-                                alert('获取日志超时，请重试');
+                                alert(languageJSON.al_gainLogFaild);
                                 $('#CO-log').removeClass('disabled');
-                                $('#CO-log').html('获取');
+                                $('#CO-log').html(languageJSON.gain);
                             }, CONFIG.termGetLogWait)
 
                         }
@@ -178,30 +179,30 @@ define(function (require, exports, module) {
             if (workSwitch === 1) {
                 workSeqments.on = 1;
                 if (workWeekRepeat.length === 0) {
-                    alert('请选择工作区间重复周期');
+                    alert(languageJSON.al_selectWorkCycle);
                     $('#CO-workWeekRepeat').focus();
                     return;
                 }
                 if (workStart === '') {
-                    alert('请填入工作区间开始时间');
+                    alert(languageJSON.al_selectWorkStart);
                     $('#CO-workStart').focus();
                     return;
                 }
 
                 if (!$('#CO-workStart').inputmask("isComplete")) {
-                    alert('请填入正确的工作区间开始时间');
+                    alert(languageJSON.al_cfWorkStart);
                     $('#CO-workStart').focus();
                     return;
                 }
 
                 if (workEnd === '') {
-                    alert('请填入工作区间结束时间');
+                    alert(languageJSON.al_selectWorkEnd);
                     $('#CO-workEnd').focus();
                     return;
                 }
 
                 if (!$('#CO-workEnd').inputmask("isComplete")) {
-                    alert('请填入正确的工作区间结束时间');
+                    alert(languageJSON.al_cfWorkEnd);
                     $('#CO-workEnd').focus();
                     return;
                 }
@@ -215,7 +216,7 @@ define(function (require, exports, module) {
                 workDuration = Math.ceil((workEnd - workStart) / 1000);
 
                 if ((workEnd - workStart) < 0) {
-                    alert('工作区间结束时间不能早于开始时间');
+                    alert(languageJSON.al_workStartEnd);
                     $('#CO-workEnd').focus();
                     return;
                 }
@@ -244,25 +245,25 @@ define(function (require, exports, module) {
                 downloadSeqments.on = 1;
 
                 if (downloadStart === '') {
-                    alert('请填入下载区间开始时间');
+                    alert(languageJSON.al_dlStart);
                     $('#CO-downloadStart').focus();
                     return;
                 }
 
                 if (!$('#CO-downloadStart').inputmask("isComplete")) {
-                    alert('请填入正确的下载区间开始时间');
+                    alert(languageJSON.al_cfStart);
                     $('#CO-downloadStart').focus();
                     return;
                 }
 
                 if (downloadEnd === '') {
-                    alert('请填入下载区间结束时间');
+                    alert(languageJSON.al_dlEnd);
                     $('#CO-downloadEnd').focus();
                     return;
                 }
 
                 if (!$('#CO-downloadEnd').inputmask("isComplete")) {
-                    alert('请填入正确的下载区间结束时间');
+                    alert(languageJSON.al_cfEnd);
                     $('#CO-downloadEnd').focus();
                     return;
                 }
@@ -302,13 +303,13 @@ define(function (require, exports, module) {
                 restartTimer.on = 1;
 
                 if (restartTime === '') {
-                    alert('请填入定时重启时间');
+                    alert(languageJSON.al_timing);
                     $('#CO-restartTime').focus();
                     return;
                 }
 
                 if (!$('#CO-restartTime').inputmask("isComplete")) {
-                    alert('请填入正确的定时重启时间');
+                    alert(languageJSON.al_cfTiming);
                     $('#CO-restartTime').focus();
                     return;
                 }
@@ -334,27 +335,27 @@ define(function (require, exports, module) {
 
             //同步ID
             if (syncSetID === '') {
-                alert('请输入终端同步ID');
+                alert(languageJSON.al_syncID);
                 $('#CO-sync-setID').focus();
                 return;
             }
             var reSpaceCheck = /^(\d+)\-(\d+)$/;
             if (!reSpaceCheck.test(syncSetID)) {
-                alert("同步ID格式输入不正确，请重新输入");
+                alert(languageJSON.al_cfSyncID);
                 $('#CO-sync-setID').focus();
                 return false;
             }
 
             //同步组播IP
             if (syncMulticastIP === '') {
-                alert('请输入同步组播IP地址');
+                alert(languageJSON.al_syncIP);
                 $('#CO-sync-multicastIP').focus();
                 return;
             }
             var reSpaceCheck = /^([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.([1-9]?\d|1\d\d|2[0-4]\d|25[0-5])$/;
             if (reSpaceCheck.test(syncMulticastIP)) {
             } else {
-                alert("同步组播IP地址输入不正确，请重新输入");
+                alert(languageJSON.al_cfSyncIP);
                 $('#CO-sync-multicastIP').focus();
                 return false;
             }
@@ -382,7 +383,7 @@ define(function (require, exports, module) {
                         if (data.rescode === '200') {
                             saveTermConfig();
                         } else {
-                            alert('保存终端信息失败');
+                            alert(languageJSON.al_saveTermInfoFaild);
                         }
                     }
                 )
@@ -431,11 +432,11 @@ define(function (require, exports, module) {
                     JSON.stringify(data),
                     function (data) {
                         if (data.rescode === '200') {
-                            alert('保存成功');
+                            alert(languageJSON.al_saveSuc);
                             require(exports.requireJS).loadTermList();
                             UTIL.cover.close();
                         } else {
-                            alert('保存终端配置失败' + data.errInfo);
+                            alert(languageJSON.al_saveTermConfFaild + data.errInfo);
                         }
                     }
                 )
@@ -443,10 +444,59 @@ define(function (require, exports, module) {
         })
     }
 
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = CONFIG.languageJson.termList;
+        $(".term-config .lbl-basicInfo").html(languageJSON.termBoxTitle);
+        $(".term-config .lbl-termName").html(languageJSON.conf_lbl_termName);
+        $("#CO-term-name").attr("title", languageJSON.conf_lbl_termName);
+        $(".term-config .lbl-currentCha").html(languageJSON.conf_lbl_currentCha);
+        $(".term-config .lbl-preLssued").html(languageJSON.conf_lbl_preLssued);
+        $(".term-config .lbl-termInfo").html(languageJSON.conf_lbl_termInfo);
+        $(".term-config .lbl-RAM").html(languageJSON.RAM);
+        $("#CO-log").html(languageJSON.gain);
+        $("#CO-log-download").html(languageJSON.download);
+        $(".term-config .lbl-CFInfo").html(languageJSON.conf_lbl_CFInfo);
+        $(".term-config .lbl-updateServer").html(languageJSON.conf_lbl_updateServer);
+        $("#CO-upgradeURL").attr("placeholder", languageJSON.conf_lbl_updateServerADD);
+        $(".term-config .lbl-logServer").html(languageJSON.conf_lbl_logServer);
+        $("#CO-logURL").attr("placeholder", languageJSON.conf_lbl_logServerADD);
+        $(".term-config .lbl-volume").html(languageJSON.conf_lbl_volume);
+        $(".term-config .lbl-city").html(languageJSON.conf_lbl_city);
+        $("#CO-city").attr("data-placeholder", languageJSON.conf_city_placeholder);
+        $(".term-config .lbl-work").html(languageJSON.conf_lbl_work);
+        $(".term-config .lbl-download").html(languageJSON.conf_lbl_download);
+        $(".term-config .lbl-timeRestart").html(languageJSON.conf_lbl_timeRestart);
+        $(".term-config .lbl-rotate").html(languageJSON.conf_lbl_rotate);
+        $("#CO-rotate-type").html('<option value="soft">' + languageJSON.conf_ddl_soft+ '</option>' +
+            '<option value="hard">' + languageJSON.conf_ddl_hard+ '</option>')
+        $("#CO-rotate-degree").html('<option value="90">' + languageJSON.conf_ddl_clockwise+ '90°</option>' +
+            '<option value="-90">' + languageJSON.conf_ddl_counterclockwise+ '90°</option>')
+        $(".term-config .lbl-outputMode").html(languageJSON.conf_lbl_outputMode);
+        $(".term-config .lbl-remoteADB").html(languageJSON.conf_lbl_remoteADB);
+        $(".term-config .lbl-debug").html(languageJSON.conf_lbl_debug);
+        $(".term-config .lbl-sync").html(languageJSON.conf_lbl_sync);
+        $(".term-config .lbl-syncID").html(languageJSON.conf_lbl_syncID);
+        $(".term-config .lbl-syncIP").html(languageJSON.conf_lbl_syncIP);
+        $(".term-config .lbl-syncPort").html(languageJSON.conf_lbl_syncPort);
+        $(".term-config .lbl-syncTimeout").html(languageJSON.conf_lbl_syncTimeout);
+        $(".term-config .CO-prompt-day").html("(" + languageJSON.everyday + ")");
+        $("#CO-save").html(languageJSON.save);
+        $("#CO-workWeekRepeat span:eq(0)").html(languageJSON.Monday);
+        $("#CO-workWeekRepeat span:eq(1)").html(languageJSON.Tuesday);
+        $("#CO-workWeekRepeat span:eq(2)").html(languageJSON.Wednesday);
+        $("#CO-workWeekRepeat span:eq(3)").html(languageJSON.Thursday);
+        $("#CO-workWeekRepeat span:eq(4)").html(languageJSON.Friday);
+        $("#CO-workWeekRepeat span:eq(5)").html(languageJSON.Saturday);
+        $("#CO-workWeekRepeat span:eq(6)").html(languageJSON.Sunday);
+    }
+
     function inputInit() {
 
-        $.fn.bootstrapSwitch.defaults.onText = '开';
-        $.fn.bootstrapSwitch.defaults.offText = '关';
+        $.fn.bootstrapSwitch.defaults.onText = languageJSON.ON;
+        $.fn.bootstrapSwitch.defaults.offText = languageJSON.OFF;
 
         $("#CO-workSwitch").bootstrapSwitch();
         $("#CO-downloadSwitch").bootstrapSwitch();
@@ -572,7 +622,7 @@ define(function (require, exports, module) {
                         }
                         loadConfigInfo();
                     } else {
-                        alert('获取城市信息失败');
+                        alert(languageJSON.al_gainCityInfoFaild);
                     }
                 }
             );
@@ -591,7 +641,7 @@ define(function (require, exports, module) {
                 JSON.stringify(data),
                 function (data) {
                     if (data.rescode !== '200') {
-                        alert('获取终端配置信息失败');
+                        alert(languageJSON.al_gainTermInfoFaild);
                     } else {
                         $('#CO-upgradeURL').val(data.config.UpgradeURL);
                         $('#CO-logURL').val(data.config.LogURL);
@@ -618,7 +668,7 @@ define(function (require, exports, module) {
                         //预发布频道链接
                         var prechn_id = config.PreDownload_Channel_ID;
                         if (prechn_id === -1) {
-                            $('#CO-preChannel').html("无");
+                            $('#CO-preChannel').html(languageJSON.nothing);
                         } else {
                             $('#CO-preChannel').html('<a class="to-preChannel">' + exports.preChannel + '</a>');
                         }

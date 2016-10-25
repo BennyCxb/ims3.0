@@ -89,7 +89,7 @@ define(function (require, exports, module) {
                     });
                     UTIL.ajax(
                         'POST',
-                        CONFIG.serverRoot + '/backend_mgt/v2/channels',
+                        CONFIG.serverRoot + '/backend_mgt/v2/channels/',
                         data2,
                         function (data) {
                             if (data.rescode === '200') {
@@ -105,6 +105,7 @@ define(function (require, exports, module) {
                     backList();
                 }
             } else {
+
                 alert("保存失败");
             }
         })

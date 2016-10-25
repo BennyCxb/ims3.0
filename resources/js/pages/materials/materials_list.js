@@ -614,7 +614,7 @@ define(function (require, exports, module) {
                     $('#mtr_reject').attr('disabled', true);
                 }
 
-                if ($(e).parent().parent().parent().attr('transform_status') != '3') {
+                if ($(e).parents("tr").attr('transform_status') != '3' && mtrType == "Office") {
                     $('#mtr_approve').attr('disabled', true);
                     $('#mtr_reject').attr('disabled', true);
                 }

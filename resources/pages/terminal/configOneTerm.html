@@ -1,24 +1,23 @@
-<div class="modal-content"
-     style="position: relative; margin: auto; margin-left: -303px; width: 606px; left:50%; max-height: 560px;">
+<div class="modal-content" style="position: relative; margin: auto; margin-left: -303px; width: 606px; left:50%; max-height: 560px;">
     <div class="modal-header">
         <button id="CO-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
         </button>
         <h4 id="CO-title" class="modal-title"></h4>
     </div>
-    <div class="modal-body" style="height:400px; overflow:auto;">
+    <div class="modal-body term-config" style="height:400px; overflow:auto;">
         <div class="form-group">
-            <label style="color: #72afd2;">基本信息</label>
+            <label style="color: #72afd2;" class="lbl-basicInfo">基本信息</label>
         </div>
         <form class="form-horizontal">
             <div class="form-group">
-                <label class="col-sm-3 control-label">终端名称</label>
+                <label class="col-sm-3 control-label lbl-termName">终端名称</label>
                 <div class="col-sm-9">
                     <input id="CO-term-name" type="text" class="form-control" placeholder="终端名称">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">当前频道</label>
+                <label class="col-sm-3 control-label lbl-currentCha">当前频道</label>
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label id="CO-channel" style="padding-left: 0;"></label>
@@ -26,7 +25,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">预下发频道</label>
+                <label class="col-sm-3 control-label lbl-preLssued">预下发频道</label>
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label id="CO-preChannel" style="padding-left: 0;"></label>
@@ -37,7 +36,7 @@
         <hr>
 
         <div class="form-group">
-            <label style="color: #72afd2;">终端信息</label>
+            <label style="color: #72afd2;" class="lbl-termInfo">终端信息</label>
         </div>
         <form class="form-horizontal">
             <div class="form-group">
@@ -49,7 +48,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">内存</label>
+                <label class="col-sm-3 control-label lbl-RAM">内存</label>
                 <div class="col-sm-9">
                     <div class="checkbox">
                         <label id="CO-Mem" style="padding-left: 0; cursor: default;"></label>
@@ -85,23 +84,23 @@
         <hr>
 
         <div class="form-group">
-            <label style="color: #72afd2;">配置信息</label>
+            <label style="color: #72afd2;" class="lbl-CFInfo">配置信息</label>
         </div>
         <form class="form-horizontal">
             <div class="form-group">
-                <label class="col-sm-3 control-label">升级服务器</label>
+                <label class="col-sm-3 control-label lbl-updateServer">升级服务器</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="CO-upgradeURL" placeholder="升级服务器地址">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">日志服务器</label>
+                <label class="col-sm-3 control-label lbl-logServer">日志服务器</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="CO-logURL" placeholder="日志服务器地址">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">音量</label>
+                <label class="col-sm-3 control-label lbl-volume">音量</label>
                 <div class="col-sm-8" style="margin: 7px 0px;">
                     <input id="CO-vol-slider" type="text" value="" class="slider form-control" data-slider-id="green">
                 </div>
@@ -109,15 +108,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">城市</label>
+                <label class="col-sm-3 control-label lbl-city">城市</label>
                 <div class="col-sm-9">
-                    <select id="CO-city" class="form-control select2" multiple="multiple"
-                            data-placeholder="请选择城市（终端将会显示所选城市的天气信息）" style="width: 100%;">
+                    <select id="CO-city" class="form-control select2" multiple="multiple" data-placeholder="请选择城市（终端将会显示所选城市的天气信息）" style="width: 100%;">
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">工作区间</label>
+                <label class="col-sm-3 control-label lbl-work">工作区间</label>
                 <div class="col-sm-9">
                     <input id="CO-workSwitch" type="checkbox" checked>
                 </div>
@@ -127,31 +125,31 @@
                     <div class="checkbox">
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周一
+                            <span>周一</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周二
+                            <span>周二</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周三
+                            <span>周三</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周四
+                            <span>周四</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周五
+                            <span>周五</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周六
+                            <span>周六</span>
                         </label>
                         <label style="padding-left: 0; ">
                             <input type="checkbox">
-                            周日
+                            <span>周日</span>
                         </label>
                     </div>
                 </div>
@@ -162,8 +160,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" class="form-control" id="CO-workStart"
-                               style="display: inline-block; width: 120px;">
+                        <input type="text" class="form-control" id="CO-workStart" style="display: inline-block; width: 120px;">
                     </div>
                     <div style="float: left; width:30px; text-align: center; height: 34; line-height: 34px;">
                         －
@@ -172,13 +169,12 @@
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" class="form-control" id="CO-workEnd"
-                               style="display: inline-block; width: 120px;">
+                        <input type="text" class="form-control" id="CO-workEnd" style="display: inline-block; width: 120px;">
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">下载区间</label>
+                <label class="col-sm-3 control-label lbl-download">下载区间</label>
                 <div class="col-sm-9">
                     <input id="CO-downloadSwitch" type="checkbox" checked>
                 </div>
@@ -189,8 +185,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" class="form-control" id="CO-downloadStart"
-                               style="display: inline-block; width: 120px;">
+                        <input type="text" class="form-control" id="CO-downloadStart" style="display: inline-block; width: 120px;">
                     </div>
                     <div style="float: left; width:30px; text-align: center; height: 34; line-height: 34px;">
                         －
@@ -199,16 +194,15 @@
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" class="form-control" id="CO-downloadEnd"
-                               style="display: inline-block; width: 120px;">
+                        <input type="text" class="form-control" id="CO-downloadEnd"style="display: inline-block; width: 120px;">
                     </div>
-                    <div style="float: left; width:70px; text-align: center; height: 34; line-height: 34px;">
+                    <div class="CO-prompt-day" style="float: left; width:70px; text-align: center; height: 34px; line-height: 34px;">
                         （每天）
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">定时重启</label>
+                <label class="col-sm-3 control-label lbl-timeRestart">定时重启</label>
                 <div class="col-sm-9">
                     <input id="CO-restartSwitch" type="checkbox" checked>
                     <div id="CO-restartArea">
@@ -220,7 +214,7 @@
                                 <input type="text" class="form-control" id="CO-restartTime"
                                        style="display: inline-block; width: 113px;">
                             </div>
-                            <div style="float: left; width:70px; text-align: center; height: 34px; line-height: 34px;">
+                            <div class="CO-prompt-day" style="float: left; width:70px; text-align: center; height: 34px; line-height: 34px;">
                                 （每天）
                             </div>
                         </div>
@@ -229,7 +223,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">屏幕旋转</label>
+                <label class="col-sm-3 control-label lbl-rotate">屏幕旋转</label>
                 <div class="col-sm-9">
                     <input id="CO-rotate" type="checkbox" checked>
                     <div id="CO-rotateArea">
@@ -242,8 +236,8 @@
                             </div>
                             <div class="input-group" style="width: 150px; float: left; margin-left: 14px;">
                                 <select id="CO-rotate-degree" class="form-control">
-                                    <option value="90">顺时针90度</option>
-                                    <option value="-90">逆时针90度</option>
+                                    <option value="90">顺时针90°</option>
+                                    <option value="-90">逆时针90°</option>
                                 </select>
                             </div>
                         </div>
@@ -251,7 +245,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">屏幕输出模式</label>
+                <label class="col-sm-3 control-label lbl-outputMode">屏幕输出模式</label>
                 <div class="col-sm-9">
                     <input id="CO-outputMode" type="checkbox" checked>
                     <div id="CO-outputModeArea">
@@ -274,13 +268,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">远程调试ADB</label>
+                <label class="col-sm-3 control-label lbl-remoteADB">远程调试ADB</label>
                 <div class="col-sm-9">
                     <input id="CO-remoteADB" type="checkbox" checked>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">打印本地日志</label>
+                <label class="col-sm-3 control-label lbl-debug">打印本地日志</label>
                 <div class="col-sm-9">
                     <input id="CO-debug" type="checkbox" checked>
                 </div>
@@ -288,39 +282,39 @@
             <hr>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">同步</label>
+                <label class="col-sm-3 control-label lbl-sync">同步</label>
                 <div class="col-sm-9">
                     <input id="CO-sync" type="checkbox" checked>
                 </div>
             </div>
             <div id="CO-syncArea" class="form-group">
                 <div class="form-group">
-                    <label class="CO-sync-label control-label col-sm-3">终端同步ID</label>
+                    <label class="CO-sync-label control-label col-sm-3 lbl-syncID">终端同步ID</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="CO-sync-setID" style="display: inline-block; width: 213px;">
-                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;格式：1-1</small>
+                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;e.g:1-1</small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="CO-sync-label control-label col-sm-3">同步组播IP</label>
+                    <label class="CO-sync-label control-label col-sm-3 lbl-syncIP">同步组播IP</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="CO-sync-multicastIP" style="display: inline-block; width: 213px;">
-                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;格式：255.1.1.1</small>
+                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;e.g:255.1.1.1</small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="CO-sync-label control-label col-sm-3">同步端口号</label>
+                    <label class="CO-sync-label control-label col-sm-3 lbl-syncPort">同步端口号</label>
                     <div class="col-sm-9">
                         <input type="number" class="form-control" id="CO-sync-multicastPort" min="1025" style="display: inline-block; width: 213px;">
-                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;值必须大于1024</small>
+                        <small class="tips"><i class="fa fa-info-circle"></i>&nbsp;>1024</small>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="CO-sync-label control-label col-sm-3">等待命令时间</label>
+                    <label class="CO-sync-label control-label col-sm-3 lbl-syncTimeout">等待命令时间</label>
                     <div class="col-sm-9">
-                        <div class="input-group" style="width: 213px;">
-                            <input type="number" class="form-control" id="CO-sync-switchTimeout" min="1" style="display: inline-block; width: 174px;">
-                            <div class="input-group-addon">秒</div>
+                        <div class="input-group" style="width: 212px;">
+                            <input type="number" class="form-control" id="CO-sync-switchTimeout" min="1" style="display: inline-block; width: 182px;">
+                            <div class="input-group-addon lbl-second">s</div>
                         </div>
                     </div>
                 </div>

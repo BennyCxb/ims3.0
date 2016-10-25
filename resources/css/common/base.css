@@ -250,7 +250,7 @@ a {
     background: #2c3b41;
 }
 
-.box-index-menu > li  > .menutree-menu > li :hover >a, .box-index-menu > li  > .menutree-menu > li.active >a {
+.box-index-menu > li  > .menutree-menu > li :hover >a, .box-index-menu > li  > .menutree-menu > li.active >a, .box-index-menu > li  > .menutree-menu > li :hover {
     color: #fff;
 }
 

@@ -12,10 +12,11 @@ define(function (require, exports, module) {
         _restartTimer,
         _heartBeatPeriod,
         _mainServer,
-        _programSync;
+        _programSync,
+        languageJSON;
 
     exports.init = function () {
-
+        selectLanguage();
         inputInit();
         loadInfo();
 
@@ -65,30 +66,30 @@ define(function (require, exports, module) {
             if (workSwitch === 1) {
                 workSeqments.on = 1;
                 if (workWeekRepeat.length === 0) {
-                    alert('请选择工作区间重复周期');
+                    alert(languageJSON.al_selectWorkCycle);
                     $('#CC-workWeekRepeat').focus();
                     return;
                 }
                 if (workStart === '') {
-                    alert('请填入工作区间开始时间');
+                    alert(languageJSON.al_selectWorkStart);
                     $('#CC-workStart').focus();
                     return;
                 }
 
                 if (!$('#CC-workStart').inputmask("isComplete")) {
-                    alert('请填入正确的工作区间开始时间');
+                    alert(languageJSON.al_cfWorkStart);
                     $('#CC-workStart').focus();
                     return;
                 }
 
                 if (workEnd === '') {
-                    alert('请填入工作区间结束时间');
+                    alert(languageJSON.al_selectWorkEnd);
                     $('#CC-workEnd').focus();
                     return;
                 }
 
                 if (!$('#CC-workEnd').inputmask("isComplete")) {
-                    alert('请填入正确的工作区间结束时间');
+                    alert(languageJSON.al_cfWorkEnd);
                     $('#CC-workEnd').focus();
                     return;
                 }
@@ -102,7 +103,7 @@ define(function (require, exports, module) {
                 workDuration = Math.ceil((workEnd - workStart) / 1000);
 
                 if ((workEnd - workStart) < 0) {
-                    alert('工作区间结束时间不能早于开始时间');
+                    alert(languageJSON.al_workStartEnd);
                     $('#CC-workEnd').focus();
                     return;
                 }
@@ -131,25 +132,25 @@ define(function (require, exports, module) {
                 downloadSeqments.on = 1;
 
                 if (downloadStart === '') {
-                    alert('请填入下载区间开始时间');
+                    alert(languageJSON.al_dlStart);
                     $('#CC-downloadStart').focus();
                     return;
                 }
 
                 if (!$('#CC-downloadStart').inputmask("isComplete")) {
-                    alert('请填入正确的下载区间开始时间');
+                    alert(languageJSON.al_cfStart);
                     $('#CC-downloadStart').focus();
                     return;
                 }
 
                 if (downloadEnd === '') {
-                    alert('请填入下载区间结束时间');
+                    alert(languageJSON.al_dlEnd);
                     $('#CC-downloadEnd').focus();
                     return;
                 }
 
                 if (!$('#CC-downloadEnd').inputmask("isComplete")) {
-                    alert('请填入正确的下载区间结束时间');
+                    alert(languageJSON.al_cfEnd);
                     $('#CC-downloadEnd').focus();
                     return;
                 }
@@ -189,13 +190,13 @@ define(function (require, exports, module) {
                 restartTimer.on = 1;
 
                 if (restartTime === '') {
-                    alert('请填入定时重启时间');
+                    alert(languageJSON.al_timing);
                     $('#CC-restartTime').focus();
                     return;
                 }
 
                 if (!$('#CC-restartTime').inputmask("isComplete")) {
-                    alert('请填入正确的定时重启时间');
+                    alert(languageJSON.al_cfTiming);
                     $('#CC-restartTime').focus();
                     return;
                 }
@@ -260,12 +261,12 @@ define(function (require, exports, module) {
                     JSON.stringify(data),
                     function (data) {
                         if (data.rescode === '200') {
-                            alert('保存成功');
+                            alert(languageJSON.al_saveSuc);
                             require(exports.requireJS).loadTermList();
                             UTIL.cover.close();
                         } else {
                             $('#CC_waiting').hide();
-                            alert('保存终端分类配置失败' + data.errInfo);
+                            alert(languageJSON.al_saveTermConfCFFaild + data.errInfo);
                         }
                     }
                 )
@@ -273,10 +274,61 @@ define(function (require, exports, module) {
         })
     }
 
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = CONFIG.languageJson.termList;
+        $(".term-prompt .warn-i").html('<i class="fa fa-warning"></i>&nbsp;' + languageJSON.cap_title);
+        $(".term-config .lbl-basicInfo").html(languageJSON.termBoxTitle);
+        $(".term-config .lbl-termName").html(languageJSON.conf_lbl_termName);
+        $("#CC-term-name").attr("title", languageJSON.conf_lbl_termName);
+        $(".term-config .lbl-currentCha").html(languageJSON.conf_lbl_currentCha);
+        $(".term-config .lbl-preLssued").html(languageJSON.conf_lbl_preLssued);
+        $(".term-config .lbl-termInfo").html(languageJSON.conf_lbl_termInfo);
+        $(".term-config .lbl-RAM").html(languageJSON.RAM);
+        $("#CC-log").html(languageJSON.gain);
+        $("#CC-log-download").html(languageJSON.download);
+        $(".term-config .lbl-CFInfo").html(languageJSON.conf_lbl_CFInfo);
+        $(".term-config .lbl-updateServer").html(languageJSON.conf_lbl_updateServer);
+        $("#CC-upgradeURL").attr("placeholder", languageJSON.conf_lbl_updateServerADD);
+        $(".term-config .lbl-logServer").html(languageJSON.conf_lbl_logServer);
+        $("#CC-logURL").attr("placeholder", languageJSON.conf_lbl_logServerADD);
+        $(".term-config .lbl-volume").html(languageJSON.conf_lbl_volume);
+        $(".term-config .lbl-city").html(languageJSON.conf_lbl_city);
+        $("#CC-city").attr("data-placeholder", languageJSON.conf_city_placeholder);
+        $(".term-config .lbl-work").html(languageJSON.conf_lbl_work);
+        $(".term-config .lbl-download").html(languageJSON.conf_lbl_download);
+        $(".term-config .lbl-timeRestart").html(languageJSON.conf_lbl_timeRestart);
+        $(".term-config .lbl-rotate").html(languageJSON.conf_lbl_rotate);
+        $("#CC-rotate-type").html('<option value="soft">' + languageJSON.conf_ddl_soft+ '</option>' +
+            '<option value="hard">' + languageJSON.conf_ddl_hard+ '</option>')
+        $("#CC-rotate-degree").html('<option value="90">' + languageJSON.conf_ddl_clockwise+ '90°</option>' +
+            '<option value="-90">' + languageJSON.conf_ddl_counterclockwise+ '90°</option>')
+        $(".term-config .lbl-outputMode").html(languageJSON.conf_lbl_outputMode);
+        $(".term-config .lbl-remoteADB").html(languageJSON.conf_lbl_remoteADB);
+        $(".term-config .lbl-debug").html(languageJSON.conf_lbl_debug);
+        $(".term-config .lbl-sync").html(languageJSON.conf_lbl_sync);
+        $(".term-config .lbl-syncID").html(languageJSON.conf_lbl_syncID);
+        $(".term-config .lbl-syncIP").html(languageJSON.conf_lbl_syncIP);
+        $(".term-config .lbl-syncPort").html(languageJSON.conf_lbl_syncPort);
+        $(".term-config .lbl-syncTimeout").html(languageJSON.conf_lbl_syncTimeout);
+        $(".term-config .CC-prompt-day").html("(" + languageJSON.everyday + ")");
+        $("#CC-save").html(languageJSON.save);
+        $("#CC-workWeekRepeat span:eq(0)").html(languageJSON.Monday);
+        $("#CC-workWeekRepeat span:eq(1)").html(languageJSON.Tuesday);
+        $("#CC-workWeekRepeat span:eq(2)").html(languageJSON.Wednesday);
+        $("#CC-workWeekRepeat span:eq(3)").html(languageJSON.Thursday);
+        $("#CC-workWeekRepeat span:eq(4)").html(languageJSON.Friday);
+        $("#CC-workWeekRepeat span:eq(5)").html(languageJSON.Saturday);
+        $("#CC-workWeekRepeat span:eq(6)").html(languageJSON.Sunday);
+        $("#CC_waiting").html(languageJSON.cap_foot);
+    }
+
     function inputInit() {
 
-        $.fn.bootstrapSwitch.defaults.onText = '开';
-        $.fn.bootstrapSwitch.defaults.offText = '关';
+        $.fn.bootstrapSwitch.defaults.onText = languageJSON.ON;
+        $.fn.bootstrapSwitch.defaults.offText = languageJSON.OFF;
 
         $("#CC-workSwitch").bootstrapSwitch();
         $("#CC-downloadSwitch").bootstrapSwitch();
@@ -370,7 +422,7 @@ define(function (require, exports, module) {
                         }
                         loadConfigInfo();
                     } else {
-                        alert('获取城市信息失败');
+                        alert(languageJSON.al_gainCityInfoFaild);
                     }
                 }
             );
@@ -389,7 +441,7 @@ define(function (require, exports, module) {
                 JSON.stringify(data),
                 function (data) {
                     if (data.rescode !== '200') {
-                        alert('获取终端分类配置信息失败');
+                        alert(languageJSON.al_gainTermInfoCFFaild);
                     } else {
                         $('#CC-Channel').html(data.config.Channel_Name);
                         $('#CC-PreChannel').html(data.config.PreDownload_Channel_Name);

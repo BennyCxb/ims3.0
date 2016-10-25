@@ -465,7 +465,7 @@ define(function (require, exports, module) {
                             downloadStatus = '-';
                             downloadDisplay = 'hidden';
                         } else {
-                            downloadNum = languageJSON.downloaded + "：" + downloadStatus.DownloadFiles + '，' + languageJSON.notDownloaded + (downloadStatus.AllFiles - downloadStatus.DownloadFiles);
+                            downloadNum = languageJSON.downloaded + "：" + downloadStatus.DownloadFiles + '，' + languageJSON.notDownloaded + "：" + (downloadStatus.AllFiles - downloadStatus.DownloadFiles);
                             downloadStatus = Math.floor(downloadStatus.DownloadFiles / downloadStatus.AllFiles * 100) + '%';
                         }
 
@@ -477,13 +477,13 @@ define(function (require, exports, module) {
                             preloadStatus = '-';
                             preloadDisplay = 'hidden';
                         } else {
-                            preloadNum = languageJSON.downloaded + "：" + preloadStatus.DownloadFiles + '，' + languageJSON.notDownloaded + (preloadStatus.AllFiles - preloadStatus.DownloadFiles);
+                            preloadNum = languageJSON.downloaded + "：" + preloadStatus.DownloadFiles + '，' + languageJSON.notDownloaded + "：" + (preloadStatus.AllFiles - preloadStatus.DownloadFiles);
                             preloadStatus = Math.floor(preloadStatus.DownloadFiles / preloadStatus.AllFiles * 100) + '%';
                         }
 
                         var statusName = (tl[i].Online === 0) ? languageJSON.offline : ((tl[i].Status === 'Running') ? languageJSON.running : languageJSON.dormancy);
                         var status = (tl[i].Online === 0) ? 'offline' : ((tl[i].Status === 'Running') ? 'running' : 'shutdown');
-                        var snap = (tl[i].Online === 0) ? '' : '<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="屏幕快照"><i class="fa fa-camera"></i></a></button>';
+                        var snap = (tl[i].Online === 0) ? '' : '<button style=" position:relative; margin-top:-16px; margin-left:10px;" class="snap btn btn-default btn-xs pull-right"><a style="font-size:12px; color:#333" title="' + languageJSON.list_querySreen + '"><i class="fa fa-camera"></i></a></button>';
                         var diskArr = tl[i].DiskInfo.split("MB");
                         var diskinfo1 = diskArr[0];
                         var diskinfo2 = diskArr[1].substring(1);
