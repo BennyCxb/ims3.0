@@ -10,9 +10,11 @@ define(function (require, exports, module) {
     var isVideoBox = false;
     var mtrIds = {},
         mtrJson = [],
-        mtrData;
+        mtrData,
+        languageJSON;
 
     exports.init = function () {
+        selectLanguage();
         mtrIds = {};
         mtrJson = []
         _pageNum = 1
@@ -114,6 +116,18 @@ define(function (require, exports, module) {
         })
     }
 
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = CONFIG.languageJson.channel;
+        $("#mtr_typeChiose").html('<option selected="selected" value=1>' + languageJSON.video + '</option>' +
+            '<option value=2>' + languageJSON.image + '</option>' +
+            '<option value=5>' + languageJSON.live + '</option>')
+        $("#amtr_add").html(languageJSON.done);
+        $("#mtr_choiseTitle").html(languageJSON.resourceList);
+    }
+
     function loadPage(pageNum, type) {
         // loading
         $("#mtr_choiseTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
@@ -123,37 +137,32 @@ define(function (require, exports, module) {
         switch (type) {
             case 1:
                 mtrType = "Video";
-                $("#mtr_choiseTitle").html("视频控件资源选择列表");
-                $("#mtrChoiseSearch").attr("placeholder", "搜索视频");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchVideo);
                 mtrTypeId = 1;
                 break;
             case 2:
                 mtrType = "Image";
-                $("#mtrChoiseSearch").attr("placeholder", "搜索图片");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchImage);
                 mtrTypeId = 2;
                 break;
             case 3:
                 mtrType = "Audio";
-                $("#mtr_choiseTitle").html("音频控件资源选择列表");
-                $("#mtrChoiseSearch").attr("placeholder", "搜索音频");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchAudio);
                 mtrTypeId = 3;
                 break;
             case 4:
                 mtrType = "WebText";
-                $("#mtr_choiseTitle").html("文本控件资源选择列表");
-                $("#mtrChoiseSearch").attr("placeholder", "搜索文本");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchText);
                 mtrTypeId = 4;
                 break;
             case 5:
                 mtrType = "Live";
-                $("#mtr_choiseTitle").html("视频控件资源选择列表");
-                $("#mtrChoiseSearch").attr("placeholder", "搜索直播");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchLive);
                 mtrTypeId = 5;
                 break;
             case 7:
                 mtrType = "Office";
-                $("#mtr_choiseTitle").html("Office控件资源选择列表");
-                $("#mtrChoiseSearch").attr("placeholder", "搜索Office/PDF");
+                $("#mtrChoiseSearch").attr("placeholder", languageJSON.pl_searchOffice);
                 mtrTypeId = 7;
                 break;
         }
@@ -161,15 +170,11 @@ define(function (require, exports, module) {
         //判断是否是视频控件选择列表
         if (isVideoBox) {
             if (mtrTypeId == 1) {
-                $("#dp_action").html("视频");
+                $("#dp_action").html(languageJSON.video);
             } else if (mtrTypeId == 2) {
-                $("#mtr_choiseTitle").html("视频控件资源选择列表");
-                $("#dp_action").html("图片");
+                $("#dp_action").html(languageJSON.image);
             }
         } else {
-            if (mtrTypeId == 2) {
-                $("#mtr_choiseTitle").html("图片控件资源选择列表");
-            }
             $("#mtr_dplist").remove();
         }
 
@@ -250,10 +255,10 @@ define(function (require, exports, module) {
             mtrData = json.Materials;
             $("#mtr_choiseTable tbody").append('<tr>' +
                 '<th class="mtr_checkbox"></th>' +
-                '<th class="mtr_choise_name">文件名</th>' +
-                '<th class="mtr_size">大小</th>' +
-                '<th class="mtr_time">时长</th>' +
-                '<th class="mtr_choise_status">状态</th>' +
+                '<th class="mtr_choise_name">' + languageJSON.resource + '</th>' +
+                '<th class="mtr_size">' + languageJSON.size2 + '</th>' +
+                '<th class="mtr_time">' + languageJSON.duration + '</th>' +
+                // '<th class="mtr_choise_status">' + languageJSON.status + '</th>' +
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
@@ -269,7 +274,7 @@ define(function (require, exports, module) {
                         '<td class="mtr_choise_name"><b>' + mtr_choise_tr + '</b></td>' +
                         '<td class="mtr_size">' + mtrData[x].Size + '</td>' +
                         '<td class="mtr_time">' + mtrData[x].Duration + '</td>' +
-                        '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
+                        // '<td class="mtr_choise_status"><span style="display: none;">已添加</span></td>' +
                         '</tr>';
                     $("#mtr_choiseTable tbody").append(mtrtr);
                 }
@@ -280,11 +285,11 @@ define(function (require, exports, module) {
             else {
                 $("#mtr_choiseTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtr_choiseTable tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#mtr_choiseTable tbody").append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
             }
         }
         //清空状态列
-        $(".mtr_choise_status").empty();
+        // $(".mtr_choise_status").empty();
 
         //勾选
         if (mtrIds != {}) {
@@ -308,13 +313,13 @@ define(function (require, exports, module) {
                     if (mtrData[z_index].Type_Name == "Video") {
                         var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if (backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4") {
-                            alert("当前视频格式暂不支持预览！");
+                            alert(languageJSON.al_videoFormat);
                             return;
                         }
                     } else if (mtrData[z_index].Type_Name == "Audio") {
                         var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if (backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav") {
-                            alert("当前音频格式暂不支持试听！");
+                            alert(languageJSON.al_audioFormat);
                             return;
                         }
                     }

@@ -3,27 +3,63 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div id="channel-editor-wrapper"> <div class="channel-editor-header"> <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-channel-editor-close"></button> <input class="direct-name-002 channel-editor-property" data-key="name" value="'+
 ((__t=(name))==null?'':__t)+
-'"> <small class="direct-name-002-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: white"></i> </small> <button type="button" class="header-button-left btn-channel-editor-saveSubmit pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> 保存并提交 </button> <button type="button" class="header-button-left btn-channel-editor-saveRelease pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> 保存并发布 </button> <button type="button" class="header-button-left btn-channel-editor-save pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> 保存 </button> </div> <div class="channel-editor-body"> <div class="channel-program-list box box-default"> <div class="channel-program-list-timed"> <small style="position: absolute; bottom: 12px; right: 15px"> 点击添加新节目 <i class="glyphicon glyphicon-hand-up"></i> </small> <div class="box-header with-border" style="position: relative; z-index: 2; background: white; width: 256px"> <h3 class="box-title"> <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px"></i> 定时节目 </h3> <div class="tools"> <a class="btn btn-default btn-xs btn-program-delete" title="删除" data-program-type="Timed"><i class="glyphicon glyphicon-trash" style="font-size:12px"></i></a> <a class="btn btn-primary btn-xs btn-program-new" title="添加" data-program-type="Timed"><i class="glyphicon glyphicon-plus" style="font-size:12px"></i></a> </div> </div> <ul> </ul> </div> <div class="channel-program-list-regular"> <small style="position: absolute; bottom: 12px; right: 15px"> 点击添加新节目 <i class="glyphicon glyphicon-hand-up"></i> </small> <div class="box-header with-border" style="position: relative; width: 256px; background: white; z-index: 2; border-top: 1px solid #f4f4f4"> <i class="glyphicon glyphicon-repeat" style="position: relative; top: 2px; font-size: 14px; margin-right: 0"></i> <h3 class="box-title">常规节目</h3> <div class="tools"> <select class="channel-program-schedule-type btn-default btn" style="height: 24px; padding: 0; padding-left: 5px"> ';
+'"> <small class="direct-name-002-hint direct-name-hint" style="top: 18px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: white"></i> </small> <button type="button" class="header-button-left btn-channel-editor-saveSubmit pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> '+
+((__t=(lang.btn_saveSubmit))==null?'':__t)+
+' </button> <button type="button" class="header-button-left btn-channel-editor-saveRelease pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> '+
+((__t=(lang.btn_savePublish))==null?'':__t)+
+' </button> <button type="button" class="header-button-left btn-channel-editor-save pull-right"> <i class="glyphicon glyphicon-floppy-disk" style="position: relative;font-size: 15px; top: 3px"></i> '+
+((__t=(lang.btn_save))==null?'':__t)+
+' </button> </div> <div class="channel-editor-body"> <div class="channel-program-list box box-default"> <div class="channel-program-list-timed"> <small style="position: absolute; bottom: 12px; right: 15px"> '+
+((__t=(lang.clickAddLayout))==null?'':__t)+
+' <i class="glyphicon glyphicon-hand-up"></i> </small> <div class="box-header with-border" style="position: relative; z-index: 2; background: white; width: 256px"> <h3 class="box-title"> <i class="glyphicon glyphicon-time" style="position: relative; top: 3px; font-size: 16px"></i> '+
+((__t=(lang.timingProgram))==null?'':__t)+
+' </h3> <div class="tools"> <a class="btn btn-default btn-xs btn-program-delete" title="'+
+((__t=(lang.delete))==null?'':__t)+
+'" data-program-type="Timed"><i class="glyphicon glyphicon-trash" style="font-size:12px"></i></a> <a class="btn btn-primary btn-xs btn-program-new" title="'+
+((__t=(lang.add))==null?'':__t)+
+'" data-program-type="Timed"><i class="glyphicon glyphicon-plus" style="font-size:12px"></i></a> </div> </div> <ul> </ul> </div> <div class="channel-program-list-regular"> <small style="position: absolute; bottom: 12px; right: 15px"> '+
+((__t=(lang.clickAddLayout))==null?'':__t)+
+' <i class="glyphicon glyphicon-hand-up"></i> </small> <div class="box-header with-border" style="position: relative; width: 256px; background: white; z-index: 2; border-top: 1px solid #f4f4f4"> <i class="glyphicon glyphicon-repeat" style="position: relative; top: 2px; font-size: 14px; margin-right: 0"></i> <h3 class="box-title">'+
+((__t=(lang.regularProgram))==null?'':__t)+
+'</h3> <div class="tools"> <select class="channel-program-schedule-type btn-default btn" style="height: 24px; padding: 0; padding-left: 5px"> ';
  var type = JSON.parse(overall_schedule_params).Type; 
 __p+=' ';
  if (type === 'Sequence') { 
-__p+=' <option value="Sequence" selected="selected">顺序</option> ';
+__p+=' <option value="Sequence" selected="selected">'+
+((__t=(lang.sequence))==null?'':__t)+
+'</option> ';
  } else { 
-__p+=' <option value="Sequence">顺序</option> ';
+__p+=' <option value="Sequence">'+
+((__t=(lang.sequence))==null?'':__t)+
+'</option> ';
  } 
 __p+=' ';
  if (type === 'Random') { 
-__p+=' <option value="Random" selected="selected">随机</option> ';
+__p+=' <option value="Random" selected="selected">'+
+((__t=(lang.random))==null?'':__t)+
+'</option> ';
  } else { 
-__p+=' <option value="Random">随机</option> ';
+__p+=' <option value="Random">'+
+((__t=(lang.random))==null?'':__t)+
+'</option> ';
  } 
 __p+=' ';
  if (type === 'Percent') { 
-__p+=' <option value="Percent" selected="selected">随机</option> ';
+__p+=' <option value="Percent" selected="selected">'+
+((__t=(lang.random))==null?'':__t)+
+'</option> ';
  } else { 
-__p+=' <option value="Percent">比例</option> ';
+__p+=' <option value="Percent">'+
+((__t=(lang.ratio))==null?'':__t)+
+'</option> ';
  } 
-__p+=' </select> <a class="btn btn-default btn-xs btn-program-delete" title="删除" data-program-type="Regular"><i class="glyphicon glyphicon-trash" style="font-size:12px"></i></a> <a class="btn btn-primary btn-xs btn-program-new" title="添加" data-program-type="Regular"><i class="glyphicon glyphicon-plus" style="font-size:12px"></i></a> </div> </div> <ul> </ul> </div> </div> <div class="channel-program-editor box box-default"> 正在加载数据... </div> </div> </div> <script type="text/javascript">(function (obj,hint){\r\n\r\n    function getLength(str){  \r\n            var realLength = 0;  \r\n            for (var i = 0; i < str.length; i++){  \r\n                var charCode = str.charCodeAt(i);\r\n                \r\n                if (charCode >= 0 && charCode <= 128)   \r\n                realLength += 1;  \r\n                else   \r\n                realLength += 2;\r\n\r\n            }\r\n\r\n            return realLength;  \r\n        }  \r\n\r\n        //get name\r\n        var $obj = $(obj);\r\n        var t = $obj.val();\r\n        var length = getLength(t);\r\n        var width = parseFloat($obj.css(\'font-size\'));\r\n        var left = length * width/2 +77;\r\n\r\n        //get hint\r\n        var $hint = $(hint);\r\n        \r\n        //ux fix\r\n        $obj.css(\'cursor\',\'pointer\');\r\n\r\n        //reposition\r\n        $hint.css(\'left\',left);\r\n\r\n        //event\r\n        $hint.click(function(){\r\n            $obj.focus().val(t);\r\n        });\r\n        $obj.focus(function(){\r\n            $hint.css(\'display\',\'none\');\r\n            $obj.css(\'cursor\',\'\');\r\n        });\r\n        $obj.blur(function(){\r\n            $hint.css(\'display\',\'\');\r\n            $obj.css(\'cursor\',\'pointer\');\r\n            //reposition\r\n            var t = $obj.val();\r\n            var length = getLength(t);\r\n            var width = parseFloat($obj.css(\'font-size\'));\r\n            var left = length * width/2 +77;\r\n            $hint.css(\'left\',left);\r\n        });\r\n    }(\'.direct-name-002\',\'.direct-name-002-hint\'))</script>';
+__p+=' </select> <a class="btn btn-default btn-xs btn-program-delete" title="'+
+((__t=(lang.delete))==null?'':__t)+
+'" data-program-type="Regular"><i class="glyphicon glyphicon-trash" style="font-size:12px"></i></a> <a class="btn btn-primary btn-xs btn-program-new" title="'+
+((__t=(lang.add))==null?'':__t)+
+'" data-program-type="Regular"><i class="glyphicon glyphicon-plus" style="font-size:12px"></i></a> </div> </div> <ul> </ul> </div> </div> <div class="channel-program-editor box box-default"> '+
+((__t=(lang.loading))==null?'':__t)+
+'... </div> </div> </div> <script type="text/javascript">(function (obj,hint){\r\n\r\n    function getLength(str){\r\n            var realLength = 0;\r\n            for (var i = 0; i < str.length; i++){\r\n                var charCode = str.charCodeAt(i);\r\n\r\n                if (charCode >= 0 && charCode <= 128)\r\n                realLength += 1;\r\n                else\r\n                realLength += 2;\r\n\r\n            }\r\n\r\n            return realLength;\r\n        }\r\n\r\n        //get name\r\n        var $obj = $(obj);\r\n        var t = $obj.val();\r\n        var length = getLength(t);\r\n        var width = parseFloat($obj.css(\'font-size\'));\r\n        var left = length * width/2 +77;\r\n\r\n        //get hint\r\n        var $hint = $(hint);\r\n\r\n        //ux fix\r\n        $obj.css(\'cursor\',\'pointer\');\r\n\r\n        //reposition\r\n        $hint.css(\'left\',left);\r\n\r\n        //event\r\n        $hint.click(function(){\r\n            $obj.focus().val(t);\r\n        });\r\n        $obj.focus(function(){\r\n            $hint.css(\'display\',\'none\');\r\n            $obj.css(\'cursor\',\'\');\r\n        });\r\n        $obj.blur(function(){\r\n            $hint.css(\'display\',\'\');\r\n            $obj.css(\'cursor\',\'pointer\');\r\n            //reposition\r\n            var t = $obj.val();\r\n            var length = getLength(t);\r\n            var width = parseFloat($obj.css(\'font-size\'));\r\n            var left = length * width/2 +77;\r\n            $hint.css(\'left\',left);\r\n        });\r\n    }(\'.direct-name-002\',\'.direct-name-002-hint\'))</script>';
 }
 return __p;
 };
@@ -32,23 +68,49 @@ var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments
 with(obj||{}){
 __p+='<div class="channel-program-header box-header with-border"> <input value="'+
 ((__t=(name))==null?'':__t)+
-'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="温馨提示：当前预览为最后一次保存的内容" is_preview="false" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp&nbsp预览节目 </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon" title="开始时间"> <i class="fa fa fa-calendar-check-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_start" step="1" value="'+
+'" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="'+
+((__t=(language.prompt1))==null?'':__t)+
+'" is_preview="false" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp;&nbsp;'+
+((__t=(language.previewProgram))==null?'':__t)+
+' </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon" title="'+
+((__t=(language.strarTime))==null?'':__t)+
+'"> <i class="fa fa fa-calendar-check-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start.match(/([^T]+)T/)[1]))==null?'':__t)+
-'"> </div> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_end" step="1" value="'+
+'"> </div> <div class="input-group"> <span class="input-group-addon" title="'+
+((__t=(language.endTime))==null?'':__t)+
+'"> <i class="fa fa-calendar-times-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end.match(/([^T]+)T/)[1]))==null?'':__t)+
-'"> </div> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>定时触发</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div> <div class="input-group"> <span class="input-group-addon" title="生效时间"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
+'"> </div> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>'+
+((__t=(language.timingTrigger))==null?'':__t)+
+'</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div> <div class="input-group"> <span class="input-group-addon" title="'+
+((__t=(language.strarTime))==null?'':__t)+
+'"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
-'"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="失效时间"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
+'"> </div> <p style="float: left; position: relative; top: 10px; left: 8px">-</p> <div class="input-group"> <span class="input-group-addon" title="'+
+((__t=(language.endTime))==null?'':__t)+
+'"> <i class="fa fa-calendar-times-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end))==null?'':__t)+
-'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="播放时长"> <i class="glyphicon glyphicon-time"></i> </span> <div class="program-duration-container"></div> </div> <div class="input-group" style="width: 100px"> <span class="input-group-addon" title="播放次数"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="count" value="'+
+'"> </div> <div class="input-group" style="width: 150px"> <span class="input-group-addon" title="'+
+((__t=(language.playDuration))==null?'':__t)+
+'"> <i class="glyphicon glyphicon-time"></i> </span> <div class="program-duration-container"></div> </div> <div class="input-group" style="width: 100px"> <span class="input-group-addon" title="'+
+((__t=(language.playTime))==null?'':__t)+
+'"> <i class="glyphicon glyphicon-time"></i> </span> <input type="number" class="form-control" data-field="count" value="'+
 ((__t=(count))==null?'':__t)+
-'"> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">模版:'+
+'"> </div> </div> <div class="channel-program-body"> <div class="channel-program-layout"> <div class="channel-program-layout-header"> <span class="channel-program-layout-header-info">'+
+((__t=(language.Layout))==null?'':__t)+
+':'+
 ((__t=(layout.name))==null?'':__t)+
-'</span> <span class="channel-program-layout-header-info">宽:'+
+'</span> <span class="channel-program-layout-header-info">'+
+((__t=(language.width))==null?'':__t)+
+':'+
 ((__t=(layout.width))==null?'':__t)+
-'</span> <span class="channel-program-layout-header-info">高:'+
+'</span> <span class="channel-program-layout-header-info">'+
+((__t=(language.height))==null?'':__t)+
+':'+
 ((__t=(layout.height))==null?'':__t)+
-'</span> </div> <div class="channel-program-layout-body"> </div> <div class="channel-program-layout-footer"> <ul></ul> </div> </div> <div class="channel-program-widget"> 正在加载数据 </div> </div> <script type="text/javascript">(function (obj,hint){\r\n\r\n    function getLength(str){  \r\n            var realLength = 0;  \r\n            for (var i = 0; i < str.length; i++){  \r\n                var charCode = str.charCodeAt(i);\r\n                \r\n                if (charCode >= 0 && charCode <= 128)   \r\n                realLength += 1;  \r\n                else   \r\n                realLength += 2;\r\n\r\n            }\r\n\r\n            return realLength;  \r\n        }  \r\n\r\n        //get name\r\n        var $obj = $(obj);\r\n        var t = $obj.val();\r\n        var length = getLength(t);\r\n        var width = parseFloat($obj.css(\'font-size\'));\r\n        var left = length * width/2 +57;\r\n\r\n        //get hint\r\n        var $hint = $(hint);\r\n        \r\n        //ux fix\r\n        $obj.css(\'cursor\',\'pointer\');\r\n\r\n        //reposition\r\n        $hint.css(\'left\',left);\r\n\r\n        //event\r\n        $hint.click(function(){\r\n            $obj.focus().val(t);\r\n        });\r\n        $obj.focus(function(){\r\n            $hint.css(\'display\',\'none\');\r\n            $obj.css(\'cursor\',\'\');\r\n        });\r\n        $obj.blur(function(){\r\n            $hint.css(\'display\',\'\');\r\n            $obj.css(\'cursor\',\'pointer\');\r\n            //reposition\r\n            var t = $obj.val();\r\n            var length = getLength(t);\r\n            var width = parseFloat($obj.css(\'font-size\'));\r\n            var left = length * width/2 +57;\r\n            $hint.css(\'left\',left);\r\n        });\r\n    }(\'.direct-name-003\',\'.direct-name-003-hint\'))</script>';
+'</span> </div> <div class="channel-program-layout-body"> </div> <div class="channel-program-layout-footer"> <ul></ul> </div> </div> <div class="channel-program-widget"> '+
+((__t=(language.loading))==null?'':__t)+
+'... </div> </div> <script type="text/javascript">(function (obj,hint){\r\n\r\n    function getLength(str){  \r\n            var realLength = 0;  \r\n            for (var i = 0; i < str.length; i++){  \r\n                var charCode = str.charCodeAt(i);\r\n                \r\n                if (charCode >= 0 && charCode <= 128)   \r\n                realLength += 1;  \r\n                else   \r\n                realLength += 2;\r\n\r\n            }\r\n\r\n            return realLength;  \r\n        }  \r\n\r\n        //get name\r\n        var $obj = $(obj);\r\n        var t = $obj.val();\r\n        var length = getLength(t);\r\n        var width = parseFloat($obj.css(\'font-size\'));\r\n        var left = length * width/2 +57;\r\n\r\n        //get hint\r\n        var $hint = $(hint);\r\n        \r\n        //ux fix\r\n        $obj.css(\'cursor\',\'pointer\');\r\n\r\n        //reposition\r\n        $hint.css(\'left\',left);\r\n\r\n        //event\r\n        $hint.click(function(){\r\n            $obj.focus().val(t);\r\n        });\r\n        $obj.focus(function(){\r\n            $hint.css(\'display\',\'none\');\r\n            $obj.css(\'cursor\',\'\');\r\n        });\r\n        $obj.blur(function(){\r\n            $hint.css(\'display\',\'\');\r\n            $obj.css(\'cursor\',\'pointer\');\r\n            //reposition\r\n            var t = $obj.val();\r\n            var length = getLength(t);\r\n            var width = parseFloat($obj.css(\'font-size\'));\r\n            var left = length * width/2 +57;\r\n            $hint.css(\'left\',left);\r\n        });\r\n    }(\'.direct-name-003\',\'.direct-name-003-hint\'))</script>';
 }
 return __p;
 };
@@ -68,15 +130,25 @@ return __p;
 exports['channel_edit_timer']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title"> 定时触发 </h4> </div> <div class="modal-body timer-container"> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px">年</button> <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px">月</button> <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px">周</button> <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px">天</button> </div> <div class="month-selector"> <label>每年...月</label> ';
+__p+='<div class="modal-content" id="channel-editor-timer"> <div class="modal-header"> <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h4 class="modal-title"> '+
+((__t=(lang.timingTrigger))==null?'':__t)+
+' </h4> </div> <div class="modal-body timer-container"> <div class="granularity-selector btn-group" style=""> <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px">'+
+((__t=(lang.year))==null?'':__t)+
+'</button> <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px">'+
+((__t=(lang.month))==null?'':__t)+
+'</button> <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px">'+
+((__t=(lang.week))==null?'':__t)+
+'</button> <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px">'+
+((__t=(lang.day))==null?'':__t)+
+'</button> </div> <div class="month-selector"> <label>'+
+((__t=(lang.timer_annually))==null?'':__t)+
+'</label> ';
  if (months.length === 12) { 
 __p+=' <input type="checkbox" class="check-all-month" checked="checked"> ';
  } else { 
 __p+=' <input type="checkbox" class="check-all-month"> ';
  } 
 __p+=' <ul style="padding:0"><!-- <label>按月选择</label> --> ';
- var numbers = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","二十一","二十二","二十三","二十四","二十五","二十六","二十七","二十八","二十九","三十","三十一"]; 
-__p+=' ';
  for ( var i = 0; i < 12; i++) { 
 __p+=' <li data-id="'+
 ((__t=(i+1))==null?'':__t)+
@@ -87,10 +159,12 @@ __p+=' <input type="checkbox" checked="checked"> ';
 __p+=' <input type="checkbox"> ';
  } 
 __p+=' '+
-((__t=(numbers[i] + '月'))==null?'':__t)+
+((__t=(lang.Month[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="date-selector"> <label>每月第...天</label> ';
+__p+=' </ul> </div> <div class="date-selector"> <label>'+
+((__t=(lang.timer_monthly))==null?'':__t)+
+'</label> ';
  if (dates.length === 31) { 
 __p+=' <input type="checkbox" class="check-all-date" checked="checked"> ';
  } else { 
@@ -110,7 +184,9 @@ __p+=' '+
 ((__t=((i < 9) ? '0' + (i + 1) : (i + 1)))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="day-selector"> <label>每周...</label> ';
+__p+=' </ul> </div> <div class="day-selector"> <label>'+
+((__t=(lang.everyWeek))==null?'':__t)+
+'...</label> ';
  if (days.length === 7) { 
 __p+=' <input type="checkbox" class="check-all-day" checked="checked"> ';
  } else { 
@@ -127,14 +203,20 @@ __p+=' <input type="checkbox" checked="checked"> ';
 __p+=' <input type="checkbox"> ';
  } 
 __p+=' '+
-((__t=('周' + numbers[i]))==null?'':__t)+
+((__t=(lang.Week[i]))==null?'':__t)+
 ' </label> </li> ';
  } 
-__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>每天第...小时</label> <select class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px"> ';
+__p+=' </ul> </div> <div class="time-selector"> <div class="hour-selector" style="margin-bottom: 15px"> <label>'+
+((__t=(lang.timer_everyDay))==null?'':__t)+
+'</label> <select class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px"> ';
  if (hours.length === 24) { 
-__p+=' <option value="*" selected="selected">每小时</option> ';
+__p+=' <option value="*" selected="selected">'+
+((__t=(lang.everyHour))==null?'':__t)+
+'</option> ';
  } else { 
-__p+=' <option value="*">每小时</option> ';
+__p+=' <option value="*">'+
+((__t=(lang.everyHour))==null?'':__t)+
+'</option> ';
  } 
 __p+=' ';
  for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1 && hours.length !== 24) { 
@@ -150,11 +232,15 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>每小时第...分钟</label> <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px"> ';
+__p+=' </select> </div> <div class="minute-selector" style="margin-bottom: 15px"> <label>'+
+((__t=(lang.timer_everyHour))==null?'':__t)+
+'</label> <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px"> ';
  if (minutes.length === 60) { 
 __p+=' <option value="*" selected="selected"> ';
  } else { 
-__p+=' <option value="*">每分钟</option> ';
+__p+=' <option value="*">'+
+((__t=(lang.everyMin))==null?'':__t)+
+'</option> ';
  } 
 __p+=' ';
  for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1 && minutes.length !== 60) { 
@@ -170,11 +256,17 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>每分钟第...秒</label> <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px"> ';
+__p+=' </option></select> </div> <div class="second-selector" style="margin-bottom: 15px"> <label>'+
+((__t=(lang.timer_everyMin))==null?'':__t)+
+'</label> <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px"> ';
  if (seconds.length === 60) { 
-__p+=' <option value="*" selected="selected">每秒</option> ';
+__p+=' <option value="*" selected="selected">'+
+((__t=(lang.everySecond))==null?'':__t)+
+'</option> ';
  } else { 
-__p+=' <option value="*">每秒</option> ';
+__p+=' <option value="*">'+
+((__t=(lang.everySecond))==null?'':__t)+
+'</option> ';
  } 
 __p+=' ';
  for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1 && seconds.length !== 60) { 
@@ -190,7 +282,9 @@ __p+=' <option value="'+
 ((__t=((i < 10) ? '0' + i : i))==null?'':__t)+
 '</option> ';
  }} 
-__p+=' </select> </div> </div> </div> <div class="modal-footer"> <button id="single-term-class-save" type="button" class="btn btn-save btn-primary pull-right">保存</button> </div> </div>';
+__p+=' </select> </div> </div> </div> <div class="modal-footer"> <button id="single-term-class-save" type="button" class="btn btn-save btn-primary pull-right">'+
+((__t=(lang.save))==null?'':__t)+
+'</button> </div> </div>';
 }
 return __p;
 };
@@ -244,7 +338,43 @@ return __p;
 exports['layout_edit_main']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="layout-editor-wrapper" style="min-width: 1080px"> <div class="layout-editor-header"> <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-layout-editor-back"></button> <h1 class="header-title">编辑模版</h1><!-- <button type="button" class="header-button-right glyphicon glyphicon-floppy-disk">保存</button> --> </div> <div class="layout-editor-body"> <div class="row" style="height: 100%"> <div class="col-md-12" style="height: 100%"> <div class="box" style="height: 100%"><!-- header --> <div class="box-header with-border"><!--edit--> <ul class="layout-editor-properties"> </ul> <button type="button" class="btn btn-default btn-layout-editor-exit">退出编辑</button> <button type="button" class="btn btn-primary btn-layout-editor-saveExit">保存并退出</button> <button type="button" class="btn btn-primary btn-layout-editor-save">保存</button> </div> <div class="box-body" style="position: absolute; width: 100%; top: 58px; bottom: 47px"><!-- toolbar --> <div class="layout-editor-toolbar"> <label style="margin-left: 20px">工具栏</label> <div class="div-line-i" style="width: 85px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp&nbsp&nbsp视频&nbsp </button> <button data-widget-id="image" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-picture"></i>&nbsp&nbsp&nbsp图片&nbsp </button> <button data-widget-id="html" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-font"></i>&nbsp&nbsp&nbsp文本&nbsp </button> <button data-widget-id="clock" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-time"></i>&nbsp&nbsp&nbsp时钟&nbsp </button> <button data-widget-id="weather" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-cloud"></i>&nbsp&nbsp&nbsp天气&nbsp </button> <button data-widget-id="office" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-file"></i>&nbsp&nbspOffice </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button data-widget-id="audio" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-music"></i>&nbsp&nbsp&nbsp音乐&nbsp </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button class="btn btn-default btn-layout-editor-delete-widget"> <i class="glyphicon glyphicon-trash"></i>&nbsp&nbsp&nbsp删除&nbsp </button> </div> </div><!-- canvas --> <div class="layout-editor-canvas-title"> <label>&nbsp画布区</label> <div class="div-line-i"></div> </div> <div class="layout-editor-canvas"></div><!-- widget --> <div class="layout-editor-widget"> <label>&nbsp控件属性</label> <div class="div-line-i"></div><!-- propoties --> <ul class="layout-editor-widget-properties"> </ul><!-- layout --> <div class="layout-editor-widgets"></div> </div> </div><!-- footer --> <div class="box-footer layout-editor-footer" style="position: absolute; bottom: 0; width: 100%"> <small class="tips">&nbsp&nbsp&nbspStep1:在工具栏中点击想要创建的控件&nbsp&nbsp&nbspStep2：在画布上拖拽画出大小&nbsp&nbsp&nbspStep3：拖拽调整大小和位置，也可以在右侧属性栏输入数值&nbsp&nbsp&nbsp（音乐控件不占面积，可点击直接添加）</small> </div> </div><!-- box --> </div> </div> </div> </div>';
+__p+='<div id="layout-editor-wrapper" style="min-width: 1080px"> <div class="layout-editor-header"> <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-layout-editor-back"></button> <h1 class="header-title">'+
+((__t=(lang.editLayout))==null?'':__t)+
+'</h1><!-- <button type="button" class="header-button-right glyphicon glyphicon-floppy-disk">保存</button> --> </div> <div class="layout-editor-body"> <div class="row" style="height: 100%"> <div class="col-md-12" style="height: 100%"> <div class="box" style="height: 100%"><!-- header --> <div class="box-header with-border"><!--edit--> <ul class="layout-editor-properties"> </ul> <button type="button" class="btn btn-default btn-layout-editor-exit">'+
+((__t=(lang.exitEdit))==null?'':__t)+
+'</button> <button type="button" class="btn btn-primary btn-layout-editor-saveExit">'+
+((__t=(lang.saveExit))==null?'':__t)+
+'</button> <button type="button" class="btn btn-primary btn-layout-editor-save">'+
+((__t=(lang.save))==null?'':__t)+
+'</button> </div> <div class="box-body" style="position: absolute; width: 100%; top: 58px; bottom: 47px"><!-- toolbar --> <div class="layout-editor-toolbar"> <label style="margin-left: 20px">'+
+((__t=(lang.toolbar))==null?'':__t)+
+'</label> <div class="div-line-i" style="width: 85px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.video))==null?'':__t)+
+'&nbsp; </button> <button data-widget-id="image" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.image))==null?'':__t)+
+'&nbsp; </button> <button data-widget-id="html" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-font"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.text))==null?'':__t)+
+'&nbsp; </button> <button data-widget-id="clock" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.clock))==null?'':__t)+
+'&nbsp; </button> <button data-widget-id="weather" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-cloud"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.weather))==null?'':__t)+
+'&nbsp; </button> <button data-widget-id="office" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;Office </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button data-widget-id="audio" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-music"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.music))==null?'':__t)+
+'&nbsp; </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button class="btn btn-default btn-layout-editor-delete-widget"> <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;'+
+((__t=(lang.delete))==null?'':__t)+
+'&nbsp; </button> </div> </div><!-- canvas --> <div class="layout-editor-canvas-title"> <label>&nbsp;'+
+((__t=(canvasArea))==null?'':__t)+
+'</label> <div class="div-line-i"></div> </div> <div class="layout-editor-canvas"></div><!-- widget --> <div class="layout-editor-widget"> <label>&nbsp;'+
+((__t=(ctrlProperties))==null?'':__t)+
+'</label> <div class="div-line-i"></div><!-- propoties --> <ul class="layout-editor-widget-properties"> </ul><!-- layout --> <div class="layout-editor-widgets"></div> </div> </div><!-- footer --> <div class="box-footer layout-editor-footer" style="position: absolute; bottom: 0; width: 100%"> <small class="tips">&nbsp;&nbsp;&nbsp;Step1:'+
+((__t=(promptSteps1))==null?'':__t)+
+'&nbsp;&nbsp;&nbsp;Step2：'+
+((__t=(promptSteps2))==null?'':__t)+
+'&nbsp;&nbsp;&nbsp;Step3：'+
+((__t=(promptSteps3))==null?'':__t)+
+'&nbsp;&nbsp;&nbsp;（'+
+((__t=(promptSteps4))==null?'':__t)+
+'）</small> </div> </div><!-- box --> </div> </div> </div> </div>';
 }
 return __p;
 };

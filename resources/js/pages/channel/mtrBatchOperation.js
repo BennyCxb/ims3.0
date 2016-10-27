@@ -1,7 +1,10 @@
 define(function (require, exports, module) {
-    var UTIL = require("common/util.js");
+    var UTIL = require("common/util.js"),
+        CONFIG = require('common/config');
+    var languageJSON;
 
     exports.init = function () {
+        selectLanguage();
         //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -13,6 +16,20 @@ define(function (require, exports, module) {
         });
 
         loadPage();
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = CONFIG.languageJson.channel;
+        $(".box-title").html(languageJSON.title4);
+        $(".batchOperation-duration label").html(languageJSON.playDuration);
+        $("#batchDuration").attr("placeholder", languageJSON.pl_playDuration);
+        $(".batchOperation-time label").html(languageJSON.playTime);
+        $("#batchTime").attr("placeholder", languageJSON.pl_playTime);
+        $(".batchOperation-prompt").html('<i class="fa fa-info-circle" >&nbsp' + languageJSON.prompt2 + '</i>');
+        $("#btn-batchSubmit").html(languageJSON.submit);
     }
 
     /**
@@ -39,7 +56,7 @@ define(function (require, exports, module) {
         if ($("#batchDuration").val() != "") {
             var attr = $("#batchDuration").val().split(":");
             if (isNaN(attr[0]) || isNaN(attr[1]) || isNaN(attr[2])) {
-                alert("请输入正确的资源播放时长！");
+                alert(languageJSON.al_batchDuration);
                 $("#batchDuration").focus();
                 return;
             }

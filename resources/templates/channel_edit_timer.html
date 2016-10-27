@@ -4,22 +4,22 @@
             <span aria-hidden="true">×</span>
         </button>
         <h4 class="modal-title">
-            定时触发
+            <%=lang.timingTrigger%>
         </h4>
     </div>
     <div class="modal-body timer-container">
 
 
         <div class="granularity-selector btn-group" style="">
-            <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px;">年</button>
-            <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px;">月</button>
-            <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px;">周</button>
-            <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px;">天</button>
+            <button class="btn btn-default btn-sm" data-selector="month" style="width: 143px;"><%=lang.year%></button>
+            <button class="btn btn-default btn-sm" data-selector="date" style="width: 143px;"><%=lang.month%></button>
+            <button class="btn btn-default btn-sm" data-selector="day" style="width: 143px;"><%=lang.week%></button>
+            <button class="btn btn-default btn-sm" data-selector="everyday" style="width: 143px;"><%=lang.day%></button>
         </div>
 
 
         <div class="month-selector">
-            <label>每年...月</label>
+            <label><%=lang.timer_annually%></label>
             <% if (months.length === 12) { %>
             <input type="checkbox" class="check-all-month" checked>
             <% } else { %>
@@ -27,7 +27,6 @@
             <% } %>
             <ul style="padding:0;">
                 <!-- <label>按月选择</label> -->
-                <% var numbers = ["一","二","三","四","五","六","七","八","九","十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","二十一","二十二","二十三","二十四","二十五","二十六","二十七","二十八","二十九","三十","三十一"]; %>
                 <% for ( var i = 0; i < 12; i++) { %>
                 <li data-id="<%=i+1%>" data-selector="month" style="width: 80px; text-indent:8px; ">
                     <label>
@@ -36,14 +35,14 @@
                         <% } else { %>
                         <input type="checkbox">
                         <% } %>
-                        <%=numbers[i] + '月'%>
+                        <%=lang.Month[i]%>
                     </label>
                 </li>
                 <% } %>
             </ul>
         </div>
         <div class="date-selector">
-            <label>每月第...天</label>
+            <label><%=lang.timer_monthly%></label>
             <% if (dates.length === 31) { %>
             <input type="checkbox" class="check-all-date" checked>
             <% } else { %>
@@ -66,7 +65,7 @@
             </ul>
         </div>
         <div class="day-selector">
-            <label>每周...</label>
+            <label><%=lang.everyWeek%>...</label>
             <% if (days.length === 7) { %>
             <input type="checkbox" class="check-all-day" checked>
             <% } else { %>
@@ -83,7 +82,7 @@
                         <% } else { %>
                         <input type="checkbox">
                         <% } %>
-                        <%='周' + numbers[i]%>
+                        <%=lang.Week[i]%>
                     </label>
                 </li>
                 <% } %>
@@ -91,12 +90,12 @@
         </div>
         <div class="time-selector" >
             <div class="hour-selector"  style="margin-bottom: 15px;">
-                    <label>每天第...小时</label>
+                    <label><%=lang.timer_everyDay%></label>
                     <select  class="form-control select2" multiple="multiple" data-selector="hour" style="height: 36px;">
                         <% if (hours.length === 24) { %>
-                        <option value="*" selected="selected">每小时</option>
+                        <option value="*" selected="selected"><%=lang.everyHour%></option>
                         <% } else { %>
-                        <option value="*">每小时</option>
+                        <option value="*"><%=lang.everyHour%></option>
                         <% } %>
                         <% for ( var i = 0; i < 24; i++) { if (hours.indexOf(i) !== -1 && hours.length !== 24) { %>
                         <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
@@ -106,12 +105,12 @@
                     </select>
             </div>
             <div class="minute-selector" style="margin-bottom: 15px;">
-                    <label>每小时第...分钟</label>
+                    <label><%=lang.timer_everyHour%></label>
                     <select class="form-control select2" multiple="multiple" data-selector="minute" style="height: 36px;">
                         <% if (minutes.length === 60) { %>
                         <option value="*" selected="selected">
                         <% } else { %>
-                        <option value="*">每分钟</option>
+                        <option value="*"><%=lang.everyMin%></option>
                         <% } %>
                         <% for ( var i = 0; i < 60; i++) { if (minutes.indexOf(i) !== -1 && minutes.length !== 60) { %>
                         <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
@@ -121,12 +120,12 @@
                     </select>
             </div>
             <div class="second-selector" style="margin-bottom: 15px;">
-                <label>每分钟第...秒</label>
+                <label><%=lang.timer_everyMin%></label>
                 <select class="form-control select2" multiple="multiple" data-selector="second" style="height: 36px;">
                     <% if (seconds.length === 60) { %>
-                    <option value="*" selected="selected">每秒</option>
+                    <option value="*" selected="selected"><%=lang.everySecond%></option>
                     <% } else { %>
-                    <option value="*">每秒</option>
+                    <option value="*"><%=lang.everySecond%></option>
                     <% } %>
                     <% for ( var i = 0; i < 60; i++) { if (seconds.indexOf(i) !== -1 && seconds.length !== 60) { %>
                     <option value="<%=i%>" selected="selected"><%=(i < 10) ? '0' + i : i%></option>
@@ -138,6 +137,6 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button id="single-term-class-save" type="button" class="btn btn-save btn-primary pull-right">保存</button>
+        <button id="single-term-class-save" type="button" class="btn btn-save btn-primary pull-right"><%=lang.save%></button>
     </div>
 </div>

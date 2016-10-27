@@ -17,6 +17,7 @@ define(function (require, exports, module) {
         editMode = false,
         widgetId = null,
         container = null;
+    var languageJSON = config.languageJson.channel;
 
     //载入
     function load(program, _container) {
@@ -24,7 +25,7 @@ define(function (require, exports, module) {
         editor = null;
         editMode = false;
         if (!program) {
-            $('#channel-editor-wrapper .channel-program-editor').html('没有节目!');
+            $('#channel-editor-wrapper .channel-program-editor').html(languageJSON.nolayout + '!');
             return;
         }
         db = crud.Database.getInstance();
@@ -47,16 +48,29 @@ define(function (require, exports, module) {
         var p = program.schedule_params === '' ? {} : JSON.parse(program.schedule_params),
             duration = typeof p.duration === 'number' ? p.duration : 0,
             data = {
-            name: program.name,
-            lifetime_start: program.lifetime_start.replace(' ', 'T'),
-            lifetime_end: program.lifetime_end.replace(' ', 'T'),
-            count: p.count,
-            layout: {
-                name: layout.name,
-                width: layout.width,
-                height: layout.height
-            }
-        };
+                name: program.name,
+                lifetime_start: program.lifetime_start.replace(' ', 'T'),
+                lifetime_end: program.lifetime_end.replace(' ', 'T'),
+                count: p.count,
+                layout: {
+                    name: layout.name,
+                    width: layout.width,
+                    height: layout.height
+                },
+                language: {
+                    previewProgram: languageJSON.previewProgram,
+                    prompt1: languageJSON.prompt1,
+                    strarTime: languageJSON.strarTime,
+                    endTime: languageJSON.endTime,
+                    timingTrigger: languageJSON.timingTrigger,
+                    playDuration: languageJSON.playDuration,
+                    playTime: languageJSON.playTime,
+                    Layout: languageJSON.layout,
+                    width: languageJSON.width,
+                    height: languageJSON.height,
+                    loading: languageJSON.loading,
+                }
+            };
         $('#channel-editor-wrapper .channel-program-editor')
             .html(templates.channel_edit_program(data));
         new durationInput.DurationInput({
@@ -291,7 +305,7 @@ define(function (require, exports, module) {
                 $(this).children('i')
                     .addClass('fa-stop')
                     .removeClass('fa-play-circle-o');
-                $(this).get(0).lastChild.nodeValue = '   取消预览 ';
+                $(this).get(0).lastChild.nodeValue = '&nbsp;&nbsp;' + languageJSON.cancel ;
                 $(this).attr("is_preview","true");
             } else {
                 editor.hidePreview();
@@ -299,7 +313,7 @@ define(function (require, exports, module) {
                 $(this).children('i')
                     .removeClass('fa-stop')
                     .addClass('fa-play-circle-o');
-                $(this).get(0).lastChild.nodeValue = '   预览节目 ';
+                $(this).get(0).lastChild.nodeValue = '&nbsp;&nbsp;' + languageJSON.previewProgram;
                 $(this).attr("is_preview","false");
             }
         });
@@ -411,23 +425,23 @@ define(function (require, exports, module) {
         $('#channel-editor-wrapper .channel-editor-program-trigger')
             .toggleClass('day-timer', dayTimer)
             .toggleClass('date-timer', !dayTimer);
-        fields[0].textContent = segments[4] === '*' ? '每月' : segments[4] + '月';
-        fields[1].textContent = segments[3] === '*' ? '每日' : segments[3] + '日';
-        fields[2].textContent = segments[6] === '*' ? '每日' : '每' + week;
-        fields[3].textContent = segments[2] === '*' ? '每点' : segments[2] + '点';
-        fields[4].textContent = segments[1] === '*' ? '每分' : segments[1] + '分';
-        fields[5].textContent = segments[0] === '*' ? '每秒' : segments[0] + '秒';
+        fields[0].textContent = segments[4] === '*' ? languageJSON.monthly : segments[4] + languageJSON.month;
+        fields[1].textContent = segments[3] === '*' ? languageJSON.everyDay : segments[3] + languageJSON.day;
+        fields[2].textContent = segments[6] === '*' ? languageJSON.everyDay : languageJSON.every + week;
+        fields[3].textContent = segments[2] === '*' ? languageJSON.everyHour : segments[2] + languageJSON.hour;
+        fields[4].textContent = segments[1] === '*' ? languageJSON.everyMin : segments[1] + languageJSON.min;
+        fields[5].textContent = segments[0] === '*' ? languageJSON.everySecond : segments[0] + languageJSON.second;
     }
 
     function toWeekday(num) {
         switch(num){
-            case '1' : return '周一'; break;
-            case '2' : return '周二'; break;
-            case '3' : return '周三'; break;
-            case '4' : return '周四'; break;
-            case '5' : return '周五'; break;
-            case '6' : return '周六'; break;
-            case '7' : return '周日'; break;
+            case '1' : return languageJSON.Monday; break;
+            case '2' : return languageJSON.Tuesday; break;
+            case '3' : return languageJSON.Wednesday; break;
+            case '4' : return languageJSON.Thursday; break;
+            case '5' : return languageJSON.Friday; break;
+            case '6' : return languageJSON.Saturday; break;
+            case '7' : return languageJSON.Sunday; break;
             default: return '' ;
         }
     }

@@ -9,7 +9,7 @@ define(function(require, exports, module) {
 		config    = require('common/config'),
 		util      = require('common/util'),
         layoutEditor    = require('common/layout_editor'),
-        toast = require('common/toast');
+        toast     = require('common/toast');
 
     /**
      * 模块全局变量
@@ -19,7 +19,8 @@ define(function(require, exports, module) {
         projectName = config.projectName,
         layoutId    = -1,
         editor      = null,
-        savedWidgetIds = [];
+        savedWidgetIds = [],
+        languageJSON = config.languageJson.channel;
 
     /**
      * 页面初始化
@@ -40,7 +41,7 @@ define(function(require, exports, module) {
         } else {
             var defaultLayout = {
                 ID: -1,
-                Name: '新建模版',
+                Name: languageJSON.newLayout,
                 Name_eng: 'new layout',
                 Width: '1920',
                 Height: '1080',
@@ -121,8 +122,28 @@ define(function(require, exports, module) {
 
         /************** main ****************/
 
+        var lang = {
+            editLayout: languageJSON.editLayout,
+            exitEdit: languageJSON.exitEdit,
+            saveExit: languageJSON.saveExit,
+            save: languageJSON.save,
+            toolbar: languageJSON.toolbar,
+            video: languageJSON.video,
+            image: languageJSON.image,
+            text: languageJSON.text,
+            clock: languageJSON.clock,
+            weather: languageJSON.weather,
+            music: languageJSON.music,
+            delete: languageJSON.delete,
+            canvasArea: languageJSON.canvasArea,
+            ctrlProperties: languageJSON.ctrlProperties,
+            promptSteps1: languageJSON.promptSteps1,
+            promptSteps2: languageJSON.promptSteps2,
+            promptSteps3: languageJSON.promptSteps3,
+            promptSteps4: languageJSON.promptSteps4,
+        };
         $('#edit-page-container')
-            .html(templates.layout_edit_main({}))
+            .html(templates.layout_edit_main(lang))
             .removeClass('none');
 
         /************** layout properties **************/
@@ -130,7 +151,15 @@ define(function(require, exports, module) {
             name: data.name,
             width: data.width,
             height: data.height,
-            background_color: data.backgroundColor
+            background_color: data.backgroundColor,
+            lang: {
+                edit: languageJSON.edit,
+                height: languageJSON.height,
+                width: languageJSON.width,
+                bgColor: languageJSON.bgColor,
+                addBgcolor: languageJSON.addBgcolor,
+                cancelBgcolor: languageJSON.cancelBgcolor,
+            }
         };
         $('#layout-editor-wrapper .layout-editor-properties')
             .html(templates.layout_edit_property(properties));
@@ -153,6 +182,15 @@ define(function(require, exports, module) {
         } : {
             type: '', top: 0, left: 0, width: 0, height: 0
         };
+        var lang = {
+            currentCtrl: languageJSON.currentCtrl,
+            width: languageJSON.width,
+            height: languageJSON.height,
+            layer: languageJSON.layer,
+            upLayer: languageJSON.upLayer,
+            downLayer: languageJSON.downLayer,
+        };
+        widgetProperty.lang = lang;
         $('#layout-editor-wrapper .layout-editor-widget-properties')
             .html(templates.layout_edit_widget_property(widgetProperty));
 
@@ -234,7 +272,7 @@ define(function(require, exports, module) {
                             if (err) { console.error(err); return; }
                             console.log('控件更新成功!');
                             $('#layout-editor-wrapper .btn-layout-editor-save').removeAttr("disabled");
-                            alert('保存成功!');
+                            alert(languageJSON.al_saveSuc);
                             if ($('#layout-editor-wrapper .btn-layout-editor-saveExit').attr("exit") == "true"){
                                 location.hash = '#layout/list';
                             }else {
@@ -542,31 +580,31 @@ define(function(require, exports, module) {
         switch (widgetId) {
             case 'image':
                 json.type = 'ImageBox';
-                json.typeName = '图片控件';
+                json.typeName = languageJSON.ImageBox;
                 break;
             case 'video':
                 json.type = 'VideoBox';
-                json.typeName = '视频控件';
+                json.typeName = languageJSON.VideoBox;
                 break;
             case 'audio':
                 json.type = 'AudioBox';
-                json.typeName = '音频控件';
+                json.typeName = languageJSON.AudioBox;
                 break;
             case 'html':
                 json.type = 'WebBox';
-                json.typeName = '文本控件';
+                json.typeName = languageJSON.WebBox;
                 break;
             case 'clock':
                 json.type = 'ClockBox';
-                json.typeName = '时钟控件';
+                json.typeName = languageJSON.ClockBox;
                 break;
             case 'weather':
                 json.type = 'WeatherBox';
-                json.typeName = '天气控件';
+                json.typeName = languageJSON.WeatherBox;
                 break;
             case 'office':
                 json.type = 'OfficeBox';
-                json.typeName = 'Office控件';
+                json.typeName = languageJSON.OfficeBox;
                 break;
         }
         var widget = layoutEditor.Widget.create(json, editor.getLayout());
@@ -585,13 +623,13 @@ define(function(require, exports, module) {
             case 'layout-width':
                 if (!editor.getLayout().setWidth(Number(this.value))) {
                     this.value = editor.getLayout().getWidth();
-                    toast.show('宽度太小了');
+                    toast.show(languageJSON.toastW);
                 }
                 break;
             case 'layout-height':
                 if (!editor.getLayout().setHeight(Number(this.value))) {
                     this.value = editor.getLayout().getHeight();
-                    toast.show('高度太小了');
+                    toast.show(languageJSON.toastH);
                 }
                 break;
             case 'layout-bg-color':
@@ -603,25 +641,25 @@ define(function(require, exports, module) {
             case 'widget-top':
                 if (focusedWidget && !focusedWidget.setTop(Number(this.value))) {
                     this.value = focusedWidget.getTop();
-                    toast.show('控件超出了容器');
+                    toast.show(languageJSON.toastO);
                 }
                 break;
             case 'widget-left':
                 if (focusedWidget && !focusedWidget.setLeft(Number(this.value))) {
                     this.value = focusedWidget.getLeft();
-                    toast.show('控件超出了容器');
+                    toast.show(languageJSON.toastO);
                 }
                 break;
             case 'widget-width':
                 if (focusedWidget && !focusedWidget.setWidth(Number(this.value))) {
                     this.value = focusedWidget.getWidth();
-                    toast.show('控件超出了容器');
+                    toast.show(languageJSON.toastO);
                 }
                 break;
             case 'widget-height':
                 if (focusedWidget && !focusedWidget.setHeight(Number(this.value))) {
                     this.value = focusedWidget.getHeight();
-                    toast.show('控件超出了容器');
+                    toast.show(languageJSON.toastO);
                 }
                 break;
         }

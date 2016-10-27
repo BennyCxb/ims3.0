@@ -12,13 +12,27 @@ define(function(require, exports, module) {
 		projectName   = config.projectName,
 		nDisplayItems = 10,
 		_pageNO = 1,
-        last;
+        last,
+		languageJSON = config.languageJson.channel;
+
 
 	// 初始化页面
 	exports.init = function() {
+		selectLanguage();
 		loadPage(_pageNO);
 		registerEventListeners();
 	};
+
+	/**
+	 * 语言切换绑定
+	 */
+	function selectLanguage() {
+		$("#layoutTitle").html(languageJSON.titleLayout);
+		$("#layoutPrompt").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.edit);
+		$("#channel-list-search").attr("placeholder", languageJSON.searchLayout);
+		$("#layout-list-controls .btn-delete").html(languageJSON.delete);
+		$("#layout-list-controls .btn-add-layout").html(languageJSON.addLayout);
+	}
 
 	function registerEventListeners() {
 		$('#layout-table').delegate('input[type="checkbox"]', 'ifClicked', function (ev) {
@@ -95,7 +109,7 @@ define(function(require, exports, module) {
 	}
 
 	function onDeleteLayout(ev) {
-        if (confirm("确定删除该模板？")) {
+        if (confirm(languageJSON.cf_delLayout)) {
             var data = JSON.stringify({
                 project_name: projectName,
                 action: 'delete',
@@ -105,9 +119,9 @@ define(function(require, exports, module) {
             });
             util.ajax('post', requestUrl + '/backend_mgt/v1/layout', data, function (res) {
                 if (Number(res.rescode) === 200) {
-                    alert('删除成功!');
+                    alert(languageJSON.deleteSuc);
                 } else {
-                    alert('删除失败，有频道正在使用它!');
+                    alert(languageJSON.al_delLayoutFaild);
                 }
                 loadPage(1);
             });
@@ -173,10 +187,10 @@ define(function(require, exports, module) {
 		$('#layout-table>tbody').html('');
         $("#layout-table>tbody").append('<tr>' +
         '<th class="mod_checkbox" style="width:32px;"></th>' +
-        '<th class="mod_name">模板名</th>' +
-        '<th class="mod_size_center">尺寸</th>' +
-        '<th class="mod_user_center">创建人</th>' +
-        '<th class="mod_create_time_center create-time">创建时间</th>'+
+        '<th class="mod_name">' + languageJSON.layoutName + '</th>' +
+        '<th class="mod_size_center">' + languageJSON.size + '</th>' +
+        '<th class="mod_user_center">' + languageJSON.chn_create + '</th>' +
+        '<th class="mod_create_time_center create-time">' + languageJSON.chn_createTime + '</th>'+
         '</tr>');
         if(json.LayoutList!=0) {
             json.LayoutList.forEach(function (el, idx, arr) {
@@ -194,7 +208,7 @@ define(function(require, exports, module) {
         }else{
             $("#layout-table>tbody").empty();
             $('#layout-table-pager').empty();
-            $("#layout-table>tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+            $("#layout-table>tbody").append( '<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
         }
 		onSelectedItemChanged();
 

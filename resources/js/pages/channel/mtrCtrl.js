@@ -3,9 +3,11 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var CRUD = require("common/crud.js");
     var DB = CRUD.Database.getInstance();
-    var widgetData;
+    var widgetData,
+        languageJSON;
 
     exports.init = function () {
+        selectLanguage();
         //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -21,9 +23,9 @@ define(function (require, exports, module) {
                 $("#mtrC_flip").hide();
             } else {
                 if ($("#mtrC_textType").val() == "Normal") {
-                    $("#box_text_time").children().first().text("翻页间隔");
+                    $("#box_text_time").children().first().text(languageJSON.flipInterval);
                 } else {
-                    $("#box_text_time").children().first().text("刷新间隔");
+                    $("#box_text_time").children().first().text(languageJSON.reflashInterval);
                 }
                 $("#mtrC_effect").hide();
                 $("#mtrC_flip").css('display', 'inline');
@@ -103,13 +105,54 @@ define(function (require, exports, module) {
         $("#box_tableHeader").hide();
         var widget = JSON.parse(localStorage.getItem('currentWidget'));
         if (widget == null) {
-            $("#mtrCtrl_Title").html("当前无控件");
+            $("#mtrCtrl_Title").html(languageJSON.noControls);
             $("#box_datetimeEffect").hide();
             $("#box_tableHeader").hide();
             return;
         }
         mtrCb();
         exports.loadPage(widget);
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = CONFIG.languageJson.channel;
+        $("#box_text_time .flipInterval").html(languageJSON.flipInterval);
+        $("#mtrC_pageDownPeriod").attr("placeholder", languageJSON.pl_input);
+        $("#box_text_time .second").html(languageJSON.second);
+        $("#text_color").attr("placeholder", languageJSON.color);
+        $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>');
+        $("#mtrC_scrollSpeed option").html(languageJSON.static);
+        $("#box_text_bgcolor label").html(languageJSON.bgcolor);
+        $("#text_bgcolor").attr("placeholder", languageJSON.pl_bgcolor);
+        $("#box_datetimeEffect label").html(languageJSON.fontColor);
+        $("#clockText_color").attr("placeholder", languageJSON.pl_fontColor);
+        $("#box_weather_color label").html(languageJSON.fontColor);
+        $("#weatherText_color").attr("placeholder", languageJSON.pl_weatherColor);
+        $("#box_weather_time .switchingInterval").html(languageJSON.switchingInterval);
+        $("#weatherFlip_time").attr("placeholder", languageJSON.pl_input);
+        $("#box_weather_time .second").html(languageJSON.second);
+        $("#mtrC_office_type").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>');
+        $("#mtrC_office_switchAnimation").html('<option selected="selected" value="None">' + languageJSON.None + '</option>' +
+            '<option value="Random">' + languageJSON.Random + '</option>');
+        $("#box_text_time .switchingInterval").html(languageJSON.switchingInterval);
+        $("#mtrC_office_switchPeriod").attr("placeholder", languageJSON.pl_input);
+        $("#box_text_time .second").html(languageJSON.second);
+        $("#mtr_delete").html(languageJSON.delete);
+        $("#mtr_batchOperation").html(languageJSON.batchOperation);
+        $("#mtr_countTime").html(languageJSON.staDuration);
+        $("#mtr_addMtr").html(languageJSON.addResource);
+        $("#mtrCtrl_playType").html('<option selected="selected" value="Sequence">' + languageJSON.SequencePlay + '</option>' +
+            '<option value="Random">' + languageJSON.RandomPlay + '</option>' +
+            '<option value="Percent">' + languageJSON.PercentPlay + '</option>');
+        $("#box_datetime .span-monday").html(languageJSON.Monday);
+        $("#weather_cloudy").html(languageJSON.Cloudy);
+        $("#weather_wind").html(languageJSON.wind);
+        $("#weather_beijing").html(languageJSON.Beijing);
+        $("#weather_today").html(languageJSON.today);
+        $("#weather_bjtd").html(languageJSON.Beijing+ '&nbsp;' + languageJSON.today + '&nbsp;' + languageJSON.Cloudy + '&nbsp;15°～28°');
     }
 
     exports.loadPage = function (widget) {
@@ -119,9 +162,9 @@ define(function (require, exports, module) {
         $("#mtrCtrl_Table thead").empty();
         $("#mtrCtrl_Table thead").append('<tr>' +
             '<th class="mtrCtrl_checkbox"></th>' +
-            '<th class="mtrCtrl_name">文件名</th>' +
-            '<th class="mtrCtrl_duration">时长</th>' +
-            '<th class="mtrCtrl_times"><label>次数</label></th>' +
+            '<th class="mtrCtrl_name">' + languageJSON.resourceName + '</th>' +
+            '<th class="mtrCtrl_duration">' + languageJSON.duration + '</th>' +
+            '<th class="mtrCtrl_times"><label>' + languageJSON.times + '</label></th>' +
             '<th class="mtrCtrl_delete"></th>' +
             '</tr>');
         if ($("#mtrCtrl_playType").val() == "Percent") {
@@ -134,22 +177,22 @@ define(function (require, exports, module) {
             var wtype = widget.type;
             switch (wtype) {
                 case 'VideoBox':
-                    $("#mtrCtrl_Title").html("视频控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle1);
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "1");
                     break;
                 case 'ImageBox':
-                    $("#mtrCtrl_Title").html("图片控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle2);
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "2");
                     break;
                 case 'AudioBox':
-                    $("#mtrCtrl_Title").html("音频控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle3);
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "3");
                     break;
                 case 'WebBox':
-                    $("#mtrCtrl_Title").html("文本控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle4);
                     $("#box_tableHeader").show();
                     $("#mtr_addMtr").attr("typeId", "4");
                     $("#box_effect").show();
@@ -158,19 +201,19 @@ define(function (require, exports, module) {
                     $("#mtrC_flip").hide();
                     break;
                 case 'ClockBox':
-                    $("#mtrCtrl_Title").html("时钟控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle5);
                     $("#box_datetime").show();
                     $("#box_datetimeEffect").show();
                     $("#mtrCtrl_Table").hide();
                     $("#box_datetime").show();
                     break;
                 case 'WeatherBox':
-                    $("#mtrCtrl_Title").html("天气控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle6);
                     $("#mtrCtrl_Table").hide();
                     $("#box_weather").show();
                     break;
                 case 'OfficeBox':
-                    $("#mtrCtrl_Title").html("Office控件");
+                    $("#mtrCtrl_Title").html(languageJSON.ctrTitle7);
                     $("#box_tableHeader").show();
                     $("#box_officeEffect").show();
                     $("#mtr_addMtr").attr("typeId", "7");
@@ -188,7 +231,7 @@ define(function (require, exports, module) {
 
             widgetLoad();
         } else {
-            $("#mtrCtrl_Title").html("当前无控件");
+            $("#mtrCtrl_Title").html(languageJSON.noControls);
         }
 
     }
@@ -205,7 +248,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
-            title: '注：最右侧为透明度',
+            title: languageJSON.transparentPrompt,
             onchange: function (ev) {
                 textAttrSave();
             }
@@ -217,7 +260,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
-            title: '注：最右侧为透明度',
+            title: languageJSON.transparentPrompt,
             onchange: function (ev) {
                 textAttrSave();
             }
@@ -229,7 +272,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
-            title: '注：最右侧为透明度',
+            title: languageJSON.transparentPrompt,
             onchange: function (ev, color) {
                 $(".mtrC_datetime").css("color", color.tiny.toRgbString());
                 clockSave();
@@ -242,7 +285,7 @@ define(function (require, exports, module) {
             swatches: false,
             sliders: false,
             hsvpanel: true,
-            title: '注：最右侧为透明度',
+            title: languageJSON.transparentPrompt,
             onchange: function (ev, color) {
                 $(".mtrC_weather").css("color", color.tiny.toRgbString());
                 weatherSave();
@@ -280,10 +323,10 @@ define(function (require, exports, module) {
                     } else {
                         $("#mtrC_flip").show();
                         if (wStyle.Type == "Normal") {
-                            $("#box_text_time").children().first().text("翻页间隔");
+                            $("#box_text_time").children().first().text(languageJSON.flipInterval);
                             $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
                         } else {
-                            $("#box_text_time").children().first().text("刷新间隔");
+                            $("#box_text_time").children().first().text(languageJSON.reflashInterval);
                             $("#mtrC_pageDownPeriod").val(wStyle.RefreshPeriod);
                         }
                     }
@@ -381,7 +424,7 @@ define(function (require, exports, module) {
         var wtop = widgetData.top;
         var wwidth = widgetData.width;
         var wheight = widgetData.height;
-        $("#widget_attribute").append('<label>左距离：' + wleft + '</label><label>上距离：' + wtop + '</label><label>尺寸：' + wwidth + '×' + wheight + '</label>');
+        $("#widget_attribute").append('<label>' + languageJSON.left + '：' + wleft + '</label><label>' + languageJSON.top + '：' + wtop + '</label><label>' + languageJSON.size + '：' + wwidth + '×' + wheight + '</label>');
 
         var mtrData = DB.collection("material").select({widget_id: widgetData.id});
         if (widgetData.type != "ClockBox") {
@@ -567,8 +610,8 @@ define(function (require, exports, module) {
                     }[mtrData[x].Type_Name];
                     var intDate = {
                         is_time_segment_limit: 0,
+                        lifetime_start: getNowFormatDate(),
                         lifetime_end: "2030-01-01 00:00:00",
-                        lifetime_start: "1970-01-01 00:00:00",
                         name: mtrData[x].Name,
                         name_eng: mtrData[x].Name_eng,
                         resource_id: mtrData[x].ID,
@@ -923,12 +966,12 @@ define(function (require, exports, module) {
         var obj;
         $(".mtrCtrl_time").each(function () {
             if ($(this).val() == "") {
-                errorMsg += "请输入资源时长！\n";
+                errorMsg += languageJSON.al_duration + "！\n";
                 obj = $(this);
             } else {
                 var attr = $(this).val().split(":");
                 if (isNaN(attr[0]) || isNaN(attr[1]) || isNaN(attr[2])) {
-                    errorMsg += "请输入正确的资源时长！\n";
+                    errorMsg += languageJSON.al_durationEr + "！\n";
                     obj = $(this);
                     $(this).val($(this).attr("value"));
                 }
@@ -936,7 +979,7 @@ define(function (require, exports, module) {
         })
         $(".mtrC_times").each(function () {
             if ($(this).val() == null) {
-                errorMsg += "请输入资源次数！\n";
+                errorMsg += languageJSON.al_times + "！\n";
                 obj = $(this);
             }
 
@@ -944,7 +987,7 @@ define(function (require, exports, module) {
         if (widgetData.type_id == 3) {
             if ($("#mtrC_textType").val() == "Normal") {
                 if ($("#mtrC_pageDownPeriod").val() == null) {
-                    errorMsg += "请填写翻页间隔时间！\n";
+                    errorMsg += languageJSON.al_flipTime + "！\n";
                     obj = $("#mtrC_textType");
                 }
             } else {
@@ -955,7 +998,7 @@ define(function (require, exports, module) {
                     }
                 }
                 if ($("#mtrC_scrollSpeed").val() == "") {
-                    errorMsg += "请选择滚动速度！\n";
+                    errorMsg += languageJSON.al_speed + "！\n";
                     obj = $("#mtrC_scrollSpeed");
                 }
             }
@@ -982,7 +1025,7 @@ define(function (require, exports, module) {
                 }
             }
             if ($("#weatherFlip_time").val() == "") {
-                errorMsg += "请输入天气切换间隔时间！\n";
+                errorMsg += languageJSON.al_weaCutTime + "！\n";
                 obj = $("#weatherFlip_time")
             }
         }
@@ -1092,5 +1135,32 @@ define(function (require, exports, module) {
         var s = Number(arr[2]);
         var time = h * 3600 + m * 60 + s;
         return time;
+    }
+
+    /**
+     * 获取当前日期时间"yyyy-MM-dd HH:MM:SS"
+     * @returns {string}
+     */
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        if (h < 10) h = '0' + h;
+        if (m < 10) m = '0' + m;
+        if (s < 10) s = '0' + s;
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + h + seperator2 + m + seperator2 + s;
+        return currentdate;
     }
 })

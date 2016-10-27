@@ -12,12 +12,22 @@ define(function(require, exports, module) {
         projectName   = config.projectName,
         nDisplayItems = 25,
         keyword       = '';
+    var languageJSON;
 
     // 初始化页面
 	exports.init = function() {
+        selectLanguage();
         loadPage(1);
         registerEventListeners();
     };
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = config.languageJson.channel;
+
+    }
 
     function registerEventListeners() {
         $('#channel-table').delegate('input[type="checkbox"]', 'ifClicked', function (ev) {

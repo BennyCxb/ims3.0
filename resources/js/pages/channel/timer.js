@@ -1,17 +1,18 @@
-
 define(function (require, exports, module) {
     'use strict';
 
-    var templates = require('common/templates');
+    var templates = require('common/templates'),
+        config = require('common/config');
+    var languageJSON = config.languageJson.channel;
 
     Array.prototype.includes = Array.prototype.includes || function (val) {
-        for (var i = 0; i < this.length; i++) {
-            if (val === this[i]) {
-                return true;
+            for (var i = 0; i < this.length; i++) {
+                if (val === this[i]) {
+                    return true;
+                }
             }
-        }
-        return false;
-    };
+            return false;
+        };
 
     /**
      *
@@ -37,7 +38,45 @@ define(function (require, exports, module) {
             days: this.tDays,
             hours: this.tHours,
             minutes: this.tMinutes,
-            seconds: this.tSeconds
+            seconds: this.tSeconds,
+            lang: {
+                timingTrigger: languageJSON.timingTrigger,
+                year: languageJSON.year,
+                month: languageJSON.month,
+                week: languageJSON.week,
+                day: languageJSON.day,
+                timer_annually: languageJSON.timer_annually,
+                timer_monthly: languageJSON.timer_monthly,
+                timer_everyDay: languageJSON.timer_everyDay,
+                timer_everyHour: languageJSON.timer_everyHour,
+                timer_everyMin: languageJSON.timer_everyMin,
+                Month: [languageJSON.Jan,
+                    languageJSON.Feb,
+                    languageJSON.Mar,
+                    languageJSON.Apr,
+                    languageJSON.May,
+                    languageJSON.Jun,
+                    languageJSON.Jul,
+                    languageJSON.Aug,
+                    languageJSON.Sep,
+                    languageJSON.Oct,
+                    languageJSON.Nov,
+                    languageJSON.Dec],
+                Week: [languageJSON.Monday,
+                    languageJSON.Tuesday,
+                    languageJSON.Wednesday,
+                    languageJSON.Thursday,
+                    languageJSON.Friday,
+                    languageJSON.Saturday,
+                    languageJSON.Sunday,],
+                annually: languageJSON.annually,
+                monthly: languageJSON.monthly,
+                everyWeek: languageJSON.everyWeek,
+                everyDay: languageJSON.everyDay,
+                everyHour: languageJSON.everyHour,
+                everyMin: languageJSON.everyMin,
+                save: languageJSON.save
+            }
         };
         $('#cover_area').html(templates.channel_edit_timer(data))
             .css({display: 'flex'});
@@ -47,10 +86,10 @@ define(function (require, exports, module) {
             checkboxClass: 'icheckbox_minimal-blue'
         });
         $('#channel-editor-timer .select2')
-			.select2();
+            .select2();
         this.registerEventListeners();
     };
-    
+
     Timer.prototype.registerEventListeners = function () {
         var self = this;
         $('#channel-editor-timer .btn-close').click(function () {
@@ -80,50 +119,50 @@ define(function (require, exports, module) {
         });
         //判断全选按钮
         //周
-        $('.day-selector ul input').on('ifToggled',function(){
-            var days =  $('.day-selector ul input');
+        $('.day-selector ul input').on('ifToggled', function () {
+            var days = $('.day-selector ul input');
             var allCheck = true;
             //console.log(days.length);
-            for(var i = 0;i <days.length;i++){
-                if(!days[i].checked){
+            for (var i = 0; i < days.length; i++) {
+                if (!days[i].checked) {
                     allCheck = false;
                 }
             }
-            if(allCheck==true){
+            if (allCheck == true) {
                 $('.day-selector .check-all-day').parent().addClass('checked');
-            }else{
+            } else {
                 $('.day-selector .check-all-day').parent().removeClass('checked');
             }
         });
         //月
-        $('.month-selector ul input').on('ifToggled',function(){
-            var months =  $('.month-selector ul input');
+        $('.month-selector ul input').on('ifToggled', function () {
+            var months = $('.month-selector ul input');
             var allCheck = true;
             //console.log(days.length);
-            for(var i = 0;i <months.length;i++){
-                if(!months[i].checked){
+            for (var i = 0; i < months.length; i++) {
+                if (!months[i].checked) {
                     allCheck = false;
                 }
             }
-            if(allCheck==true){
+            if (allCheck == true) {
                 $('.month-selector .check-all-month').parent().addClass('checked');
-            }else{
+            } else {
                 $('.month-selector .check-all-month').parent().removeClass('checked');
             }
         });
         //日
-        $('.date-selector ul input').on('ifToggled',function(){
-            var dates =  $('.date-selector ul input');
+        $('.date-selector ul input').on('ifToggled', function () {
+            var dates = $('.date-selector ul input');
             var allCheck = true;
             //console.log(days.length);
-            for(var i = 0;i <dates.length;i++){
-                if(!dates[i].checked){
+            for (var i = 0; i < dates.length; i++) {
+                if (!dates[i].checked) {
                     allCheck = false;
                 }
             }
-            if(allCheck==true){
+            if (allCheck == true) {
                 $('.date-selector .check-all-date').parent().addClass('checked');
-            }else{
+            } else {
                 $('.date-selector .check-all-date').parent().removeClass('checked');
             }
         });
@@ -254,21 +293,22 @@ define(function (require, exports, module) {
         this.saveCallback && this.saveCallback(Timer.encode(this));
     };
 
-    Timer.prototype.unregisterEventListeners = function () {};
+    Timer.prototype.unregisterEventListeners = function () {
+    };
 
     Timer.prototype.maxGranularity = function () {
         var i;
-        for ( i = 1; i <= 7; i++) {
+        for (i = 1; i <= 7; i++) {
             if (!this.tDays.includes(i)) {
                 return 'day';
             }
         }
-        for ( i = 1; i <= 12; i++) {
+        for (i = 1; i <= 12; i++) {
             if (!this.tMonths.includes(i)) {
                 return 'month';
             }
         }
-        for ( i  = 1; i <= 31; i++) {
+        for (i = 1; i <= 31; i++) {
             if (!this.tDates.includes(i)) {
                 return 'date';
             }
@@ -346,7 +386,7 @@ define(function (require, exports, module) {
             segments[4] = '*';
             segments[3] = '*';
             bool = checkRange(timer.tDays, 7, 1) || timer.tDays.length === 0;
-            if (!bool && timer.tGranularity === 'day' ) {
+            if (!bool && timer.tGranularity === 'day') {
                 segments[6] = timer.tDays.join(',');
             } else {
                 segments[6] = '*';

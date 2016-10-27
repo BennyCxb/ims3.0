@@ -15,7 +15,8 @@ define(function (require, exports, module) {
         pagerNext = config.pager.next,
         pagerPrev = config.pager.prev,
         pagerPage = config.pager.page,
-        instance;
+        instance,
+        languageJSON = config.languageJson.channel;
 
     function openDialog() {
         instance = null;
@@ -27,7 +28,11 @@ define(function (require, exports, module) {
             currentPage: 1,
             keyword: ''
         };
-        $('#cover_area').html(templates.layout_list_dialog({}))
+        var lang = {
+            selectLayout: languageJSON.selectLayout,
+            searchLayout: languageJSON.searchLayout,
+        };
+        $('#cover_area').html(templates.layout_list_dialog(lang))
             .css({display: 'flex'});
         loadPage(instance.currentPage, instance.keyword);
         registerEventListeners();

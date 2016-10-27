@@ -3,7 +3,7 @@
 
         <button type="button" class="header-button-left glyphicon glyphicon-chevron-left btn-layout-editor-back"></button>
 		
-        <h1 class="header-title">编辑模版</h1>
+        <h1 class="header-title"><%=lang.editLayout%></h1>
         <!-- <button type="button" class="header-button-right glyphicon glyphicon-floppy-disk">保存</button> -->
 
     </div>
@@ -24,9 +24,9 @@
                         <ul class="layout-editor-properties">
                             
                         </ul>
-                        <button type="button" class=" btn  btn-default btn-layout-editor-exit">退出编辑</button>
-                        <button type="button" class=" btn  btn-primary btn-layout-editor-saveExit">保存并退出</button>
-                        <button type="button" class=" btn  btn-primary btn-layout-editor-save">保存</button>
+                        <button type="button" class=" btn  btn-default btn-layout-editor-exit"><%=lang.exitEdit%></button>
+                        <button type="button" class=" btn  btn-primary btn-layout-editor-saveExit"><%=lang.saveExit%></button>
+                        <button type="button" class=" btn  btn-primary btn-layout-editor-save"><%=lang.save%></button>
                     </div>
                     
                     
@@ -34,52 +34,52 @@
 
                         <!-- toolbar -->
                         <div class="layout-editor-toolbar">
-                            <label style="margin-left: 20px">工具栏</label>
+                            <label style="margin-left: 20px"><%=lang.toolbar%></label>
                             
                             <div class="div-line-i" style="width: 85px;"></div>
                             <div class="btn-group-vertical">
                                 <button data-widget-id="video" class="btn btn-default btn-add-widget">
-                                    <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp&nbsp&nbsp视频&nbsp
+                                    <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;<%=lang.video%>&nbsp;
                                 </button>
                                 <button data-widget-id="image" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-picture"></i>&nbsp&nbsp&nbsp图片&nbsp
+                                    <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;&nbsp;<%=lang.image%>&nbsp;
                                 </button>
                                 <button data-widget-id="html" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-font"></i>&nbsp&nbsp&nbsp文本&nbsp
+                                    <i class="glyphicon glyphicon-font"></i>&nbsp;&nbsp;&nbsp;<%=lang.text%>&nbsp;
                                 </button>
                                 <button data-widget-id="clock" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-time"></i>&nbsp&nbsp&nbsp时钟&nbsp
+                                    <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;<%=lang.clock%>&nbsp;
                                 </button>
                                 <button data-widget-id="weather" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-cloud"></i>&nbsp&nbsp&nbsp天气&nbsp
+                                    <i class="glyphicon glyphicon-cloud"></i>&nbsp;&nbsp;&nbsp;<%=lang.weather%>&nbsp;
                                 </button>
                                 <button data-widget-id="office" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-file"></i>&nbsp&nbspOffice
+                                    <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;Office
                                 </button>
                             </div>
 
                             <div class="btn-group-vertical" style="margin-top: 15px;">
                                 <button data-widget-id="audio" class="btn btn-default  btn-add-widget">
-                                    <i class="glyphicon glyphicon-music"></i>&nbsp&nbsp&nbsp音乐&nbsp
+                                    <i class="glyphicon glyphicon-music"></i>&nbsp;&nbsp;&nbsp;<%=lang.music%>&nbsp;
                                 </button>
                             </div>
 
                             <div class="btn-group-vertical" style="margin-top: 15px;">
                                 <button class="btn btn-default btn-layout-editor-delete-widget">
-                                    <i class="glyphicon glyphicon-trash"></i>&nbsp&nbsp&nbsp删除&nbsp
+                                    <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;<%=lang.delete%>&nbsp;
                                 </button>
                             </div>
                         </div>
                         <!-- canvas -->
                         <div class="layout-editor-canvas-title">
-                            <label>&nbsp画布区</label>
+                            <label>&nbsp;<%=canvasArea%></label>
                             
                             <div class="div-line-i"></div>
                         </div>
                         <div class="layout-editor-canvas"></div>
                         <!-- widget -->
                         <div class="layout-editor-widget">
-                            <label>&nbsp控件属性</label>
+                            <label>&nbsp;<%=ctrlProperties%></label>
                             <div class="div-line-i"></div>
                             <!-- propoties -->
                             <ul class="layout-editor-widget-properties">
@@ -91,7 +91,7 @@
 
                     <!-- footer -->
                     <div class="box-footer layout-editor-footer" style="position: absolute; bottom: 0; width: 100%;">
-                        <small class="tips">&nbsp&nbsp&nbspStep1:在工具栏中点击想要创建的控件&nbsp&nbsp&nbspStep2：在画布上拖拽画出大小&nbsp&nbsp&nbspStep3：拖拽调整大小和位置，也可以在右侧属性栏输入数值&nbsp&nbsp&nbsp（音乐控件不占面积，可点击直接添加）</small>
+                        <small class="tips">&nbsp;&nbsp;&nbsp;Step1:<%=promptSteps1%>&nbsp;&nbsp;&nbsp;Step2：<%=promptSteps2%>&nbsp;&nbsp;&nbsp;Step3：<%=promptSteps3%>&nbsp;&nbsp;&nbsp;（<%=promptSteps4%>）</small>
                         
                         
                     </div>

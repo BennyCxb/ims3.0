@@ -9,17 +9,20 @@ define(function (require, exports, module) {
         toast = require('common/toast'),
         getClassAndTerm = require('pages/terminal/getTermClassAndTerm.js'),
         INDEX = require("../index.js"),
-        MTRU = require("pages/materials/materials_upload.js");;
+        MTRU = require("pages/materials/materials_upload.js");
+    ;
 
     // global variables
     var requestUrl = config.serverRoot,
         projectName = config.projectName,
         nDisplayItems = 10,
         _pageNO = 1,
-        last;
+        last,
+        languageJSON;
 
     // 初始化页面
     exports.init = function () {
+        selectLanguage();
         checkCheck();
         loadPage(_pageNO);
 
@@ -63,10 +66,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已提交');
+                                alert(languageJSON.al_sumbmit);
                                 loadPage(_pageNO);
                             } else {
-                                alert('提交失败');
+                                alert(languageJSON.al_sumbmitFaild);
                             }
                         }
                     )
@@ -88,10 +91,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已审核');
+                                alert(languageJSON.al_check);
                                 loadPage(_pageNO);
                             } else {
-                                alert('审核失败');
+                                alert(languageJSON.al_checkFaild);
                             }
                         }
                     )
@@ -106,7 +109,7 @@ define(function (require, exports, module) {
                     var unpassChn = [];
                     for (var i = 0; i < ids.length; i++) {
                         //ids[i].failInfo="这里是审核不通过的反馈信息"
-                        var a = {"channelID": ids[i], "failInfo": "这里是审核不通过的反馈信息"}
+                        var a = {"channelID": ids[i], "failInfo": languageJSON.al_checkFailInfo}
                         unpassChn[i] = a;
 
                     }
@@ -121,10 +124,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已审核');
+                                alert(languageJSON.al_check);
                                 loadPage(_pageNO);
                             } else {
-                                alert('审核失败');
+                                alert(languageJSON.al_checkFaild);
                             }
                         }
                     )
@@ -136,6 +139,31 @@ define(function (require, exports, module) {
 
     exports.loadPage = function () {
         loadPage(_pageNO);
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        languageJSON = config.languageJson.channel;
+        $(".channel-box-title").html(languageJSON.title1);
+        $(".channel-box-prompt").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.prompt1);
+        $("#mtrLisTitle").html(languageJSON.title2);
+        $("#channelSearch").attr("placeholder", languageJSON.pl_search);
+        $(".btn-publish").html(languageJSON.publish);
+        $(".btn-publish-later").html(languageJSON.prePublish);
+        $(".btn-copy").html(languageJSON.copy);
+        $(".btn-delete").html(languageJSON.delete);
+        $(".btn-import-offline").html(languageJSON.importOffline);
+        $(".btn-export-offline").html(languageJSON.exportOffline);
+        $("#chn_submit").html(languageJSON.chn_submit);
+        $("#chn_pass").html(languageJSON.chn_pass);
+        $("#chn_unpass").html(languageJSON.chn_unpass);
+        $("#chn_toBeCheckedDiv .btn-pendingSubmit").html(languageJSON.pendingSubmit);
+        $("#chn_toBeCheckedDiv .btn-pendingAudit").html(languageJSON.pendingAudit);
+        $("#chn_toBeCheckedDiv .btn-pass").html(languageJSON.pass);
+        $("#chn_toBeCheckedDiv .btn-unpass").html(languageJSON.unpass);
+        $(".btn-add-channel").html(languageJSON.addChannel);
     }
 
     function registerEventListeners() {
@@ -196,7 +224,7 @@ define(function (require, exports, module) {
         var channelID = $(".checked").parent().parent().attr("chnID");
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
         getClassAndTerm.channelID = channelID;
-        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.title = languageJSON.title3 + '...';
         getClassAndTerm.save = function (data) {
             //var cList = JSON.stringify(data.categoryList);
             //var tList = JSON.stringify(data.termList);
@@ -210,12 +238,12 @@ define(function (require, exports, module) {
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
             util.ajax('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
-                    alert("频道发布成功！")
+                    alert(languageJSON.al_publishSuc)
                     util.cover.close();
                     loadPage(_pageNO);
                 }
                 else {
-                    alert("频道发布失败！")
+                    alert(languageJSON.al_publishFaild)
                     util.cover.close();
                 }
             });
@@ -226,7 +254,7 @@ define(function (require, exports, module) {
         var channelID = $(".checked").parent().parent().attr("chnID");
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
         getClassAndTerm.channelID = channelID;
-        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.title = languageJSON.title3 + '...';
         getClassAndTerm.save = function (data) {
             //var cList = JSON.stringify(data.categoryList);
             //var tList = JSON.stringify(data.termList);
@@ -240,11 +268,11 @@ define(function (require, exports, module) {
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
             util.ajax('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
-                    alert("频道预发布成功！")
+                    alert(languageJSON.al_prePublishSuc)
 
                 }
                 else {
-                    alert("频道预发布失败！")
+                    alert(languageJSON.al_prePublishFaild)
                 }
             });
             util.cover.close();
@@ -262,7 +290,7 @@ define(function (require, exports, module) {
             id: getCurrentChannelId()
         });
         util.ajax('post', requestUrl + '/backend_mgt/v2/copy', data, function (res) {
-            alert(JSON.parse(res).rescode === 200 ? '复制成功' : '复制失败');
+            alert(JSON.parse(res).rescode === 200 ? languageJSON.copySuc : languageJSON.copyFaild);
             loadPage(_pageNO);
         }, 'text');
     }
@@ -271,13 +299,13 @@ define(function (require, exports, module) {
      * 删除频道
      */
     function deleteChannel() {
-        if (confirm("确定删除该频道？")) {
+        if (confirm(languageJSON.cf_delete)) {
             var data = JSON.stringify({
                 action: 'Delete',
                 project_name: projectName
             });
             util.ajax('post', requestUrl + '/backend_mgt/v2/channels/' + getCurrentChannelId(), data, function (res) {
-                alert(Number(res.rescode) === 200 ? '删除成功' : '删除失败');
+                alert(Number(res.rescode) === 200 ? languageJSON.deleteSuc : languageJSON.deleteFaild);
                 loadPage(_pageNO);
             });
         }
@@ -305,11 +333,11 @@ define(function (require, exports, module) {
     }
 
     /**
-     * 导出频道
+     * 生成离线包
      */
     function exportOffline() {
-        if (confirm("确定导出该频道？")) {
-            var ids = [];
+        var ids = [];
+        if (confirm(languageJSON.cf_exportOffline)) {
             $(".chn_cb[type=checkbox]:checked").each(function (index, el) {
                 ids.push(Number(el.value));
             })
@@ -320,11 +348,11 @@ define(function (require, exports, module) {
             });
             util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
                 if (Number(res.rescode) != 200) {
-                    alert('导出失败');
+                    alert(languageJSON.al_exportFaild);
                 }
-                var t1 = window.setInterval(function() {
+                var t1 = window.setInterval(function () {
                     loadPage(_pageNO);
-                },60000);
+                }, 30000);
             });
         }
     }
@@ -411,39 +439,39 @@ define(function (require, exports, module) {
             var chnData = json.Channels;
             var check_th = '';
             if (util.getLocalParameter('config_checkSwitch') == '1') {
-                check_th = '<th class="chn_check">审核状态</th>';
+                check_th = '<th class="chn_check">' + languageJSON.checkStatus + '</th>';
             }
 
             $("#channel-table tbody").append('<tr>' +
                 '<th class="chn_checkbox" style="width:32px;"></th>' +
-                '<th class="chn_name">频道名</th>' +
+                '<th class="chn_name">' + languageJSON.channelName + '</th>' +
                 check_th +
-                '<th class="chn_portStatus text-center">状态</th>' +
-                '<th class="chn_create">创建人</th>' +
-                '<th class="chn_createTime  create-time">创建时间</th>' +
-                '<th class="chn_operation text-center">操作</th>'+
+                '<th class="chn_portStatus text-center">' + languageJSON.chn_portStatus + '</th>' +
+                '<th class="chn_create">' + languageJSON.chn_create + '</th>' +
+                '<th class="chn_createTime  create-time">' + languageJSON.chn_createTime + '</th>' +
+                '<th class="chn_operation text-center">' + languageJSON.chn_operation + '</th>' +
                 '</tr>');
             if (chnData.length != 0) {
                 for (var x = 0; x < chnData.length; x++) {
                     var check_td = '';
                     var check_status = '';
                     var chn_operation_td = '';
-                    var portStatus = '获取状态失败';
+                    var portStatus = languageJSON.gainStatusFaild;
                     switch (chnData[x].Status) {
                         case -1:
                             portStatus = '';
                             break;
                         case 1:
-                            portStatus = '等待生成';
+                            portStatus = languageJSON.pendingProd;
                             break;
                         case 2:
-                            portStatus = '生成中';
+                            portStatus = languageJSON.producing;
                             break;
                         case 3:
-                            portStatus = '生成成功';
+                            portStatus = languageJSON.prodSuc;
                             break;
                         case 4:
-                            portStatus = '生成失败';
+                            portStatus = languageJSON.prodFaild;
                             break;
                         default:
                             break;
@@ -452,9 +480,9 @@ define(function (require, exports, module) {
                     if (chnData[x].URL == null) {
                         chn_operation_td = '<td class="chn_operation">' +
                             '</td>';
-                    } else {
+                    } else if (chnData[x].URL != null & chnData[x].Status == 3) {
                         chn_operation_td = '<td class="chn_operation">' +
-                            '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">下载</a>'+
+                            '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">' + languageJSON.download + '</a>' +
                             '</td>';
                     }
 
@@ -463,16 +491,16 @@ define(function (require, exports, module) {
                         check_status = "check_status=" + chnData[x].CheckLevel;
                         switch (chnData[x].CheckLevel) {
                             case 0:
-                                checkStatus = '待提交';
+                                checkStatus = languageJSON.pendingSubmit;
                                 break;
                             case 1:
-                                checkStatus = '待审核';
+                                checkStatus = languageJSON.pendingAudit;
                                 break;
                             case 2:
-                                checkStatus = '已通过';
+                                checkStatus = languageJSON.pass;
                                 break;
                             case 3:
-                                checkStatus = '未通过';
+                                checkStatus = languageJSON.unpass;
                                 break;
                             default:
                                 break;
@@ -493,7 +521,7 @@ define(function (require, exports, module) {
             } else {
                 $("#channel-table tbody").empty();
                 $('#channel-table-pager').empty();
-                $("#channel-table tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#channel-table tbody").append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
             }
             checkCheckBtns();
         }

@@ -29,7 +29,8 @@ define(function (require, exports, module) {
         /**
          * 保存定时节目的序列
          */
-        timedSortable = null;
+        timedSortable = null,
+        languageJSON = config.languageJson.channel;;
 
     /**
      * 初始化数据库
@@ -182,7 +183,7 @@ define(function (require, exports, module) {
         } else {
 
             db.collection('channel').insert({
-                name: '新建频道',
+                name: languageJSON.newChannel,
                 name_eng: 'new channel',
                 overall_schedule_params: '{"Type":"Sequence"}',
                 overall_schedule_type: 'Regular',
@@ -398,7 +399,21 @@ define(function (require, exports, module) {
         var data = {
             name: channel.name,
             overall_schedule_params: channel.overall_schedule_params,
-            overall_schedule_type: channel.overall_schedule_type
+            overall_schedule_type: channel.overall_schedule_type,
+            lang: {
+                btn_save: languageJSON.save,
+                btn_saveSubmit: languageJSON.saveSubmit,
+                btn_savePublish: languageJSON.savePublish,
+                clickAddLayout: languageJSON.clickAddLayout,
+                timingProgram: languageJSON.timingProgram,
+                regularProgram: languageJSON.regularProgram,
+                delete: languageJSON.delete,
+                add: languageJSON.add,
+                sequence: languageJSON.sequence,
+                random: languageJSON.Random,
+                ratio: languageJSON.ratio,
+                loading: languageJSON.loading
+            }
         };
         $('#edit-page-container')
             .html(templates.channel_edit_main(data))
@@ -524,10 +539,10 @@ define(function (require, exports, module) {
             var deleteType = this.getAttribute('data-program-type'),
                 selectedProgram = findSelectedProgram();
             if (!selectedProgram || selectedProgram.schedule_type !== deleteType) {
-                alert('没有选中节目');
+                alert(languageJSON.al_noLayout);
                 return;
             };
-            if (confirm("确定删除该节目？")) {
+            if (confirm(languageJSON.cf_deleteLayout)) {
                 onDeleteProgram(selectedProgram.id);
             }
         });
@@ -591,7 +606,7 @@ define(function (require, exports, module) {
      */
     function onSaveChannel() {
         if (!inputCheck()) return;
-        toast.show('温馨提示:正在保存，可能需要几分钟时间，请耐心等待');
+        toast.show(languageJSON.prompt2);
         // $('#edit-page-container').hide();
         $('#channel-editor-wrapper .btn-channel-editor-save').attr("disabled", "disabled");
         setTimeout(removeDisabled, config.letTimeout);
@@ -1054,7 +1069,7 @@ define(function (require, exports, module) {
         } else if ($('#channel-editor-wrapper .btn-channel-editor-saveSubmit').attr("audit") == "true") {
             onSubmitAudit();
         } else {
-            alert('保存成功!');
+            alert(languageJSON.al_saveSuc);
         }
         if (location.hash.indexOf('?id=') === -1) {
             location.hash = '#channel/edit?id=' + channelId;
@@ -1067,7 +1082,7 @@ define(function (require, exports, module) {
     function onSaveChannelFail() {
         //db.rollback();
         $('#channel-editor-wrapper .btn-channel-editor-save').removeAttr("disabled");
-        alert('保存失败');
+        alert(languageJSON.al_saveFaild);
     }
 
     /**************** end of saveChannel  *****************/
@@ -1092,31 +1107,31 @@ define(function (require, exports, module) {
                 var type, type_id, type_name;
                 if (el.Type === 'VideoBox') {
                     type = 'VideoBox';
-                    type_name = '视频控件';
+                    type_name = languageJSON.VideoBox;
                     type_id = 1;
                 } else if (el.Type === 'AudioBox') {
                     type = 'AudioBox';
-                    type_name = '音频控件';
+                    type_name = languageJSON.AudioBox;
                     type_id = 4;
                 } else if (el.Type === 'WebBox') {
                     type = 'WebBox';
-                    type_name = '文本控件';
+                    type_name = languageJSON.WebBox;
                     type_id = 3;
                 } else if (el.Type === 'ImageBox') {
                     type = 'ImageBox';
-                    type_name = '图片控件';
+                    type_name = languageJSON.ImageBox;
                     type_id = 2;
                 } else if (el.Type === 'ClockBox') {
                     type = 'ClockBox';
-                    type_name = '时钟控件';
+                    type_name = languageJSON.ClockBox;
                     type_id = 5;
                 } else if (el.Type === 'WeatherBox') {
                     type = 'WeatherBox';
-                    type_name = '天气控件';
+                    type_name = languageJSON.WeatherBox;
                     type_id = 6;
                 } else if (el.Type === 'OfficeBox') {
                     type = 'OfficeBox';
-                    type_name = 'Office控件';
+                    type_name = languageJSON.OfficeBox;
                     type_id = 7;
                 }
                 return {
@@ -1173,7 +1188,7 @@ define(function (require, exports, module) {
             is_time_segment_limit: 0,
             layout_id: layout.id,
             template_id: 0,
-            lifetime_start: '1970-01-01 00:00:00',
+            lifetime_start: getNowFormatDate(),
             lifetime_end: '2030-01-01 00:00:00',
             name: layout.name,
             name_eng: 'new program',
@@ -1306,7 +1321,7 @@ define(function (require, exports, module) {
     function onPublishChannel() {
         util.cover.load('resources/pages/terminal/getTermClassAndTerm.html');
         getClassAndTerm.channelID = channelId;
-        getClassAndTerm.title = '发布到...';
+        getClassAndTerm.title = languageJSON.title3 + '...';
         getClassAndTerm.save = function (data) {
             //var cList = JSON.stringify(data.categoryList);
             //var tList = JSON.stringify(data.termList);
@@ -1320,11 +1335,11 @@ define(function (require, exports, module) {
             var url = config.serverRoot + '/backend_mgt/v2/termcategory';
             util.ajax2('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
-                    alert("频道保存并发布成功！")
+                    alert(languageJSON.al_chnSavePubSuc)
                     location.hash = '#channel/list';
                 }
                 else {
-                    alert("频道保存并发布失败！")
+                    alert(languageJSON.al_chnSavePubFaild)
                 }
             });
             util.cover.close();
@@ -1345,10 +1360,10 @@ define(function (require, exports, module) {
             JSON.stringify(data),
             function (data) {
                 if (data.rescode === '200') {
-                    alert('保存并提交审核成功！');
+                    alert(languageJSON.al_chnSaveSubSuc);
                     location.hash = '#channel/list';
                 } else {
-                    alert('保存并提交审核失败！');
+                    alert(languageJSON.al_chnSaveSubFaild);
                 }
             }
         )
@@ -1361,31 +1376,54 @@ define(function (require, exports, module) {
         var programList = db.collection('program').select({});
         for (var a = 0; a < programList.length; a++) {
             var program = programList[a];
-            var errorMsg = "";
             if (program != null) {
                 if (program.lifetime_start.length != 16) {
                     if (program.lifetime_start.length != 19) {
-                        errorMsg = "请输入正确的节目生效时间!\n";
-                        alert(errorMsg);
+                        alert(languageJSON.al_startTime);
                         return false;
                     }
                 }
                 if (program.lifetime_end.length != 16) {
                     if (program.lifetime_end.length != 19) {
-                        errorMsg = "请输入正确的节目失效时间!";
-                        alert(errorMsg);
+                        alert(languageJSON.al_endTime);
                         return false;
                     }
                 }
                 var start_time = new Date(program.lifetime_start);
                 var end_time = new Date(program.lifetime_end);
                 if (start_time > end_time) {
-                    errorMsg = "节目生效时间晚于失效时间，请重新输入!"
-                    alert(errorMsg);
+                    alert(languageJSON.al_resetTime);
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    /**
+     * 获取当前日期时间“yyyy-MM-dd HH:MM:SS”
+     * @returns {string}
+     */
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        var s = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        if (h < 10) h = '0' + h;
+        if (m < 10) m = '0' + m;
+        if (s < 10) s = '0' + s;
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + h + seperator2 + m + seperator2 + s;
+        return currentdate;
     }
 });

@@ -1,6 +1,6 @@
 <section id="" class="content-header">
-	<h1>频道</h1>
-	<small class="tips" style="position: absolute; top:22px; right: 16px; font-size: 12px;"><i class="fa fa-info-circle"></i>&nbsp把频道发布到终端后，如果频道内容发生变化，终端的播放内容也会随之更改。</small>
+	<h1 class="channel-box-title">频道</h1>
+	<small class="tips channel-box-prompt" style="position: absolute; top:22px; right: 16px; font-size: 12px;"><i class="fa fa-info-circle"></i>&nbsp把频道发布到终端后，如果频道内容发生变化，终端的播放内容也会随之更改。</small>
 	
 </section>
 <section class="content" id="channel-list-nav">
@@ -39,10 +39,10 @@
 			</div>
            
             <div id="chn_toBeCheckedDiv" class="btn-group pull-right">
-                <button type="button" class="btn btn-default btn-sm" value="1">待审核</button>
-                <button type="button" class="btn btn-default btn-sm" value="0">待提交</button>
-                <button type="button" class="btn btn-default btn-sm" value="2">已通过</button>
-                <button type="button" class="btn btn-default btn-sm" value="3">未通过</button>
+                <button type="button" class="btn btn-default btn-sm btn-pendingSubmit" value="0">待提交</button>
+                <button type="button" class="btn btn-default btn-sm btn-pendingAudit" value="1">待审核</button>
+                <button type="button" class="btn btn-default btn-sm btn-pass" value="2">已通过</button>
+                <button type="button" class="btn btn-default btn-sm btn-unpass" value="3">未通过</button>
             </div>
 			<a href="#channel/edit" class="btn btn-primary btn-sm btn-add-channel">添加频道</a>
 		</div>

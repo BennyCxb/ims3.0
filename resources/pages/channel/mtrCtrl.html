@@ -2,7 +2,7 @@
 <div class="" style="height: 100%;" xmlns="http://www.w3.org/1999/html">
     <div class="box-header with-border" style="height: 54px;">
         <i class="wiget-mark" style="margin-top: 11px;"></i>
-        <label id="mtrCtrl_Title"  style="position: relative; left: 20px; top: 6px;">视频控件</label>
+        <label id="mtrCtrl_Title" style="position: relative; left: 20px; top: 6px;">视频控件</label>
         <div id="widget_attribute" class="pull-right"></div>
     </div>
     <!-- /.box-header -->
@@ -11,8 +11,7 @@
         <!-- 文本控件属性 -->
         <div id="box_effect" class="box-header with-border">
             <div class="btn-group mtrCtrl_select">
-                <select id="mtrC_textType" class="form-control select2 "
-                        style="width: 100%; height: 30px; padding: 0px 10px;">
+                <select id="mtrC_textType" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
                     <option selected="selected" value="Normal">常规</option>
                     <option value="Marquee">走马灯</option>
                     <option value="WebURL">在线网页</option>
@@ -20,9 +19,9 @@
             </div>
             <div id="mtrC_flip" class="pull-right">
                 <div id="box_text_time" class="input-group">
-                    <span class="input-group-addon">翻页间隔</span>
+                    <span class="input-group-addon flipInterval">翻页间隔</span>
                     <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
-                    <span class="input-group-addon">秒</span>
+                    <span class="input-group-addon second">秒</span>
                 </div>
             </div>
             <div id="mtrC_effect" class="pull-right">
@@ -77,9 +76,9 @@
                     <div class="col-sm-9"><input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色"></div>
                 </div>
                 <div id="box_weather_time" class="input-group pull-right">
-                    <span class="input-group-addon">切换间隔</span>
+                    <span class="input-group-addon switchingInterval">切换间隔</span>
                     <input id="weatherFlip_time" type="number" class="form-control" min="0" placeholder="请输入">
-                    <span class="input-group-addon">秒</span>
+                    <span class="input-group-addon second">秒</span>
                 </div>
             </div>
         </div>
@@ -98,7 +97,7 @@
             </div>
             <div id="mtrC_flip" class="pull-right">
                 <div id="box_text_time" class="input-group">
-                    <span class="input-group-addon">切换间隔</span>
+                    <span class="input-group-addon switchingInterval">切换间隔</span>
                     <input id="mtrC_office_switchPeriod" type="number" class="form-control" min="0" placeholder="请输入">
                     <span class="input-group-addon">秒</span>
                 </div>
@@ -116,8 +115,7 @@
             <button id="mtr_addMtr" type="button" class="btn btn-primary btn-sm" typeid="1">添加资源</button>
             <div class="pull-right">
                 <div id="mtr_dplist" class="btn-group">
-                    <select id="mtrCtrl_playType" class="form-control select2"
-                            style="width: 100%; height: 30px; padding: 0px 10px;">
+                    <select id="mtrCtrl_playType" class="form-control select2" style="width: 100%; height: 30px; padding: 0px 10px;">
                         <option selected="selected" value="Sequence">顺序播放</option>
                         <option value="Random">随机播放</option>
                         <option value="Percent">比例播放</option>
@@ -164,7 +162,7 @@
                     <div class="info-box mtrC_datetime">
 
                         <div class="info-box-content">
-                            <span class="info-box-number">星期一</span>
+                            <span class="info-box-number span-monday">星期一</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -188,7 +186,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-number">2016-01-01 00:00:00</span>
-                            <span class="info-box-number">星期一</span>
+                            <span class="info-box-number span-monday">星期一</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -202,7 +200,7 @@
                         <div class="info-box-content">
                             <span class="info-box-number">2016-01-01</span>
                             <span class="info-box-number">00:00:00</span>
-                            <span class="info-box-number">星期一</span>
+                            <span class="info-box-number span-monday">星期一</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -230,13 +228,13 @@
                     <div id="mtrC_weatherNormal_box" class="info-box mtrC_weather">
                         <div class="mtrC_weatherNormal_box_left"><img src="resources/img/img_weather_1.png"></div>
                         <div class="mtrC_weatherNormal_box_middle">
-                            <span>多云</span>
-                            </br><span>无持续风向：微风</span>
+                            <span id="weather_cloudy">多云</span>
+                            </br><span id="weather_wind">无持续风向：微风</span>
                             <h3>15°～28°</h3>
                         </div>
                         <div class="mtrC_weatherNormal_box_right">
-                            <h2>北京</h2>
-                            <span>今天</span>
+                            <h2 id="weather_beijing">北京</h2>
+                            <span id="weather_today">今天</span>
                         </div>
                     </div>
                 </div>
@@ -246,7 +244,7 @@
                     <div id="mtrC_weatherOneline_box" class="info-box mtrC_weather">
                         <div class="mtrC_weatherOneline_box_left"><img src="resources/img/img_weather_1.png"></div>
                         <div class="mtrC_weatherNormal_box_right">
-                            <span>北京&nbsp;今天&nbsp;多云&nbsp;15°～28°</span>
+                            <span id="weather_bjtd">北京&nbsp;今天&nbsp;多云&nbsp;15°～28°</span>
                         </div>
                     </div>
                 </div>
