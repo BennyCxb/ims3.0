@@ -17,29 +17,16 @@
             <form role="form">
               <div class="box-body">
                 <div class="form-group">
-                  <label>用户名</label>
-                  <input type="text" class="form-control" id="user_name" readonly="readonly" autocomplete="off" placeholder="请输入英文用户名" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')">
+                  <label id="lbl_username">用户名</label>
+                  <input type="text" class="form-control" id="user_name" readonly="readonly" autocomplete="off" disabled>
                 </div>
                 <div class="form-group">
-                  <label>新密码</label>
-                  <input type="password" class="form-control" id="password" autocomplete="off" onfocus="this.type='password'" placeholder="请输入密码">
+                  <label id="lbl_newPsw">新密码</label>
+                  <input type="password" class="form-control" id="password" autocomplete="off" onfocus="this.type='password'">
                 </div>
                 <div class="form-group">
-                  <label>确认密码</label>
-                  <input type="password" class="form-control" id="password1" placeholder="请再次输入确认密码">
-                </div>
-               <!-- <div class="form-group">
-                  <label>角色</label>
-                  <select class="form-control">
-                    <option>role 1</option>
-                    <option>role 2</option>
-                    <option>role 3</option>
-                    <option>role 4</option>
-                    <option>role 5</option>
-                  </select>
-                </div>-->
-                <div class="checkbox">
-                 
+                  <label id="lbl_rePsw">确认密码</label>
+                  <input type="password" class="form-control" id="password1">
                 </div>
               </div>
               <!-- /.box-body -->

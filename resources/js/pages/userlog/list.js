@@ -4,8 +4,10 @@ define(function (require, exports, module) {
     var templates = require('common/templates');
     var nDisplayItems = 10;
     var last;
+    var languageJSON = CONFIG.languageJson.user;
 
     exports.init = function () {
+        selectLanguage();
         exports.loadUserlogPage(1); //加载默认页面
 
         //搜索
@@ -31,12 +33,23 @@ define(function (require, exports, module) {
          })*/
     }
 
-    // 加载页面数据
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#operationLogTitle").html(languageJSON.operationLog);
+        $("#userlogSearch").attr("placeholder", languageJSON.pl_keyword);
+    }
+
+    /**
+     * 加载页面数据
+     * @param pageNum
+     */
     exports.loadUserlogPage = function (pageNum) {
         $("#userlogLisTitle").html("");
         $("#userlogTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $(".fa.fa-check-square-o").attr("class", "fa fa-square-o");
-        $("#userlogLisTitle").html("日志列表");
+        $("#userlogLisTitle").html(languageJSON.logList);
 
         var data = JSON.stringify({
             project_name: CONFIG.projectName,
@@ -79,27 +92,27 @@ define(function (require, exports, module) {
         if (json.logList != undefined) {
             var rolData = json.logList;
             $("#userlogTable tbody").append('<tr>' +
-            '<th class="User">用户名</th>' +
-            '<th class="OperationObject">操作对象</th>' +
-            '<th class="Operation">操作</th>' +
-                '<th class="Datetime create-time">时间</th>' +
+                '<th class="User">' + languageJSON.username + '</th>' +
+                '<th class="OperationObject">' + languageJSON.operationObject + '</th>' +
+                '<th class="Operation">' + languageJSON.operation + '</th>' +
+                '<th class="Datetime create-time">' + languageJSON.operationTime + '</th>' +
                 //'<th class="Detail">详情</th>'+
-            '</tr>');
+                '</tr>');
             if (rolData.length != 0) {
-            for (var x = 0; x < rolData.length; x++) {
-                var roltr = '<tr>' +
-                    '<td class="User">' + rolData[x].User + '</td>' +
-                    '<td class="OperationObject">' + rolData[x].OperationObject + '</td>' +
-                    '<td class="Operation">' + rolData[x].Operation + '</td>' +
-                    '<td class="Datetime create-time">' + rolData[x].Datetime + '</td>' +
+                for (var x = 0; x < rolData.length; x++) {
+                    var roltr = '<tr>' +
+                        '<td class="User">' + rolData[x].User + '</td>' +
+                        '<td class="OperationObject">' + rolData[x].OperationObject + '</td>' +
+                        '<td class="Operation">' + rolData[x].Operation + '</td>' +
+                        '<td class="Datetime create-time">' + rolData[x].Datetime + '</td>' +
                         //'<td class="Detail">' + rolData[x].Detail + '</td>' +
-                    '</tr>';
-                $("#userlogTable tbody").append(roltr);
-            }
-        }else{
+                        '</tr>';
+                    $("#userlogTable tbody").append(roltr);
+                }
+            } else {
                 $("#userlogTable tbody").empty();
                 $('#userlog-table-pager').empty();
-                $("#userlogTable tbody").append( '<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#userlogTable tbody").append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
             }
         }
     }

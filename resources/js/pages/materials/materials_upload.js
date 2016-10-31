@@ -35,13 +35,13 @@ define(function (require, exports, module) {
         $("#lbl_webType").html(languageJSON.webType + ":");
         $("#lbl_text").html(languageJSON.normalText);
         $("#lbl_url").html(languageJSON.webUrl);
-        $("#Tbe_filesList").html('<tr>' +
+        $("#Tbe_filesList").html('<tbody><tr>' +
             '<th style="width:6%">#</th>' +
             '<th style="width:40%; max-width: 240px; text-overflow: ellipsis; overflow: hidden;">' + languageJSON.resourceName + '</th>' +
             '<th style="width:20%; text-align: center;">' + languageJSON.uploadProgress + '</th>' +
             '<th style="width:17%; text-align: center;">' + languageJSON.speed + '</th>' +
             '<th style="width:17%; text-align: center;">' + languageJSON.status + '</th>' +
-            '</tr>')
+            '</tr></tbody>')
     }
 
     function loadPage() {

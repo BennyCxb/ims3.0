@@ -808,6 +808,19 @@ a {
     text-align: center;
 }
 
+#usersTable .users_name {
+    max-width: 200px;
+}
+
+.user_resetPwd {
+    width: 100px;
+}
+
+.users_delete {
+    position: relative;
+    top: 2px;
+}
+
 /*用户日志页面*/
 .Datetime, .Operation {
     text-align: center;
@@ -1128,7 +1141,7 @@ a {
 
 /*user*/
 .user_name {
-    /*font-weight: bold;*/
+    /*max-width: 200px;*/
 }
 
 .users_name .fa-user {

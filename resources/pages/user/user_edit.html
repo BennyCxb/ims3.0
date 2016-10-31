@@ -17,20 +17,24 @@
         <form role="form">
             <div class="box-body">
                 <div class="form-group">
-                  <label>用户名</label>
+                  <label id="lbl_username">用户名</label>
                   <input type="text" class="form-control" id="user_name1" autocomplete="off" placeholder="请输入英文用户名" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')">
                 </div>
             <div class="form-group"  style="display:none;">
-                <label>密码</label>
-                <input class="form-control" id="password1" autocomplete="off" onfocus="this.type='password'" placeholder="请输入密码">
+                <label id="lbl_newPsw">密码</label>
+                <input class="form-control" id="password1" autocomplete="off" onfocus="this.type='password'">
             </div>
             <div class="form-group">
-                <label>邮箱</label>
-                <input type="email" class="form-control" id="email1" placeholder="请输入邮箱">
+                <label id="lbl_rePsw">确认密码</label>
+                <input type="password" class="form-control" id="password2">
             </div>
             <div class="form-group">
-                <label>备注</label>
-                <input type="text" class="form-control" id="description1" placeholder="备注">
+                <label id="lbl_email">邮箱</label>
+                <input type="email" class="form-control" id="email1">
+            </div>
+            <div class="form-group">
+                <label id="lbl_description">备注</label>
+                <input type="text" class="form-control" id="description1">
             </div>
             <!-- <div class="form-group">
               <label>角色</label>

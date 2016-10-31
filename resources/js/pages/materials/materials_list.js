@@ -35,9 +35,9 @@ define(function (require, exports, module) {
         $("#mtr_approve").html(languageJSON.checkPass);
         $("#mtr_reject").html(languageJSON.checkUnpass);
         $("#addResource").html(languageJSON.addResource);
-        $("#mtr_upload").html('<i class="fa fa-circle-o text-red">' + languageJSON.upload);
-        $("#mtr_addText").html('<i class="fa fa-circle-o text-yellow">' + languageJSON.addText);
-        $("#mtr_addLive").html('<i class="fa fa-circle-o text-green">' + languageJSON.addLive);
+        $("#mtr_upload").html('<i class="fa fa-circle-o text-red"></i>' + languageJSON.upload);
+        $("#mtr_addText").html('<i class="fa fa-circle-o text-yellow"></i>' + languageJSON.addText);
+        $("#mtr_addLive").html('<i class="fa fa-circle-o text-green"></i>' + languageJSON.addLive);
         $("#mtr_refresh").attr("title", languageJSON.refrash);
         $("#mtr_toBeCheckedDiv button:eq(0)").html(languageJSON.pendingAudit);
         $("#mtr_toBeCheckedDiv button:eq(1)").html(languageJSON.pendingSubmit);
