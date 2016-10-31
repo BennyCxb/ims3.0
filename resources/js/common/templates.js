@@ -70,7 +70,7 @@ __p+='<div class="channel-program-header box-header with-border"> <input value="
 ((__t=(name))==null?'':__t)+
 '" data-field="name" type="text" class="direct-name-003 form-control layout-edit-propoties-name" style="width:360px; height: 41px; top: 6px; position: absolute; font-weight: bold"> <small class="direct-name-003-hint direct-name-hint" style="top: 20px; width: 24px; left: 75px"> <i class="glyphicon glyphicon-edit" style="color: #555"></i> </small> <button class="btn-channel-preview btn btn-default pull-right" title="'+
 ((__t=(language.prompt1))==null?'':__t)+
-'" is_preview="false" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp;&nbsp;'+
+'" is_preview="false" style="position: relative; top: 0px; margin-left: 15px"> <i class="fa fa-play-circle-o"></i> &nbsp;'+
 ((__t=(language.previewProgram))==null?'':__t)+
 ' </button> </div> <div class="channel-program-timer"> <div class="input-group"> <span class="input-group-addon" title="'+
 ((__t=(language.strarTime))==null?'':__t)+
@@ -381,15 +381,27 @@ return __p;
 exports['layout_edit_property']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 30px">编辑</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
+__p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; width: 30px">'+
+((__t=(lang.edit))==null?'':__t)+
+'</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
 ((__t=(name))==null?'':__t)+
-'" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property" style="width: 101px"> <label class="col-sm-3 control-label property-name-inline">宽</label> <input class="form-control" type="text" value="'+
+'" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property" style="width: 101px"> <label class="col-sm-3 control-label property-name-inline">'+
+((__t=(lang.height))==null?'':__t)+
+'</label> <input class="form-control" type="text" value="'+
 ((__t=(width))==null?'':__t)+
-'" data-property-id="layout-width" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 15px; width: 101px"> <label class="col-sm-3 control-label property-name-inline">高</label> <input class="form-control" type="text" value="'+
+'" data-property-id="layout-width" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 15px; width: 101px"> <label class="col-sm-3 control-label property-name-inline">'+
+((__t=(lang.width))==null?'':__t)+
+'</label> <input class="form-control" type="text" value="'+
 ((__t=(height))==null?'':__t)+
-'" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">背景色</label> <input class="form-control" type="color" value="'+
+'" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">'+
+((__t=(lang.bgColor))==null?'':__t)+
+'</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">添加背景图</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">取消背景图</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">'+
+((__t=(lang.addBgcolor))==null?'':__t)+
+'</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">'+
+((__t=(lang.cancelBgcolor))==null?'':__t)+
+'</button> </div> </div> <script type="text/javascript">function getLength(str){  \r\n		    var realLength = 0;  \r\n		    for (var i = 0; i < str.length; i++){  \r\n		        var charCode = str.charCodeAt(i);\r\n		        \r\n		        if (charCode >= 0 && charCode <= 128)   \r\n		        realLength += 1;  \r\n		        else   \r\n		        realLength += 2;\r\n\r\n		    }\r\n\r\n		    return realLength;  \r\n		}  \r\n\r\n\r\n	function directName(obj,hint){\r\n		//get name\r\n		var $obj = $(obj);\r\n		var t = $obj.val();\r\n		var length = getLength(t);\r\n		var width = parseFloat($obj.css(\'font-size\'));\r\n		var left = length * width/2 +47;\r\n\r\n		//get hint\r\n		var $hint = $(hint);\r\n		\r\n		//ux fix\r\n		$obj.css(\'cursor\',\'pointer\');\r\n\r\n		//reposition\r\n		$hint.css(\'left\',left);\r\n\r\n		//event\r\n		$hint.click(function(){\r\n			$obj.focus().val(t);\r\n		});\r\n		$obj.focus(function(){\r\n			$hint.css(\'display\',\'none\');\r\n			$obj.css(\'cursor\',\'\');\r\n		});\r\n		$obj.blur(function(){\r\n			$hint.css(\'display\',\'\');\r\n			$obj.css(\'cursor\',\'pointer\');\r\n			//reposition\r\n			var t = $obj.val();\r\n			var length = getLength(t);\r\n			var width = parseFloat($obj.css(\'font-size\'));\r\n			var left = length * width/2 +47;\r\n			$hint.css(\'left\',left);\r\n		});\r\n	}\r\n\r\n	directName(\'.direct-name-001\',\'.direct-name-001-hint\');</script>';
 }
 return __p;
 };
@@ -423,24 +435,40 @@ return __p;
 exports['layout_edit_widget_property']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<!-- <label>\r\n        <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp视频控件\r\n    </label>\r\n--> <li style="display: none"> <label>当前控件:</label> <input type="text" readonly="readonly" value="'+
+__p+='<!-- <label>\r\n        <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp视频控件\r\n    </label>\r\n--> <li style="display: none"> <label>'+
+((__t=(lang.currentCtrl))==null?'':__t)+
+':</label> <input type="text" readonly="readonly" value="'+
 ((__t=(type))==null?'':__t)+
 '"> </li> <div class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">x</label> <input type="number" value="'+
 ((__t=(left))==null?'':__t)+
 '" class="form-control" data-property-id="widget-left" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">y</label> <input type="number" value="'+
 ((__t=(top))==null?'':__t)+
-'" class="form-control" data-property-id="widget-top" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">宽</label> <input type="number" value="'+
+'" class="form-control" data-property-id="widget-top" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" title="'+
+((__t=(lang.width))==null?'':__t)+
+'" style="padding-left: 0px; width: 16px">W</label> <input type="number" value="'+
 ((__t=(width))==null?'':__t)+
-'" class="form-control" data-property-id="widget-width" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">高</label> <input type="number" value="'+
+'" class="form-control" data-property-id="widget-width" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" title="'+
+((__t=(lang.height))==null?'':__t)+
+'" style="padding-left: 0px; width: 16px">H</label> <input type="number" value="'+
 ((__t=(height))==null?'':__t)+
-'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">层</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">上移一层</button> <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">下移一层</button> </div> <!-- <li>\r\n    <button class="btn-layout-editor-delete-widget">删除控件</button>\r\n</li> -->';
+'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">'+
+((__t=(lang.layer))==null?'':__t)+
+'</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">'+
+((__t=(lang.upLayer))==null?'':__t)+
+'</button> <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">'+
+((__t=(lang.downLayer))==null?'':__t)+
+'</button> </div> <!-- <li>\r\n    <button class="btn-layout-editor-delete-widget">删除控件</button>\r\n</li> -->';
 }
 return __p;
 };
 exports['layout_list_dialog']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
-__p+='<div id="layout-list-dialog" class="modal-content"> <div class="modal-header"> <button type="button" class="btn btn-close close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h3 class="modal-title">选择模版</h3> </div> <div> <div class="box-header with-border"> <div class="has-feedback pull-right"> <input type="text" class="layout-list-search form-control input-sm" placeholder="搜索模版"> <span class="glyphicon glyphicon-search form-control-feedback"></span> </div> </div> <ul class="layout-list"> </ul> </div> <div class="text-center modal-footer"> <ul class="pagination layout-list-pager"> </ul> </div> </div>';
+__p+='<div id="layout-list-dialog" class="modal-content"> <div class="modal-header"> <button type="button" class="btn btn-close close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> <h3 class="modal-title">'+
+((__t=(selectLayout))==null?'':__t)+
+'</h3> </div> <div> <div class="box-header with-border"> <div class="has-feedback pull-right"> <input type="text" class="layout-list-search form-control input-sm" placeholder="'+
+((__t=(searchLayout))==null?'':__t)+
+'"> <span class="glyphicon glyphicon-search form-control-feedback"></span> </div> </div> <ul class="layout-list"> </ul> </div> <div class="text-center modal-footer"> <ul class="pagination layout-list-pager"> </ul> </div> </div>';
 }
 return __p;
 };

@@ -2,9 +2,20 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         loadPage();
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#lbl_name").html(languageJSON.liveName + ":");
+        $("#lbl_url").html(languageJSON.liveUrl + ":");
+        $("#ULmtr_add").html(languageJSON.submit);
     }
 
     function loadPage() {
@@ -14,7 +25,7 @@ define(function (require, exports, module) {
         });
 
         if ($("#mtr_edit").attr("edit_type") == "直播") {			//修改
-            $("#mtr_alTitle").html("编辑直播源");
+            $("#mtr_alTitle").html(languageJSON.editLiveUrl);
             var mtrId;
             for (var x = 0; x < $(".mtr_cb").length; x++) {
                 if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
@@ -41,7 +52,7 @@ define(function (require, exports, module) {
                 onSubmit(mtrId);
             })
         } else {													//添加
-            $("#mtr_alTitle").html("添加直播源");
+            $("#mtr_alTitle").html(languageJSON.addLiveUrl);
             $("#ULmtr_add").click(function () {
                 if (!inputCheck()) return;
                 onSubmit();
@@ -108,7 +119,7 @@ define(function (require, exports, module) {
                 md5: '',
                 duration: '0',
                 create_time: getNowFormatDate(),
-                CreateUser: $('#USER-NAME').html()
+                CreateUser: CONFIG.userName
             };
             var data = JSON.stringify({
                 action: action,
@@ -120,9 +131,9 @@ define(function (require, exports, module) {
                 if (msg.rescode == 200) {
                     $("#mtrLive").trigger("click");
                     close();
-                    alert("添加成功");
+                    alert(languageJSON.al_addSuc);
                 } else {
-                    alert("添加失败");
+                    alert(languageJSON.al_addFaild);
                 }
             });
         } else {
@@ -142,9 +153,9 @@ define(function (require, exports, module) {
                     var pageNum = MTR.mtrList().pageNum;
                     MTR.loadPage(pageNum, "Live");
                     close();
-                    alert("修改成功");
+                    alert(languageJSON.al_editSuc);
                 } else {
-                    alert("修改失败");
+                    alert(languageJSON.al_editFaild);
                 }
             });
         }
@@ -158,10 +169,10 @@ define(function (require, exports, module) {
     function inputCheck() {
         var errormsg = "";
         if ($("#ULmtr_name").val() == "") {
-            errormsg += "请输入直播源名称！\n";
+            errormsg += languageJSON.al_inLiveName + "\n";
         }
         if ($("#ULmtr_address").val() == "") {
-            errormsg += "请输入直播源地址！";
+            errormsg += languageJSON.al_inLiveUrl;
         }
         if (errormsg != "") {
             alert(errormsg);

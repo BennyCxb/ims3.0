@@ -305,7 +305,7 @@ define(function (require, exports, module) {
                 $(this).children('i')
                     .addClass('fa-stop')
                     .removeClass('fa-play-circle-o');
-                $(this).get(0).lastChild.nodeValue = '&nbsp;&nbsp;' + languageJSON.cancel ;
+                $(this).get(0).lastChild.nodeValue = ' ' + languageJSON.cancelPreview ;
                 $(this).attr("is_preview","true");
             } else {
                 editor.hidePreview();
@@ -313,7 +313,7 @@ define(function (require, exports, module) {
                 $(this).children('i')
                     .removeClass('fa-stop')
                     .addClass('fa-play-circle-o');
-                $(this).get(0).lastChild.nodeValue = '&nbsp;&nbsp;' + languageJSON.previewProgram;
+                $(this).get(0).lastChild.nodeValue = ' ' + languageJSON.previewProgram;
                 $(this).attr("is_preview","false");
             }
         });

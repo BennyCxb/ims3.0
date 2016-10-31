@@ -1,6 +1,6 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>
+    <h1 id="material_title">
         资源存储
     </h1>
 </section>
@@ -34,7 +34,7 @@
                     <div class="mailbox-controls">
                         <!-- Check all button -->
                         <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i></button>
-                        
+
                         <div class="btn-group">
                             <button id="mtr_download" type="button" class="btn btn-default btn-sm" disabled><a style="color: #333">下载</a></button>
                             <button id="mtr_edit" type="button" class="btn btn-default btn-sm" disabled>编辑</button>
@@ -49,26 +49,26 @@
                         </div>
 
                         <div class="input-group-btn" style="display: inline; margin-right: 4px;">
-                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">添加资源
+                            <button id="addResource" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">添加资源
                                 <span class="fa fa-caret-down"></span>
                             </button>
                             <ul id="ad-material-list" class="dropdown-menu" style="margin-top: 15px;">
                                 <li><a id="mtr_upload"><i class="fa fa-circle-o text-red"></i> 上传</a></li>
                                 <li><a id="mtr_addText" href="#materials/materials_addText"><i class="fa fa-circle-o text-yellow"></i> 添加文本</a></li>
                                 <li><a id="mtr_addLive"><i class="fa fa-circle-o text-green"></i> 添加直播</a></li>
-                                <li><a id="mtr_addURL"><i class="fa fa-circle-o text-blue"></i> 添加在线网页</a></li>
+                                <!--<li><a id="mtr_addURL"><i class="fa fa-circle-o text-blue"></i> 添加在线网页</a></li>-->
                             </ul>
                         </div>
 
                         <!-- /.btn-group -->
                         <button id="mtr_refresh" type="button" class="btn btn-default btn-sm" title="刷新列表"><i class="fa fa-refresh"></i></button>
 
-                        
+
                         <div id="mtr_toBeCheckedDiv" class="btn-group pull-right">
-                          <button type="button" class="btn btn-default btn-sm" value="1">待审核</button>
-                          <button type="button" class="btn btn-default btn-sm" value="0">待提交</button>
-                          <button type="button" class="btn btn-default btn-sm" value="2">已通过</button>
-                          <button type="button" class="btn btn-default btn-sm" value="3">未通过</button>
+                            <button type="button" class="btn btn-default btn-sm" value="0">待提交</button>
+                            <button type="button" class="btn btn-default btn-sm" value="1">待审核</button>
+                            <button type="button" class="btn btn-default btn-sm" value="2">已通过</button>
+                            <button type="button" class="btn btn-default btn-sm" value="3">未通过</button>
                         </div>
 
                         <!-- /.pull-right -->

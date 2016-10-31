@@ -3,8 +3,10 @@ define(function (require, exports, module) {
     var UTIL = require("common/util.js");
     var _mtrId,
         mtrTextType = "0";
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         var DispClose = false;
         $(window).bind('beforeunload', function () {
             var editor = CKEDITOR.instances.editor1;//获取编辑器对象,editor1 为 textarea 的ID
@@ -13,7 +15,7 @@ define(function (require, exports, module) {
                 DispClose = true;
             }
             if (DispClose) {
-                return "当前正在编辑文本，是否离开当前页面?";
+                return languageJSON.al_editText + "?";
             }
         })
 
@@ -41,17 +43,32 @@ define(function (require, exports, module) {
             var viewText = require("pages/materials/materials_viewText.js");
             var mtrId = location.hash.substring(location.hash.lastIndexOf('?id=') + 4);
             viewText.materialID = mtrId;
-            viewText.materialName = '已通过审核的内容';
+            viewText.materialName = languageJSON.checkedContent;
             var page = "resources/pages/materials/materials_viewText.html";
             UTIL.cover.load(page);
         })
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#lbl_webName").html(languageJSON.webName + ":");
+        $("#lbl_webType").html(languageJSON.webType + ":");
+        $("#lbl_text").html(languageJSON.normalText);
+        $("#lbl_url").html(languageJSON.webUrl);
+        $("#mtr-input-url label").html(languageJSON.webUrl + ":");
+        $("#Tmtr_viewlast").html(languageJSON.queryCheck);
+        $("#Tmtr_submit").html(languageJSON.saveSubmit);
+        $("#Tmtr_save").html(languageJSON.save);
+        $("#Tmtr_back").html(languageJSON.exit);
     }
 
     function loadPage() {
         _mtrId = null;
         mtrTextType = "0";
         if (location.hash.indexOf('?id=') != -1) {			//编辑
-            $("#mtr_atTitle").html("编辑文本");
+            $("#mtr_atTitle").html(languageJSON.editWeb);
             $('input[type="radio"].Tmtr-minimal').prop("disabled", true);
             _mtrId = location.hash.substring(location.hash.lastIndexOf('?id=') + 4);
             var data1 = JSON.stringify({
@@ -77,7 +94,7 @@ define(function (require, exports, module) {
             }, 'text')
         } else {        //添加
             $('#Tmtr_viewlast').hide();
-            $("#mtr_atTitle").html("添加文本");
+            $("#mtr_atTitle").html(languageJSON.addWeb);
         }
 
         //保存
@@ -148,7 +165,7 @@ define(function (require, exports, module) {
             if (parseInt(msg.rescode) == 200) {
                 submitToCheck();
             } else {
-                alert("保存失败");
+                alert(languageJSON.al_saveFaild);
             }
         })
 
@@ -165,12 +182,12 @@ define(function (require, exports, module) {
                 data,
                 function (data) {
                     if (data.rescode === '200') {
-                        alert("保存并提交成功");
+                        alert(languageJSON.al_saveSubSuc);
                         backList();
                         //解除绑定，一般放在提交触发事件中
                         $(window).unbind('beforeunload');
                     } else {
-                        alert("保存并提交失败");
+                        alert(languageJSON.al_saveSubFaild);
                     }
                 }
             )
@@ -218,23 +235,23 @@ define(function (require, exports, module) {
                         data2,
                         function (data) {
                             if (data.rescode === '200') {
-                                alert("保存成功");
+                                alert(languageJSON.al_saveSuc);
                                 backList();
                                 //解除绑定，一般放在提交触发事件中
                                 $(window).unbind('beforeunload');
                             } else {
-                                alert("保存失败");
+                                alert(languageJSON.al_saveFaild);
                             }
                         }
                     )
                 } else {
-                    alert("保存成功");
+                    alert(languageJSON.al_saveSuc);
                     backList();
                     //解除绑定，一般放在提交触发事件中
                     $(window).unbind('beforeunload');
                 }
             } else {
-                alert("保存失败");
+                alert(languageJSON.al_saveFaild);
             }
         })
     }
@@ -245,16 +262,16 @@ define(function (require, exports, module) {
     function inputCheck() {
         var errormsg = "";
         if ($("#Tmtr_name").val() == "") {
-            errormsg += "请输入文本资源名称！\n";
+            errormsg += languageJSON.al_inWebName + "！\n";
         }
         if (Number(mtrTextType) === 1) {
-            var url = $("#Tmtr_url").val();
-            var regExp = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/;
             if ($("#Tmtr_url").val() == "") {
-                errormsg += "请输入URL地址！\n";
+                errormsg += languageJSON.al_inWebUrl + "！\n";
             }
+            // var url = $("#Tmtr_url").val();
+            // var regExp = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/;
             // else if (!regExp.test(url)) {
-            //     errormsg += "请输入正确的URL地址！\n";
+            //     errormsg += languageJSON.al_inRiWebUrl + "！\n";
             // }
         }
         if (errormsg != "") {

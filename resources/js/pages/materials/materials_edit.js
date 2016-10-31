@@ -2,9 +2,10 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
-
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         var mtrId = $("input[type=checkbox]:checked").attr("mtrID");
         $("#Emtr_name").focus();
         loadPage();
@@ -25,9 +26,9 @@ define(function (require, exports, module) {
                     if(msg.rescode == 200){
                         MTR.loadPage(MTR.mtrList().pageNum, MTR.mtrList().mtrType);
                         close();
-                        alert("修改成功");
+                        alert(languageJSON.al_editSuc);
                     }else{
-                        alert("修改失败");
+                        alert(languageJSON.al_editFaild);
                     }
                 });
             } else {
@@ -43,13 +44,22 @@ define(function (require, exports, module) {
                     if(msg.rescode == 200){
                         MTR.loadPage(MTR.mtrList().pageNum, MTR.mtrList().mtrType);
                         close();
-                        alert("修改成功");
+                        alert(languageJSON.al_editSuc);
                     }else{
-                        alert("修改失败");
+                        alert(languageJSON.al_editFaild);
                     }
                 });
             }
         })
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $(".resourceTitle").html(languageJSON.resoureEdit);
+        $("#lbl_resourceName").html(languageJSON.webUrl + ":");
+        $("#Emtr_updata").html(languageJSON.save);
     }
 
     function loadPage() {
@@ -59,7 +69,7 @@ define(function (require, exports, module) {
         });
 
         var mtrName = $("input[type=checkbox]:checked").parents("tr").find($(".mtr_name")).attr("title");
-        var name = mtrName.substring(0, mtrName.indexOf('.'));
+        var name = mtrName.substring(0, mtrName.lastIndexOf('.'));
         $("#Emtr_name").val(name);
         $("#Emtr_name").attr("mtrtype", mtrName.substring(mtrName.lastIndexOf('.') + 1));
     }
@@ -77,7 +87,7 @@ define(function (require, exports, module) {
     function inputCheck() {
         var errormsg = "";
         if ($("#Emtr_name").val() == "") {
-            errormsg += "请输入资源名称！\n";
+            errormsg += languageJSON.al_inResourceName + "！\n";
         }
         if (errormsg != "") {
             alert(errormsg);

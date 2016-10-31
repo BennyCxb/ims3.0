@@ -9,11 +9,40 @@ define(function (require, exports, module) {
     var _pageNum = 1;
     var mtrType;
     var t1;
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         checkCheck();
         bind();
         exports.loadPage(_pageNum, mtrType == undefined ? "Video" : mtrType ); //加载默认页面
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#material_title").html(languageJSON.resourceTitle);
+        $("#mtrVideo").html('<i class="fa fa-video-camera"></i> ' + languageJSON.video);
+        $("#mtrVideo").html('<i class="fa fa-image"></i> ' + languageJSON.image);
+        $("#mtrVideo").html('<i class="fa fa-music"></i> ' + languageJSON.audio);
+        $("#mtrVideo").html('<i class="fa fa-font"></i> ' + languageJSON.text);
+        $("#mtrVideo").html('<i class="fa fa-cloud"></i> ' + languageJSON.live);
+        $("#mtr_download").html('<a style="color: #333">' + languageJSON.download + '</a>');
+        $("#mtr_edit").html(languageJSON.edit);
+        $("#mtr_delete").html(languageJSON.delete);
+        $("#mtr_submit").html(languageJSON.submitCheck);
+        $("#mtr_approve").html(languageJSON.checkPass);
+        $("#mtr_reject").html(languageJSON.checkUnpass);
+        $("#addResource").html(languageJSON.addResource);
+        $("#mtr_upload").html('<i class="fa fa-circle-o text-red">' + languageJSON.upload);
+        $("#mtr_addText").html('<i class="fa fa-circle-o text-yellow">' + languageJSON.addText);
+        $("#mtr_addLive").html('<i class="fa fa-circle-o text-green">' + languageJSON.addLive);
+        $("#mtr_refresh").attr("title", languageJSON.refrash);
+        $("#mtr_toBeCheckedDiv button:eq(0)").html(languageJSON.pendingAudit);
+        $("#mtr_toBeCheckedDiv button:eq(1)").html(languageJSON.pendingSubmit);
+        $("#mtr_toBeCheckedDiv button:eq(2)").html(languageJSON.pass);
+        $("#mtr_toBeCheckedDiv button:eq(3)").html(languageJSON.unpass);
     }
 
     /**
@@ -43,25 +72,25 @@ define(function (require, exports, module) {
         mtrType = typeName;
         switch (typeName) {
             case "Video":
-                $("#mtrSearch").attr("placeholder", "搜索视频");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchVideo);
                 break;
             case "Image":
-                $("#mtrSearch").attr("placeholder", "搜索图片");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchImage);
                 break;
             case "Audio":
-                $("#mtrSearch").attr("placeholder", "搜索音频");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchAudio);
                 break;
             case "WebText":
-                $("#mtrSearch").attr("placeholder", "搜索文本");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchText);
                 break;
             case "Live":
-                $("#mtrSearch").attr("placeholder", "搜索直播");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchLive);
                 break;
-            case "WebUrl":
-                $("#mtrSearch").attr("placeholder", "搜索在线网页");
-                break;
+            // case "WebUrl":
+            //     $("#mtrSearch").attr("placeholder", "搜索在线网页");
+            //     break;
             case "Office":
-                $("#mtrSearch").attr("placeholder", "搜索Office/PDF");
+                $("#mtrSearch").attr("placeholder", languageJSON.pl_searchOffice);
                 break;
         }
         var status = "";
@@ -146,17 +175,17 @@ define(function (require, exports, module) {
             var mtrData = json.Materials;
             var check_th = '';
             if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
-                check_th = '<th class="mtr_check">审核状态</th>';
+                check_th = '<th class="mtr_check">' + languageJSON.checkStatus + '</th>';
             }
             $("#mtrTable tbody").append('<tr>' +
                 '<th class="mtr_checkbox"></th>' +
-                '<th class="mtr_name">文件名</th>' +
+                '<th class="mtr_name">' + languageJSON.resourceName + '</th>' +
                 check_th +
-                '<th class="mtr_size">大小</th>' +
-                '<th class="mtr_time">时长</th>' +
-                '<th class="mtr_status">状态</th>' +
-                '<th class="mtr_uploadUser">创建人</th>' +
-                '<th class="mtr_uploadDate create-time">创建时间</th>' +
+                '<th class="mtr_size">' + languageJSON.size + '</th>' +
+                '<th class="mtr_time">' + languageJSON.duration + '</th>' +
+                '<th class="mtr_status">' + languageJSON.transformStatus + '</th>' +
+                '<th class="mtr_uploadUser">' + languageJSON.createUser + '</th>' +
+                '<th class="mtr_uploadDate create-time">' + languageJSON.createTime + '</th>' +
                 '</tr>');
             if (mtrData.length != 0) {
                 var material_type = mtrData[0].Type_Name;
@@ -183,16 +212,16 @@ define(function (require, exports, module) {
                         check_status = "check_status=" + mtrData[x].CheckLevel;
                         switch (mtrData[x].CheckLevel) {
                             case 0:
-                                status = '待提交';
+                                status = languageJSON.pendingSubmit;
                                 break;
                             case 1:
-                                status = '待审核';
+                                status = languageJSON.pendingAudit;
                                 break;
                             case 2:
-                                status = '已通过';
+                                status = languageJSON.pass;
                                 break;
                             case 3:
-                                status = '未通过';
+                                status = languageJSON.unpass;
                                 break;
                             default:
                                 break;
@@ -205,16 +234,16 @@ define(function (require, exports, module) {
                     if (mtrData[x].status != undefined) {
                         switch (mtrData[x].status) {
                             case 0:
-                                mtr_status = "转换失败";
+                                mtr_status = languageJSON.tfFaild;
                                 break;
                             case 1:
-                                mtr_status = "待转换";
+                                mtr_status = languageJSON.pendingTf;
                                 break;
                             case 2:
-                                mtr_status = "转换中";
+                                mtr_status = languageJSON.transforming;
                                 break;
                             case 3:
-                                mtr_status = "转换成功";
+                                mtr_status = languageJSON.tfSuc;
                                 break;
                         }
                     }
@@ -275,13 +304,13 @@ define(function (require, exports, module) {
                     if(mtrData[z_index].Type_Name == "Video"){
                         var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if(backSuffix != ".mp4" && backSuffix != ".ogg" && backSuffix != ".WebM" && backSuffix != ".MPEG4"){
-                            alert("当前视频格式暂不支持预览！");
+                            alert(languageJSON.al_videoFormat);
                             return;
                         }
                     } else if(mtrData[z_index].Type_Name == "Audio"){
                         var backSuffix = mtrData[z_index].URL.substring(mtrData[z_index].URL.lastIndexOf("."));
                         if(backSuffix != ".mp3" && backSuffix != ".ogg" && backSuffix != ".wav"){
-                            alert("当前音频格式暂不支持试听！");
+                            alert(languageJSON.al_audioFormat);
                             return;
                         }
                     }
@@ -377,7 +406,7 @@ define(function (require, exports, module) {
                 }
             }
             if (w) {
-                if (confirm("删除资源会删除频道对应的资源,确定删除资源？")) {
+                if (confirm(languageJSON.cf_delResource)) {
                     var mtrId;
                     for (var x = 0; x < $(".mtr_cb").length; x++) {
                         if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
@@ -499,10 +528,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已提交');
+                                alert(languageJSON.al_submitted);
                                 loadPage();
                             } else {
-                                alert('提交失败');
+                                alert(languageJSON.al_submitFaild);
                             }
                         }
                     )
@@ -524,10 +553,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已审核');
+                                alert(languageJSON.al_audited);
                                 loadPage();
                             } else {
-                                alert('审核失败');
+                                alert(languageJSON.al_auditFaild);
                             }
                         }
                     )
@@ -549,10 +578,10 @@ define(function (require, exports, module) {
                         JSON.stringify(data),
                         function (data) {
                             if (data.rescode === '200') {
-                                alert('已审核');
+                                alert(languageJSON.al_audited);
                                 loadPage();
                             } else {
-                                alert('审核失败');
+                                alert(languageJSON.al_auditFaild);
                             }
                         }
                     )

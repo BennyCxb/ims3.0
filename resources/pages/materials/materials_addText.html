@@ -8,16 +8,16 @@
         <!-- /.box-header -->
         <div class="box-body pad">
             <div class="form-group">
-                <label>文本资源名称：</label>
-                <input type="text" class="form-control" id="Tmtr_name" placeholder="请输入文本资源名称">
+                <label id="lbl_webName">文本资源名称：</label>
+                <input type="text" class="form-control" id="Tmtr_name">
             </div>
             <div class="form-group">
-                <label>文本类型：</label>
+                <label id="lbl_webType">文本类型：</label>
                 <label class="Tmtr-text-type">
-                    <input id="Tmtr-type-text" type="radio" name="r1" class="Tmtr-minimal" value="0" checked><label>普通文本</label>
+                    <input id="Tmtr-type-text" type="radio" name="r1" class="Tmtr-minimal" value="0" checked><label id="lbl_text">普通文本</label>
                 </label>
                 <label class="Tmtr-text-type">
-                    <input id="Tmtr-type-url" type="radio" name="r1" class="Tmtr-minimal" value="1"><label>网页地址</label>
+                    <input id="Tmtr-type-url" type="radio" name="r1" class="Tmtr-minimal" value="1"><label id="lbl_url">网页地址</label>
                 </label>
             </div>
             <div id="mtr-input-text">
@@ -29,8 +29,8 @@
             </div>
             <div id="mtr-input-url"  class="form-group">
                 <label>网页地址：</label>
-                <input type="text" class="form-control" id="Tmtr_url" placeholder="请输入网页地址">
-                <small class="tips"><i class="fa fa-info-circle" >&nbsp例:http://www.baidu.com</i></small>
+                <input type="text" class="form-control" id="Tmtr_url">
+                <small class="tips"><i class="fa fa-info-circle" >&nbsp;e.q:http://www.baidu.com</i></small>
             </div>
 
         </div>

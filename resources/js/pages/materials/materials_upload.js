@@ -9,8 +9,10 @@ define(function (require, exports, module) {
         qiniu_url = "",
         domain = "";
     var uploadType;
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         var DispClose = false;
         $(window).bind('beforeunload', function () {
             $("#Tbe_filesList tr").each(function () {
@@ -19,10 +21,27 @@ define(function (require, exports, module) {
                 }
             })
             if (DispClose) {
-                return "当前正在上传文件，是否离开当前页面?";
+                return languageJSON.al_uploading + "?";
             }
         })
         loadPage();
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#lbl_webName").html(languageJSON.webName + ":");
+        $("#lbl_webType").html(languageJSON.webType + ":");
+        $("#lbl_text").html(languageJSON.normalText);
+        $("#lbl_url").html(languageJSON.webUrl);
+        $("#Tbe_filesList").html('<tr>' +
+            '<th style="width:6%">#</th>' +
+            '<th style="width:40%; max-width: 240px; text-overflow: ellipsis; overflow: hidden;">' + languageJSON.resourceName + '</th>' +
+            '<th style="width:20%; text-align: center;">' + languageJSON.uploadProgress + '</th>' +
+            '<th style="width:17%; text-align: center;">' + languageJSON.speed + '</th>' +
+            '<th style="width:17%; text-align: center;">' + languageJSON.status + '</th>' +
+            '</tr>')
     }
 
     function loadPage() {
@@ -35,7 +54,7 @@ define(function (require, exports, module) {
 
         //最小化上传窗口
         $('#BtMinimize').click(function () {
-            alert("可点击右上方的云按钮重新打开上传页面！");
+            alert(languageJSON.al_rightBtn + "！");
             $("#page_upload").css("display", "none");
             $("#dpUpl").css("display", "block");
         })
@@ -49,7 +68,7 @@ define(function (require, exports, module) {
                 }
             })
             if (status == 'uploading') {
-                if (confirm("有资源正在上传，确定取消上传？")) {
+                if (confirm(languageJSON.al_cfCancelUpload + "？")) {
                     //中断所有正在上传内容
                     for (var i = 0; i < _upl_list.length; i++) {
                         if (_upl_list[i].status == 'uploading') {
@@ -78,7 +97,7 @@ define(function (require, exports, module) {
                         '<td><div class="progress progress-xs progress-striped active">' +
                         '<div id="progressbar_' + x + '" class="progress-bar progress-bar-primary" style="width: 0%"></div></div></td>' +
                         '<td id="upl_speed_' + x + '"></td>' +
-                        '<td id="upl_status_' + x + '"><a class="upl_cancle">取消上传</td></tr>';
+                        '<td id="upl_status_' + x + '"><a class="upl_cancle">' + languageJSON.cancelUpload + '</td></tr>';
                     $("#Tbe_filesList tbody").append(tr);
                 }
             }
@@ -89,7 +108,7 @@ define(function (require, exports, module) {
                 $("#upl_tr_" + i).attr("status", "end");
                 $("#progressbar_" + i).prop("class", "progress-bar progress-bar-danger");
                 $("#upl_speed_" + i).html("");
-                $("#upl_status_" + i).html("已取消");
+                $("#upl_status_" + i).html(languageJSON.canceled);
                 _upl_list[i].status = 'end';
             })
 
@@ -177,7 +196,7 @@ define(function (require, exports, module) {
     function Qiniu_upload(f, num) {
         var fileExtension = f.name.substring(f.name.lastIndexOf('.') + 1);
         if ((uploadType == "import" && fileExtension != "zip") || (uploadType == "upload" && fileExtension == "zip")) {
-            alert(file.name + " 无法上传该格式文件");
+            alert(file.name + " " + languageJSON.al_cannotUpload);
             return false;
         }
         var xhr = new XMLHttpRequest();
@@ -289,7 +308,7 @@ define(function (require, exports, module) {
                         $("#upl_tr_" + num).prop("status", "end");
                         $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
                         $("#upl_speed_" + num).html("");
-                        $("#upl_status_" + num).html("上传失败");
+                        $("#upl_status_" + num).html(languageJSON.uploadFaild);
                         _upl_list[num].status = 'end';
                     }
                 });
@@ -301,7 +320,7 @@ define(function (require, exports, module) {
                 $("#upl_tr_" + num).prop("status", "end");
                 $("#progressbar_" + num).prop("class", "progress-bar progress-bar-danger");
                 $("#upl_speed_" + num).html("");
-                $("#upl_status_" + num).html("上传失败");
+                $("#upl_status_" + num).html(languageJSON.uploadFaild);
             }
         };
         startDate = new Date().getTime();
@@ -316,10 +335,10 @@ define(function (require, exports, module) {
         $("#upl_tr_" + num).attr("status", "end");
         $("#progressbar_" + num).prop("class", "progress-bar progress-bar-success");
         $("#upl_speed_" + num).html("");
-        $("#upl_status_" + num).html("上传成功");
+        $("#upl_status_" + num).html(languageJSON.uploadSuc);
         _upl_list[num].status = "end";
         var status = "uploading";
-        setTimeout(function() {
+        setTimeout(function () {
             $("#upl_tr_" + num).remove();
         }, 1000)
 
@@ -331,7 +350,7 @@ define(function (require, exports, module) {
                     status = "end";
                     //解除绑定
                     $(window).unbind('beforeunload');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         closeUpl_list();
                     }, 1000)
                 }

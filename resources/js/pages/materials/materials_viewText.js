@@ -1,6 +1,7 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
+    var languageJSON = CONFIG.languageJson.material;
     exports.materialID;
     exports.materialName;
 
@@ -19,7 +20,7 @@ define(function (require, exports, module) {
             JSON.stringify(data),
             function(data){
                 if(data == ''){
-                    $('#mvt_content').html('无内容')
+                    $('#mvt_content').html(languageJSON.noContent)
                 }
                 else{
                     $('#mvt_content').html(data);

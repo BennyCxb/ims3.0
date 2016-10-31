@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     var index = 0;
     var currentPage = 1,
         totalPage;
+    var languageJSON = CONFIG.languageJson.material;
     exports.init = function () {
         zdata = null;
         //关闭预览
@@ -62,7 +63,7 @@ define(function (require, exports, module) {
             }, 1000);
         } else if (typeId == 2) {      //图片
             if (zdata.file_size > 5000000) {
-                if (confirm("图片内存占用比较大,可能会造成浏览器卡顿，确定要继续预览吗？")) {
+                if (confirm(languageJSON.al_inResourceName + "？")) {
                     $("#mtrView_picArea").css("display", "block");
                     $("#mtrView_picArea").find("img").attr("src", mtrUrl);
                 } else {

@@ -2,9 +2,20 @@ define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
     var UTIL = require("common/util.js");
     var MTR = require("pages/materials/materials_list.js");
+    var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
+        selectLanguage();
         loadPage();
+    }
+
+    /**
+     * 语言切换绑定
+     */
+    function selectLanguage() {
+        $("#lbl_name").html(languageJSON.name + ":");
+        $("#lbl_webUrl").html(languageJSON.webUrl + ":");
+        $("#ULmtr_add").html(languageJSON.submit);
     }
 
     function loadPage() {
@@ -14,7 +25,7 @@ define(function (require, exports, module) {
         });
 
         if ($("#mtr_edit").attr("edit_type") == "直播") {			//修改
-            $("#mtr_alTitle").html("编辑在线网页");
+            $("#mtr_alTitle").html(languageJSON.al_editWebUrl);
             var mtrId;
             for (var x = 0; x < $(".mtr_cb").length; x++) {
                 if ($(".mtr_cb:eq(" + x + ")").get(0).checked) {
@@ -41,7 +52,7 @@ define(function (require, exports, module) {
                 onSubmit(mtrId);
             })
         } else {													//添加
-            $("#mtr_alTitle").html("添加在线网页");
+            $("#mtr_alTitle").html(languageJSON.al_addWebUrl);
             $("#ULmtr_add").click(function () {
                 if (!inputCheck()) return;
                 onSubmit();
@@ -93,20 +104,20 @@ define(function (require, exports, module) {
                         data2,
                         function (data) {
                             if (data.rescode === '200') {
-                                alert("保存成功");
+                                alert(languageJSON.al_saveSuc);
                                 backList();
                             } else {
-                                alert("保存失败");
+                                alert(languageJSON.al_saveFaild);
                             }
                         }
                     )
                 } else {
-                    alert("保存成功");
+                    alert(languageJSON.al_saveSuc);
                     backList();
                 }
             } else {
 
-                alert("保存失败");
+                alert(languageJSON.al_saveFaild);
             }
         })
     }
@@ -117,10 +128,10 @@ define(function (require, exports, module) {
     function inputCheck() {
         var errormsg = "";
         if ($("#ULmtr_name").val() == "") {
-            errormsg += "请输入名称！\n";
+            errormsg += languageJSON.al_inName + "！\n";
         }
         if ($("#ULmtr_address").val() == "") {
-            errormsg += "请输入在线网页地址！";
+            errormsg += languageJSON.al_inUrl+ "！";
         }
         if (errormsg != "") {
             alert(errormsg);
