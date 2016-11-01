@@ -61,7 +61,9 @@ define(function(require, exports, module) {
         if (location.hash.indexOf('#layout/edit') !== 0) {
             $('#edit-page-container').empty().addClass('none');
         }
-		editor.destroy();
+        try {
+            editor.destroy();
+        } catch(e) {}
         window.onpopstate = undefined;
     }
 
@@ -122,28 +124,30 @@ define(function(require, exports, module) {
 
         /************** main ****************/
 
-        var lang = {
-            editLayout: languageJSON.editLayout,
-            exitEdit: languageJSON.exitEdit,
-            saveExit: languageJSON.saveExit,
-            save: languageJSON.save,
-            toolbar: languageJSON.toolbar,
-            video: languageJSON.video,
-            image: languageJSON.image,
-            text: languageJSON.text,
-            clock: languageJSON.clock,
-            weather: languageJSON.weather,
-            music: languageJSON.music,
-            delete: languageJSON.delete,
-            canvasArea: languageJSON.canvasArea,
-            ctrlProperties: languageJSON.ctrlProperties,
-            promptSteps1: languageJSON.promptSteps1,
-            promptSteps2: languageJSON.promptSteps2,
-            promptSteps3: languageJSON.promptSteps3,
-            promptSteps4: languageJSON.promptSteps4,
-        };
+        var language = {
+            lang: {
+                editLayout: languageJSON.editLayout,
+                exitEdit: languageJSON.exitEdit,
+                saveExit: languageJSON.saveExit,
+                save: languageJSON.save,
+                toolbar: languageJSON.toolbar,
+                video: languageJSON.video,
+                image: languageJSON.image,
+                text: languageJSON.text,
+                clock: languageJSON.clock,
+                weather: languageJSON.weather,
+                music: languageJSON.music,
+                delete: languageJSON.delete,
+                canvasArea: languageJSON.canvasArea,
+                ctrlProperties: languageJSON.ctrlProperties,
+                promptSteps1: languageJSON.promptSteps1,
+                promptSteps2: languageJSON.promptSteps2,
+                promptSteps3: languageJSON.promptSteps3,
+                promptSteps4: languageJSON.promptSteps4,
+            }
+        }
         $('#edit-page-container')
-            .html(templates.layout_edit_main(lang))
+            .html(templates.layout_edit_main(language))
             .removeClass('none');
 
         /************** layout properties **************/

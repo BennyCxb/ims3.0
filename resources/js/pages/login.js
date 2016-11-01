@@ -1,5 +1,6 @@
 var languageJson = {
     zh_CN: {
+        pageTitle: "CLEAR IMS 3.0",
         title1: "CLEAR",
         title2: "信息发布系统",
         loginTitle: "登录Clear Cloud 账户",
@@ -9,10 +10,11 @@ var languageJson = {
         error_prompt3: "请您输入密码！"
     },
     en_US: {
+        pageTitle: "CLEAR IMS 3.0",
         title1: "CLEAR",
         title2: "IMS",
         loginTitle: "Login Clear Cloud Account",
-        loginName: "Sing in",
+        loginName: "Sign in",
         error_prompt1: "Please enter user name!",
         error_prompt2: "User name format is not correct! Such as：xxx@develop",
         error_prompt3: "Please enter your password!"
@@ -95,6 +97,7 @@ $(document).ready(function () {
             $("#l_language .language_zh").removeAttr("disabled").removeClass("active");
             setCookie("language", "en-US")
         }
+        $("title").html(obj.pageTitle);
         $(".login-logo").html('<b>' + obj.title1 + '</b>&nbsp;' + obj.title2);
         $(".login-box-body h3").html(obj.loginTitle);
         $(".login-box-body #submit").val(obj.loginName);

@@ -94,7 +94,7 @@ define(function (require, exports, module) {
             $("#userlogTable tbody").append('<tr>' +
                 '<th class="User">' + languageJSON.username + '</th>' +
                 '<th class="OperationObject">' + languageJSON.operationObject + '</th>' +
-                '<th class="Operation">' + languageJSON.operation + '</th>' +
+                '<th class="Operation">' + languageJSON.logContent + '</th>' +
                 '<th class="Datetime create-time">' + languageJSON.operationTime + '</th>' +
                 //'<th class="Detail">详情</th>'+
                 '</tr>');

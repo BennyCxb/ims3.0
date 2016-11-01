@@ -4,10 +4,9 @@ define(function (require, exports, module) {
 
     var username = CONFIG.userName;
     var project = CONFIG.projectName;
-    var languageJSON;
+    var languageJSON = CONFIG.languageJson.index;
 
     exports.init = function () {
-        languageJSON = CONFIG.languageJson.index;
         selectLanguage();
         if (CONFIG.token == undefined) {
             alert(languageJSON.errorRelogin);
@@ -47,7 +46,15 @@ define(function (require, exports, module) {
      * 语言切换绑定
      */
     function selectLanguage() {
+        $(".index-lang-select .index-lang-option").click(function (el) {
+            var lang = $(this).attr("lang");
+            UTIL.setCookie("language", lang)
+            window.location.reload();
+            console.log($(this))
+        })
         $("title").html(languageJSON.title);
+        $("#languageName").html(CONFIG.languageJson.langName);
+        $("#langImage").attr("src", CONFIG.languageJson.iconUrl)
         $("#repassword").html('<i class="fa fa-unlock-alt"></i>'+languageJSON.resetPassword);
         $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>'+languageJSON.logout);
         $("#dpUpl").attr("title", languageJSON.dpUpl);

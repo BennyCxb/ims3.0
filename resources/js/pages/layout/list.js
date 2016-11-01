@@ -28,7 +28,8 @@ define(function(require, exports, module) {
 	 */
 	function selectLanguage() {
 		$("#layoutTitle").html(languageJSON.titleLayout);
-		$("#layoutPrompt").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.edit);
+		$("#layoutPrompt").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.prompt3);
+		$("#mtrLisTitle").html(languageJSON.layoutList)
 		$("#channel-list-search").attr("placeholder", languageJSON.searchLayout);
 		$("#layout-list-controls .btn-delete").html(languageJSON.delete);
 		$("#layout-list-controls .btn-add-layout").html(languageJSON.addLayout);

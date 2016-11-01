@@ -1,5 +1,11 @@
 define(function (require, exports, module) {
     exports.JSON = {
+        langName: "中文(简体)",
+        iconUrl: "resources/img/national_flag/china.png",
+        first: "首页",
+        prev: "上一页",
+        next: "下一页",
+        last: "首页",
         index: {
             title: "CLEAR 信息发布系统",
             resetPassword: "修改密码",
@@ -214,7 +220,7 @@ define(function (require, exports, module) {
             al_prePublishFaild: "频道预发布失败！",
             cf_delete: "确定删除该频道？",
             cf_exportOffline: "确定生成该频道的离线包？",
-            al_exportFaild: "导出失败",
+            al_exportFaild: "生成失败",
             title4: "批量编辑",
             playDuration: "播放时长",
             pl_playDuration: "请输入播放时长",
@@ -331,7 +337,7 @@ define(function (require, exports, module) {
             termCf: "终端分类",
             all: "全部",
             publishInfo: "发布信息",
-            prePublishInfo: "发布信息",
+            prePublishInfo: "预发布信息",
             save: "保存",
             saveSubmit: "保存并提交",
             savePublish: "保存并发布",
@@ -403,11 +409,11 @@ define(function (require, exports, module) {
             toastH: "高度太小了",
             toastO: "控件超出了容器",
             titleLayout: "节目模版",
-            edit: "使用模版可以制作强大的分屏节目，但需要预先将它们做好",
-            edit: "模版列表",
+            prompt3: "使用模版可以制作强大的分屏节目，但需要预先将它们做好",
+            layoutList: "模版列表",
             addLayout: "添加模版",
             cf_delLayout: "确定删除该模板？",
-            al_delLayoutFaild: "删除失败，有频道正在使用它!",
+            al_delLayoutFaild: "删除失败，有频道正在使用它！",
             layoutName: "模板名"
         },
         material: {
@@ -501,9 +507,10 @@ define(function (require, exports, module) {
             al_rightBtn: "可点击右上方的云按钮重新打开上传页面",
             al_cfCancelUpload: "有资源正在上传，确定取消上传",
             al_cannotUpload: "无法上传该格式文件",
-            noContent: "无内容",
+            noContent: "无内容"
         },
         user: {
+            administrator: "超级管理员",
             userManagement: "用户管理",
             createNewUser: "创建新用户",
             username: "用户名",
@@ -556,6 +563,7 @@ define(function (require, exports, module) {
             logList: "日志列表",
             operationObject: "操作对象",
             operationTime: "操作时间",
+            logContent: "日志内容",
             empty: "空"
         }
     }

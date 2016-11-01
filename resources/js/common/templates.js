@@ -363,17 +363,17 @@ __p+='<div id="layout-editor-wrapper" style="min-width: 1080px"> <div class="lay
 '&nbsp; </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button class="btn btn-default btn-layout-editor-delete-widget"> <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.delete))==null?'':__t)+
 '&nbsp; </button> </div> </div><!-- canvas --> <div class="layout-editor-canvas-title"> <label>&nbsp;'+
-((__t=(canvasArea))==null?'':__t)+
+((__t=(lang.canvasArea))==null?'':__t)+
 '</label> <div class="div-line-i"></div> </div> <div class="layout-editor-canvas"></div><!-- widget --> <div class="layout-editor-widget"> <label>&nbsp;'+
-((__t=(ctrlProperties))==null?'':__t)+
+((__t=(lang.ctrlProperties))==null?'':__t)+
 '</label> <div class="div-line-i"></div><!-- propoties --> <ul class="layout-editor-widget-properties"> </ul><!-- layout --> <div class="layout-editor-widgets"></div> </div> </div><!-- footer --> <div class="box-footer layout-editor-footer" style="position: absolute; bottom: 0; width: 100%"> <small class="tips">&nbsp;&nbsp;&nbsp;Step1:'+
-((__t=(promptSteps1))==null?'':__t)+
+((__t=(lang.promptSteps1))==null?'':__t)+
 '&nbsp;&nbsp;&nbsp;Step2：'+
-((__t=(promptSteps2))==null?'':__t)+
+((__t=(lang.promptSteps2))==null?'':__t)+
 '&nbsp;&nbsp;&nbsp;Step3：'+
-((__t=(promptSteps3))==null?'':__t)+
+((__t=(lang.promptSteps3))==null?'':__t)+
 '&nbsp;&nbsp;&nbsp;（'+
-((__t=(promptSteps4))==null?'':__t)+
+((__t=(lang.promptSteps4))==null?'':__t)+
 '）</small> </div> </div><!-- box --> </div> </div> </div> </div>';
 }
 return __p;
@@ -385,19 +385,19 @@ __p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; wid
 ((__t=(lang.edit))==null?'':__t)+
 '</small> <input class="form-control layout-edit-propoties-name direct-name-001" type="text" value="'+
 ((__t=(name))==null?'':__t)+
-'" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property" style="width: 101px"> <label class="col-sm-3 control-label property-name-inline">'+
+'" data-property-id="layout-name" style="margin-left: 15px; font-weight: bold"> <div class="input-group layout-editor-property"> <label class="col-sm-3 control-label property-name-inline">'+
 ((__t=(lang.height))==null?'':__t)+
 '</label> <input class="form-control" type="text" value="'+
 ((__t=(width))==null?'':__t)+
-'" data-property-id="layout-width" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 15px; width: 101px"> <label class="col-sm-3 control-label property-name-inline">'+
+'" data-property-id="layout-width" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property"> <label class="col-sm-3 control-label property-name-inline">'+
 ((__t=(lang.width))==null?'':__t)+
 '</label> <input class="form-control" type="text" value="'+
 ((__t=(height))==null?'':__t)+
-'" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px; width: 72px"> <label class="control-label property-name-inline">'+
+'" data-property-id="layout-height" style="width: 61px;top: 4px; height: 28px; float: right"> </div> <div class="input-group layout-editor-property" style="margin-left: 32px"> <label class="control-label property-name-inline">'+
 ((__t=(lang.bgColor))==null?'':__t)+
 '</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 200px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">'+
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 350px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">'+
 ((__t=(lang.addBgcolor))==null?'':__t)+
 '</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">'+
 ((__t=(lang.cancelBgcolor))==null?'':__t)+
@@ -451,9 +451,9 @@ __p+='<!-- <label>\r\n        <i class="glyphicon glyphicon glyphicon-film"></i>
 ((__t=(lang.height))==null?'':__t)+
 '" style="padding-left: 0px; width: 16px">H</label> <input type="number" value="'+
 ((__t=(height))==null?'':__t)+
-'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">'+
+'" class="form-control" data-property-id="widget-height" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 230px;display: inline; float: left; top: 4px"> <label class="col-sm-3 control-label property-name-inline" title="'+
 ((__t=(lang.layer))==null?'':__t)+
-'</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">'+
+'" style="padding-left: 0px; width: 16px; margin-right: 4px; top: -4px">L</label> <button class="btn-layout-editor-zindex-increase btn btn-default btn-sm" style="width: 93px; margin-right:4px">'+
 ((__t=(lang.upLayer))==null?'':__t)+
 '</button> <button class="btn-layout-editor-zindex-decrease btn btn-default btn-sm" style="width: 93px">'+
 ((__t=(lang.downLayer))==null?'':__t)+

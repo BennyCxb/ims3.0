@@ -73,6 +73,26 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li><a id="dpUpl" title="点击打开上传页面"><i class="glyphicon glyphicon-cloud-upload"></i></a></li>
+
+                    <!-- language -->
+                    <li class="dropdown user user-menu">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                             <img id="langImage" src="" class="user-image" alt="User Image">
+                            <!--下面这个地方替换掉java的模板标签-->
+                            <span id="languageName" class="hidden-xs"></span>
+                            <i class="glyphicon glyphicon-triangle-bottom" style="font-size: 12px; transform: translateY(2px) scale(0.9); margin-left: 4px;"></i>
+                        </a>
+                        <ul class="dropdown-menu index-lang-select" style="width: 180px">
+                            <!-- User image -->
+                            <li class="lang-national">
+                                <a class="index-lang-option" lang="zh-CN"><img src="resources/img/national_flag/china.png">中文(简体)</a>
+                            </li>
+                            <li class="lang-national">
+                                <a class="index-lang-option" lang="en-US"><img src="resources/img/national_flag/usa.png">English(US)</a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -86,14 +106,10 @@
                             <!-- User image -->
                             <li class="user-header" style="padding-left:0; padding-right:0; height: 132px;">
                                 <!-- <img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
-
-                                <p id="bar">
-                                </p>
+                                <p id="bar"></p>
                                 <a id="repassword" class="index-header-user-option">修改密码 </a>
-                                <a id="logout" class="index-header-user-option" style="width: 100%;"><i
-                                        class="glyphicon glyphicon-log-out"></i>退出</a>
+                                <a id="logout" class="index-header-user-option" style="width: 100%;"><i class="glyphicon glyphicon-log-out"></i>退出</a>
                             </li>
-
                         </ul>
                     </li>
                 </ul>

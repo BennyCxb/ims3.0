@@ -60,14 +60,14 @@ body, h1, h2, h3, h4, h5, h6 {
     padding: 0 !important;
 }
 
+.index-header-user-option:hover {
+    background-color: #367faa !important;
+}
+
 /*search*/
 .glyphicon-search {
     cursor: pointer;
     pointer-events: all;
-}
-
-.index-header-user-option:hover {
-    background-color: #367faa !important;
 }
 
 .sticky-item-replace {
@@ -274,6 +274,36 @@ a {
 
 .box-index-menu .menutree-menu {
     display: block;
+}
+
+.lang-national {
+    height: 41px;
+    padding-left:0;
+    padding-right:0;
+    background-color: #3c8dbc;
+}
+
+.lang-national > .index-lang-option {
+    display: block;
+    clear: both;
+    font-weight: 400;
+    white-space: nowrap;
+    color: white !important;
+    line-height: 31px !important;
+    padding: 5px 15px!important;
+}
+
+.lang-national > .index-lang-option:hover {
+    background-color: #367faa !important;
+}
+
+.lang-national img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 3px;
 }
 
 /*全屏弹窗层1*/
@@ -813,7 +843,7 @@ a {
 }
 
 .user_resetPwd {
-    width: 100px;
+    width: 150px;
 }
 
 .users_delete {
