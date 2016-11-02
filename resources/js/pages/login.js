@@ -22,8 +22,7 @@ var languageJson = {
 }
 
 $(document).ready(function () {
-    var language,
-        obj;
+    var language, obj;
     languageStatus()
 
     $("#l_language .language_zh").click(function () {

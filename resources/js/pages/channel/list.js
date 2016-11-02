@@ -213,6 +213,7 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
+                    $('#chn_toBeCheckedDiv button').removeClass('btn-primary').addClass('btn-defalut');
                     loadPage(_pageNO);
                 }
             }, 500);
@@ -350,7 +351,7 @@ define(function (require, exports, module) {
                 if (Number(res.rescode) != 200) {
                     alert(languageJSON.al_exportFaild);
                 }
-                var t1 = window.setInterval(function () {
+                exports.channelListRefrash = window.setInterval(function () {
                     loadPage(_pageNO);
                 }, 30000);
             });

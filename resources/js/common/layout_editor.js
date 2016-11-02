@@ -2,6 +2,8 @@
 
 define(function (require, exports, module) {
     var UTIL = require("common/util.js");
+    var CONFIG = require("common/config.js"),
+        languageJSON = CONFIG.languageJson.channel;
     /**
      *
      * @type {{NONE: number, CONTENT: number, TOP: number, BOTTOM: number, LEFT_TOP: number, LEFT: number, LEFT_BOTTOM: number, RIGHT_TOP: number, RIGHT: number, RIGHT_BOTTOM: number}}
@@ -1336,7 +1338,7 @@ define(function (require, exports, module) {
             video.style.objectFit = 'fill';
             source.setAttribute('src', UTIL.getRealURL(data.download_auth_type, data.material));
             source.setAttribute('type', 'video/mp4');
-            video.textContent = '该视频格式不支持预览';
+            video.textContent = languageJSON.al_videoFormat;
             video.appendChild(source);
             this.mElement.appendChild(video);
         }

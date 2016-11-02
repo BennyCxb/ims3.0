@@ -13,10 +13,9 @@ define(function (require, exports, module) {
         _termStatusCount,
         _editTreeClassInput,
         last,
-        languageJSON;
+        languageJSON = CONFIG.languageJson.termList;
 
     exports.init = function () {
-        languageJSON = CONFIG.languageJson.termList;
         selectLanguage();
         initTree();
         initEvent();
@@ -109,6 +108,8 @@ define(function (require, exports, module) {
             setTimeout(function () {          //设时延迟0.5s执行
                 if (last - event.timeStamp == 0) //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
                 {
+                    //初始化状态
+                    $('#term-status button').removeClass('btn-primary').addClass('btn-defalut');
                     loadTermList(_pageNO);
                 }
             }, 500);
@@ -757,7 +758,7 @@ define(function (require, exports, module) {
                             {
                                 "children": [],
                                 "id": "",
-                                "name": "未命名终端分类"
+                                "name": languageJSON.uncategorizedTermCf
                             }
                         ]
                         // 如果分类有子分类
@@ -796,7 +797,7 @@ define(function (require, exports, module) {
 
                             // 终端组分类名称为空时设置名称为：未命名终端分类
                             if (change === '') {
-                                change = '未命名终端分类';
+                                change = languageJSON.uncategorizedTermCf;
                             }
 
                             // 提交终端组分类名称新建

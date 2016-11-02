@@ -35,6 +35,7 @@ define(function (require, exports, module) {
             termTreeTitle: "终端分类",
             allTerm: "全部终端",
             uncategorizedTerm: "未分类终端",
+            uncategorizedTermCf: "未分类终端分类",
             edit: "编辑",
             delete: "删除",
             add: "添加",
@@ -295,8 +296,8 @@ define(function (require, exports, module) {
             pl_searchText: "搜索文本",
             pl_searchLive: "搜索直播",
             pl_searchOffice: "搜索Office/PDF",
-            al_videoFormat: "当前视频格式暂不支持预览！",
-            al_audioFormat: "当前音频格式暂不支持试听！",
+            al_videoFormat: "该视频格式暂不支持预览！",
+            al_audioFormat: "该前音频格式暂不支持试听！",
             nolayout: "无节目",
             cancel: "取消",
             previewProgram: "预览节目",
@@ -416,7 +417,7 @@ define(function (require, exports, module) {
             addLayout: "添加模版",
             cf_delLayout: "确定删除该模板？",
             al_delLayoutFaild: "删除失败，有频道正在使用它！",
-            layoutName: "模板名"
+            layoutName: "模板名",
         },
         material: {
             resourceTitle: "资源存储",
