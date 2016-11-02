@@ -8,7 +8,6 @@ define(function (require, exports, module) {
         last;
     var _pageNum = 1;
     var mtrType;
-    var t1;
     var languageJSON = CONFIG.languageJson.material;
 
     exports.init = function () {
@@ -24,10 +23,10 @@ define(function (require, exports, module) {
     function selectLanguage() {
         $("#material_title").html(languageJSON.resourceTitle);
         $("#mtrVideo").html('<i class="fa fa-video-camera"></i> ' + languageJSON.video);
-        $("#mtrVideo").html('<i class="fa fa-image"></i> ' + languageJSON.image);
-        $("#mtrVideo").html('<i class="fa fa-music"></i> ' + languageJSON.audio);
-        $("#mtrVideo").html('<i class="fa fa-font"></i> ' + languageJSON.text);
-        $("#mtrVideo").html('<i class="fa fa-cloud"></i> ' + languageJSON.live);
+        $("#mtrImage").html('<i class="fa fa-image"></i> ' + languageJSON.image);
+        $("#mtrAudio").html('<i class="fa fa-music"></i> ' + languageJSON.audio);
+        $("#mtrText").html('<i class="fa fa-font"></i> ' + languageJSON.text);
+        $("#mtrLive").html('<i class="fa fa-cloud"></i> ' + languageJSON.live);
         $("#mtr_download").html('<a style="color: #333">' + languageJSON.download + '</a>');
         $("#mtr_edit").html(languageJSON.edit);
         $("#mtr_delete").html(languageJSON.delete);
@@ -51,7 +50,7 @@ define(function (require, exports, module) {
      * @param typeName  类别
      */
     exports.loadPage = function (pageNum, typeName) {
-        window.clearInterval(t1);
+        window.clearInterval(exports.mtrListRefrash);
         // loading
         $("#mtrTable tbody").html('<i class="fa fa-refresh fa-spin" style="display:block; text-align: center; padding:10px;"></i>');
         $("#addtext_box").empty();
@@ -138,9 +137,9 @@ define(function (require, exports, module) {
 
         //定时刷新
         if (mtrType == "Office") {
-            t1 = window.setInterval(function() {
+            exports.mtrListRefrash = window.setInterval(function() {
                 exports.loadPage(_pageNum, mtrType);
-            },60000);
+            },30000);
         }
     }
 
@@ -151,25 +150,28 @@ define(function (require, exports, module) {
     function render(json) {
         $("#mtrTable tbody").empty();
         //翻页
-        var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
-        totalPages = Math.max(totalPages, 1);
-        $('#materials-table-pager').jqPaginator({
-            totalPages: totalPages,
-            visiblePages: CONFIG.pager.visiblePages,
-            first: CONFIG.pager.first,
-            prev: CONFIG.pager.prev,
-            next: CONFIG.pager.next,
-            last: CONFIG.pager.last,
-            page: CONFIG.pager.page,
-            currentPage: Number(json.Pager.page),
-            onPageChange: function (num, type) {
-                if (type == 'change') {
-                    _pageNum = num;
-                    $('#materials-table-pager').jqPaginator('destroy');
-                    exports.loadPage(num, mtrType);
+        if (json.Pager != undefined) {
+            var totalPages = Math.ceil(json.Pager.total / nDisplayItems);
+            totalPages = Math.max(totalPages, 1);
+            $('#materials-table-pager').jqPaginator({
+                totalPages: totalPages,
+                visiblePages: CONFIG.pager.visiblePages,
+                first: CONFIG.pager.first,
+                prev: CONFIG.pager.prev,
+                next: CONFIG.pager.next,
+                last: CONFIG.pager.last,
+                page: CONFIG.pager.page,
+                currentPage: Number(json.Pager.page),
+                onPageChange: function (num, type) {
+                    if (type == 'change') {
+                        _pageNum = num;
+                        $('#materials-table-pager').jqPaginator('destroy');
+                        exports.loadPage(num, mtrType);
+                    }
                 }
-            }
-        });
+            });
+        }
+
         //拼接
         if (json.Materials != undefined) {
             var mtrData = json.Materials;

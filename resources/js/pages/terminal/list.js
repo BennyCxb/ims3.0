@@ -30,8 +30,8 @@ define(function (require, exports, module) {
      * 语言切换绑定
      */
     function selectLanguage() {
+        $(".termTree-title").html(languageJSON.termTreeTitle);
         $(".term-box-title").html(languageJSON.termBoxTitle);
-        $(".termlist-title").html(languageJSON.termTreeTitle);
         $("#tct_edit").attr("title", languageJSON.edit);
         $("#tct_delete").attr("title", languageJSON.delete);
         $("#tct_add").attr("title", languageJSON.add);

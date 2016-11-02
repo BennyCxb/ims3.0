@@ -348,19 +348,19 @@ __p+='<div id="layout-editor-wrapper" style="min-width: 1080px"> <div class="lay
 ((__t=(lang.save))==null?'':__t)+
 '</button> </div> <div class="box-body" style="position: absolute; width: 100%; top: 58px; bottom: 47px"><!-- toolbar --> <div class="layout-editor-toolbar"> <label style="margin-left: 20px">'+
 ((__t=(lang.toolbar))==null?'':__t)+
-'</label> <div class="div-line-i" style="width: 85px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;'+
+'</label> <div class="div-line-i" style="width: 85px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.video))==null?'':__t)+
-'&nbsp; </button> <button data-widget-id="image" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> <button data-widget-id="image" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.image))==null?'':__t)+
-'&nbsp; </button> <button data-widget-id="html" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-font"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> <button data-widget-id="html" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-font"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.text))==null?'':__t)+
-'&nbsp; </button> <button data-widget-id="clock" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> <button data-widget-id="clock" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-time"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.clock))==null?'':__t)+
-'&nbsp; </button> <button data-widget-id="weather" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-cloud"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> <button data-widget-id="weather" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-cloud"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.weather))==null?'':__t)+
-'&nbsp; </button> <button data-widget-id="office" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;Office </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button data-widget-id="audio" class="btn btn-default btn-add-widget"> <i class="glyphicon glyphicon-music"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> <button data-widget-id="office" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;Office </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button data-widget-id="audio" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-music"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.music))==null?'':__t)+
-'&nbsp; </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button class="btn btn-default btn-layout-editor-delete-widget"> <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;'+
+'&nbsp; </button> </div> <div class="btn-group-vertical" style="margin-top: 15px"> <button class="btn btn-default btn-layout-editor-delete-widget btn-layout-control"> <i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.delete))==null?'':__t)+
 '&nbsp; </button> </div> </div><!-- canvas --> <div class="layout-editor-canvas-title"> <label>&nbsp;'+
 ((__t=(lang.canvasArea))==null?'':__t)+
@@ -439,9 +439,9 @@ __p+='<!-- <label>\r\n        <i class="glyphicon glyphicon glyphicon-film"></i>
 ((__t=(lang.currentCtrl))==null?'':__t)+
 ':</label> <input type="text" readonly="readonly" value="'+
 ((__t=(type))==null?'':__t)+
-'"> </li> <div class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">x</label> <input type="number" value="'+
+'"> </li> <div class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">X</label> <input type="number" value="'+
 ((__t=(left))==null?'':__t)+
-'" class="form-control" data-property-id="widget-left" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">y</label> <input type="number" value="'+
+'" class="form-control" data-property-id="widget-left" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" style="width: 100px;display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" style="padding-left: 0px; width: 16px">Y</label> <input type="number" value="'+
 ((__t=(top))==null?'':__t)+
 '" class="form-control" data-property-id="widget-top" style="margin-left: 4px; top:4px; width: 80px; height: 28px; line-height: 1"> </div> <div class="input-group" class="input-group" style="width: 115px; display: inline; float: left"> <label class="col-sm-3 control-label property-name-inline" title="'+
 ((__t=(lang.width))==null?'':__t)+

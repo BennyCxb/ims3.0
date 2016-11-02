@@ -1,4 +1,6 @@
 define(function(require, exports, module) {
+    var CONFIG = require("common/config.js");
+    var languageJSON = CONFIG.languageJson.termList;
 
 	exports.new = function(tree){
 		return Tree.new(tree);
@@ -259,10 +261,17 @@ define(function(require, exports, module) {
               angle = '<i class="glyphicon" style="width:22px"></i>';
           }
 
+          var categoryName = data[i].name;
+          if (categoryName == "全部终端" && i == 0) {
+              categoryName = languageJSON.allTerm;
+          } else if (categoryName == "未分类终端" && data[i].id == 2) {
+              categoryName = languageJSON.uncategorizedTerm;
+          }
+
           var li = $('' +
             '<li node-id="' + data[i].id + '" class="' + treeview + '">' +
               '<a>' + angle + checkbox +
-              '<i class="fa fa-folder-o"></i><span> ' + data[i].name + '</span>' +
+              '<i class="fa fa-folder-o"></i><span> ' + categoryName + '</span>' +
               '</a>' +
             '</li>');
 

@@ -276,6 +276,10 @@ a {
     display: block;
 }
 
+#langImage {
+    border: solid 2px rgba(255,255,255,0.5);
+}
+
 .lang-national {
     height: 41px;
     padding-left:0;
@@ -304,6 +308,7 @@ a {
     border-radius: 50%;
     margin-right: 10px;
     margin-top: 3px;
+    border: solid 2px rgba(255,255,255,0.5);
 }
 
 /*全屏弹窗层1*/
@@ -573,8 +578,8 @@ a {
     cursor: pointer;
     text-align: center;
     color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 30px;
+    font-weight: 300;
     z-index: 999;
 }
 

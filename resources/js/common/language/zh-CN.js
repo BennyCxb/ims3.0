@@ -33,6 +33,8 @@ define(function (require, exports, module) {
         termList: {
             termBoxTitle: "终端",
             termTreeTitle: "终端分类",
+            allTerm: "全部终端",
+            uncategorizedTerm: "未分类终端",
             edit: "编辑",
             delete: "删除",
             add: "添加",
@@ -564,7 +566,16 @@ define(function (require, exports, module) {
             operationObject: "操作对象",
             operationTime: "操作时间",
             logContent: "日志内容",
-            empty: "空"
+            empty: "空",
+            addRole: "新建角色",
+            pleaseSelect: "请选取",
+            failedGetTerminalNodes: "获取终端节点失败",
+            al_noRoleName: "角色名不能为空",
+            al_RoleNameExist: "角色名已存在",
+            addSuc: "创建成功",
+            addFaild: "创建失败",
+            editSuc: "修改成功",
+            editFaild: "修改失败",
         }
     }
 })

@@ -25,7 +25,7 @@ define(function (require, exports, module) {
         else {
             $("#role_name").val();
             $("#term").val();
-            $(".modal-title").html("新建角色");
+            $(".modal-title").html(languageJSON.addRole);
             rID = NaN;
         }
 
@@ -47,7 +47,7 @@ define(function (require, exports, module) {
                 var termString = termArr + "";
                 $("#term").val(termString);
             } else {
-                $("#term").val("获取终端节点失败");
+                $("#term").val(languageJSON.failedGetTerminalNodes);
             }
         })
         //获取角色的功能模块及读写权限
@@ -58,7 +58,7 @@ define(function (require, exports, module) {
             var flag5 = true;
             var roleName = $("#role_name").val();
             if (roleName === "") {
-                alert("角色名不能为空！");
+                alert(languageJSON.al_noRoleName + "！");
                 $("#role_name").focus();
                 return false
             } else {
@@ -73,11 +73,11 @@ define(function (require, exports, module) {
                 var url1 = CONFIG.serverRoot + '/backend_mgt/v2/roles';
                 UTIL.ajax('post', url1, data1, function (msg) {
                     if (msg.RoleCount !== 0 && newName != rName && type == "edit") {
-                        alert("角色名已存在！")
+                        alert(languageJSON.al_RoleNameExist + "！")
                         $("#role_name").focus();
                         return false;
                     } else if (type == "add" && msg.RoleCount !== 0) {
-                        alert("角色名已存在！");
+                        alert(languageJSON.al_RoleNameExist + "！");
                         $("#role_name").focus();
                         return false;
                     } else {
@@ -145,11 +145,11 @@ define(function (require, exports, module) {
                                 }
                             });
                             if (flag5) {
-                                alert("修改成功！")
+                                alert(languageJSON.editSuc + "！")
                                 UTIL.cover.close();
                                 ROLES.loadRolesPage(_pageNO);
                             } else {
-                                alert("修改失败！");
+                                alert(languageJSON.editFaild + "！");
                             }
                         } else {
                             var data = JSON.stringify({
@@ -224,14 +224,14 @@ define(function (require, exports, module) {
                                         ;
                                     });
                                     if (flag5) {
-                                        alert("创建成功！");
+                                        alert(languageJSON.addSuc + "！");
                                         UTIL.cover.close();
                                         ROLES.loadRolesPage(1);
                                     } else {
-                                        alert("创建失败！");
+                                        alert(languageJSON.addFaild + "！");
                                     }
                                 } else {
-                                    alert("创建失败！")
+                                    alert(languageJSON.addFaild + "！")
                                 }
                             });
                         }
@@ -243,7 +243,7 @@ define(function (require, exports, module) {
         //终端分类选择
         $("#term_list").click(function () {
             rID ? rID : rID = "";
-            getClass.title = '请选取';
+            getClass.title = languageJSON.pleaseSelect;
             getClass.roleID = rID;
             getClass.save = function (data) {
                 cIDArr = [];

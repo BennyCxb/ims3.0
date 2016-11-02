@@ -255,7 +255,7 @@ define(function (require, exports, module) {
             mtrData = json.Materials;
             $("#mtr_choiseTable tbody").append('<tr>' +
                 '<th class="mtr_checkbox"></th>' +
-                '<th class="mtr_choise_name">' + languageJSON.resource + '</th>' +
+                '<th class="mtr_choise_name">' + languageJSON.resourceName + '</th>' +
                 '<th class="mtr_size">' + languageJSON.size2 + '</th>' +
                 '<th class="mtr_time">' + languageJSON.duration + '</th>' +
                 // '<th class="mtr_choise_status">' + languageJSON.status + '</th>' +

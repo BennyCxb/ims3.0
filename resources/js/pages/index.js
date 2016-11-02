@@ -33,6 +33,10 @@ define(function (require, exports, module) {
             exports.userName = uName;
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
+
+        $(window).bind('hashchange', function() {
+            window.clearInterval(require("pages/materials/materials_list.js").mtrListRefrash);
+        });
     };
     /**
      * 上传弹层页面

@@ -14,7 +14,7 @@ var languageJson = {
         title1: "CLEAR",
         title2: "IMS",
         loginTitle: "Login Clear Cloud Account",
-        loginName: "Sign in",
+        loginName: "Sign In",
         error_prompt1: "Please enter user name!",
         error_prompt2: "User name format is not correct! Such as：xxx@develop",
         error_prompt3: "Please enter your password!"
