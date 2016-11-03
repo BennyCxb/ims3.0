@@ -80,9 +80,9 @@ __p+='<div class="channel-program-header box-header with-border"> <input value="
 ((__t=(language.endTime))==null?'':__t)+
 '"> <i class="fa fa-calendar-times-o"></i> </span> <input type="date" class="form-control" data-field="lifetime_end" step="1" value="'+
 ((__t=(lifetime_end.match(/([^T]+)T/)[1]))==null?'':__t)+
-'"> </div> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-group-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>'+
+'"> </div> <div class="channel-editor-program-trigger input-group input-group-sm"> <div class="input-btn" style="float: left"> <button type="button" class="btn btn-danger btn-channel-setup-timer"> <i class="fa fa-fw fa-bomb"></i> <b>'+
 ((__t=(language.timingTrigger))==null?'':__t)+
-'</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="width: calc(100% - 88px); height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div> <div class="input-group"> <span class="input-group-addon" title="'+
+'</b> </button> </div><!-- /btn-group --> <label type="text" class="form-control" style="height: 30px; overflow: hidden; float: right; display: inline; line-height: 25px"> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-date"> <span></span> </label> <label class="timer-field timer-field-day"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> <label class="timer-field"> <span></span> </label> </label> </div> <div class="input-group"> <span class="input-group-addon" title="'+
 ((__t=(language.strarTime))==null?'':__t)+
 '"> <i class="fa fa-calendar-check-o"></i> </span> <input type="datetime-local" class="form-control" data-field="lifetime_start" step="1" value="'+
 ((__t=(lifetime_start))==null?'':__t)+
@@ -348,7 +348,7 @@ __p+='<div id="layout-editor-wrapper" style="min-width: 1080px"> <div class="lay
 ((__t=(lang.save))==null?'':__t)+
 '</button> </div> <div class="box-body" style="position: absolute; width: 100%; top: 58px; bottom: 47px"><!-- toolbar --> <div class="layout-editor-toolbar"> <label style="margin-left: 20px">'+
 ((__t=(lang.toolbar))==null?'':__t)+
-'</label> <div class="div-line-i" style="width: 85px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;'+
+'</label> <div class="div-line-i" style="width: 100px"></div> <div class="btn-group-vertical"> <button data-widget-id="video" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon glyphicon-film"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.video))==null?'':__t)+
 '&nbsp; </button> <button data-widget-id="image" class="btn btn-default btn-add-widget btn-layout-control"> <i class="glyphicon glyphicon-picture"></i>&nbsp;&nbsp;&nbsp;'+
 ((__t=(lang.image))==null?'':__t)+

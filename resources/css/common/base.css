@@ -1,9 +1,34 @@
-#bg_img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+/*#bg_img {*/
+    /*position: absolute;*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*margin: 0;*/
+/*}*/
+
+/* set the background of the body */
+body {
     margin: 0;
+    background: url(../../img/background.jpg) center no-repeat !important;
+    -ms-behavior: url(../../js/pages/background/backgroundsize.min.htc);
+    behavior: url(../../js/pages/background/backgroundsize.min.htc);
 }
+.bgsCover {
+    background-size: cover!important;
+}
+.bgsContain {
+    background-size: contain;
+}
+/* this allows to use a second background in all browsers and IE8 */
+/*body:after {*/
+    /*content: "";*/
+    /*background: url(../../img/background.jpg) repeat;*/
+    /*position: absolute;*/
+    /*z-index: -1;*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+/*}*/
 
 /*font*/
 body, h1, h2, h3, h4, h5, h6 {
@@ -241,13 +266,30 @@ a {
 
 .box-index-menu > li > a {
     border-left: 3px solid transparent;
-    padding: 12px 5px 12px 15px;
+    padding: 10px 5px 5px 10px;
     display: block;
+    opacity: 0.35;
+}
+
+.box-index-menu li>a>.pull-right {
+    /*position: absolute;*/
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+}
+
+.box-index-menu li>a>.fa-angle-down {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+    margin-top: 3px;
 }
 
 .box-index-menu > li > .menutree-menu {
     margin: 0 1px;
-    background: #2c3b41;
+    /* background: #2c3b41; */
+    border-bottom: solid 1px rgba(255,255,255,.2);
 }
 
 .box-index-menu > li  > .menutree-menu > li :hover >a, .box-index-menu > li  > .menutree-menu > li.active >a, .box-index-menu > li  > .menutree-menu > li :hover {
@@ -267,7 +309,7 @@ a {
 }
 
 .box-index-menu .menutree-menu > li > a {
-    padding: 5px 5px 5px 22px;
+    padding: 12px 5px 12px 22px;
     display: block;
     font-size: 14px;
 }
@@ -276,7 +318,51 @@ a {
     display: block;
 }
 
+/*#langImage {*/
+    /*border: solid 2px rgba(255,255,255,0.5);*/
+/*}*/
+
+/*.lang-national {*/
+    /*height: 41px;*/
+    /*padding-left:0;*/
+    /*padding-right:0;*/
+    /*background-color: #3c8dbc;*/
+/*}*/
+
+/*.lang-national > .index-lang-option {*/
+    /*display: block;*/
+    /*clear: both;*/
+    /*font-weight: 400;*/
+    /*white-space: nowrap;*/
+    /*color: white !important;*/
+    /*line-height: 31px !important;*/
+    /*padding: 5px 15px!important;*/
+/*}*/
+
+/*.lang-national > .index-lang-option:hover {*/
+    /*background-color: #367faa !important;*/
+/*}*/
+
+/*.lang-national img {*/
+    /*float: left;*/
+    /*width: 25px;*/
+    /*height: 25px;*/
+    /*border-radius: 50%;*/
+    /*margin-right: 10px;*/
+    /*margin-top: 3px;*/
+    /*border: solid 2px rgba(255,255,255,0.5);*/
+/*}*/
+
+.language-box {
+    position: absolute;
+    bottom: 0px;
+    list-style: none;
+}
+
 #langImage {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
     border: solid 2px rgba(255,255,255,0.5);
 }
 
@@ -284,7 +370,7 @@ a {
     height: 41px;
     padding-left:0;
     padding-right:0;
-    background-color: #3c8dbc;
+    /*background-color: #3c8dbc;*/
 }
 
 .lang-national > .index-lang-option {
@@ -292,13 +378,17 @@ a {
     clear: both;
     font-weight: 400;
     white-space: nowrap;
-    color: white !important;
     line-height: 31px !important;
     padding: 5px 15px!important;
 }
 
 .lang-national > .index-lang-option:hover {
+    color: white;
     background-color: #367faa !important;
+}
+
+.flag-menu .dropdown-toggle {
+    color: white;
 }
 
 .lang-national img {
@@ -308,8 +398,8 @@ a {
     border-radius: 50%;
     margin-right: 10px;
     margin-top: 3px;
-    border: solid 2px rgba(255,255,255,0.5);
 }
+
 
 /*全屏弹窗层1*/
 #cover_area {
@@ -853,7 +943,6 @@ a {
 
 .users_delete {
     position: relative;
-    top: 2px;
 }
 
 /*用户日志页面*/

@@ -214,16 +214,16 @@ define(function (require, exports, module) {
                         check_status = "check_status=" + mtrData[x].CheckLevel;
                         switch (mtrData[x].CheckLevel) {
                             case 0:
-                                status = languageJSON.pendingSubmit;
+                                status = '<span class="label label-primary">' + languageJSON.pendingSubmit + '</span>';
                                 break;
                             case 1:
-                                status = languageJSON.pendingAudit;
+                                status = '<span class="label label-warning">' + languageJSON.pendingAudit + '</span>';
                                 break;
                             case 2:
-                                status = languageJSON.pass;
+                                status = '<span class="label label-success">' + languageJSON.pass + '</span>';
                                 break;
                             case 3:
-                                status = languageJSON.unpass;
+                                status = '<span class="label label-danger">' + languageJSON.unpass + '</span>';
                                 break;
                             default:
                                 break;
@@ -231,21 +231,21 @@ define(function (require, exports, module) {
                         check_td = '<td class="mtr_check">' + status + '</td>';
                     }
 
-                    var mtr_status;
+                    var mtr_status = "";
                     var transform_status = "transform_status=" + mtrData[x].status;
                     if (mtrData[x].status != undefined) {
                         switch (mtrData[x].status) {
                             case 0:
-                                mtr_status = languageJSON.tfFaild;
+                                mtr_status = '<span class="label label-danger">' + languageJSON.tfFaild + '</span>';
                                 break;
                             case 1:
-                                mtr_status = languageJSON.pendingTf;
+                                mtr_status = '<span class="label label-warning">' + languageJSON.pendingTf + '</span>';
                                 break;
                             case 2:
-                                mtr_status = languageJSON.transforming;
+                                mtr_status = '<span class="label label-primary">' + languageJSON.transforming + '</span>';
                                 break;
                             case 3:
-                                mtr_status = languageJSON.tfSuc;
+                                mtr_status = '<span class="label label-success">' + languageJSON.tfSuc + '</span>';
                                 break;
                         }
                     }

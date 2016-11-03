@@ -457,22 +457,22 @@ define(function (require, exports, module) {
                     var check_td = '';
                     var check_status = '';
                     var chn_operation_td = '';
-                    var portStatus = languageJSON.gainStatusFaild;
+                    var portStatus = '<span class="label label-warning">' + languageJSON.gainStatusFaild + '</span>';
                     switch (chnData[x].Status) {
                         case -1:
                             portStatus = '';
                             break;
                         case 1:
-                            portStatus = languageJSON.pendingProd;
+                            portStatus = '<span class="label label-warning">' + languageJSON.pendingProd + '</span>';
                             break;
                         case 2:
-                            portStatus = languageJSON.producing;
+                            portStatus = '<span class="label label-primary">' + languageJSON.producing + '</span>';
                             break;
                         case 3:
-                            portStatus = languageJSON.prodSuc;
+                            portStatus = '<span class="label label-success">' + languageJSON.prodSuc + '</span>';
                             break;
                         case 4:
-                            portStatus = languageJSON.prodFaild;
+                            portStatus = '<span class="label label-danger">' + languageJSON.prodFaild + '</span>';
                             break;
                         default:
                             break;
@@ -483,7 +483,7 @@ define(function (require, exports, module) {
                             '</td>';
                     } else if (chnData[x].URL != null & chnData[x].Status == 3) {
                         chn_operation_td = '<td class="chn_operation">' +
-                            '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '">' + languageJSON.download + '</a>' +
+                            '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '"><button type="button" class="btn btn-default btn-xs">' + languageJSON.download + '</button></a>' +
                             '</td>';
                     }
 
@@ -492,16 +492,16 @@ define(function (require, exports, module) {
                         check_status = "check_status=" + chnData[x].CheckLevel;
                         switch (chnData[x].CheckLevel) {
                             case 0:
-                                checkStatus = languageJSON.pendingSubmit;
+                                checkStatus = '<span class="label label-primary">' + languageJSON.pendingSubmit + '</span>';
                                 break;
                             case 1:
-                                checkStatus = languageJSON.pendingAudit;
+                                checkStatus = '<span class="label label-warning">' + languageJSON.pendingAudit + '</span>';
                                 break;
                             case 2:
-                                checkStatus = languageJSON.pass;
+                                checkStatus = '<span class="label label-success">' + languageJSON.pass + '</span>';
                                 break;
                             case 3:
-                                checkStatus = languageJSON.unpass;
+                                checkStatus = '<span class="label label-danger">' + languageJSON.unpass + '</span>';
                                 break;
                             default:
                                 break;

@@ -429,6 +429,8 @@ define(function (require, exports, module) {
             download: "下载",
             edit: "编辑",
             delete: "删除",
+            save: "保存",
+            saveSubmit: "保存并提交",
             submitCheck: "提交审核",
             addResource: "添加资源",
             upload: "上传",

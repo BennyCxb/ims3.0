@@ -34,10 +34,21 @@ define(function (require, exports, module) {
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
 
-        $(window).bind('hashchange', function() {
-            window.clearInterval(require("pages/materials/materials_list.js").mtrListRefrash);
-            window.clearInterval(require("pages/channel/list.js").channelListRefrash);
-        });
+        // $(window).bind('hashchange', function() {
+        //     var MTRLIST = require("pages/materials/materials_list.js"),
+        //         CHALISH = require("pages/channel/list.js");
+        //     var page = window.location.hash.match(/^#([^?]*)/);
+        //     if (page[1] != "materials/materials_list" && page[1] != "channel/list") {
+        //         window.clearInterval(MTRLIST.mtrListRefrash);
+        //         window.clearInterval(require("pages/channel/list.js").channelListRefrash);
+        //     } else if (page[1] == "materials/materials_list") {
+        //         $(window).unbind('hashchange')
+        //         MTRLIST.init;
+        //     } else if (page[1] == "channel/list") {
+        //         $(window).unbind('hashchange')
+        //         CHALISH.init;
+        //     }
+        // });
     };
     /**
      * 上传弹层页面
@@ -129,7 +140,7 @@ define(function (require, exports, module) {
                     case 1:		//终端管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_term" class="menutree">' +
-                                '<a><i class="fa fa-dashboard"></i> <span>' + menuJson.console + '</span></a>' +
+                                '<a><span>' + menuJson.console + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                 '<ul class="menutree-menu">' +
                                 '<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> ' + menuJson.termList + '</a></li>' +
                                 '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> ' + menuJson.termLog + '</a></li>' +
@@ -140,7 +151,7 @@ define(function (require, exports, module) {
                     case 2:		//频道管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
-                                '<a><i class="fa fa-rocket"></i><span> ' + menuJson.releases + '</span></a>' +
+                                '<a><span> ' + menuJson.releases + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                 '<ul class="menutree-menu">' +
                                 '<li><a href="#channel/list"><i class="fa fa-newspaper-o"></i> ' + menuJson.channelList + '</a></li>' +
                                 '</ul>' +
@@ -150,9 +161,9 @@ define(function (require, exports, module) {
                     case 3:		//资源管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_mtr" class="menutree">' +
-                                '<a><i class="fa fa-server"></i><span> ' + menuJson.resource + '</span></a>' +
+                                '<a><span> ' + menuJson.resource + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                 '<ul class="menutree-menu">' +
-                                '<li><a href="#materials/materials_list"><i class="fa fa-newspaper-o"></i> ' + menuJson.resourceList + '</a></li>' +
+                                '<li><a href="#materials/materials_list"><i class="fa fa-folder"></i> ' + menuJson.resourceList + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                         }
@@ -163,7 +174,7 @@ define(function (require, exports, module) {
                         if (jdtData[a].ReadWriteAuth == 1) {
                             if ($("#treeview_channel ul").length == 0) {
                                 $(".box-index-menu").append('<li id="treeview_channel" class="menutree">' +
-                                    '<a><i class="glyphicon glyphicon-user"></i><span>&nbsp;' + menuJson.layout + '</span></a>' +
+                                    '<a><span>&nbsp;' + menuJson.layout + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                     '<ul class="menutree-menu">' +
                                     '<li><a href="#layout/list"><i class="fa fa-object-group"></i> ' + menuJson.layoutList + '</a></li>' +
                                     '</ul>' +
@@ -176,7 +187,7 @@ define(function (require, exports, module) {
                     case 6:		//用户管理
                         if (jdtData[a].ReadWriteAuth == 1) {
                             $(".box-index-menu").append('<li id="treeview_user" class="menutree">' +
-                                '<a><i class="fa fa-key"></i><span>&nbsp;' + menuJson.administratorTools + '</span></a>' +
+                                '<a><span>&nbsp;' + menuJson.administratorTools + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                 '<ul class="menutree-menu">' +
                                 '<li><a href="#user/users_list"><i class="glyphicon glyphicon-user"></i> ' + menuJson.userList + '</a></li>' +
                                 '<li><a href="#user/roles_list"><i class="fa fa-black-tie"></i> ' + menuJson.roleList + '</a></li>' +

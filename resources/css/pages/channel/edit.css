@@ -140,7 +140,7 @@
 }
 
 #channel-editor-wrapper .timed-program .channel-editor-program-trigger {
-    display: inherit;
+    display: inline-flex;
     float: left;
     width: calc(100% - 605px);
 }
@@ -346,4 +346,10 @@
 #box_weather{
     margin-left: 12px;
     margin-right: 12px;
+}
+
+.btn-channel-setup-timer {
+    height: 30px;
+    line-height: 16px;
+    margin-right: -2px;
 }

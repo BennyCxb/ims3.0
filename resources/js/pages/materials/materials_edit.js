@@ -58,7 +58,7 @@ define(function (require, exports, module) {
      */
     function selectLanguage() {
         $(".resourceTitle").html(languageJSON.resoureEdit);
-        $("#lbl_resourceName").html(languageJSON.webUrl + ":");
+        $("#lbl_resourceName").html(languageJSON.name + ":");
         $("#Emtr_updata").html(languageJSON.save);
     }
 

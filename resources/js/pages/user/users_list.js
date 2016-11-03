@@ -89,11 +89,11 @@ define(function (require, exports, module) {
                 var uPass = rolData[x].PASSWORD;
                 if (rName !== undefined) {
                     if (uID === 1) {
-                        var operation = '<a class="reset_psw">' + languageJSON.resetPassword + '</a> ' +
-                            '| <a class="pull-right" style="visibility: hidden"><i class="glyphicon glyphicon-trash user-delete"></i></a>';
+                        var operation = '<a class="reset_psw"><button type="button" class="btn btn-default btn-xs">' + languageJSON.resetPassword + '</button></a> ' +
+                            '<a class="" style="visibility: hidden"><button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash user-delete"></i></button></a>';
                     } else {
-                        var operation = '<a class="reset_psw">' + languageJSON.resetPassword + '</a> ' +
-                            '| <a class="users_delete pull-right"><i class="glyphicon glyphicon-trash user-delete"></i></a>';
+                        var operation = '<a class="reset_psw"><button type="button" class="btn btn-default btn-xs">' + languageJSON.resetPassword + '</button></a> ' +
+                            '<a class="users_delete"><button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash user-delete"></i></button></a>';
                     }
                 } else {
                     rName = languageJSON.undistributed;
