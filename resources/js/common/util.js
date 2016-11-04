@@ -132,11 +132,21 @@ define(function (require, exports, module) {
             data: data,
             timeout: CONFIG.letTimeout,
             success: function (data) {
+                if (data.rescode != undefined && data.rescode == '401' && data.errInfo != undefined && data.errInfo == "Token Unauthorized!") {
+                    alert(CONFIG.languageJson.index.errorRelogin)
+                    window.location.href = "login.html";
+                    return false;
+                }
                 successFn(data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 // XMLHttpRequest.status
                 // alert('连接服务器出错 ' + textStatus + errorThrown);
+                if (ajax.abort().status === 500) {
+                    location.hash = '#common/500';
+                } else if (ajax.abort().status === 404) {
+                    location.hash = '#common/404';
+                }
                 ajax.abort();
             }
         })
@@ -158,11 +168,21 @@ define(function (require, exports, module) {
             timeout: CONFIG.letTimeout,
             async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
             success: function (data) {
+                if (data.rescode != undefined && data.rescode == '401' && data.errInfo != undefined && data.errInfo == "Token Unauthorized!") {
+                    alert(CONFIG.languageJson.index.errorRelogin)
+                    window.location.href = "login.html";
+                    return false;
+                }
                 successFn(data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 // XMLHttpRequest.status
                 // alert('连接服务器出错 ' + textStatus + errorThrown);
+                if (ajax.abort().status === 500) {
+                    location.hash = '#common/500';
+                } else if (ajax.abort().status === 404) {
+                    location.hash = '#common/404';
+                }
                 ajax.abort();
             }
         })

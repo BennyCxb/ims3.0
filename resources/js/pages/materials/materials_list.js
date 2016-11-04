@@ -247,6 +247,9 @@ define(function (require, exports, module) {
                             case 3:
                                 mtr_status = '<span class="label label-success">' + languageJSON.tfSuc + '</span>';
                                 break;
+                            case 4:
+                                mtr_status = '<span class="label label-primary">' + languageJSON.transforming + '</span>';
+                                break;
                         }
                     }
 
@@ -265,7 +268,7 @@ define(function (require, exports, module) {
             } else {
                 $("#mtrTable tbody").empty();
                 $('#materials-table-pager').empty();
-                $("#mtrTable tbody").append('<h5 style="text-align:center;color:grey;">（空）</h5>');
+                $("#mtrTable tbody").append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
             }
         }
 

@@ -87,7 +87,7 @@ define(function (require, exports, module) {
                 var uID = rolData[x].ID;
                 var email = rolData[x].EMAIL;
                 var uPass = rolData[x].PASSWORD;
-                if (rName !== undefined) {
+                if (uName !== undefined) {
                     if (uID === 1) {
                         var operation = '<a class="reset_psw"><button type="button" class="btn btn-default btn-xs">' + languageJSON.resetPassword + '</button></a> ' +
                             '<a class="" style="visibility: hidden"><button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash user-delete"></i></button></a>';
@@ -95,7 +95,8 @@ define(function (require, exports, module) {
                         var operation = '<a class="reset_psw"><button type="button" class="btn btn-default btn-xs">' + languageJSON.resetPassword + '</button></a> ' +
                             '<a class="users_delete"><button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash user-delete"></i></button></a>';
                     }
-                } else {
+                }
+                if (rName == undefined){
                     rName = languageJSON.undistributed;
                 }
                 var roltr = '<tr class="user-row" userID="' + uID + '" userName="' + uName + '" userEmail="' + email + '" userDes="' + description + '" userPass="' + uPass + '" roleID="' + rID + '">' +

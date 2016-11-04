@@ -1066,6 +1066,7 @@ define(function (require, exports, module) {
 
         if ($('#channel-editor-wrapper .btn-channel-editor-saveRelease').attr("release") == "true") {
             onPublishChannel();
+            return;
         } else if ($('#channel-editor-wrapper .btn-channel-editor-saveSubmit').attr("audit") == "true") {
             onSubmitAudit();
         } else {
@@ -1336,13 +1337,13 @@ define(function (require, exports, module) {
             util.ajax2('post', url, post_data, function (msg) {
                 if (msg.rescode == 200) {
                     alert(languageJSON.al_chnSavePubSuc)
+                    util.cover.close();
                     location.hash = '#channel/list';
                 }
                 else {
                     alert(languageJSON.al_chnSavePubFaild)
                 }
             });
-            util.cover.close();
         }
     }
 

@@ -177,7 +177,7 @@ define(function(require, exports, module) {
         var input_div = $('' +
         '<div class="input-group tree-input-group">' +
           '<input type="text" class="form-control">' +
-          '<span class="input-group-addon"><i class="fa fa-check"></i></span>' +
+          '<span class="input-group-addon" style="display: inline-block"><i class="fa fa-check"></i></span>' +
         '</div>');
 
         var input = input_div.find('input');

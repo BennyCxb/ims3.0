@@ -8,11 +8,11 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         selectLanguage();
-        if (CONFIG.token == undefined) {
-            alert(languageJSON.errorRelogin);
-            window.location.href = "login.html";
-            return false;
-        }
+        // if (CONFIG.token == undefined) {
+        //     alert(languageJSON.errorRelogin);
+        //     window.location.href = "login.html";
+        //     return false;
+        // }
         $("#i_version span").text(CONFIG.version);
         $("#username").html(username + '@' + project);
         $("#bar").html(username + '@' + project);

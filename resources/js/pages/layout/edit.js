@@ -126,6 +126,7 @@ define(function(require, exports, module) {
 
         var language = {
             lang: {
+
                 editLayout: languageJSON.editLayout,
                 exitEdit: languageJSON.exitEdit,
                 saveExit: languageJSON.saveExit,

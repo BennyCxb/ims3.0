@@ -121,7 +121,7 @@ define(function (require, exports, module) {
         languageJSON = CONFIG.languageJson.channel;
         $("#box_text_time .flipInterval").html(languageJSON.flipInterval);
         $("#mtrC_pageDownPeriod").attr("placeholder", languageJSON.pl_input);
-        $("#box_text_time .second").html(languageJSON.second);
+        // $("#box_text_time .second").html(languageJSON.second);
         $("#text_color").attr("placeholder", languageJSON.color);
         $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>');
         $("#mtrC_scrollSpeed option").html(languageJSON.static);
@@ -133,17 +133,19 @@ define(function (require, exports, module) {
         $("#weatherText_color").attr("placeholder", languageJSON.pl_weatherColor);
         $("#box_weather_time .switchingInterval").html(languageJSON.switchingInterval);
         $("#weatherFlip_time").attr("placeholder", languageJSON.pl_input);
-        $("#box_weather_time .second").html(languageJSON.second);
+        // $("#box_weather_time .second").html(languageJSON.second);
         $("#mtrC_office_type").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>');
         $("#mtrC_office_switchAnimation").html('<option selected="selected" value="None">' + languageJSON.None + '</option>' +
             '<option value="Random">' + languageJSON.Random + '</option>');
         $("#box_text_time .switchingInterval").html(languageJSON.switchingInterval);
         $("#mtrC_office_switchPeriod").attr("placeholder", languageJSON.pl_input);
-        $("#box_text_time .second").html(languageJSON.second);
         $("#mtr_delete").html(languageJSON.delete);
         $("#mtr_batchOperation").html(languageJSON.batchOperation);
         $("#mtr_countTime").html(languageJSON.staDuration);
         $("#mtr_addMtr").html(languageJSON.addResource);
+        $("#mtrC_textType").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>' +
+            '<option value="Marquee">' + languageJSON.Marquee + '</option>' +
+            '<option value="WebURL">' + languageJSON.WebURL + '</option>')
         $("#mtrCtrl_playType").html('<option selected="selected" value="Sequence">' + languageJSON.SequencePlay + '</option>' +
             '<option value="Random">' + languageJSON.RandomPlay + '</option>' +
             '<option value="Percent">' + languageJSON.PercentPlay + '</option>');

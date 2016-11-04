@@ -62,8 +62,8 @@ define(function (require, exports, module) {
                 }
             }, 1000);
         } else if (typeId == 2) {      //图片
-            if (zdata.file_size > 5000000) {
-                if (confirm(languageJSON.al_inResourceName + "？")) {
+            if (zdata.Size > 5000000) {
+                if (confirm(languageJSON.cf_preview + "？")) {
                     $("#mtrView_picArea").css("display", "block");
                     $("#mtrView_picArea").find("img").attr("src", mtrUrl);
                 } else {

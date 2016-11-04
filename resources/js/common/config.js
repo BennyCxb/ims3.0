@@ -28,6 +28,28 @@ define(function (require, exports, module) {
         }
     }
 
+    if (exports.token == undefined) {
+        var currentLang = navigator.language;
+        UTIL.setCookie("language", "zh-CN");
+        var language = "zh-CN";
+        if(!currentLang)
+            currentLang = navigator.browserLanguage;
+        switch (currentLang.toLowerCase()) {
+            case "zh-cn":
+                UTIL.setCookie("language", "zh-CN");
+                break;
+            case "en-us":
+                UTIL.setCookie("language", "en-US");
+                break;
+            default:
+                break;
+        }
+        exports.selectLanguage(UTIL.getCookie("language"));
+        alert(exports.languageJson.index.errorRelogin);
+        window.location.href = "login.html";
+        return false;
+    }
+
     exports.selectLanguage(UTIL.getCookie("language"));
 
     exports.pager = {

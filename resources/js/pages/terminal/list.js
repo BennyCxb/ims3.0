@@ -855,8 +855,8 @@ define(function (require, exports, module) {
                         if (focus.attr('node-id') == 1) {
                             alert(languageJSON.al_deleteRoot);
                         } else {
-                            if (confirm(languageJSON.cf_deleteCf1 + '"' + $.trim(focus.children('a').find('span').html()) + '"? （' + languageJSON.cf_deleteCf2 + '）')) {
-                                if (confirm(languageJSON.cf_deleteCf3 + '"' + $.trim(focus.children('a').find('span').html()) + '"? （' + languageJSON.cf_deleteCf2 + '）')) {
+                            if (confirm(languageJSON.cf_deleteCf1 + '"' + $.trim(focus.children('a').find('span').html()) + '"' + languageJSON.cf_deleteCf4 + '? （' + languageJSON.cf_deleteCf2 + '）')) {
+                                if (confirm(languageJSON.cf_deleteCf3 + '"' + $.trim(focus.children('a').find('span').html()) + '"' + languageJSON.cf_deleteCf4 + '? （' + languageJSON.cf_deleteCf2 + '）')) {
 
                                     var nodeId = focus.attr('node-id');
                                     var data = {

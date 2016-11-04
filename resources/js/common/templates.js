@@ -397,7 +397,7 @@ __p+='<small class="direct-name-001-hint direct-name-hint" style="top: 10px; wid
 ((__t=(lang.bgColor))==null?'':__t)+
 '</label> <input class="form-control" type="color" value="'+
 ((__t=(background_color))==null?'':__t)+
-'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 350px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">'+
+'" data-property-id="layout-bg-color" style="width: 25px;top: 4px; height: 28px;float: right; padding: 3px"> </div> <div class="col-xs-2 layout-editor-property"><!-- <label class="control-label property-name-inline">背景图</label> --> <div class="btn-group" style="width: 360px"> <button type="button" class="btn-layout-editor-background btn btn-primary" style="width: auto">'+
 ((__t=(lang.addBgcolor))==null?'':__t)+
 '</button> <button type="button" class="btn-layout-editor-cancelbackground btn btn-default" style="width: auto">'+
 ((__t=(lang.cancelBgcolor))==null?'':__t)+
@@ -507,29 +507,6 @@ __p+='<tr data-layout-id="'+
 '</td> <td class="mod_create_time_center create-time">'+
 ((__t=(create_time))==null?'':__t)+
 '</td><!-- <td>编辑</td> --> </tr>';
-}
-return __p;
-};
-exports['material_table_row']=function(obj){
-var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
-with(obj||{}){
-__p+='<tr data-material-id="'+
-((__t=(id))==null?'':__t)+
-'"> <td class="mtr_checkbox" style="width: 32px"><input type="checkbox"></td> <td class="mtr_name"><b><a href="#layout/edit?id='+
-((__t=(id))==null?'':__t)+
-'" class="btn-table-detail">'+
-((__t=(name))==null?'':__t)+
-'</a></b></td> <td class="mtr_check"></td> <td class="mtr_size">'+
-((__t=(width))==null?'':__t)+
-'×'+
-((__t=(height))==null?'':__t)+
-'</td> <td class="mtr_time">'+
-((__t=(operator))==null?'':__t)+
-'</td> <td class="mtr_status">'+
-((__t=(operator))==null?'':__t)+
-'</td> <td class="mtr_create_time_center">'+
-((__t=(create_time))==null?'':__t)+
-'</td> </tr>';
 }
 return __p;
 };});
