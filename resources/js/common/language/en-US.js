@@ -467,6 +467,8 @@ define(function (require, exports, module) {
             al_submitFaild: "Failure",
             al_audited: "Reviewed",
             al_auditFaild: "Failure",
+            al_saveSuc: "Saved",
+            al_saveFaild: "Failure",
             liveName: "Name of Live resource",
             liveUrl: "Live resource address",
             submit: "Submit",

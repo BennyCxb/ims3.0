@@ -348,7 +348,9 @@ define(function (require, exports, module) {
                 id: ids
             });
             util.ajax('post', requestUrl + '/backend_mgt/v2/channels/', data, function (res) {
-                if (Number(res.rescode) != 200) {
+                if (Number(res.rescode) == 200) {
+                    loadPage(_pageNO);
+                } else {
                     alert(languageJSON.al_exportFaild);
                 }
                 exports.channelListRefrash = window.setInterval(function () {
@@ -561,6 +563,7 @@ define(function (require, exports, module) {
                     $('#channel-list-controls .btn-publish').attr('disabled', true);
                     $('#channel-list-controls .btn-copy').attr('disabled', true);
                     $('#channel-list-controls .btn-delete').prop('disabled', true);
+                    $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
                     if (checked.length == 0) {
                         $("#channel-list-controls .btn-export-offline").attr('disabled', true);
                     } else {
@@ -571,6 +574,7 @@ define(function (require, exports, module) {
                     $('#channel-list-controls .btn-publish').attr('disabled', false);
                     $('#channel-list-controls .btn-copy').attr('disabled', false);
                     $('#channel-list-controls .btn-delete').prop('disabled', false);
+                    $("#channel-list-controls .btn-export-offline").removeAttr('disabled');
                 }
             } else {
                 if (util.getLocalParameter('config_canCheck') == '0') {
