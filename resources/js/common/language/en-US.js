@@ -74,6 +74,8 @@ define(function (require, exports, module) {
             al_getListFaild: "Obtained Failure",
             al_ssFaild: "Screenshot failure, please try again",
             al_addCfFaild: "Add Failure",
+            al_forbidUpdate: "Can't modify the category",
+            al_forbidDelete: "Can't delete the category",
             al_deleteRoot: "Could not delete root directory",
             al_deleteRootF: "Deleted Failure",
             al_editRootF: "Edit Failure",

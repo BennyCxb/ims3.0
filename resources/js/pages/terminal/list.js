@@ -859,6 +859,10 @@ define(function (require, exports, module) {
                                 if (confirm(languageJSON.cf_deleteCf3 + '"' + $.trim(focus.children('a').find('span').html()) + '"' + languageJSON.cf_deleteCf4 + '? （' + languageJSON.cf_deleteCf2 + '）')) {
 
                                     var nodeId = focus.attr('node-id');
+                                    if (nodeId == "1" || nodeId == "2") {
+                                        alert(languageJSON.al_forbidDelete)
+                                        return false;
+                                    }
                                     var data = {
                                         "project_name": CONFIG.projectName,
                                         "action": "delCategory",
@@ -923,6 +927,12 @@ define(function (require, exports, module) {
                             // 提交终端组分类名称修改
                             else {
                                 var nodeId = a.parent().attr('node-id');
+                                if (nodeId == "1" || nodeId == "2") {
+                                    alert(languageJSON.al_forbidUpdate)
+                                    t.css('display', 'inline-block');
+                                    input.parent().remove();
+                                    return false;
+                                }
                                 var data = {
                                     "project_name": CONFIG.projectName,
                                     "action": "changeCategoryName",

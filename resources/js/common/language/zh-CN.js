@@ -74,6 +74,8 @@ define(function (require, exports, module) {
             al_getListFaild: "获取终端列表失败",
             al_ssFaild: "截屏失败，请重试",
             al_addCfFaild: "新建终端分类失败",
+            al_forbidUpdate: "不能修改该分类",
+            al_forbidDelete: "不能删除该分类",
             al_deleteRoot: "不能删除根目录",
             al_deleteRootF: "删除终端分类失败",
             al_editRootF: "编辑终端分类失败",
