@@ -24,7 +24,8 @@ define(function (require, exports, module) {
                 administratorTools: "管理员工具",
                 userList: "用户管理",
                 roleList: "角色权限",
-                oplog: "操作日志"
+                oplog: "操作日志",
+                audit: "频道审核，资源审核",
             },
             errorRelogin: "登录过期，请重新登录！",
             errorRelogin2: "请重新登录！",
@@ -585,6 +586,8 @@ define(function (require, exports, module) {
             addFaild: "创建失败",
             editSuc: "修改成功",
             editFaild: "修改失败",
+            allTerm: "全部终端",
+            administrator: "超级管理员",
         }
     }
 })

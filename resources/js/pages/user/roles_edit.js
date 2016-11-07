@@ -15,10 +15,13 @@ define(function (require, exports, module) {
         var type = ROLES.type;
         var cIDArr = [];
         var cNameArr = [];
-        var categoryData;
+        var categoryData = [];
         if (type == "edit") {
             if (rName) {
                 $("#role_name").val(rName);
+                if (rID == 1) {
+                    $("#role_name").attr("disabled", true);
+                }
             }
             isNew = false;
         }
@@ -39,10 +42,16 @@ define(function (require, exports, module) {
             if (msg.rescode === '200') {
                 var termArr = [];
                 for (var x = 0; x < msg.RoleTgCategory.length; x++) {
-                    if (msg.RoleTgCategory[x].Name === "null") {
-                        msg.RoleTgCategory[x].Name = "";
+                    var categoryID = msg.RoleTgCategory[x].TermCategoryID;
+                    var categoryName = msg.RoleTgCategory[x].Name;
+                    if (categoryName === "null") {
+                        categoryName = "";
+                    } else if (categoryName == "全部终端" && categoryID == 1) {
+                        categoryName = CONFIG.languageJson.termList.allTerm;
+                    } else if (categoryName == "未分类终端" && categoryID == 2) {
+                        categoryName = CONFIG.languageJson.termList.uncategorizedTerm;
                     }
-                    termArr.push(msg.RoleTgCategory[x].Name);
+                    termArr.push(categoryName);
                 }
                 var termString = termArr + "";
                 $("#term").val(termString);
@@ -331,6 +340,29 @@ define(function (require, exports, module) {
                         var auth = rolData[i].ReadWriteAuth;
                         var ModuleID = rolData[i].ModuleID;
                         var ModuleName = rolData[i].ModuleName;
+                        var menuJSON = CONFIG.languageJson.index.menu
+                        switch (ModuleID) {
+                            case 1:
+                                ModuleName = menuJSON.console;
+                                break;
+                            case 2:
+                                ModuleName = menuJSON.channelList;
+                                break;
+                            case 3:
+                                ModuleName = menuJSON.resource;
+                                break;
+                            case 5:
+                                ModuleName = menuJSON.layoutList;
+                                break;
+                            case 6:
+                                ModuleName = menuJSON.administratorTools;
+                                break;
+                            case 7:
+                                ModuleName = menuJSON.audit;
+                                break;
+                            default:
+                                break;
+                        }
                         var flag1 = false;
                         for (var y = 0; y < authArr.length; y++) {
                             if (ModuleID == authArr[y]) {

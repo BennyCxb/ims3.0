@@ -90,6 +90,11 @@ define(function (require, exports, module) {
                 var rID = rolData[x].RoleID;
                 var users = rolData[x].Users;
                 userListArr[x] = users;
+
+                var roleName = rolData[x].RoleName;
+                if (rID == 1) {
+                    roleName = languageJSON.administrator;
+                }
 //				var data = JSON.stringify({
 //					project_name: 'newui_dev',
 //					action: 'GetUsers',
@@ -128,8 +133,8 @@ define(function (require, exports, module) {
                 if (rID !== 1) {
                     deleteTd = '<a class="roles_delete"><i class="glyphicon glyphicon-trash user-delete"></i></a>'
                 }
-                var roltr = '<tr class="rol-row" num="' + x + '" rolesID="' + rolData[x].RoleID + '" rolesName="' + rolData[x].RoleName + '">' +
-                    '<td class="roles_name" style="width:30%"><a class="role_name">' + rolData[x].RoleName + '</a></td>' +
+                var roltr = '<tr class="rol-row" num="' + x + '" rolesID="' + rolData[x].RoleID + '" rolesName="' + roleName + '">' +
+                    '<td class="roles_name" style="width:30%"><a class="role_name">' + roleName + '</a></td>' +
                     // '<td class="roles_id">ID：' + rolData[x].RoleID + '</td>' +
                     '<td class="users"><a class="roles_assign" title="' + languageJSON.assignUser + '"  style="width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + users1 + '</a></td>' +
                     '<td>' + deleteTd + '</td>' +

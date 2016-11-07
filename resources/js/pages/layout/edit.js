@@ -83,7 +83,7 @@ define(function(require, exports, module) {
                 height: el.Height,
                 id: el.ID,
                 type: el.Type,
-                typeName: el.Type_Name
+                typeName: boxTypeName(el.Type)
             });
             if (el.ID !== -1) {
                 savedWidgetIds.push(el.ID);
@@ -686,6 +686,39 @@ define(function(require, exports, module) {
         el.attr('typeid', 2);
         el.attr('is_choisebg', 1);
         util.cover.load('resources/pages/channel/addMtr.html');
+    }
+
+    /**
+     * 判断控件名
+     * @param type
+     * @returns {*}
+     */
+    function boxTypeName(type) {
+        var typeName;
+        switch (type) {
+            case 'ImageBox':
+                typeName = languageJSON.ImageBox;
+                break;
+            case 'VideoBox':
+                typeName = languageJSON.VideoBox;
+                break;
+            case 'AudioBox':
+                typeName = languageJSON.AudioBox;
+                break;
+            case 'WebBox':
+                typeName = languageJSON.WebBox;
+                break;
+            case 'ClockBox':
+                typeName = languageJSON.ClockBox;
+                break;
+            case 'WeatherBox':
+                typeName = languageJSON.WeatherBox;
+                break;
+            case 'OfficeBox':
+                typeName = languageJSON.OfficeBox;
+                break;
+        }
+        return typeName;
     }
 
     exports.updateBackground = updateBackground;

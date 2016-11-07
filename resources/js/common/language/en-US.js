@@ -14,17 +14,18 @@ define(function (require, exports, module) {
             menu: {
                 console: "Admin Console",
                 termList: "Terminal",
-                termLog: "Log",
+                termLog: "Terminal Log",
                 resource: "Resource Management",
                 resourceList: "Resource Storage",
                 releases: "Release Management",
                 channelList: "Channel List",
-                layoutList: "Layout",
+                layoutList: "Program templates",
                 layout: "Layout",
                 administratorTools: "Administrtor Tool",
                 userList: "User Management",
                 roleList: "Role Privilege",
-                oplog: "Operating Log"
+                oplog: "Operating Log",
+                audit: "Channel audit, Resource audit",
             },
             errorRelogin: "Expired login, Please login again!",
             errorRelogin2: "Please Login again",
@@ -585,6 +586,8 @@ define(function (require, exports, module) {
             addFaild: "Failure",
             editSuc: "Modified",
             editFaild: "Failure",
+            allTerm: "All Terminals",
+            administrator: "Administrator",
         }
     }
 })
