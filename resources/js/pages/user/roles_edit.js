@@ -349,7 +349,7 @@ define(function (require, exports, module) {
                                 ModuleName = menuJSON.channelList;
                                 break;
                             case 3:
-                                ModuleName = menuJSON.resource;
+                                ModuleName = menuJSON.resourceList;
                                 break;
                             case 5:
                                 ModuleName = menuJSON.layoutList;

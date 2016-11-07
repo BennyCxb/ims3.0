@@ -1,0 +1,108 @@
+/* set the background of the body */
+body {
+    margin: 0;
+    background: url(../../img/background.jpg) center no-repeat !important;
+    -ms-behavior: url(../../js/pages/background/backgroundsize.min.htc);
+    behavior: url(../../js/pages/background/backgroundsize.min.htc);
+}
+.bgsCover {
+    background-size: cover!important;
+}
+.bgsContain {
+    background-size: contain;
+}
+/* this allows to use a second background in all browsers and IE8 */
+/*body:after {*/
+/*content: "";*/
+/*background: url(../../img/background.jpg) repeat;*/
+/*position: absolute;*/
+/*z-index: -1;*/
+/*top: 0;*/
+/*right: 0;*/
+/*bottom: 0;*/
+/*left: 0;*/
+/*}*/
+
+.login-box {
+    position: absolute;
+    margin-left: -180px;
+    left: 50%;
+    margin-top: 7%;
+}
+
+.login-logo {
+    color: white;
+    margin-bottom: 12px;
+}
+
+.login-box > .login-logo > a {
+    cursor: default;
+    color: white;
+    font-size: 36px;
+}
+
+.login-box-body {
+    background-color: rgba(255, 255, 255, .85);
+}
+
+.login-box-body h3 {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#l_language {
+    display: block;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+
+#l_language > .active {
+    color: grey;
+}
+
+#error_m {
+    display: block;
+    margin-top: 10px;
+    color: #3c8dbc;
+    text-align: center;
+}
+
+#AutoComplete {
+    background: #fff;
+    border: 1px solid #4190db;
+    display: none;
+    width: 320px;
+}
+
+#AutoComplete ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#AutoComplete li {
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    text-indent: 12px;
+    line-height: 30px;
+}
+
+#AutoComplete .hover {
+    background: #6eb6fe;
+    color: #fff;
+}
+
+#l_version {
+    text-align: center;
+    bottom: 20px;
+    position: absolute;
+    left: 50%;
+    margin-left: -960px;
+    width: 1920px;
+}
+
+#l_version {
+    color: white;
+}
