@@ -28,24 +28,6 @@ define(function (require, exports, module) {
             exports.userName = uName;
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
-
-        $(window).bind('hashchange', function() {
-            var MTRLIST = require("pages/materials/materials_list.js"),
-                CHALISH = require("pages/channel/list.js");
-            var page = window.location.hash.match(/^#([^?]*)/);
-            if (page[1] != "materials/materials_list" && page[1] != "channel/list" &&  page[1] != "terminal/statistics" ) {
-                window.clearInterval(MTRLIST.mtrListRefrash);
-                window.clearInterval(require("pages/channel/list.js").channelListRefrash);
-                window.clearInterval(require("pages/terminal/statistics.js").staInt);
-                window.clearInterval(require("pages/terminal/statistics.js").staInt2);
-            } else if (page[1] == "materials/materials_list") {
-                $(window).unbind('hashchange')
-                MTRLIST.init;
-            } else if (page[1] == "channel/list") {
-                $(window).unbind('hashchange')
-                CHALISH.init;
-            }
-        });
     };
     /**
      * 上传弹层页面
@@ -68,8 +50,8 @@ define(function (require, exports, module) {
         $("title").html(languageJSON.title);
         $("#languageName").html(CONFIG.languageJson.langName);
         $("#langImage").attr("src", CONFIG.languageJson.iconUrl)
-        $("#repassword").html('<i class="fa fa-unlock-alt"></i>'+languageJSON.resetPassword);
-        $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>'+languageJSON.logout);
+        $("#repassword").html('<i class="fa fa-unlock-alt"></i>' + languageJSON.resetPassword);
+        $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>' + languageJSON.logout);
         $("#dpUpl").attr("title", languageJSON.dpUpl);
     }
 
@@ -103,6 +85,15 @@ define(function (require, exports, module) {
             }
         })
 
+        //清除周期事件
+        var MTRLIST = require("pages/materials/materials_list.js"),
+            CHALISH = require("pages/channel/list.js"),
+            STATISTICS = require("pages/terminal/statistics.js");
+        window.clearInterval(MTRLIST.mtrListRefrash);
+        window.clearInterval(CHALISH.channelListRefrash);
+        window.clearInterval(STATISTICS.staInt);
+        window.clearInterval(STATISTICS.staInt2);
+
         //检查关闭弹窗
         UTIL.cover.close();
         UTIL.cover.close(2);
@@ -110,15 +101,6 @@ define(function (require, exports, module) {
         // load页面
         $('#page_box').load('resources/pages/' + page + '.html');
     }
-
-    //$(function(){
-    //	var json_data = JSON.stringify({
-    //			Project: project,
-		//        Action : "Get"
-    //	    })
-    //	var url = CONFIG.serverRoot + "/backend_mgt/v1/projects"
-    //	UTIL.ajax("post", url, json_data, render);
-    //})
 
     //检索权限
     function checkJurisdiction() {

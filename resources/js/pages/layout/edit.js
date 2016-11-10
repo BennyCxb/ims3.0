@@ -126,7 +126,6 @@ define(function(require, exports, module) {
 
         var language = {
             lang: {
-
                 editLayout: languageJSON.editLayout,
                 exitEdit: languageJSON.exitEdit,
                 saveExit: languageJSON.saveExit,
@@ -166,8 +165,7 @@ define(function(require, exports, module) {
                 cancelBgcolor: languageJSON.cancelBgcolor,
             }
         };
-        $('#layout-editor-wrapper .layout-editor-properties')
-            .html(templates.layout_edit_property(properties));
+        $('#layout-editor-wrapper .layout-editor-properties').html(templates.layout_edit_property(properties));
 
         /*************** editor *******************/
         var canvas = $('#layout-editor-wrapper .layout-editor-canvas'),
@@ -196,8 +194,7 @@ define(function(require, exports, module) {
             downLayer: languageJSON.downLayer,
         };
         widgetProperty.lang = lang;
-        $('#layout-editor-wrapper .layout-editor-widget-properties')
-            .html(templates.layout_edit_widget_property(widgetProperty));
+        $('#layout-editor-wrapper .layout-editor-widget-properties').html(templates.layout_edit_widget_property(widgetProperty));
 
     }
 

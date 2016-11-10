@@ -164,7 +164,7 @@ define(function (require, exports, module) {
             screenshotsTimeout: "Screen shot timeout, please try again",
             statistics: "Online Statistics",
             termOnlineDur: "Terminals Online Duration",
-            termLastOnlineTime: "Terminal Online Last Time",
+            termLastOnlineTime: "Offline Terminal Online Last Time",
             lastOnlineTime: "Online Last Time",
             serverData: "Server Status",
             serverInfo: "Server Information",
