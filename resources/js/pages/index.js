@@ -8,11 +8,6 @@ define(function (require, exports, module) {
 
     exports.init = function () {
         selectLanguage();
-        // if (CONFIG.token == undefined) {
-        //     alert(languageJSON.errorRelogin);
-        //     window.location.href = "login.html";
-        //     return false;
-        // }
         $("#i_version span").text(CONFIG.version);
         $("#username").html(username + '@' + project);
         $("#bar").html(username + '@' + project);
@@ -34,21 +29,23 @@ define(function (require, exports, module) {
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
 
-        // $(window).bind('hashchange', function() {
-        //     var MTRLIST = require("pages/materials/materials_list.js"),
-        //         CHALISH = require("pages/channel/list.js");
-        //     var page = window.location.hash.match(/^#([^?]*)/);
-        //     if (page[1] != "materials/materials_list" && page[1] != "channel/list") {
-        //         window.clearInterval(MTRLIST.mtrListRefrash);
-        //         window.clearInterval(require("pages/channel/list.js").channelListRefrash);
-        //     } else if (page[1] == "materials/materials_list") {
-        //         $(window).unbind('hashchange')
-        //         MTRLIST.init;
-        //     } else if (page[1] == "channel/list") {
-        //         $(window).unbind('hashchange')
-        //         CHALISH.init;
-        //     }
-        // });
+        $(window).bind('hashchange', function() {
+            var MTRLIST = require("pages/materials/materials_list.js"),
+                CHALISH = require("pages/channel/list.js");
+            var page = window.location.hash.match(/^#([^?]*)/);
+            if (page[1] != "materials/materials_list" && page[1] != "channel/list" &&  page[1] != "terminal/statistics" ) {
+                window.clearInterval(MTRLIST.mtrListRefrash);
+                window.clearInterval(require("pages/channel/list.js").channelListRefrash);
+                window.clearInterval(require("pages/terminal/statistics.js").staInt);
+                window.clearInterval(require("pages/terminal/statistics.js").staInt2);
+            } else if (page[1] == "materials/materials_list") {
+                $(window).unbind('hashchange')
+                MTRLIST.init;
+            } else if (page[1] == "channel/list") {
+                $(window).unbind('hashchange')
+                CHALISH.init;
+            }
+        });
     };
     /**
      * 上传弹层页面
@@ -143,7 +140,8 @@ define(function (require, exports, module) {
                                 '<a><span>' + menuJson.console + '</span><i class="fa fa-angle-down pull-right"></i></a>' +
                                 '<ul class="menutree-menu">' +
                                 '<li class="active"><a id="menu_termlist" href="#terminal/list"><i class="fa fa-television"></i> ' + menuJson.termList + '</a></li>' +
-                                '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-area-chart"></i> ' + menuJson.termLog + '</a></li>' +
+                                '<li><a id="menu_statistics" href="#terminal/statistics"><i class="fa fa-area-chart"></i> ' + menuJson.statistics + '</a></li>' +
+                                '<li><a id="menu_termlog" href="#termlog/list"><i class="fa fa-calendar"></i> ' + menuJson.termLog + '</a></li>' +
                                 '</ul>' +
                                 '</li>');
                         }
@@ -241,12 +239,6 @@ define(function (require, exports, module) {
                     if (UTIL.getLocalParameter('config_checkSwitch') == '1') {
                         setUserConfig_check();
                     }
-                } else if (data.rescode === '401' && data.errInfo == "Token Unauthorized!"){
-                    alert(languageJSON.errorRelogin);
-                    window.location.href = "login.html";
-                } else {
-                    alert(languageJSON.errorRelogin2);
-                    window.location.href = "login.html";
                 }
             }
         )

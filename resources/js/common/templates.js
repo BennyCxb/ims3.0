@@ -509,4 +509,77 @@ __p+='<tr data-layout-id="'+
 '</td><!-- <td>编辑</td> --> </tr>';
 }
 return __p;
+};
+exports['statistics_server_info']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<div class="box-header"> <i class="fa fa-th"></i> <h3 class="box-title">'+
+((__t=(serverData))==null?'':__t)+
+'</h3> <div class="box-tools pull-right"> <button type="button" class="btn btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button> <button type="button" class="btn btn-sm" data-widget="remove"><i class="fa fa-times"></i></button> </div> </div> <div class="box-body border-radius-none"> <div id="container" class="col-md-8" style="min-width:400px;height:400px"></div> <div class="col-md-4" style="height: 400px"> <div id="box-server-info"> <h2 class="text-center"> <strong>'+
+((__t=(serverInfo))==null?'':__t)+
+'</strong> </h2> <div class="progress-group" style="margin-bottom: 30px"> <span class="progress-text">CPU</span> <span id="cpuInfo" class="progress-number">'+
+((__t=(cpuI))==null?'':__t)+
+'</span> </div> <div class="progress-group"> <span class="progress-text">'+
+((__t=(ram))==null?'':__t)+
+' '+
+((__t=(usage))==null?'':__t)+
+'</span> <span id="ramUsage" class="progress-number">0/0</span> <div class="progress sm"> <div id="progress-ramUsed" class="progress-bar progress-bar-aqua" style="width: 0%"></div> </div> </div><!-- /.progress-group --> <div class="progress-group"> <span class="progress-text">'+
+((__t=(disk))==null?'':__t)+
+' '+
+((__t=(usage))==null?'':__t)+
+'</span> <span id="diskUsage" class="progress-number">0/0</span> <div class="progress sm"> <div id="progress-diskUsed" class="progress-bar progress-bar-aqua" style="width: 0%"></div> </div> </div><!-- /.progress-group --> </div> <div class="box-footer no-border" style="bottom: 0px; position: absolute; width: calc(100% - 30px)"> <div class="row"> <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4"> <input type="text" class="knob knob-cpu" value="0" data-readonly="true" data-width="60" data-height="60" data-fgcolor="#39CCCC"> <div class="knob-label">CPU '+
+((__t=(utilization))==null?'':__t)+
+'</div> </div><!-- ./col --> <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4"> <input type="text" class="knob knob-ram" value="0" data-readonly="true" data-width="60" data-height="60" data-fgcolor="#39CCCC"> <div class="knob-label">'+
+((__t=(ram))==null?'':__t)+
+' '+
+((__t=(utilization))==null?'':__t)+
+'</div> </div><!-- ./col --> <div class="col-xs-4 text-center"> <input type="text" class="knob knob-disk" value="0" data-readonly="true" data-width="60" data-height="60" data-fgcolor="#39CCCC"> <div class="knob-label">'+
+((__t=(disk))==null?'':__t)+
+' '+
+((__t=(utilization))==null?'':__t)+
+'</div> </div><!-- ./col --> </div><!-- /.row --> </div> </div><!-- /.col --> </div><!-- /.box-body --> <div class="box-footer no-border"><!--<div class="row">--><!--<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">--><!--<input type="text" class="knob knob-cpu" value="0" data-readonly="true" data-width="60"--><!--data-height="60" data-fgColor="#39CCCC">--><!--<div class="knob-label">CPU '+
+((__t=(utilization))==null?'':__t)+
+' '+
+((__t=(cpuI))==null?'':__t)+
+'</div>--><!--</div>--><!--&lt;!&ndash; ./col &ndash;&gt;--><!--<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">--><!--<input type="text" class="knob knob-ram" value="0" data-readonly="true" data-width="60"--><!--data-height="60" data-fgColor="#39CCCC">--><!--<div class="knob-label">'+
+((__t=(ram))==null?'':__t)+
+' '+
+((__t=(utilization))==null?'':__t)+
+'</div>--><!--</div>--><!--&lt;!&ndash; ./col &ndash;&gt;--><!--<div class="col-xs-4 text-center">--><!--<input type="text" class="knob knob-disk" value="0" data-readonly="true" data-width="60"--><!--data-height="60" data-fgColor="#39CCCC">--><!--<div class="knob-label">'+
+((__t=(disk))==null?'':__t)+
+' '+
+((__t=(utilization))==null?'':__t)+
+'</div>--><!--</div>--><!--&lt;!&ndash; ./col &ndash;&gt;--><!--</div>--><!--&lt;!&ndash; /.row &ndash;&gt;--> </div> <!-- /.box-footer -->';
+}
+return __p;
+};
+exports['statistics_table_last_row']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<tr> <td class="lot_name"><b>'+
+((__t=(name))==null?'':__t)+
+'</b></td> <td class="lot_mac text-center">'+
+((__t=(mac))==null?'':__t)+
+'</td> <td class="lot_lastTime text-center">'+
+((__t=(LastOnlineTime))==null?'':__t)+
+'</td> </tr>';
+}
+return __p;
+};
+exports['statistics_table_row']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<tr> <td class="sta_name"><b>'+
+((__t=(name))==null?'':__t)+
+'</b></td> <td class="sta_mac text-center">'+
+((__t=(mac))==null?'':__t)+
+'</td> <td class="sta_onlineStatus text-center">'+
+((__t=(onlineStatus))==null?'':__t)+
+'</td> <td class="sta_yesOnTime text-center">'+
+((__t=(YesterdayTotalOnlineTime))==null?'':__t)+
+'</td> <td class="sta_toOnTime text-center">'+
+((__t=(TodayTotalOnlineTime))==null?'':__t)+
+'</td> </tr>';
+}
+return __p;
 };});

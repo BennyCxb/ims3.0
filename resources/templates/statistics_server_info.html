@@ -1,0 +1,98 @@
+<div class="box-header">
+    <i class="fa fa-th"></i>
+
+    <h3 class="box-title"><%=serverData%></h3>
+
+    <div class="box-tools pull-right">
+        <button type="button" class="btn btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+</div>
+<div class="box-body border-radius-none">
+    <div id="container" class="col-md-8" style="min-width:400px;height:400px"></div>
+
+    <div class="col-md-4" style="height: 400px;">
+        <div id="box-server-info">
+            <h2 class="text-center">
+                <strong><%=serverInfo%></strong>
+            </h2>
+            <div class="progress-group" style="margin-bottom: 30px;">
+                <span class="progress-text">CPU</span>
+                <span id="cpuInfo" class="progress-number"><%=cpuI%></span>
+            </div>
+            <div class="progress-group">
+                <span class="progress-text"><%=ram%> <%=usage%></span>
+                <span id="ramUsage" class="progress-number">0/0</span>
+
+                <div class="progress sm">
+                    <div id="progress-ramUsed" class="progress-bar progress-bar-aqua" style="width: 0%"></div>
+                </div>
+            </div>
+            <!-- /.progress-group -->
+            <div class="progress-group">
+                <span class="progress-text"><%=disk%> <%=usage%></span>
+                <span id="diskUsage" class="progress-number">0/0</span>
+
+                <div class="progress sm">
+                    <div id="progress-diskUsed" class="progress-bar progress-bar-aqua" style="width: 0%"></div>
+                </div>
+            </div>
+            <!-- /.progress-group -->
+        </div>
+        <div class="box-footer no-border" style="bottom: 0px; position: absolute; width: calc(100% - 30px);">
+            <div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <input type="text" class="knob knob-cpu" value="0" data-readonly="true" data-width="60"
+                           data-height="60" data-fgColor="#39CCCC">
+
+                    <div class="knob-label">CPU <%=utilization%></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                    <input type="text" class="knob knob-ram" value="0" data-readonly="true" data-width="60"
+                           data-height="60" data-fgColor="#39CCCC">
+
+                    <div class="knob-label"><%=ram%> <%=utilization%></div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                    <input type="text" class="knob knob-disk" value="0" data-readonly="true" data-width="60"
+                           data-height="60" data-fgColor="#39CCCC">
+
+                    <div class="knob-label"><%=disk%> <%=utilization%></div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.box-body -->
+<div class="box-footer no-border">
+    <!--<div class="row">-->
+    <!--<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">-->
+    <!--<input type="text" class="knob knob-cpu" value="0" data-readonly="true" data-width="60"-->
+    <!--data-height="60" data-fgColor="#39CCCC">-->
+
+    <!--<div class="knob-label">CPU <%=utilization%> <%=cpuI%></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; ./col &ndash;&gt;-->
+    <!--<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">-->
+    <!--<input type="text" class="knob knob-ram" value="0" data-readonly="true" data-width="60"-->
+    <!--data-height="60" data-fgColor="#39CCCC">-->
+
+    <!--<div class="knob-label"><%=ram%> <%=utilization%></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; ./col &ndash;&gt;-->
+    <!--<div class="col-xs-4 text-center">-->
+    <!--<input type="text" class="knob knob-disk" value="0" data-readonly="true" data-width="60"-->
+    <!--data-height="60" data-fgColor="#39CCCC">-->
+
+    <!--<div class="knob-label"><%=disk%> <%=utilization%></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; ./col &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.row &ndash;&gt;-->
+</div>
+<!-- /.box-footer -->

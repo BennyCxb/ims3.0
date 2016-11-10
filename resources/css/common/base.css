@@ -1274,3 +1274,12 @@ a {
 .create-time {
     width: 180px;
 }
+
+/* statistics */
+#box-server-info > .progress-group {
+    font-size: 14px;
+}
+
+#box-server-info > .progress-group > .progress.sm {
+    height: 15px;
+}

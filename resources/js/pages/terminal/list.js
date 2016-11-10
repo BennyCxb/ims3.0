@@ -532,7 +532,7 @@ define(function (require, exports, module) {
                 } else {
                     $('#term-table-pager').jqPaginator('destroy');
 
-                    $("#term_list").append('<h5 style="text-align:center;color:grey;">' + languageJSON.list_empty + '</h5>');
+                    $("#term_list").append('<h5 style="text-align:center;color:grey;">(' + languageJSON.empty + ')</h5>');
                 }
 
 

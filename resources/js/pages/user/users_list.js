@@ -82,6 +82,9 @@ define(function (require, exports, module) {
                 //var stringArry;
                 var rID = rolData[x].RoleID;
                 var rName = rolData[x].RoleName;
+                if (rID == 1) {
+                    rName = languageJSON.administrator;
+                }
                 var uName = rolData[x].USERNAME;
                 var description = rolData[x].Description;
                 var uID = rolData[x].ID;

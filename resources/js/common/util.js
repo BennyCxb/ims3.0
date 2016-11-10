@@ -1,10 +1,26 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
 
+    /**
+     * AJAX请求（异步）
+     * @param type
+     * @param url
+     * @param data
+     * @param successFn
+     * @param dataType
+     */
     exports.ajax = function (type, url, data, successFn, dataType) {
         ajax(type, url, data, successFn, dataType);
     };
 
+    /**
+     * AJAX请求（同步）
+     * @param type
+     * @param url
+     * @param data
+     * @param successFn
+     * @param dataType
+     */
     exports.ajax2 = function (type, url, data, successFn, dataType) {
         ajax2(type, url, data, successFn, dataType);
     };
@@ -169,8 +185,8 @@ define(function (require, exports, module) {
             async: false,//false代表只有在等待ajax执行完毕后才执行后面语句
             success: function (data) {
                 if (data.rescode != undefined && data.rescode == '401' && data.errInfo != undefined && data.errInfo == "Token Unauthorized!") {
-                    alert(CONFIG.languageJson.index.errorRelogin)
                     window.location.href = "login.html";
+                    alert(CONFIG.languageJson.index.errorRelogin)
                     return false;
                 }
                 successFn(data);
