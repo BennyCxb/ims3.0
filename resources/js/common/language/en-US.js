@@ -540,7 +540,8 @@ define(function (require, exports, module) {
             al_rightBtn: "Click the cloud button at the top right to reoopen uploading page",
             al_cfCancelUpload: "In the process of uploading resource, sure to cancel the uploading",
             al_cannotUpload: "This resource in this format can not be uploaded",
-            noContent: "Null"
+            noContent: "Null",
+            obtainFailure: "Obtain failure, please try again"
         },
         user: {
             administrator: "Administrator",

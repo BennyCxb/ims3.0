@@ -540,7 +540,8 @@ define(function (require, exports, module) {
             al_rightBtn: "可点击右上方的云按钮重新打开上传页面",
             al_cfCancelUpload: "有资源正在上传，确定取消上传",
             al_cannotUpload: "无法上传该格式文件",
-            noContent: "无内容"
+            noContent: "无内容",
+            obtainFailure: "获取失败，请重试"
         },
         user: {
             administrator: "超级管理员",

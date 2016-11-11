@@ -78,7 +78,7 @@ define(function (require, exports, module) {
         var _url = CONFIG.serverRoot + "/backend_mgt/v2/sysinfo/";
         exports.staInt = setInterval(function () {
             UTIL.ajax("post", _url, data, function (msg) {
-                cpuI = msg.cpu_num ? msg.cpu_num : 1 + languageJSON.core + msg.logical_cpu_num + languageJSON.threads;
+                cpuI = (msg.cpu_num ? msg.cpu_num : 1) + languageJSON.core + (msg.logical_cpu_num ? msg.logical_cpu_num : 1) + languageJSON.threads;
                 $("#cpuInfo").html(cpuI)
                 $("#ramUsage").html(msg.mem_used + '/' + msg.mem_total);
                 var ramUsed = usage(msg.mem_used, msg.mem_total);

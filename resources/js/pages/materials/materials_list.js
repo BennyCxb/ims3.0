@@ -170,6 +170,8 @@ define(function (require, exports, module) {
                     }
                 }
             });
+        } else {
+            alert(languageJSON.obtainFailure);
         }
 
         //拼接
