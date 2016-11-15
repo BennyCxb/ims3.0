@@ -124,7 +124,7 @@ define(function (require, exports, module) {
         // $("#box_text_time .second").html(languageJSON.second);
         $("#text_color").attr("placeholder", languageJSON.color);
         $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>');
-        $("#mtrC_scrollSpeed option").html(languageJSON.static);
+        $("#mtrC_scrollSpeed option:eq(0)").html(languageJSON.static);
         $("#box_text_bgcolor label").html(languageJSON.bgcolor);
         $("#text_bgcolor").attr("placeholder", languageJSON.pl_bgcolor);
         $("#box_datetimeEffect label").html(languageJSON.fontColor);

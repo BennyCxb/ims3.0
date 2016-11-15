@@ -15,11 +15,10 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title term-online-duration"></h3>
-
+                    <button id="btn-export-timeDuration" type="button" class="btn btn-default btn-sm btn-export-html"></button>
                     <div class="box-tools pull-right">
                         <div class="has-feedback">
-                            <input id="statistics-term-search" type="text" class="form-control input-sm"
-                                   placeholder="Search">
+                            <input id="statistics-term-search" type="text" class="form-control input-sm" placeholder="Search">
                             <span class="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </div>
@@ -55,7 +54,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title term-lastOnline"></h3>
-
+                    <button id="btn-export-lastTime" type="button" class="btn btn-default btn-sm btn-export-html"></button>
                     <div class="box-tools pull-right">
                         <div class="has-feedback">
                             <input id="statistics-term-last-search" type="text" class="form-control input-sm" placeholder="Search">
@@ -88,6 +87,18 @@
     </div>
     <!-- /.row -->
     <!-- /.最后上线时间 -->
+
+    <!-- 导出部分 -->
+    <div id="box-export-table" class="box-body no-padding" style="display: none">
+        <div class="table-responsive mailbox-messages">
+            <table id="export-table" class="table table-hover table-striped" border="1" cellspacing="1">
+                <tbody>
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+    </div>
 </section>
 <!-- /.content -->
 
