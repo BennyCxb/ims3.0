@@ -321,7 +321,7 @@ define(function (require, exports, module) {
             '</tr>')
         var pager = {
             Online: 0,
-            page: 1,
+            page: pageNum,
             total: 0,
             per_page: nDisplayItems,
             orderby: 'LastOnlineTime',
