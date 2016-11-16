@@ -307,52 +307,6 @@ define(function (require, exports, module) {
     }
 
     /**
-     * 导出终端在线时长
-     */
-    function exportOnlineDur() {
-        var pager = {
-            Online: 1,
-            page: 1,
-            total: 0,
-            per_page: 9999,
-            orderby: 'YesterdayTotalOnlineTime',
-            sortby: 'DESC',
-            keyword: ''
-        };
-        var data = JSON.stringify({
-            action: "gettermOnlineTime",
-            project_name: CONFIG.projectName,
-            Pager: pager
-        })
-        UTIL.ajax('post', CONFIG.serverRoot + '/backend_mgt/v2/term/', data, function (json) {
-            $('#export-table>tbody').empty();
-            $('#export-table>tbody').append('<tr>' +
-                '<th class="sta_name"><b>' + languageJSON.termName + '</b></th>' +
-                '<th class="sta_mac text-center">' + languageJSON.termMac + '</th>' +
-                '<th class="sta_onlineStatus text-center">' + languageJSON.status + '</th>' +
-                '<th class="sta_yesOnTime text-center">' + languageJSON.yestOnlineTime + '</th>' +
-                '<th class="sta_toOnTime text-center">' + languageJSON.todayOnlineTime + '</th>' +
-                '</tr>')
-            if (json.total != 0) {
-                json.data.forEach(function (el, idx, arr) {
-                    var data = {
-                        name: el.Name,
-                        mac: el.MAC,
-                        onlineStatus: el.Online == 1 ? languageJSON.online : languageJSON.offline,
-                        TodayTotalOnlineTime: formatTime(el.TodayTotalOnlineTime),
-                        YesterdayTotalOnlineTime: formatTime(el.YesterdayTotalOnlineTime)
-                    };
-                    $('#export-table>tbody').append(templates.statistics_table_row(data));
-                })
-            } else {
-                $('#export-table>tbody').empty();
-                $('#export-table>tbody').append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
-            }
-            export_raw(languageJSON.termOnlineDur, $("#box-export-table").html())
-        })
-    }
-
-    /**
      * 终端最后上线时间列表
      * @param pageNum
      */
@@ -415,6 +369,52 @@ define(function (require, exports, module) {
     }
 
     /**
+     * 导出终端在线时长
+     */
+    function exportOnlineDur() {
+        var pager = {
+            Online: 1,
+            page: 1,
+            total: 0,
+            per_page: 9999,
+            orderby: 'YesterdayTotalOnlineTime',
+            sortby: 'DESC',
+            keyword: ''
+        };
+        var data = JSON.stringify({
+            action: "gettermOnlineTime",
+            project_name: CONFIG.projectName,
+            Pager: pager
+        })
+        UTIL.ajax('post', CONFIG.serverRoot + '/backend_mgt/v2/term/', data, function (json) {
+            $('#export-table>tbody').empty();
+            $('#export-table>tbody').append('<tr>' +
+                '<th class="sta_name"><b>' + languageJSON.termName + '</b></th>' +
+                '<th class="sta_mac text-center">' + languageJSON.termMac + '</th>' +
+                '<th class="sta_onlineStatus text-center">' + languageJSON.status + '</th>' +
+                '<th class="sta_yesOnTime text-center">' + languageJSON.yestOnlineTime + '</th>' +
+                '<th class="sta_toOnTime text-center">' + languageJSON.todayOnlineTime + '</th>' +
+                '</tr>')
+            if (json.total != 0) {
+                json.data.forEach(function (el, idx, arr) {
+                    var data = {
+                        name: el.Name,
+                        mac: el.MAC,
+                        onlineStatus: el.Online == 1 ? languageJSON.online : languageJSON.offline,
+                        TodayTotalOnlineTime: formatTime(el.TodayTotalOnlineTime),
+                        YesterdayTotalOnlineTime: formatTime(el.YesterdayTotalOnlineTime)
+                    };
+                    $('#export-table>tbody').append(templates.statistics_table_row(data));
+                })
+            } else {
+                $('#export-table>tbody').empty();
+                $('#export-table>tbody').append('<h5 style="text-align:center;color:grey;">（' + languageJSON.empty + '）</h5>');
+            }
+            export_raw(languageJSON.termOnlineDur, $("#box-export-table").html())
+        })
+    }
+
+    /**
      * 导出离线终端最后上线时间
      */
     function exportLastOnline() {
@@ -422,7 +422,7 @@ define(function (require, exports, module) {
             Online: 0,
             page: 1,
             total: 0,
-            per_page: nDisplayItems,
+            per_page: 9999,
             orderby: 'LastOnlineTime',
             sortby: '',
             keyword: ''
@@ -462,6 +462,7 @@ define(function (require, exports, module) {
     function export_raw(name, data) {
         var time = new Date();
         var filename = time.toLocaleDateString();
+        var data = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title></title></head><body>' + data + '</body></html>';
         var urlObject = window.URL || window.webkitURL || window;
         var export_blob = new Blob([data]);
         var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")

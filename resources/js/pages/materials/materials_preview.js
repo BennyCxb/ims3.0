@@ -62,12 +62,16 @@ define(function (require, exports, module) {
                 }
             }, 1000);
         } else if (typeId == 2) {      //图片
-            if (zdata.Size > 5000000) {
+            if (imgSizeFlag(zdata.Size)) {
                 if (confirm(languageJSON.cf_preview + "？")) {
-                    $("#mtrView_picArea").css("display", "block");
+                    $("#mtrView_picArea").css("display", "inline");
                     $("#mtrView_picArea").find("img").attr("src", mtrUrl);
                 } else {
+                    MTR.viewData = undefined;
+                    MTRCTRL.viewData = undefined;
+                    ADDMTR.viewData = undefined;
                     $("#mtrPrevieBg").remove();
+                    UTIL.cover.close(3);
                 }
             } else {
                 $("#mtrView_picArea").css("display", "inline");
@@ -134,4 +138,16 @@ define(function (require, exports, module) {
             callback.call(img);//将回调函数的this替换为Image对象
         };
     };
+
+    function imgSizeFlag(size) {
+        var units = size.substring(size.length - 2);
+        var iSize = size.substring(0, size.length - 2);
+        if (units == 'KB' && Number(iSize > 5000)) {
+            return true;
+        } else if (units == 'MB' && Number(iSize > 5)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 })
