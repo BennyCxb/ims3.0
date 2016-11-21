@@ -44,7 +44,7 @@ define(function (require, exports, module) {
             batchConfiguration: "Batch configuration terminals",
             search: "Search Terminal",
             termMove: "Remove",
-            awaken: "Sleep",
+            awaken: "Awaken",
             dormancy: "Hibernate",
             running: "Running",
             offline: "Offline",

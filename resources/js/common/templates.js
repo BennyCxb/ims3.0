@@ -46,7 +46,7 @@ __p+=' <option value="Random">'+
 __p+=' ';
  if (type === 'Percent') { 
 __p+=' <option value="Percent" selected="selected">'+
-((__t=(lang.random))==null?'':__t)+
+((__t=(lang.ratio))==null?'':__t)+
 '</option> ';
  } else { 
 __p+=' <option value="Percent">'+

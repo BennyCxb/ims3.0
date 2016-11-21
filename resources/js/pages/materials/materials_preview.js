@@ -140,14 +140,19 @@ define(function (require, exports, module) {
     };
 
     function imgSizeFlag(size) {
-        var units = size.substring(size.length - 2);
-        var iSize = size.substring(0, size.length - 2);
-        if (units == 'KB' && Number(iSize > 5000)) {
-            return true;
-        } else if (units == 'MB' && Number(iSize > 5)) {
-            return true;
+        if (size != undefined) {
+            var units = size.substring(size.length - 2);
+            var iSize = size.substring(0, size.length - 2);
+            if (units == 'KB' && Number(iSize > 5000)) {
+                return true;
+            } else if (units == 'MB' && Number(iSize > 5)) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+
     }
 })
