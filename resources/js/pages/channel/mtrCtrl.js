@@ -612,7 +612,7 @@ define(function (require, exports, module) {
                     }[mtrData[x].Type_Name];
                     var intDate = {
                         is_time_segment_limit: 0,
-                        lifetime_start: getNowFormatDate(),
+                        lifetime_start: '1970-01-01 00:00:00',
                         lifetime_end: "2030-01-01 00:00:00",
                         name: mtrData[x].Name,
                         name_eng: mtrData[x].Name_eng,

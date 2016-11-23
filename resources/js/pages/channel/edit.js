@@ -1164,7 +1164,7 @@ define(function (require, exports, module) {
     function onNewProgram(type, layout, widgets) {
         // find max sequence
         var maxSequence = 0;
-        var startTime = '1970-01-01 00:00:00';
+        // var startTime = '1970-01-01 00:00:00';
         if (type === 'Regular') {
             var regularIds = regularSortable.toArray().map(function (el) {
                 return parseInt(el);
@@ -1186,13 +1186,13 @@ define(function (require, exports, module) {
                 }
             });
             //定时节目开始时间获取当前时间
-            startTime = getNowFormatDate();
+            // startTime = getNowFormatDate();
         }
         db.collection('program').insert({
             is_time_segment_limit: 0,
             layout_id: layout.id,
             template_id: 0,
-            lifetime_start: startTime,
+            lifetime_start: '1970-01-01 00:00:00',
             lifetime_end: '2030-01-01 00:00:00',
             name: layout.name,
             name_eng: 'new program',
