@@ -480,13 +480,12 @@ define(function (require, exports, module) {
                             break;
                     }
 
-                    if (chnData[x].URL == null) {
-                        chn_operation_td = '<td class="chn_operation">' +
-                            '</td>';
-                    } else if (chnData[x].URL != null & chnData[x].Status == 3) {
+                    if (chnData[x].URL != null & chnData[x].Status == 3) {
                         chn_operation_td = '<td class="chn_operation">' +
                             '<a class="download-offline" href="' + chnData[x].URL + '" download="' + chnData[x].Name + '"><button type="button" class="btn btn-default btn-xs">' + languageJSON.download + '</button></a>' +
                             '</td>';
+                    } else {
+                        chn_operation_td = '<td class="chn_operation"></td>';
                     }
 
                     if (util.getLocalParameter('config_checkSwitch') == '1') {
