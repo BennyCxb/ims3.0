@@ -10,58 +10,77 @@
     <form role="form" style="height: 90%;">
         <!-- 文本控件属性 -->
         <div id="box_effect" class="box-header with-border">
-            <div class="btn-group mtrCtrl_select">
-                <select id="mtrC_textType" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
-                    <option selected="selected" value="Normal">常规</option>
-                    <option value="Marquee">走马灯</option>
-                    <option value="WebURL">在线网页</option>
-                </select>
-            </div>
-            <div id="mtrC_flip" class="pull-right">
-                <div id="box_text_time" class="input-group">
-                    <span class="input-group-addon flipInterval">翻页间隔</span>
-                    <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
-                    <span class="input-group-addon second">s</span>
+            <div>
+                <div class="btn-group mtrCtrl_selectText form-group" style="padding: 0px">
+                    <select id="mtrC_textType" class="form-control select2 "
+                            style="width: 100%; height: 30px; padding: 0px 10px;">
+                        <option selected="selected" value="Normal">常规</option>
+                        <option value="Marquee">走马灯</option>
+                        <option value="WebURL">在线网页</option>
+                    </select>
                 </div>
-            </div>
-
-
-
-
-            <div id="mtrC_effect" class="pull-right">
-                <div class="btn-group">
-                    <div id="box_text_color" class="input-group my-colorpicker2">
-                        <input id="text_color" type="text" class="form-control"  placeholder="颜色">
+                <div id="mtrC_flip" class="pull-right">
+                    <div id="box_text_time" class="input-group">
+                        <span class="input-group-addon flipInterval">翻页间隔</span>
+                        <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
+                        <span class="input-group-addon second">s</span>
                     </div>
                 </div>
-                <div class="btn-group mtrCtrl_select">
-                    <select id="mtrC_scrollDirection" class="form-control select2 ">
-                        <option selected="selected" value="Right_2_Left">从右到左</option>
-                    </select>
-                </div>
-                <div class="btn-group mtrCtrl_select">
-                    <select id="mtrC_scrollSpeed" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
-                        <option selected="selected" value=0>静止</option>
-                        <option value=1>1</option>
-                        <option value=2>2</option>
-                        <option value=3>3</option>
-                        <option value=4>4</option>
-                        <option value=5>5</option>
-                        <option value=6>6</option>
-                        <option value=7>7</option>
-                        <option value=8>8</option>
-                        <option value=9>9</option>
-                        <option value=10>10</option>
-                    </select>
+
+
+                <div id="mtrC_effect" class="form-group">
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <div id="box_text_color" class="input-group my-colorpicker2">
+                                <input id="text_color" type="text" class="form-control" placeholder="颜色">
+                            </div>
+                        </div>
+                        <div class="btn-group mtrCtrl_selectText">
+                            <select id="mtrC_scrollDirection" class="form-control select2 ">
+                                <option selected="selected" value="Right_2_Left">从右到左</option>
+                            </select>
+                        </div>
+                        <div class="btn-group mtrCtrl_selectText">
+                            <select id="mtrC_scrollSpeed" class="form-control select2 "
+                                    style="width: 100%; height: 30px; padding: 0px 10px;">
+                                <option selected="selected" value=0>静止</option>
+                                <option value=1>1</option>
+                                <option value=2>2</option>
+                                <option value=3>3</option>
+                                <option value=4>4</option>
+                                <option value=5>5</option>
+                                <option value=6>6</option>
+                                <option value=7>7</option>
+                                <option value=8>8</option>
+                                <option value=9>9</option>
+                                <option value=10>10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group mtrCtrl_selectText">
+                            <select id="mtrC_fontFamily" class="form-control select2 ">
+                            </select>
+                        </div>
+                        <div class="btn-group mtrCtrl_selectText">
+                            <select id="mtrC_fontBold" class="form-control select2 ">
+                            </select>
+                        </div>
+                        <div class="btn-group mtrCtrl_selectText">
+                            <select id="mtrC_FontItalic" class="form-control select2 ">
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="mtrC_bgFlip" class="btn-group">
                 <!--<div id="box_text_bgcolor" class="input-group">-->
-                    <!--<input id="text_bgcolor" type="text" class="form-control"  placeholder="颜色">-->
+                <!--<input id="text_bgcolor" type="text" class="form-control"  placeholder="颜色">-->
                 <!--</div>-->
                 <div id="box_text_bgcolor" class="input-group">
                     <label class="col-sm-2 control-label">背景颜色：</label>
-                    <div class="col-sm-10"><input id="text_bgcolor" type="text" class="form-control" placeholder="请选择背景颜色"></div>
+                    <div class="col-sm-10"><input id="text_bgcolor" type="text" class="form-control"
+                                                  placeholder="请选择背景颜色"></div>
                 </div>
             </div>
         </div>
@@ -69,15 +88,17 @@
         <div id="box_datetimeEffect" class="box-header with-border">
             <div class="input-group my-colorpicker2" style="width: 100%;">
                 <label class="col-sm-2 control-label">字体颜色：</label>
-                <div class="col-sm-10"><input id="clockText_color" type="text" class="form-control"  placeholder="请选择时钟字体颜色"></div>
+                <div class="col-sm-10"><input id="clockText_color" type="text" class="form-control"
+                                              placeholder="请选择时钟字体颜色"></div>
             </div>
         </div>
         <!-- 天气控件属性 -->
         <div id="box_weatherEffect" class="box-header with-border">
             <div class="btn-group" style="width: 100%;">
-                <div  id="box_weather_color" class="input-group pull-left">
+                <div id="box_weather_color" class="input-group pull-left">
                     <label class="col-sm-3 control-label">字体颜色:</label>
-                    <div class="col-sm-9"><input id="weatherText_color" type="text" class="form-control"  placeholder="请选择天气字体颜色"></div>
+                    <div class="col-sm-9"><input id="weatherText_color" type="text" class="form-control"
+                                                 placeholder="请选择天气字体颜色"></div>
                 </div>
                 <div id="box_weather_time" class="input-group pull-right">
                     <span class="input-group-addon switchingInterval">切换间隔</span>
@@ -89,12 +110,14 @@
         <!-- Office控件属性 -->
         <div id="box_officeEffect" class="box-header with-border">
             <div class="btn-group mtrCtrl_select">
-                <select id="mtrC_office_type" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
+                <select id="mtrC_office_type" class="form-control select2 "
+                        style="width: 100%; height: 30px; padding: 0px 10px;">
                     <option selected="selected" value="Normal">常规</option>
                 </select>
             </div>
             <div class="btn-group mtrCtrl_select">
-                <select id="mtrC_office_switchAnimation" class="form-control select2 " style="width: 100%; height: 30px; padding: 0px 10px;">
+                <select id="mtrC_office_switchAnimation" class="form-control select2 "
+                        style="width: 100%; height: 30px; padding: 0px 10px;">
                     <option selected="selected" value="None">无动画</option>
                     <option value="Random">随机</option>
                 </select>
@@ -112,14 +135,15 @@
             <button type="button" class="btn btn-default btn-sm checkbox-toggle allCheck"><i class="fa fa-square-o"></i>
             </button>
             <div class="btn-group">
-            <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
-            <button id="mtr_batchOperation" type="button" class="btn btn-default btn-sm">批量编辑</button>
-            <button id="mtr_countTime" type="button" class="btn btn-default btn-sm">统计时长</button>
+                <button id="mtr_delete" type="button" class="btn btn-default btn-sm" disabled>删除</button>
+                <button id="mtr_batchOperation" type="button" class="btn btn-default btn-sm">批量编辑</button>
+                <button id="mtr_countTime" type="button" class="btn btn-default btn-sm">统计时长</button>
             </div>
             <button id="mtr_addMtr" type="button" class="btn btn-primary btn-sm" typeid="1">添加资源</button>
             <div class="pull-right">
                 <div id="mtr_dplist" class="btn-group">
-                    <select id="mtrCtrl_playType" class="form-control select2" style="width: 100%; height: 30px; padding: 0px 10px;">
+                    <select id="mtrCtrl_playType" class="form-control select2"
+                            style="width: 100%; height: 30px; padding: 0px 10px;">
                         <option selected="selected" value="Sequence">顺序播放</option>
                         <option value="Random">随机播放</option>
                         <option value="Percent">比例播放</option>
@@ -128,7 +152,8 @@
             </div>
             <!-- /.box-tools -->
         </div>
-        <div class="mtr_choise table-responsive" style=" margin-top: 10px; height: calc(100% - 150px); border: 1px solid #ddd; border-radius: 3px; width: calc(100% - 10px)">
+        <div class="mtr_choise table-responsive"
+             style=" margin-top: 10px; height: calc(100% - 150px); border: 1px solid #ddd; border-radius: 3px; width: calc(100% - 10px)">
             <!-- 资源列表 -->
             <table id="mtrCtrl_Table" class="table table-hover table-striped">
                 <thead></thead>
@@ -137,7 +162,7 @@
             <!-- /.table -->
             <!-- 时间控件类型 -->
             <div id="box_datetime" style="display: none;">
-            	<div>
+                <div>
                     <input id="mtrC_dtTime" type="radio" clockType="Time" name="r3" class="flat-red rd_clock" checked>
 
                     <div class="info-box mtrC_datetime">
@@ -184,7 +209,8 @@
                     <!-- /.info-box -->
                 </div>
                 <div>
-                    <input id="mtrC_dtDateTimeWeekH" type="radio" clockType="DateTimeWeekH" name="r3" class="flat-red rd_clock">
+                    <input id="mtrC_dtDateTimeWeekH" type="radio" clockType="DateTimeWeekH" name="r3"
+                           class="flat-red rd_clock">
 
                     <div class="info-box mtrC_datetime">
 
@@ -197,7 +223,8 @@
                     <!-- /.info-box -->
                 </div>
                 <div>
-                    <input id="mtrC_dtDateTimeWeekV" type="radio" clockType="DateTimeWeekV" name="r3" class="flat-red rd_clock">
+                    <input id="mtrC_dtDateTimeWeekV" type="radio" clockType="DateTimeWeekV" name="r3"
+                           class="flat-red rd_clock">
 
                     <div class="info-box mtrC_datetime">
 
@@ -227,7 +254,8 @@
             <!-- 天气控件 -->
             <div id="box_weather" style="display: none;">
                 <div>
-                    <input id="mtrC_weatherNormal" type="radio" weatherType="Normal" name="r3" class="flat-red rd_weather" checked>
+                    <input id="mtrC_weatherNormal" type="radio" weatherType="Normal" name="r3"
+                           class="flat-red rd_weather" checked>
 
                     <div id="mtrC_weatherNormal_box" class="info-box mtrC_weather">
                         <div class="mtrC_weatherNormal_box_left"><img src="resources/img/img_weather_1.png"></div>
@@ -243,7 +271,8 @@
                     </div>
                 </div>
                 <div>
-                    <input id="mtrC_weatherOneline" type="radio" weatherType="oneline" name="r3" class="flat-red rd_weather" checked>
+                    <input id="mtrC_weatherOneline" type="radio" weatherType="oneline" name="r3"
+                           class="flat-red rd_weather" checked>
 
                     <div id="mtrC_weatherOneline_box" class="info-box mtrC_weather">
                         <div class="mtrC_weatherOneline_box_left"><img src="resources/img/img_weather_1.png"></div>

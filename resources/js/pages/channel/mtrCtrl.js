@@ -23,6 +23,7 @@ define(function (require, exports, module) {
                 $("#mtrC_flip").hide();
             } else {
                 if ($("#mtrC_textType").val() == "Normal") {
+                    $("#mtrC_pageDownPeriod").val(0)
                     $("#box_text_time").children().first().text(languageJSON.flipInterval);
                 } else {
                     $("#box_text_time").children().first().text(languageJSON.reflashInterval);
@@ -146,6 +147,19 @@ define(function (require, exports, module) {
         $("#mtrC_textType").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>' +
             '<option value="Marquee">' + languageJSON.Marquee + '</option>' +
             '<option value="WebURL">' + languageJSON.WebURL + '</option>')
+        $("#mtrC_fontFamily").html('<option selected="selected" value="">' + languageJSON.Default + '</option>' +
+            '<option value="宋体" style="font-family: 宋体">' + languageJSON.SimSun + '</option>' +
+            '<option value="黑体" style="font-family: 黑体">' + languageJSON.SimHei + '</option>' +
+            '<option value="仿宋" style="font-family: 仿宋">' + languageJSON.FangSong + '</option>' +
+            '<option value="楷体" style="font-family: 楷体">' + languageJSON.KaiTi + '</option>' +
+            '<option value="隶书" style="font-family: 隶书">' + languageJSON.LiSu + '</option>' +
+            '<option value="幼圆" style="font-family: 幼圆">' + languageJSON.YouYuan + '</option>' +
+            '<option value="微软雅黑" style="font-family: 微软雅黑">' + languageJSON.YaHei + '</option>')
+        $("#mtrC_fontBold").html('<option selected="selected" value="0">' + languageJSON.Normal + '</option>' +
+            '<option value="1" style="font-weight: 700">' + languageJSON.Bold + '</option>');
+        $("#mtrC_FontItalic").html('<option selected="selected" value="0">' + languageJSON.Normal + '</option>' +
+            '<option value="1" style="font-style: italic">' + languageJSON.Italic + '</option>');
+
         $("#mtrCtrl_playType").html('<option selected="selected" value="Sequence">' + languageJSON.SequencePlay + '</option>' +
             '<option value="Random">' + languageJSON.RandomPlay + '</option>' +
             '<option value="Percent">' + languageJSON.PercentPlay + '</option>');
@@ -154,7 +168,7 @@ define(function (require, exports, module) {
         $("#weather_wind").html(languageJSON.wind);
         $("#weather_beijing").html(languageJSON.Beijing);
         $("#weather_today").html(languageJSON.today);
-        $("#weather_bjtd").html(languageJSON.Beijing+ '&nbsp;' + languageJSON.today + '&nbsp;' + languageJSON.Cloudy + '&nbsp;15°～28°');
+        $("#weather_bjtd").html(languageJSON.Beijing + '&nbsp;' + languageJSON.today + '&nbsp;' + languageJSON.Cloudy + '&nbsp;15°～28°');
     }
 
     exports.loadPage = function (widget) {
@@ -320,8 +334,21 @@ define(function (require, exports, module) {
                 if (widgetData.style != "") {
                     var wStyle = JSON.parse(widgetData.style);
                     $("#mtrC_textType").val(wStyle.Type);
+                    //走马灯
                     if (wStyle.Type == "Marquee") {
                         $("#mtrC_effect").show();
+                        $("#mtrC_fontFamily").val(wStyle.FontFamily);
+                        if (wStyle.FontFamily != "") {
+                            $("#mtrC_fontFamily").css("font-family", wStyle.FontFamily)
+                        }
+                        $("#mtrC_fontBold").val(wStyle.FontBold);
+                        if (wStyle.FontBold == 1) {
+                            $("#mtrC_fontBold").css("font-weight", "700")
+                        }
+                        $("#mtrC_FontItalic").val(wStyle.FontItalic);
+                        if (wStyle.FontItalic == 1) {
+                            $("#mtrC_FontItalic").css("font-style", "italic")
+                        }
                     } else {
                         $("#mtrC_flip").show();
                         if (wStyle.Type == "Normal") {
@@ -604,12 +631,12 @@ define(function (require, exports, module) {
                         maxsequence++;
                     }
                     var dbtype_id = typeof mtrData[x].Type_ID === 'number' ? mtrData[x].Type_ID : {
-                        'Office': 5,
-                        '文本': 4,
-                        '音频': 3,
-                        '图片': 2,
-                        '视频': 1
-                    }[mtrData[x].Type_Name];
+                            'Office': 5,
+                            '文本': 4,
+                            '音频': 3,
+                            '图片': 2,
+                            '视频': 1
+                        }[mtrData[x].Type_Name];
                     var intDate = {
                         is_time_segment_limit: 0,
                         lifetime_start: '1970-01-01 00:00:00',
@@ -775,6 +802,31 @@ define(function (require, exports, module) {
         $("#mtrC_scrollSpeed").change(function () {
             textAttrSave();
         })
+        //字体
+        $("#mtrC_fontFamily").change(function () {
+            if ($(this).val() != "") {
+                this.style.fontFamily = $(this).val();
+            }
+            textAttrSave();
+        })
+        //加粗
+        $("#mtrC_fontBold").change(function () {
+            if ($(this).val() == 0) {
+                this.style.fontWeight = "400";
+            } else {
+                this.style.fontWeight = "700";
+            }
+            textAttrSave();
+        })
+        //斜体
+        $("#mtrC_FontItalic").change(function () {
+            if ($(this).val() == 0) {
+                this.style.fontStyle = "normal";
+            } else {
+                this.style.fontStyle = "italic";
+            }
+            textAttrSave();
+        })
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
             playTypeSave();
@@ -817,6 +869,9 @@ define(function (require, exports, module) {
                 TextColor: $("#text_color").val(),
                 ScrollDriection: $("#mtrC_scrollDirection").val(),
                 ScrollSpeed: $("#mtrC_scrollSpeed").val(),
+                FontFamily: $("#mtrC_fontFamily").val(),
+                FontBold: $("#mtrC_fontBold").val(),
+                FontItalic: $("#mtrC_FontItalic").val(),
                 BackgroundColor: $("#text_bgcolor").val()
             }
         } else if ($("#mtrC_textType").val() == "Normal") {
@@ -953,7 +1008,7 @@ define(function (require, exports, module) {
             UTIL.ajax('post', _url, data, function (msg) {
                 var count = Object.keys(msg).length
                 var duration = formatTime(switchPeriod * count);
-                $("#mtrCtrl_Table tbody tr:eq("+ el +")").find($(".mtrCtrl_time")).val(duration);
+                $("#mtrCtrl_Table tbody tr:eq(" + el + ")").find($(".mtrCtrl_time")).val(duration);
             })
         })
     }

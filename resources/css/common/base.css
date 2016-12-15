@@ -583,11 +583,15 @@ a {
 }
 
 #box_text_color {
-    width: 100px;
+    width: 145px;
 }
 
 .mtrCtrl_select {
     width: 100px;
+}
+
+.mtrCtrl_selectText {
+    width: 145px;
 }
 
 #box_effect, #box_datetimeEffect, #box_tableHeader， #mtrC_flip, #box_weatherEffect, #mtrC_bgFlip, #box_officeEffect {
@@ -609,7 +613,7 @@ a {
 }
 
 #box_text_bgcolor {
-    padding-top: 10px;
+    /*padding-top: 10px;*/
 }
 
 #box_text_bgcolor, #box_datetimeEffect {

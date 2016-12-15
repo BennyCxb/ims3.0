@@ -443,7 +443,17 @@ define(function (require, exports, module) {
             addLayout: "Add template",
             cf_delLayout: "Delete？",
             al_delLayoutFaild: "The channel is Unavilable!",
-            layoutName: "Template"
+            layoutName: "Template",
+            Default: "Default",
+            SimSun: "SimSun",
+            SimHei: "SimHei",
+            FangSong: "FangSong",
+            KaiTi: "KaiTi",
+            LiSu: "LiSu",
+            YouYuan: "YouYuan",
+            YaHei: "Microsoft YaHei",
+            Bold: "Bold",
+            Italic: "Italic"
         },
         material: {
             resourceTitle: "Resource storage",

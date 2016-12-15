@@ -444,6 +444,16 @@ define(function (require, exports, module) {
             cf_delLayout: "确定删除该模板？",
             al_delLayoutFaild: "删除失败，有频道正在使用它！",
             layoutName: "模板名",
+            Default: "默认",
+            SimSun: "宋体",
+            SimHei: "黑体",
+            FangSong: "仿宋",
+            KaiTi: "楷体",
+            LiSu: "隶书",
+            YouYuan: "幼圆",
+            YaHei: "微软雅黑",
+            Bold: "加粗",
+            Italic: "斜体"
         },
         material: {
             resourceTitle: "资源存储",
