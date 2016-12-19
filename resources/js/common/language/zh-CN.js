@@ -274,6 +274,7 @@ define(function (require, exports, module) {
             second: "秒",
             color: "颜色",
             rightToleft: "从右到左",
+            downToup: "从下到上",
             static: "静止",
             bgcolor: "背景颜色",
             pl_bgcolor: "请选择背景颜色",

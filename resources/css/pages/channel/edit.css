@@ -92,7 +92,7 @@
 
 #channel-editor-wrapper .channel-program-widget {
     width: 465px;
-    height: 100%;
+    height: calc(100% - 36px);
     float: left;
 }
 

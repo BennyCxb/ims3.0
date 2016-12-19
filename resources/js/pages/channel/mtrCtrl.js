@@ -21,6 +21,7 @@ define(function (require, exports, module) {
                 $("#mtrC_scrollDirection").val("Left_2_Right");
                 $("#mtrC_scrollSpeed").val("0");
                 $("#mtrC_flip").hide();
+                $(".mtr_choise").css("height", "calc(100% - 255px)");
             } else {
                 if ($("#mtrC_textType").val() == "Normal") {
                     $("#mtrC_pageDownPeriod").val(0)
@@ -30,6 +31,7 @@ define(function (require, exports, module) {
                 }
                 $("#mtrC_effect").hide();
                 $("#mtrC_flip").css('display', 'inline');
+                $(".mtr_choise").css("height", "calc(100% - 170px)");
             }
         })
 
@@ -124,7 +126,8 @@ define(function (require, exports, module) {
         $("#mtrC_pageDownPeriod").attr("placeholder", languageJSON.pl_input);
         // $("#box_text_time .second").html(languageJSON.second);
         $("#text_color").attr("placeholder", languageJSON.color);
-        $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>');
+        $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>' +
+            '<option value="Down_2_Up">' + languageJSON.downToup + '</option>');
         $("#mtrC_scrollSpeed option:eq(0)").html(languageJSON.static);
         $("#box_text_bgcolor label").html(languageJSON.bgcolor);
         $("#text_bgcolor").attr("placeholder", languageJSON.pl_bgcolor);
@@ -155,10 +158,10 @@ define(function (require, exports, module) {
             '<option value="隶书" style="font-family: 隶书">' + languageJSON.LiSu + '</option>' +
             '<option value="幼圆" style="font-family: 幼圆">' + languageJSON.YouYuan + '</option>' +
             '<option value="微软雅黑" style="font-family: 微软雅黑">' + languageJSON.YaHei + '</option>')
-        $("#mtrC_fontBold").html('<option selected="selected" value="0">' + languageJSON.Normal + '</option>' +
-            '<option value="1" style="font-weight: 700">' + languageJSON.Bold + '</option>');
-        $("#mtrC_FontItalic").html('<option selected="selected" value="0">' + languageJSON.Normal + '</option>' +
-            '<option value="1" style="font-style: italic">' + languageJSON.Italic + '</option>');
+        $("#mtrC_fontStyle").html('<option selected="selected" value="0">' + languageJSON.Normal + '</option>' +
+            '<option value="1">' + languageJSON.Bold + '</option>' +
+            '<option value="2">' + languageJSON.Italic + '</option>' +
+            '<option value="3"><b>' + languageJSON.Bold + '</b> <i>' + languageJSON.Italic + '</i></option>');
 
         $("#mtrCtrl_playType").html('<option selected="selected" value="Sequence">' + languageJSON.SequencePlay + '</option>' +
             '<option value="Random">' + languageJSON.RandomPlay + '</option>' +
@@ -319,16 +322,19 @@ define(function (require, exports, module) {
                 if (wOsp.Type != undefined) {
                     playTypeSave();
                 }
+                $(".mtr_choise").css("height", "calc(100% - 70px)");
                 break;
             case 'ImageBox':
                 if (wOsp.Type != undefined) {
                     playTypeSave();
                 }
+                $(".mtr_choise").css("height", "calc(100% - 70px)");
                 break;
             case 'AudioBox':
                 if (wOsp.Type != undefined) {
                     playTypeSave();
                 }
+                $(".mtr_choise").css("height", "calc(100% - 70px)");
                 break;
             case 'WebBox':
                 if (widgetData.style != "") {
@@ -341,14 +347,16 @@ define(function (require, exports, module) {
                         if (wStyle.FontFamily != "") {
                             $("#mtrC_fontFamily").css("font-family", wStyle.FontFamily)
                         }
-                        $("#mtrC_fontBold").val(wStyle.FontBold);
-                        if (wStyle.FontBold == 1) {
-                            $("#mtrC_fontBold").css("font-weight", "700")
+                        if (wStyle.FontBold == 1 && wStyle.FontBold == 0) {
+                            $("#mtrC_fontStyle").val(1);
+                        } else if (wStyle.FontBold == 0 && wStyle.FontItalic == 1) {
+                            $("#mtrC_fontStyle").val(2);
+                        } else if (wStyle.FontBold == 1 && wStyle.FontItalic == 1) {
+                            $("#mtrC_fontBold").val(3);
+                        } else {
+                            $("#mtrC_fontStyle").val(0);
                         }
-                        $("#mtrC_FontItalic").val(wStyle.FontItalic);
-                        if (wStyle.FontItalic == 1) {
-                            $("#mtrC_FontItalic").css("font-style", "italic")
-                        }
+                        $(".mtr_choise").css("height", "calc(100% - 256px)");
                     } else {
                         $("#mtrC_flip").show();
                         if (wStyle.Type == "Normal") {
@@ -361,7 +369,7 @@ define(function (require, exports, module) {
                     }
                     $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
-                    $("#mtrC_scrollDirection").val(wStyle.ScrollDriection);
+                    $("#mtrC_scrollDirection").val(wStyle.ScrollDirection);
                     $("#mtrC_scrollSpeed").val(wStyle.ScrollSpeed);
 
                 } else {
@@ -407,6 +415,7 @@ define(function (require, exports, module) {
                     }
                 }
                 clockSave();
+                $(".mtr_choise").css("height", "calc(100% - 70px)");
                 break;
             case 'WeatherBox':
                 var wStyle = widgetData.style === '' ? {} : JSON.parse(widgetData.style);
@@ -431,6 +440,7 @@ define(function (require, exports, module) {
                     }
                 }
                 weatherSave();
+                $(".mtr_choise").css("height", "calc(100% - 70px)");
                 break;
             case 'OfficeBox':
                 if (widgetData.style != "") {
@@ -445,6 +455,7 @@ define(function (require, exports, module) {
                     playTypeSave();
                 }
                 officeSave();
+                $(".mtr_choise").css("height", "calc(100% - 121px)");
                 break;
         }
 
@@ -779,7 +790,6 @@ define(function (require, exports, module) {
     function save() {
         //文本类型
         $("#mtrC_textType").change(function () {
-            $("#mtrC_scrollDirection").val("Right_2_Left");
             textAttrSave();
         })
         //翻页时间
@@ -809,24 +819,11 @@ define(function (require, exports, module) {
             }
             textAttrSave();
         })
-        //加粗
-        $("#mtrC_fontBold").change(function () {
-            if ($(this).val() == 0) {
-                this.style.fontWeight = "400";
-            } else {
-                this.style.fontWeight = "700";
-            }
+        //字形
+        $("#mtrC_fontStyle").change(function () {
             textAttrSave();
         })
-        //斜体
-        $("#mtrC_FontItalic").change(function () {
-            if ($(this).val() == 0) {
-                this.style.fontStyle = "normal";
-            } else {
-                this.style.fontStyle = "italic";
-            }
-            textAttrSave();
-        })
+
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
             playTypeSave();
@@ -864,14 +861,30 @@ define(function (require, exports, module) {
     function textAttrSave() {
         if (!inputCheck()) return;
         if ($("#mtrC_textType").val() == "Marquee") {
+            var FontBold,
+                FontItalic;
+            switch (Number($("#mtrC_fontStyle").val())) {
+                case 0: FontBold = 0;
+                    FontItalic = 0;
+                    break;
+                case 1: FontBold = 1;
+                    FontItalic = 0;
+                    break;
+                case 2: FontBold = 0;
+                    FontItalic = 1;
+                    break;
+                case 3: FontBold = 1;
+                    FontItalic = 1;
+                    break;
+            }
             var wstyle = {
                 Type: $("#mtrC_textType").val(),
                 TextColor: $("#text_color").val(),
-                ScrollDriection: $("#mtrC_scrollDirection").val(),
+                ScrollDirection: $("#mtrC_scrollDirection").val(),
                 ScrollSpeed: $("#mtrC_scrollSpeed").val(),
                 FontFamily: $("#mtrC_fontFamily").val(),
-                FontBold: $("#mtrC_fontBold").val(),
-                FontItalic: $("#mtrC_FontItalic").val(),
+                FontBold: FontBold,
+                FontItalic: FontItalic,
                 BackgroundColor: $("#text_bgcolor").val()
             }
         } else if ($("#mtrC_textType").val() == "Normal") {

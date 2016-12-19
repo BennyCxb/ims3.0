@@ -598,7 +598,7 @@ a {
     display: none;
 }
 
-#mtrC_pageDownPeriod, #weatherFlip_time {
+#mtrC_pageDownPeriod, #weatherFlip_time, #mtrC_office_switchPeriod {
     height: 30px;
     padding: 0px 0px 0px 10px;
     line-height: 28px;
@@ -672,10 +672,10 @@ a {
     display: block;
 }
 
-#mtrC_scrollDirection {
+.mtr-select2 {
     width: 100%;
     height: 30px;
-    padding: 0px;
+    padding: 0px 10px;
 }
 
 #mtrC_weatherNormal_box {

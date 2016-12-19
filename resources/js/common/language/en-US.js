@@ -274,6 +274,7 @@ define(function (require, exports, module) {
             second: "Second",
             color: "Color",
             rightToleft: "Right-Left",
+            downToup: "Down-Up",
             static: "Static",
             bgcolor: "Background Color",
             pl_bgcolor: "Please choose background color",
@@ -453,7 +454,7 @@ define(function (require, exports, module) {
             YouYuan: "YouYuan",
             YaHei: "Microsoft YaHei",
             Bold: "Bold",
-            Italic: "Italic"
+            Italic: "Italic",
         },
         material: {
             resourceTitle: "Resource storage",
