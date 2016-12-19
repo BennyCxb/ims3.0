@@ -18,7 +18,7 @@ define(function (require, exports, module) {
             if ($("#mtrC_textType").val() == "Marquee") {
                 $("#mtrC_effect").show();
                 $("#text_color").val("#000000");
-                $("#mtrC_scrollDirection").val("Left_2_Right");
+                $("#mtrC_scrollDirection").val("Right_2_Left");
                 $("#mtrC_scrollSpeed").val("0");
                 $("#mtrC_flip").hide();
                 $(".mtr_choise").css("height", "calc(100% - 255px)");
