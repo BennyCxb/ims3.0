@@ -1165,6 +1165,7 @@ define(function (require, exports, module) {
         // find max sequence
         var maxSequence = 0;
         // var startTime = '1970-01-01 00:00:00';
+        var schedule_params = '{\"duration\":3600,\"count\":1}';
         if (type === 'Regular') {
             var regularIds = regularSortable.toArray().map(function (el) {
                 return parseInt(el);
@@ -1185,6 +1186,7 @@ define(function (require, exports, module) {
                     maxSequence = sequence;
                 }
             });
+            schedule_params = '{\"duration\":3600,\"count\":1,\"trigger\":\"0 0 0 * * * *\"}';
             //定时节目开始时间获取当前时间
             // startTime = getNowFormatDate();
         }
@@ -1196,7 +1198,7 @@ define(function (require, exports, module) {
             lifetime_end: '2030-01-01 00:00:00',
             name: layout.name,
             name_eng: 'new program',
-            schedule_params: '{\"duration\":3600,\"count\":1}',
+            schedule_params: schedule_params,
             schedule_type: type,
             sequence: maxSequence + 1,
             time_segment_duration: 0,
