@@ -21,7 +21,7 @@ define(function (require, exports, module) {
                 $("#mtrC_scrollDirection").val("Right_2_Left");
                 $("#mtrC_scrollSpeed").val("0");
                 $("#mtrC_flip").hide();
-                $(".mtr_choise").css("height", "calc(100% - 255px)");
+                $(".mtr_choise").css("height", "calc(100% - 260px)");
             } else {
                 if ($("#mtrC_textType").val() == "Normal") {
                     $("#mtrC_pageDownPeriod").val(0)
@@ -356,7 +356,7 @@ define(function (require, exports, module) {
                         } else {
                             $("#mtrC_fontStyle").val(0);
                         }
-                        $(".mtr_choise").css("height", "calc(100% - 256px)");
+                        $(".mtr_choise").css("height", "calc(100% - 260px)");
                     } else {
                         $("#mtrC_flip").show();
                         if (wStyle.Type == "Normal") {
