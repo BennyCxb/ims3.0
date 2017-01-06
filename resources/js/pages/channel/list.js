@@ -551,7 +551,10 @@ define(function (require, exports, module) {
             checkCheckBtns();
         })
 
-        //校验批量操作的审核功能
+        /**
+         * 校验批量操作的审核功能
+         * util.getLocalParameter('config_checkSwitch') 权限开关 {0:关闭, 1:开启}
+         */
         function checkCheckBtns() {
             $("#channel-list-controls .btn-export-offline").attr('disabled', true);
             if (util.getLocalParameter('config_checkSwitch') == '0') {
