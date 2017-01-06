@@ -18,15 +18,40 @@
                         <option value="WebURL">在线网页</option>
                     </select>
                 </div>
-                <div id="mtrC_flip" class="pull-right">
-                    <div id="box_text_time" class="input-group">
-                        <span class="input-group-addon flipInterval">翻页间隔</span>
-                        <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
-                        <span class="input-group-addon second">s</span>
+                <!-- 常规文本 -->
+                <div id="mtrC_flip" class="form-group">
+                    <!-- 翻页及滚动 -->
+                    <div id="mtrC-normalType-box" class="btn-group mtrCtrl_selectText">
+                        <select id="mtrC-selsect-normalType" class="form-control select2 mtr-select2"></select>
+                    </div>
+                    <!-- 滚动速度 -->
+                    <div id="mtrC-normalScrollSpeed-box" class="btn-group mtrCtrl_selectText">
+                        <select id="mtrC-selsect-normalScrollSpeed" class="form-control select2 mtr-select2">
+                            <option selected="selected" value=0>静止</option>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                            <option value=5>5</option>
+                            <option value=6>6</option>
+                            <option value=7>7</option>
+                            <option value=8>8</option>
+                            <option value=9>9</option>
+                            <option value=10>10</option>
+                        </select>
+                    </div>
+                    <!-- 翻页速度 -->
+                    <div id="mtrC-normalFilpSpeed-box" class="btn-group">
+                        <div id="box_text_time" class="input-group">
+                            <span class="input-group-addon flipInterval">翻页间隔</span>
+                            <input id="mtrC_pageDownPeriod" type="number" class="form-control" min="0"
+                                   placeholder="请输入">
+                            <span class="input-group-addon second">s</span>
+                        </div>
                     </div>
                 </div>
 
-
+                <!-- 走马灯 -->
                 <div id="mtrC_effect" class="form-group">
                     <div class="form-group">
                         <div class="btn-group">
@@ -65,11 +90,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- 在线网页 -->
+                <div id="mtrC_webText" class="form-group">
+                    <div id="box_webText_time" class="input-group">
+                        <span class="input-group-addon flipInterval"></span>
+                        <input id="mtrC_webPageDownPeriod" type="number" class="form-control" min="0" placeholder="请输入">
+                        <span class="input-group-addon second">s</span>
+                    </div>
+                </div>
             </div>
             <div id="mtrC_bgFlip" class="btn-group">
-                <!--<div id="box_text_bgcolor" class="input-group">-->
-                <!--<input id="text_bgcolor" type="text" class="form-control"  placeholder="颜色">-->
-                <!--</div>-->
                 <div id="box_text_bgcolor" class="input-group">
                     <label class="col-sm-2 control-label">背景颜色：</label>
                     <div class="col-sm-10"><input id="text_bgcolor" type="text" class="form-control"

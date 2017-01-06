@@ -15,23 +15,50 @@ define(function (require, exports, module) {
 
         //文本类型下拉框
         $("#mtrC_textType").change(function () {
-            if ($("#mtrC_textType").val() == "Marquee") {
-                $("#mtrC_effect").show();
-                $("#text_color").val("#000000");
-                $("#mtrC_scrollDirection").val("Right_2_Left");
-                $("#mtrC_scrollSpeed").val("0");
-                $("#mtrC_flip").hide();
-                $(".mtr_choise").css("height", "calc(100% - 260px)");
-            } else {
-                if ($("#mtrC_textType").val() == "Normal") {
+            $("#mtrC_effect").hide();
+            $("#mtrC_flip").hide();
+            $("#mtrC_webText").hide();
+            switch ($("#mtrC_textType").val()) {
+                case 'Normal':
+                    $("#mtrC_flip").show();
+                    if ($("#mtrC-selsect-normalType").val() == "Flip") {
+                        $("#mtrC-normalFilpSpeed-box").show();
+                        $("#mtrC-normalScrollSpeed-box").hide();
+                    } else {
+                        $("#mtrC-normalFilpSpeed-box").hide();
+                        $("#mtrC-normalScrollSpeed-box").show();
+                    }
                     $("#mtrC_pageDownPeriod").val(0)
-                    $("#box_text_time").children().first().text(languageJSON.flipInterval);
-                } else {
-                    $("#box_text_time").children().first().text(languageJSON.reflashInterval);
+                    $(".mtr_choise").css("height", "calc(100% - 215px)");
+                    break;
+                case 'Marquee':
+                    $("#mtrC_effect").show();
+                    $("#text_color").val("#000000");
+                    $("#mtrC_scrollDirection").val("Right_2_Left");
+                    $("#mtrC_scrollSpeed").val("0");
+                    $(".mtr_choise").css("height", "calc(100% - 260px)");
+                    break;
+                case 'WebURL':
+                    $("#mtrC_webText").show();
+                    if ($("#mtrC_webPageDownPeriod").val() == "") {
+                        $("#mtrC_webPageDownPeriod").val(0);
+                    }
+                    $(".mtr_choise").css("height", "calc(100% - 215px)");
+                    break;
+            }
+        })
+
+        //文本刷新类型下拉框
+        $("#mtrC-selsect-normalType").change(function () {
+            if ($("#mtrC-selsect-normalType").val() == "Flip") {
+                $("#mtrC-normalFilpSpeed-box").show();
+                $("#mtrC-normalScrollSpeed-box").hide();
+                if ($("#mtrC_pageDownPeriod").val() == "") {
+                    $("#mtrC_pageDownPeriod").val(0);
                 }
-                $("#mtrC_effect").hide();
-                $("#mtrC_flip").css('display', 'inline');
-                $(".mtr_choise").css("height", "calc(100% - 170px)");
+            } else {
+                $("#mtrC-normalFilpSpeed-box").hide();
+                $("#mtrC-normalScrollSpeed-box").show();
             }
         })
 
@@ -124,7 +151,8 @@ define(function (require, exports, module) {
         languageJSON = CONFIG.languageJson.channel;
         $("#box_text_time .flipInterval").html(languageJSON.flipInterval);
         $("#mtrC_pageDownPeriod").attr("placeholder", languageJSON.pl_input);
-        // $("#box_text_time .second").html(languageJSON.second);
+        $("#box_webText_time .flipInterval").html(languageJSON.reflashInterval);
+        $("#mtrC_webPageDownPeriod").attr("placeholder", languageJSON.pl_input);
         $("#text_color").attr("placeholder", languageJSON.color);
         $("#mtrC_scrollDirection").html('<option selected="selected" value="Right_2_Left">' + languageJSON.rightToleft + '</option>' +
             '<option value="Down_2_Up">' + languageJSON.downToup + '</option>');
@@ -137,7 +165,6 @@ define(function (require, exports, module) {
         $("#weatherText_color").attr("placeholder", languageJSON.pl_weatherColor);
         $("#box_weather_time .switchingInterval").html(languageJSON.switchingInterval);
         $("#weatherFlip_time").attr("placeholder", languageJSON.pl_input);
-        // $("#box_weather_time .second").html(languageJSON.second);
         $("#mtrC_office_type").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>');
         $("#mtrC_office_switchAnimation").html('<option selected="selected" value="None">' + languageJSON.None + '</option>' +
             '<option value="Random">' + languageJSON.Random + '</option>');
@@ -150,6 +177,9 @@ define(function (require, exports, module) {
         $("#mtrC_textType").html('<option selected="selected" value="Normal">' + languageJSON.Normal + '</option>' +
             '<option value="Marquee">' + languageJSON.Marquee + '</option>' +
             '<option value="WebURL">' + languageJSON.WebURL + '</option>')
+        $("#mtrC-selsect-normalType").html('<option selected="selected" value="Flip">' + languageJSON.Flip + '</option>' +
+            '<option value="Roll">' + languageJSON.Roll + '</option>')
+        $("#mtrC-selsect-normalScrollSpeed option:eq(0)").html(languageJSON.static);
         $("#mtrC_fontFamily").html('<option selected="selected" value="">' + languageJSON.Default + '</option>' +
             '<option value="宋体" style="font-family: 宋体">' + languageJSON.SimSun + '</option>' +
             '<option value="黑体" style="font-family: 黑体">' + languageJSON.SimHei + '</option>' +
@@ -218,6 +248,7 @@ define(function (require, exports, module) {
                     $("#mtrC_bgFlip").show();
                     $("#mtrC_effect").hide();
                     $("#mtrC_flip").hide();
+                    $("#mtrC_webText").hide();
                     break;
                 case 'ClockBox':
                     $("#mtrCtrl_Title").html(languageJSON.ctrTitle5);
@@ -340,32 +371,43 @@ define(function (require, exports, module) {
                 if (widgetData.style != "") {
                     var wStyle = JSON.parse(widgetData.style);
                     $("#mtrC_textType").val(wStyle.Type);
-                    //走马灯
-                    if (wStyle.Type == "Marquee") {
-                        $("#mtrC_effect").show();
-                        $("#mtrC_fontFamily").val(wStyle.FontFamily);
-                        if (wStyle.FontFamily != "") {
-                            $("#mtrC_fontFamily").css("font-family", wStyle.FontFamily)
-                        }
-                        if (wStyle.FontBold == 1 && wStyle.FontItalic == 0) {
-                            $("#mtrC_fontStyle").val(1);
-                        } else if (wStyle.FontBold == 0 && wStyle.FontItalic == 1) {
-                            $("#mtrC_fontStyle").val(2);
-                        } else if (wStyle.FontBold == 1 && wStyle.FontItalic == 1) {
-                            $("#mtrC_fontStyle").val(3);
-                        } else {
-                            $("#mtrC_fontStyle").val(0);
-                        }
-                        $(".mtr_choise").css("height", "calc(100% - 260px)");
-                    } else {
-                        $("#mtrC_flip").show();
-                        if (wStyle.Type == "Normal") {
-                            $("#box_text_time").children().first().text(languageJSON.flipInterval);
-                            $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
-                        } else {
-                            $("#box_text_time").children().first().text(languageJSON.reflashInterval);
-                            $("#mtrC_pageDownPeriod").val(wStyle.RefreshPeriod);
-                        }
+                    switch (wStyle.Type) {
+                        case 'Normal':
+                            $("#mtrC_flip").show();
+                            $("#mtrC-selsect-normalType").val(wStyle.RefrashType)
+                            if (wStyle.RefrashType == "Flip") {
+                                $("#mtrC-normalFilpSpeed-box").show();
+                                $("#mtrC-normalScrollSpeed-box").hide();
+                                $("#mtrC_pageDownPeriod").val(wStyle.PageDownPeriod);
+                            } else {
+                                $("#mtrC-normalFilpSpeed-box").hide();
+                                $("#mtrC-normalScrollSpeed-box").show();
+                                $("#mtrC-selsect-normalScrollSpeed").val(wStyle.RollSpeed)
+                            }
+                            $(".mtr_choise").css("height", "calc(100% - 215px)");
+                            break;
+                        case 'Marquee':
+                            $("#mtrC_effect").show();
+                            $("#mtrC_fontFamily").val(wStyle.FontFamily);
+                            if (wStyle.FontFamily != "") {
+                                $("#mtrC_fontFamily").css("font-family", wStyle.FontFamily)
+                            }
+                            if (wStyle.FontBold == 1 && wStyle.FontItalic == 0) {
+                                $("#mtrC_fontStyle").val(1);
+                            } else if (wStyle.FontBold == 0 && wStyle.FontItalic == 1) {
+                                $("#mtrC_fontStyle").val(2);
+                            } else if (wStyle.FontBold == 1 && wStyle.FontItalic == 1) {
+                                $("#mtrC_fontStyle").val(3);
+                            } else {
+                                $("#mtrC_fontStyle").val(0);
+                            }
+                            $(".mtr_choise").css("height", "calc(100% - 260px)");
+                            break;
+                        case 'WebURL':
+                            $("#mtrC_webText").show();
+                            $("#mtrC_webPageDownPeriod").val(wStyle.RefreshPeriod);
+                            $(".mtr_choise").css("height", "calc(100% - 215px)");
+                            break;
                     }
                     $("#text_color").trigger("colorpickersliders.updateColor", wStyle.TextColor);
                     $("#text_bgcolor").trigger("colorpickersliders.updateColor", wStyle.BackgroundColor);
@@ -788,14 +830,26 @@ define(function (require, exports, module) {
     }
 
     function save() {
+        //常规
         //文本类型
         $("#mtrC_textType").change(function () {
             textAttrSave();
         })
-        //翻页时间
-        $("#mtrC_pageDownPeriod").change(function () {
+        //刷新类型
+        $("#mtrC-selsect-normalType").change(function () {
             textAttrSave();
         })
+        //滚动速度
+        $("#mtrC-selsect-normalScrollSpeed").change(function () {
+            textAttrSave();
+        })
+        //翻页时间
+        $("#mtrC_pageDownPeriod").bind("input propertychange", function () {
+            textAttrSave();
+        })
+
+
+        //走马灯
         //文本字体颜色
         $("#text_color").bind("input propertychange", function () {
             textAttrSave();
@@ -812,6 +866,7 @@ define(function (require, exports, module) {
         $("#mtrC_scrollSpeed").change(function () {
             textAttrSave();
         })
+
         //字体
         $("#mtrC_fontFamily").change(function () {
             if ($(this).val() != "") {
@@ -823,6 +878,13 @@ define(function (require, exports, module) {
         $("#mtrC_fontStyle").change(function () {
             textAttrSave();
         })
+
+        //在线网页
+        //间隔时间
+        $("#mtrC_webPageDownPeriod").bind("input propertychange", function () {
+            textAttrSave();
+        })
+
 
         //播放顺序
         $("#mtrCtrl_playType").change(function () {
@@ -860,45 +922,52 @@ define(function (require, exports, module) {
      */
     function textAttrSave() {
         if (!inputCheck()) return;
-        if ($("#mtrC_textType").val() == "Marquee") {
-            var FontBold,
-                FontItalic;
-            switch (Number($("#mtrC_fontStyle").val())) {
-                case 0: FontBold = 0;
-                    FontItalic = 0;
-                    break;
-                case 1: FontBold = 1;
-                    FontItalic = 0;
-                    break;
-                case 2: FontBold = 0;
-                    FontItalic = 1;
-                    break;
-                case 3: FontBold = 1;
-                    FontItalic = 1;
-                    break;
-            }
-            var wstyle = {
-                Type: $("#mtrC_textType").val(),
-                TextColor: $("#text_color").val(),
-                ScrollDirection: $("#mtrC_scrollDirection").val(),
-                ScrollSpeed: $("#mtrC_scrollSpeed").val(),
-                FontFamily: $("#mtrC_fontFamily").val(),
-                FontBold: FontBold,
-                FontItalic: FontItalic,
-                BackgroundColor: $("#text_bgcolor").val()
-            }
-        } else if ($("#mtrC_textType").val() == "Normal") {
-            var wstyle = {
-                Type: $("#mtrC_textType").val(),
-                PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
-                BackgroundColor: $("#text_bgcolor").val()
-            }
-        } else if ($("#mtrC_textType").val() == "WebURL") {
-            var wstyle = {
-                Type: $("#mtrC_textType").val(),
-                RefreshPeriod: $("#mtrC_pageDownPeriod").val(),
-                BackgroundColor: $("#text_bgcolor").val()
-            }
+        var wstyle = {}
+        switch ($("#mtrC_textType").val()) {
+            case 'Normal':
+                wstyle = {
+                    Type: $("#mtrC_textType").val(),
+                    RefrashType: $("#mtrC-selsect-normalType").val(),
+                    RollSpeed: $("#mtrC-selsect-normalScrollSpeed").val(),
+                    PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
+                    BackgroundColor: $("#text_bgcolor").val()
+                }
+                break;
+            case 'Marquee':
+                var FontBold,
+                    FontItalic;
+                switch (Number($("#mtrC_fontStyle").val())) {
+                    case 0: FontBold = 0;
+                        FontItalic = 0;
+                        break;
+                    case 1: FontBold = 1;
+                        FontItalic = 0;
+                        break;
+                    case 2: FontBold = 0;
+                        FontItalic = 1;
+                        break;
+                    case 3: FontBold = 1;
+                        FontItalic = 1;
+                        break;
+                }
+                wstyle = {
+                    Type: $("#mtrC_textType").val(),
+                    TextColor: $("#text_color").val(),
+                    ScrollDirection: $("#mtrC_scrollDirection").val(),
+                    ScrollSpeed: $("#mtrC_scrollSpeed").val(),
+                    FontFamily: $("#mtrC_fontFamily").val(),
+                    FontBold: FontBold,
+                    FontItalic: FontItalic,
+                    BackgroundColor: $("#text_bgcolor").val()
+                }
+                break;
+            case 'WebURL':
+                wstyle = {
+                    Type: $("#mtrC_textType").val(),
+                    RefreshPeriod: $("#mtrC_webPageDownPeriod").val(),
+                    BackgroundColor: $("#text_bgcolor").val()
+                }
+                break;
         }
         DB.collection("widget").update({style: JSON.stringify(wstyle)}, {id: Number($("#mtrCtrl_Title").attr("widget_id"))});
     }
@@ -1055,22 +1124,33 @@ define(function (require, exports, module) {
 
         })
         if (widgetData.type_id == 3) {
-            if ($("#mtrC_textType").val() == "Normal") {
-                if ($("#mtrC_pageDownPeriod").val() == null) {
-                    errorMsg += languageJSON.al_flipTime + "！\n";
-                    obj = $("#mtrC_textType");
-                }
-            } else {
-                if ($("#text_color").val() == "") {
-                    $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
-                    if ($(".cp-popover-container").length != 0) {
-                        $("#text_color").trigger("colorpickersliders.hide");
+            switch ($("#mtrC_textType").val()) {
+                case 'Normal':
+                    if ($("#mtrC-selsect-normalType").val() == 'Flip') {
+                        if ($("#mtrC_pageDownPeriod").val() == "") {
+                            errorMsg += languageJSON.al_flipTime + "！\n";
+                            obj = $("#mtrC_pageDownPeriod");
+                        }
                     }
-                }
-                if ($("#mtrC_scrollSpeed").val() == "") {
-                    errorMsg += languageJSON.al_speed + "！\n";
-                    obj = $("#mtrC_scrollSpeed");
-                }
+                    break;
+                case 'Marquee':
+                    if ($("#text_color").val() == "") {
+                        $("#text_color").trigger("colorpickersliders.updateColor", "#000000");
+                        if ($(".cp-popover-container").length != 0) {
+                            $("#text_color").trigger("colorpickersliders.hide");
+                        }
+                    }
+                    if ($("#mtrC_scrollSpeed").val() == "") {
+                        errorMsg += languageJSON.al_speed + "！\n";
+                        obj = $("#mtrC_scrollSpeed");
+                    }
+                    break;
+                case 'WebURL':
+                    if ($("#mtrC_webPageDownPeriod").val() == "") {
+                        errorMsg += languageJSON.al_refrashTime + "！\n";
+                        obj = $("#mtrC_webPageDownPeriod");
+                    }
+                    break;
             }
             if ($("#text_bgcolor").val() == "") {
                 $("#text_bgcolor").trigger("colorpickersliders.updateColor", "rgba(0, 0, 0, 0)");
