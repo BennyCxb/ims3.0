@@ -382,7 +382,7 @@ define(function (require, exports, module) {
                             } else {
                                 $("#mtrC-normalFilpSpeed-box").hide();
                                 $("#mtrC-normalScrollSpeed-box").show();
-                                $("#mtrC-selsect-normalScrollSpeed").val(wStyle.RollSpeed)
+                                $("#mtrC-selsect-normalScrollSpeed").val(wStyle.ScrollSpeed)
                             }
                             $(".mtr_choise").css("height", "calc(100% - 215px)");
                             break;
@@ -928,7 +928,7 @@ define(function (require, exports, module) {
                 wstyle = {
                     Type: $("#mtrC_textType").val(),
                     RefrashType: $("#mtrC-selsect-normalType").val(),
-                    RollSpeed: $("#mtrC-selsect-normalScrollSpeed").val(),
+                    ScrollSpeed: $("#mtrC-selsect-normalScrollSpeed").val(),
                     PageDownPeriod: $("#mtrC_pageDownPeriod").val(),
                     BackgroundColor: $("#text_bgcolor").val()
                 }
