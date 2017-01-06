@@ -30,7 +30,7 @@ define(function(require, exports, module) {
 
             var dom = $(this).parent().parent();
             e.stopPropagation();
-            if(tree.checkMode === 'multiple'){
+            if(tree.checkMode === 'multiple' && $("#tree-include").is(':checked') ){
               tree.checkChildren(dom);
               tree.checkParent(dom);
             }
@@ -73,7 +73,7 @@ define(function(require, exports, module) {
 
       // 向上检查
       tree.checkParent = function(dom){
-        /*var parent = dom.parent().parent();
+        var parent = dom.parent().parent();
         if( parent.children('ul').attr('id') == tree.domId ){
           return;
         }
@@ -93,29 +93,30 @@ define(function(require, exports, module) {
           }
 
         //选择
-        }else{
-
-          var checked = true;
-
-          parent.children('ul').find('li').each(function(i,e){
-            if($(e).children('a').find('input[type$="checkbox"]').get(0).checked === false){
-              checked = false;
-              return false;
-            }
-          })
-
-          if( checked ){
-
-            parent.children('a').find('input[type$="checkbox"]').get(0).checked = true;
-
-            if( parent.parent().attr('id') != tree.domId ){
-
-              tree.checkParent(parent);
-
-            }
-          }
-
-        }*/
+        }
+        // else{
+        //
+        //   var checked = true;
+        //
+        //   parent.children('ul').find('li').each(function(i,e){
+        //     if($(e).children('a').find('input[type$="checkbox"]').get(0).checked === false){
+        //       checked = false;
+        //       return false;
+        //     }
+        //   })
+        //
+        //   if( checked ){
+        //
+        //     parent.children('a').find('input[type$="checkbox"]').get(0).checked = true;
+        //
+        //     if( parent.parent().attr('id') != tree.domId ){
+        //
+        //       tree.checkParent(parent);
+        //
+        //     }
+        //   }
+        //
+        // }
       }
 
       tree.getSelectedNodeID = function(){
@@ -131,15 +132,26 @@ define(function(require, exports, module) {
         return data;
 
         function getMultipleSelectedNodeID(ul){
-          ul.children('li').each(function(i,e){
-            if($(e).children('a').find('input[type$="checkbox"]').get(0).checked){
-              var content = $.trim($(e).find('span').html());
-              data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
+            //是否递归
+            if ($("#tree-include").is(':checked')) {
+                ul.children('li').each(function(i,e){
+                    if($(e).children('a').find('input[type$="checkbox"]').get(0).checked){
+                        var content = $.trim($(e).find('span').html());
+                        data.push({nodeId : Number($(e).attr('node-id')), nodeContent : content})
+                    }
+                    else if($(e).hasClass('treeview')){
+                        getMultipleSelectedNodeID($(e).children('ul'))
+                    }
+                })
+            } else {
+                ul.find('input[type$="checkbox"]').each(function (i, e) {
+                    if (e.checked == true) {
+                        var content = $.trim($(e).next().next().html());
+                        data.push({nodeId : Number($(e).parents('li').attr('node-id')), nodeContent : content})
+                    }
+                })
             }
-            else if($(e).hasClass('treeview')){
-              getMultipleSelectedNodeID($(e).children('ul'))
-            }
-          })
+
         }
       }
 
@@ -284,8 +296,8 @@ define(function(require, exports, module) {
               parentChecked = (dom.prev('a').find('input[type$="checkbox"]').get(0).checked)?true:false;
             }
             if(data[i].isChecked === 1 || parentChecked){
-              li.children('a').find('input[type$="checkbox"]').get(0).checked = true;
-              tree.openAncestorsNode(li);
+              // li.children('a').find('input[type$="checkbox"]').get(0).checked = true;
+              // tree.openAncestorsNode(li);
             }
           }
 

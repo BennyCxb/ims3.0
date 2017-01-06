@@ -182,7 +182,11 @@ define(function (require, exports, module) {
             todayOnlineTime: "今日",
             export: "导出",
             months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
-            weekdays: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+            weekdays: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+
+            Including_sub_category: "包含子分类",
+            Including_sub_category_tips_on: "发布到分类，以及所属的所有子分类",
+            Including_sub_category_tips_off: "仅发布到所选分类，但不发布到其所属子分类"
         },
         termLog: {
             title: "日志",

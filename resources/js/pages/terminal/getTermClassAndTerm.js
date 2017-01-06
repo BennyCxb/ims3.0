@@ -33,6 +33,12 @@ define(function (require, exports, module) {
                 alert(languageJSON.al_selectTtT);
             } else {
                 var data = [];
+                //是否递归
+                if ($("#tree-include").is(':checked')) {
+                    data.action = "";
+                } else {
+                    data.action = "NoRecursive";
+                }
                 data.categoryList = categoryList;
                 data.termList = termList;
                 exports.save(data);
@@ -49,9 +55,21 @@ define(function (require, exports, module) {
         $("#term_sel_cancel").html(languageJSON.cancel);
         $("#select-termlist-title").html(languageJSON.all);
         $("#term_sel_search").attr("placeholder", languageJSON.pl_searchTerm);
+        $(".lbl-include").html(languageJSON.Including_sub_category + ":");
+        $(".tree-footer-include-tips").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.Including_sub_category_tips_on)
     }
 
     function initTree() {
+        $("#tree-include").bootstrapToggle();
+        //是否递归
+        $("#tree-include").change(function () {
+            if ($("#tree-include").is(':checked')) {
+                $(".tree-footer-include-tips").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.Including_sub_category_tips_on)
+            } else {
+                $(".tree-footer-include-tips").html('<i class="fa fa-info-circle"></i>&nbsp;' + languageJSON.Including_sub_category_tips_off)
+            }
+        })
+
         var dataParameter = {
             "project_name": CONFIG.projectName,
             "action": "getTree"
@@ -207,10 +225,10 @@ define(function (require, exports, module) {
                     var status = (tl[i].Online === 0) ? 'offline' : ((tl[i].Status === 'Running') ? 'running' : 'shutdown');
 
                     var checked = '';
-                    if (Number(exports.channelID) === tl[i].Channel_ID) {
-                        checked = 'checked="checked"';
-                        _checkList.add(tl[i].ID, tl[i].Status);
-                    }
+                    // if (Number(exports.channelID) === tl[i].Channel_ID) {
+                    //     checked = 'checked="checked"';
+                    //     _checkList.add(tl[i].ID, tl[i].Status);
+                    // }
                     $('#term_sel_list').append('' +
                         '<tr tid="' + tl[i].ID + '" status="' + status + '">' +
                         '<td>' +

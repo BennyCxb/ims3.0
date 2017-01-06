@@ -347,12 +347,12 @@ define(function (require, exports, module) {
                         if (wStyle.FontFamily != "") {
                             $("#mtrC_fontFamily").css("font-family", wStyle.FontFamily)
                         }
-                        if (wStyle.FontBold == 1 && wStyle.FontBold == 0) {
+                        if (wStyle.FontBold == 1 && wStyle.FontItalic == 0) {
                             $("#mtrC_fontStyle").val(1);
                         } else if (wStyle.FontBold == 0 && wStyle.FontItalic == 1) {
                             $("#mtrC_fontStyle").val(2);
                         } else if (wStyle.FontBold == 1 && wStyle.FontItalic == 1) {
-                            $("#mtrC_fontBold").val(3);
+                            $("#mtrC_fontStyle").val(3);
                         } else {
                             $("#mtrC_fontStyle").val(0);
                         }

@@ -231,7 +231,7 @@ define(function (require, exports, module) {
             //var tList = JSON.stringify(data.termList);
             var post_data = JSON.stringify({
                 project_name: config.projectName,
-                action: 'publishChannel',
+                action: 'publishChannel' + data.action,
                 channelID: channelID,
                 categoryList: data.categoryList,
                 termList: data.termList
@@ -261,7 +261,7 @@ define(function (require, exports, module) {
             //var tList = JSON.stringify(data.termList);
             var post_data = JSON.stringify({
                 project_name: config.projectName,
-                action: 'publishPreDownloadChannel',
+                action: 'publishPreDownloadChannel' + data.action,
                 channelID: channelID,
                 categoryList: data.categoryList,
                 termList: data.termList

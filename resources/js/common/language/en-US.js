@@ -182,7 +182,11 @@ define(function (require, exports, module) {
             todayOnlineTime: "Today",
             export: "Export",
             months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+            Including_sub_category: "Including sub-category",
+            Including_sub_category_tips_on: "Publish to the category, and all subcategories to which it belongs.",
+            Including_sub_category_tips_off: "Publish to selected category rather than its subcategories"
         },
         termLog: {
             title: "Log",

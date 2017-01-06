@@ -1287,3 +1287,8 @@ a {
 #box-server-info > .progress-group > .progress.sm {
     height: 15px;
 }
+
+/* 发布选择终端页面 */
+.tree-footer-include {
+    border-bottom: 1px solid #f4f4f4;
+}

@@ -1333,7 +1333,7 @@ define(function (require, exports, module) {
             //var tList = JSON.stringify(data.termList);
             var post_data = JSON.stringify({
                 project_name: config.projectName,
-                action: 'publishChannel',
+                action: 'publishChannel' + data.action,
                 channelID: channelId,
                 categoryList: data.categoryList,
                 termList: data.termList
