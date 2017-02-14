@@ -26,8 +26,8 @@ CKEDITOR.editorConfig = function (config) {
     config.fontSize_style =
         {
             element: 'span',
-            /*styles                : { 'font-size' : '#(size)' },*/
-            styles: {'font-size': '#(20)'},
+            styles: { 'font-size' : '#(size)' },
+            // styles: {'font-size': '#(20)'},
             overrides: [{element: 'font', attributes: {'size': null}}]
         };
 };
