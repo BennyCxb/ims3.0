@@ -77,6 +77,26 @@
                 <ul class="nav navbar-nav">
                     <li><a id="dpUpl" title="点击打开上传页面"><i class="glyphicon glyphicon-cloud-upload"></i></a></li>
 
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <li class="dropdown messages-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i>
+                            <span id="messageNum" class="label label-success"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li id="msg-box-title" class="header"></li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul id="msg-list" class="menu">
+                                    <!-- start message -->
+
+                                    <!-- end message -->
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#terminal/messageList" id="seeAllMsg">See All Messages</a></li>
+                        </ul>
+                    </li>
+
                     <!-- language -->
                     <li class="dropdown user user-menu">
                         <a class="dropdown-toggle" data-toggle="dropdown">

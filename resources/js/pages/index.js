@@ -1,6 +1,8 @@
 define(function (require, exports, module) {
     var CONFIG = require("common/config.js");
-    var UTIL = require("common/util.js");
+    var UTIL = require("common/util.js"),
+        templates = require('common/templates'),
+        toast = require('common/toast');
 
     var username = CONFIG.userName;
     var project = CONFIG.projectName;
@@ -17,6 +19,11 @@ define(function (require, exports, module) {
 
         checkJurisdiction();
 
+        var msgNum = 0;
+        channelVersionCheck();
+        setInterval(channelVersionCheck, 10000);
+
+
         //登出
         $("#logout").click(function () {
             window.location.href = "login.html";
@@ -28,6 +35,35 @@ define(function (require, exports, module) {
             exports.userName = uName;
             UTIL.cover.load('resources/pages/user/user_psw.html');
         });
+
+        /**
+         * 频道版本校验
+         */
+        function channelVersionCheck() {
+            $('#messageNum').html(msgNum > 0 ? msgNum : '');
+
+            var data = JSON.stringify({
+                action: "checkTerm",
+                project: project,
+            });
+            var _url = CONFIG.serverRoot + '/backend_mgt/v2/sysinfo/';
+            UTIL.ajax('post', _url, data, function (json) {
+                if (json.res.length > 0) {
+                    json.res.forEach(function (el) {
+                        var data = {
+                            title: languageJSON.warning,
+                            datetime: el.ErrTime,
+                            message: el.Error,
+                        };
+                        $('#msg-list').append(templates.message_menu_list_row(data));
+                        msgNum++;
+                        $('#msg-box-title').html(languageJSON.you_have + ' ' + msgNum + ' ' + languageJSON.messages);
+                        toast.show(languageJSON.new_message + "：" + el.Error);
+                    })
+                }
+
+            })
+        }
     };
     /**
      * 上传弹层页面
@@ -53,6 +89,7 @@ define(function (require, exports, module) {
         $("#repassword").html('<i class="fa fa-unlock-alt"></i>' + languageJSON.resetPassword);
         $("#logout").html('<i class="glyphicon glyphicon-log-out"></i>' + languageJSON.logout);
         $("#dpUpl").attr("title", languageJSON.dpUpl);
+        $("#seeAllMsg").html(languageJSON.see_all_messages);
     }
 
     function loadPage() {
@@ -245,4 +282,5 @@ define(function (require, exports, module) {
             }
         )
     }
+
 });
