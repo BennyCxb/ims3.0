@@ -510,6 +510,38 @@ __p+='<tr data-layout-id="'+
 }
 return __p;
 };
+exports['message_menu_list_row']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<!-- start message --> <li> <a href="#"> <h4> '+
+((__t=(title))==null?'':__t)+
+' <small><i class="fa fa-clock-o"></i> '+
+((__t=(datetime))==null?'':__t)+
+'</small> </h4> <p>'+
+((__t=(message))==null?'':__t)+
+'</p> </a> </li> <!-- end message -->';
+}
+return __p;
+};
+exports['message_table_row']=function(obj){
+var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+with(obj||{}){
+__p+='<tr data-message-id="'+
+((__t=(id))==null?'':__t)+
+'"> <td class="mod_checkbox" style="width: 32px"><input type="checkbox"></td> <td class=""><b>'+
+((__t=(termMac))==null?'':__t)+
+'</b></td> <td class="text-center"><span class="label label-'+
+((__t=(statusClass))==null?'':__t)+
+'">'+
+((__t=(status))==null?'':__t)+
+'</span></td> <td class="text-center create-time">'+
+((__t=(errTime))==null?'':__t)+
+'</td> <td class="">'+
+((__t=(error))==null?'':__t)+
+'</td> </tr>';
+}
+return __p;
+};
 exports['statistics_server_info']=function(obj){
 var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
 with(obj||{}){
