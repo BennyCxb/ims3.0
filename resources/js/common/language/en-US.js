@@ -30,7 +30,13 @@ define(function (require, exports, module) {
             },
             errorRelogin: "Expired login, Please login again!",
             errorRelogin2: "Please Login again",
-            errorNoPermissions: "No privilege, Please contact Administrator!"
+            errorNoPermissions: "No privilege, Please contact Administrator!",
+
+            new_message: "New message",
+            you_have: "You have",
+            messages: "messages",
+            warning: "Warning",
+            see_all_messages: "See All Messages"
         },
         termList: {
             termBoxTitle: "Terminal",
@@ -186,7 +192,17 @@ define(function (require, exports, module) {
 
             Including_sub_category: "Including sub-category",
             Including_sub_category_tips_on: "Publish to the category, and all subcategories to which it belongs.",
-            Including_sub_category_tips_off: "Publish to selected category rather than its subcategories"
+            Including_sub_category_tips_off: "Publish to selected category rather than its subcategories",
+
+            //消息界面
+            message_center: "Message center",
+            message_list: "Message list",
+            marked_as_rocessed: "Marked as processed",
+            untreated: "Untreated",
+            treated: "Treated",
+            contect: "Contect",
+            time: "Time",
+            cf_delete_message: "Delete？"
         },
         termLog: {
             title: "Log",

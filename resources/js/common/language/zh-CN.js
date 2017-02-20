@@ -30,7 +30,14 @@ define(function (require, exports, module) {
             },
             errorRelogin: "登录过期，请重新登录！",
             errorRelogin2: "请重新登录！",
-            errorNoPermissions: "您没有任何权限，请联系管理员！"
+            errorNoPermissions: "您没有任何权限，请联系管理员！",
+
+            new_message: "新消息",
+            you_have: "您有",
+            messages: "条消息",
+            warning: "警告",
+            warning1: "当前频道版本与发布的频道版本不一致",
+            see_all_messages: "查看所有消息"
         },
         termList: {
             termBoxTitle: "终端",
@@ -186,7 +193,17 @@ define(function (require, exports, module) {
 
             Including_sub_category: "包含子分类",
             Including_sub_category_tips_on: "发布到分类，以及所属的所有子分类",
-            Including_sub_category_tips_off: "仅发布到所选分类，但不发布到其所属子分类"
+            Including_sub_category_tips_off: "仅发布到所选分类，但不发布到其所属子分类",
+
+            //消息界面
+            message_center: "消息中心",
+            message_list: "消息列表",
+            marked_as_rocessed: "标记为已处理",
+            untreated: "未处理",
+            treated: "已处理",
+            contect: "内容",
+            time: "时间",
+            cf_delete_message: "确定删除？"
         },
         termLog: {
             title: "日志",
