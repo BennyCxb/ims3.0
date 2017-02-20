@@ -71,7 +71,7 @@ define(function (require, exports, module) {
     function render(json) {
         var totalPages = Math.ceil(json.total / nDisplayItems);
         totalPages = Math.max(totalPages, 1);
-        $('#layout-table-pager').jqPaginator({
+        $('#message-table-pager').jqPaginator({
             totalPages: totalPages,
             visiblePages: 10,
             first: config.pager.first,
