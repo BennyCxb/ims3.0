@@ -30,7 +30,7 @@ define(function (require, exports, module) {
          * 保存定时节目的序列
          */
         timedSortable = null,
-        languageJSON = config.languageJson.channel;;
+        languageJSON = config.languageJson.channel;
 
     /**
      * 初始化数据库

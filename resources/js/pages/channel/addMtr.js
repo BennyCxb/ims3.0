@@ -16,8 +16,8 @@ define(function (require, exports, module) {
     exports.init = function () {
         selectLanguage();
         mtrIds = {};
-        mtrJson = []
-        _pageNum = 1
+        mtrJson = [];
+        _pageNum = 1;
         //关闭窗口
         $(".CA_close").click(function () {
             UTIL.cover.close();
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
         $("#mtr_typeChiose").change(function () {
             mtrTypeId = Number($("#mtr_typeChiose").val());
             loadPage(1, mtrTypeId);
-        })
+        });
 
         //全选和全不选
         if ($("#mtr_addMtr").attr("is_choisebg") != "1") {
@@ -123,7 +123,7 @@ define(function (require, exports, module) {
         languageJSON = CONFIG.languageJson.channel;
         $("#mtr_typeChiose").html('<option selected="selected" value=1>' + languageJSON.video + '</option>' +
             '<option value=2>' + languageJSON.image + '</option>' +
-            '<option value=5>' + languageJSON.live + '</option>')
+            '<option value=5>' + languageJSON.live + '</option>');
         $("#amtr_add").html(languageJSON.done);
         $("#mtr_choiseTitle").html(languageJSON.resourceList);
     }
