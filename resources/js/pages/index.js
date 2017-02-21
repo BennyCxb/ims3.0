@@ -57,12 +57,13 @@ define(function (require, exports, module) {
                         };
                         $('#msg-list').append(templates.message_menu_list_row(data));
                         msgNum++;
-                        $('#msg-box-title').html(languageJSON.you_have + ' ' + msgNum + ' ' + languageJSON.messages);
+
                         toast.show(languageJSON.new_message + "：" + el.Error);
                     })
                 }
-
+                $('#msg-box-title').html(languageJSON.you_have + ' ' + msgNum + ' ' + languageJSON.messages);
             })
+
         }
     };
     /**

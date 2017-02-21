@@ -1,5 +1,5 @@
 var currentLang = navigator.language;
-var language = "zh-CN";
+var default_language;
 if(!currentLang)
 	currentLang = navigator.browserLanguage;
 switch (currentLang.toLowerCase()) {
@@ -10,6 +10,7 @@ switch (currentLang.toLowerCase()) {
 		default_language = "en-US";
 		break;
 	default:
+        default_language = "zh-CN";
 		break;
 }
 
