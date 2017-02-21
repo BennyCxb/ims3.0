@@ -31,7 +31,7 @@ define(function (require, exports, module) {
             var ids = new Array();
             $("#channel-table input[type='checkBox']:checked").each(function (i, e) {
                 ids.push(Number($(e).parent().parent().parent().attr('chnID')));
-            })
+            });
             return ids;
         }
 
@@ -48,7 +48,7 @@ define(function (require, exports, module) {
                     $(this).addClass(isFocus ? 'btn-defalut' : 'btn-primary');
                     loadPage(1);
                 })
-            })
+            });
 
             //提交审核
             $('#chn_submit').click(function () {
@@ -139,7 +139,7 @@ define(function (require, exports, module) {
 
     exports.loadPage = function () {
         loadPage(_pageNO);
-    }
+    };
 
     /**
      * 语言切换绑定
