@@ -238,7 +238,7 @@ define(function (require, exports, module) {
                         "CityIDs": cityIDs,
                         "MainServer": _mainServer,
                         "RestartTimer": restartTimer,
-                        "ProgramSync": _programSync,
+                        // "ProgramSync": _programSync,
                         "LogURL": logURL,
                         "RemoteADB": remoteADB,
                         "Debug": debug,
