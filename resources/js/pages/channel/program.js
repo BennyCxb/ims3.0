@@ -231,7 +231,7 @@ define(function (require, exports, module) {
                         style = {
                             type: style.Type,
                             color: style.TextColor,
-                            direction: style.ScrollDriection,
+                            direction: style.ScrollDirection,
                             speed: Number(style.ScrollSpeed),
                             backgroundColor: style.BackgroundColor
                         };
