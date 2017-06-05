@@ -270,7 +270,7 @@ define(function (require, exports, module) {
             "action": "HasCheckModule"
         }
 
-        UTIL.ajax(
+        UTIL.ajax2(
             'POST',
             CONFIG.serverRoot + '/backend_mgt/v2/userdetails',
             JSON.stringify(data),
