@@ -29,7 +29,7 @@ define(function (require, exports, module) {
                 onSearch(event);
             }
         });
-        $("#mtrSearch").next().click(onSearch);
+        $("#mtrChoiseSearch").next().click(onSearch);
 
         //下拉框点击事件
         $("#mtr_typeChiose").change(function () {
