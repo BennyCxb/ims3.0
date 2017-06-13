@@ -545,8 +545,9 @@ define(function(require, exports, module) {
                 focused: el === editor.mLayout.mFocusedWidget
             });
         });
-        $('#layout-editor-wrapper .btn-add-widget[data-widget-id="video"]').prop('disabled', videoOrAudioWidgetExists);
-        $('#layout-editor-wrapper .btn-add-widget[data-widget-id="audio"]').prop('disabled', videoOrAudioWidgetExists);
+        // 注释掉 视频和音频控件只能选一个
+        // $('#layout-editor-wrapper .btn-add-widget[data-widget-id="video"]').prop('disabled', videoOrAudioWidgetExists);
+        // $('#layout-editor-wrapper .btn-add-widget[data-widget-id="audio"]').prop('disabled', videoOrAudioWidgetExists);
         $('#layout-editor-wrapper .layout-editor-widgets')
             .html(templates.layout_edit_widgets({widgets: widgets}));
     }
