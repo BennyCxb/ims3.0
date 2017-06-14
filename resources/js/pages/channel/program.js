@@ -236,6 +236,14 @@ define(function (require, exports, module) {
                             backgroundColor: style.BackgroundColor
                         };
                         mtrData = mtrData.replace(/<\/?.+?>/g,"")
+                    } else if(style.Type === 'Normal'){
+                        style = {
+                            type: style.Type,
+                            RefrashType: $("#mtrC-selsect-normalType").val(),
+                            speed: $("#mtrC-selsect-normalScrollSpeed").val(),
+                            pageDownPeriod: Number($("#mtrC_pageDownPeriod").val()),
+                            backgroundColor: $("#text_bgcolor").val()
+                        };
                     } else {
                         style = {
                             type: style.Type,

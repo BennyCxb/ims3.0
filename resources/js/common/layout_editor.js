@@ -1398,9 +1398,9 @@ define(function (require, exports, module) {
                 var direction=data.style.direction,duration;
                 if(direction=='Right_2_Left'){
                     var marquee = document.createElement('div');
-                    marquee.innerHTML = data.material;
+                    marquee.innerHTML = data.material.replace(/px/g,'em');
                     marquee.setAttribute('class', 'marquee layout-preview-text');
-                    marquee.style.fontSize = (this.mElement.offsetHeight >= this.mElement.offsetWidth)? (this.mElement.offsetWidth * 0.9) + 'px' : (this.mElement.offsetHeight * 0.6) + 'px';
+                    marquee.style.fontSize = this.mElement.offsetHeight*0.7 + 'px';
                     marquee.style.color = data.style.color;
                     marquee.style.backgroundColor = data.style.backgroundColor;
                     this.mElement.appendChild(marquee);
@@ -1412,13 +1412,53 @@ define(function (require, exports, module) {
                 }else if(direction=='Down_2_Up') {
                     var marquee2=document.createElement("marquee");
                     marquee2.innerHTML =data.material;
-                    marquee2.style.fontSize = (this.mElement.offsetHeight >= this.mElement.offsetWidth)? (this.mElement.offsetWidth * 0.9) + 'px' : (this.mElement.offsetHeight * 0.6) + 'px';
+                    marquee2.setAttribute('scrollamount', data.style.speed);
+                    marquee2.style.fontSize = (this.mElement.offsetWidth * 0.87) + 'px';
                     marquee2.setAttribute('direction','up');
-                    marquee2.style.lineHeight=  (this.mElement.offsetHeight >= this.mElement.offsetWidth)? (this.mElement.offsetWidth * 0.9) + 'px' : (this.mElement.offsetHeight * 0.6) + 'px';
+                    marquee2.style.lineHeight=  "normal";
                     marquee2.style.color = data.style.color;
                     marquee2.style.backgroundColor = data.style.backgroundColor;
                     this.mElement.appendChild(marquee2);
                 }
+            }
+        }else if(data.style.type === 'Normal'){
+            if(data.style.RefrashType === 'Roll' && data.style.speed!=0){
+                var speed=data.style.speed;
+                var freshDiv=document.createElement('marquee');
+                freshDiv.setAttribute('direction', 'up');
+                freshDiv.setAttribute('scrollamount', speed);
+                freshDiv.style.width = '100%';
+                freshDiv.style.height = '100%';
+                freshDiv.style.fontSize = (0.125 * DEFAULT_FONT_SIZE * scale) + 'px';
+                freshDiv.style.lineHeight = 'normal';
+                freshDiv.innerHTML=data.material.replace(/px/g,'em');
+                this.mElement.appendChild(freshDiv);
+            }else {
+                var iFrame = document.createElement('iframe');
+                iFrame.setAttribute('frameborder', '0');
+                iFrame.setAttribute('scrolling', 'no');
+                iFrame.setAttribute('seamless', 'seamless');
+                iFrame.setAttribute('allowtransparency', 'true');
+                iFrame.style.width =
+                    iFrame.style.height = '100%';
+                iFrame.style.overflowY = 'hidden';
+                // http://stackoverflow.com/questions/8240101/set-content-of-iframe
+                var mtrText = data.material.replace(/px/g,'em');
+                iFrame.srcdoc = '<html><head><style>body {font-size:' +
+                    (0.125 * DEFAULT_FONT_SIZE * scale) +
+                    'px; background-color: ' +
+                    data.style.backgroundColor
+                    + '; font-family: "微软雅黑";}</style></head><body>' +
+                    mtrText +
+                    '</body></html>';
+                this.mElement.appendChild(iFrame);
+                var overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                this.mElement.appendChild(overlay);
             }
         } else {
             var iFrame = document.createElement('iframe');
@@ -1447,8 +1487,6 @@ define(function (require, exports, module) {
             overlay.style.left = '0';
             this.mElement.appendChild(overlay);
         }
-
-
     };
     HTMLWidget.prototype.hidePreview = function () {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
@@ -1471,37 +1509,46 @@ define(function (require, exports, module) {
             this.mElement.removeChild(this.mElement.firstChild);
         }
 
-        var format = {
-            Time: 'hh:MM:ss',
-            Date: 'yyyy-mm-dd',
-            Week: 'dddd',
-            DateTime: 'yyyy-mm-dd hh:MM:ss',
-            DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
-            DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd',
-            TimeAnim: 'hh:MM:ss'
-        }[resource.style.Type],
-            now = new Date();
-        if (!format) {
-            format = 'hh:MM:ss';
+        if(resource.style.Type=="Clock"){
+            this.mElement.style.backgroundImage = 'url(resources/img/clockbg.png)';
+            this.mElement.style.backgroundSize = 'contain';
+            this.mElement.style.backgroundPosition = 'center';
+            this.mElement.style.backgroundRepeat = 'no-repeat';
+        }else {
+            var format = {
+                    Time: 'hh:MM:ss',
+                    Date: 'yyyy-mm-dd',
+                    Week: 'dddd',
+                    DateTime: 'yyyy-mm-dd hh:MM:ss',
+                    DateTimeWeekH: 'yyyy-mm-dd hh:MM:ss<br>dddd',
+                    DateTimeWeekV: 'yyyy-mm-dd<br>hh:MM:ss<br>dddd',
+                    TimeAnim: 'hh:MM:ss'
+                }[resource.style.Type],
+                now = new Date();
+            if (!format) {
+                format = 'hh:MM:ss';
+            }
+            var text = now.format(format),
+                div = document.createElement('div'),
+                lines = (text.match(/<br>/g) || []).length + 1,
+                cHeight = this.mHeight * this.mContext.mZoomFactor;
+            div.style.textAlign = 'center';
+            div.style.fontSize = cHeight * 0.5 + 'px';
+            div.style.color = resource.style.TextColor;
+            div.style.overflow = 'hidden';
+            div.style.whiteSpace = 'nowrap';
+            div.style.lineHeight = cHeight / lines + 'px';
+            div.style.height = '100%';
+            div.innerHTML = text;
+            this.mElement.appendChild(div);
         }
-        var text = now.format(format),
-            div = document.createElement('div'),
-            lines = (text.match(/<br>/g) || []).length + 1,
-            cHeight = this.mHeight * this.mContext.mZoomFactor;
-        div.style.textAlign = 'center';
-        div.style.fontSize = cHeight * 0.5 + 'px';
-        div.style.color = resource.style.TextColor;
-        div.style.overflow = 'hidden';
-        div.style.whiteSpace = 'nowrap';
-        div.style.lineHeight = cHeight / lines + 'px';
-        div.style.height = '100%';
-        div.innerHTML = text;
-        this.mElement.appendChild(div);
+
 
     };
     ClockWidget.prototype.hidePreview = function () {
         this.mElement.style.backgroundColor = this.mElement.dataset.background;
         Widget.prototype.hidePreview.call(this);
+        this.mElement.style.backgroundImage = 'none';
     };
 
     /**
